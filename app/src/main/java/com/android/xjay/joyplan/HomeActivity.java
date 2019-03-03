@@ -1,0 +1,129 @@
+package com.android.xjay.joyplan;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.view.MenuItem;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * HomeActivity
+ */
+
+public class HomeActivity extends AppCompatActivity {
+
+    private ViewPager viewPager;
+    private MenuItem menuItem;
+    private BottomNavigationView bottomNavigationView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
+
+        viewPager = findViewById(R.id.vp_home);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.item_agenda:
+                                viewPager.setCurrentItem(0);
+                                break;
+                            case R.id.item_planing:
+                                viewPager.setCurrentItem(1);
+                                break;
+                            case R.id.item_discovery:
+                                viewPager.setCurrentItem(2);
+                                break;
+                            case R.id.item_setup:
+                                viewPager.setCurrentItem(3);
+                                break;
+                        }
+                        return false;
+                    }
+                });
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            // Triggered when scrolling the pages
+            // position: current page index
+            // position offset: value from 0~1,
+            //                  getting larger when the page is scrolled to the right
+            //                  and vice versa.
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            // Triggered when finishing the scrolling action
+            // position: current page index (after scrolling)
+            public void onPageSelected(int position) {
+                if (menuItem != null) {
+                    menuItem.setChecked(false);
+                } else {
+                    bottomNavigationView.getMenu().getItem(0).setChecked(false);
+                }
+                menuItem = bottomNavigationView.getMenu().getItem(position);
+                menuItem.setChecked(true);
+            }
+
+            @Override
+            // Triggered when changing the state of the scrolling action
+            // state: 0 stop
+            //        1 scrolling
+            //        2 scrolling done
+            // usually 1->2->0
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+
+        setupViewPager(viewPager);
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+        adapter.addFragment(HomeFragment.newInstance("日程"));
+        adapter.addFragment(HomeFragment.newInstance("规划"));
+        adapter.addFragment(HomeFragment.newInstance("发现"));
+        adapter.addFragment(HomeFragment.newInstance("设置"));
+        viewPager.setAdapter(adapter);
+    }
+
+}
+
+class ViewPagerAdapter extends FragmentPagerAdapter {
+
+    private final List<Fragment> mFragmentList = new ArrayList<>();
+
+    public ViewPagerAdapter(FragmentManager manager) {
+        super(manager);
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+        return mFragmentList.get(position);
+    }
+
+    @Override
+    public int getCount() {
+        return mFragmentList.size();
+    }
+
+    public void addFragment(Fragment fragment) {
+        mFragmentList.add(fragment);
+    }
+
+}
+
