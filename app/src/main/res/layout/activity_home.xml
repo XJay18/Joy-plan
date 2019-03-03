@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -13,8 +12,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_navigation" />
 
-    <android.support.design.widget.BottomNavigationView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.design.widget.BottomNavigationView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
@@ -23,12 +21,13 @@
         android:layout_marginBottom="0dp"
         android:background="?android:attr/windowBackground"
 
-        app:itemTextAppearanceActive="@style/bottom_text"
         app:itemIconSize="40dp"
         app:itemIconTint="@drawable/navigation_selector"
+        app:itemTextAppearanceActive="@style/bottom_text"
         app:itemTextColor="@drawable/navigation_selector"
         app:labelVisibilityMode="labeled"
-        app:menu="@menu/bottom_menu" >
+        app:menu="@menu/bottom_menu">
+
     </android.support.design.widget.BottomNavigationView>
 
 
