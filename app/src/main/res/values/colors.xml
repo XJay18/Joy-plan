@@ -4,6 +4,13 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="date_picker_text_light">#59B29C</color>
+    <color name="date_picker_text_dark">#333333</color>
+    <color name="date_picker_bg">#FFFFFF</color>
+    <color name="date_picker_divider">#11112233</color>
+
     <color name="tab_checked">#3F51B5</color>
     <color name="tab_unchecked">#757575</color>
+
+
 </resources>
