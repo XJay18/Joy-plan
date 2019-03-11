@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void btn_home(View view){
-        Intent intent = new Intent(this, FqzActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 }
