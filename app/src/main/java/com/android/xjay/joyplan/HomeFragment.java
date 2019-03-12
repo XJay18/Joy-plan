@@ -50,6 +50,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 View view=inflater.inflate(R.layout.fragment_plan,null);
                 return view;
             }
+            case"设置":
+            {
+                View view=inflater.inflate(R.layout.fragment_setup,null);
+                return view;
+            }
             default:{
                 View view = inflater.inflate(R.layout.fragment_base, null);
                 TextView tvInfo = (TextView) view.findViewById(R.id.textView);

@@ -36,4 +36,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@color/date_picker_bg</item>
     </style>
+    <style name="font_yy" >
+        <item name="android:fontFamily">@font/youyuan</item>
+    </style>
 </resources>
