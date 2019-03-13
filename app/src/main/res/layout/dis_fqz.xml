@@ -79,6 +79,28 @@
                 android:fontFamily="@font/youyuan"
                 />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ll_fqz_size"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/youyuan"
+                android:gravity="right"
+                android:text="我的番茄篮子大小："
+                android:textSize="25sp" />
+            <Spinner
+                android:id="@+id/sp_fqz_size"
+                android:layout_width="140dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:spinnerMode="dropdown"
+                />
+        </LinearLayout>
 
     </LinearLayout>
 

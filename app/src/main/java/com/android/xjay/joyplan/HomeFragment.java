@@ -1,5 +1,7 @@
 package com.android.xjay.joyplan;
+
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -9,11 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
-/**
-   Include four instances of the home pages.
-   Agenda, Planning, Discovery, Setup
- */
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
     protected Context mContext;
@@ -69,6 +66,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view){
         if(view.getId()==R.id.ll_fqz){
             Toast.makeText(mContext,"你点击了番茄钟",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            intent.setClass(mContext,FqzActivity.class);
+            startActivity(intent);
         }else if(view.getId()==R.id.ll_ydhd) {
             Toast.makeText(mContext,"你点击了预定活动",Toast.LENGTH_SHORT).show();
         }else if(view.getId()==R.id.ll_rcq){
@@ -78,3 +78,5 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 }
+
+
