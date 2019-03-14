@@ -24,6 +24,7 @@ public class FqzActivity extends AppCompatActivity
     private TextView tv_pickertitle;
     private CustomTimePicker mTimePicker;
     private String[] sizeArray = {"1", "2", "3", "4", "5", "6", "7", "8"};
+    private boolean auxiliary =true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,6 @@ public class FqzActivity extends AppCompatActivity
         starAdapter.setDropDownViewResource(R.layout.item_dropdown);
 
         Spinner sp = (Spinner) findViewById(R.id.sp_fqz_size);
-        sp.setPrompt("我的番茄篮子大小");
         sp.setAdapter(starAdapter);
         sp.setSelection(0);
         sp.setOnItemSelectedListener(new BasicSelectedListener());
@@ -86,8 +86,16 @@ public class FqzActivity extends AppCompatActivity
     }
 
     class BasicSelectedListener implements AdapterView.OnItemSelectedListener {
-        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-            Toast.makeText(FqzActivity.this, "您选择的是"+sizeArray[arg2], Toast.LENGTH_LONG).show();
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if (auxiliary) {
+
+                // store the selected value into the memory
+                // TODO
+                // END
+
+                view.setVisibility(View.INVISIBLE);
+            }
+            auxiliary=false;
         }
 
         public void onNothingSelected(AdapterView<?> arg0) {

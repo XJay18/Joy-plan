@@ -1,6 +1,7 @@
 package com.android.xjay.joyplan;
 
 import android.app.Dialog;
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.Gravity;
