@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_marginStart="10dp"
+            android:id="@+id/profile_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:src="@drawable/ic_act"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="等级："
+                android:textSize="30sp"
+                android:layout_marginLeft="5dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="昵称："
+                android:textSize="30sp"
+                android:layout_marginLeft="10dp"
+
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="用户ID："
+                android:textSize="30sp"
+                android:layout_marginLeft="5dp"
+                style="@style/font_yy"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textview1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="功能1："
+            android:gravity="left|center_vertical"
+            android:paddingLeft="10dp"
+            android:textSize="24sp"
+            />
+        <TextView
+            android:id="@+id/textview2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textview1"
+            android:layout_marginTop="15dp"
+            android:text="功能2："
+            android:gravity="center_vertical"
+            android:textSize="24sp"
+            android:paddingLeft="10dp"
+            />
+
+        <TextView
+            android:id="@+id/textview3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textview2"
+            android:layout_marginTop="13dp"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="10dp"
+            android:text="功能3："
+            android:textSize="24sp" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button1"
+            android:layout_alignRight="@id/textview1"
+            android:layout_alignBottom="@id/textview1"
+            android:text=""
+            android:drawableLeft="@drawable/ic_right"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="20dp" />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button2"
+            android:layout_alignRight="@id/textview2"
+            android:layout_alignBottom="@id/textview2"
+            android:layout_alignTop="@id/textview2"
+            android:drawableLeft="@drawable/ic_right"
+            android:text=""
+            android:background="@android:color/transparent"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button3"
+            android:layout_alignRight="@id/textview3"
+            android:layout_alignBottom="@id/textview3"
+            android:drawableLeft="@drawable/ic_right"
+            android:layout_alignTop="@id/textview3"
+            android:text=""
+            android:background="@android:color/transparent" />
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>
