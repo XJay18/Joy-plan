@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:background="@color/transparent"
+                android:layout_gravity="center_vertical"
+                android:textSize="20sp"
+                android:text="取消" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/addButton"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_shape"
+                android:textColor="@color/colorWhite"
+                android:layout_gravity="center_vertical"
+                android:textSize="20sp"
+                android:text="添加"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/editText_title"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="left"
+            android:layout_height="40dp"
+            android:background="@drawable/edtext_shape"
+            android:textColor="@color/add_activity_text_color_lite"
+            android:textAlignment="gravity"
+            android:text="请输入活动标题"/>
+
+        <EditText
+            android:id="@+id/editText_info"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="left"
+            android:layout_height="200dp"
+            android:background="@drawable/edtext_shape"
+            android:textColor="@color/add_activity_text_color_lite"
+            android:textAlignment="gravity"
+            android:text="请输入活动描述"/>
+        <TextView
+            android:id="@+id/tv_select_date"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_height="40dp"
+            android:background="@drawable/edtext_shape"
+            android:textColor="@color/add_activity_text_color_lite"
+            android:text="选择日期"/>
+
+        <EditText
+            android:id="@+id/editText_address"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="left"
+            android:layout_height="40dp"
+            android:background="@drawable/edtext_shape"
+            android:textColor="@color/add_activity_text_color_lite"
+            android:textAlignment="gravity"
+            android:text="请输入活动地点"/>
+        <Button
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/btn_activity_added"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_shape"
+            android:text="已添加活动页面"/>
+
+    </LinearLayout>
+
+</android.widget.LinearLayout>

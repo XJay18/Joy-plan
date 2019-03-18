@@ -37,13 +37,13 @@
             android:id="@+id/ll_fqz_cycle"
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="我的番茄周期："
-                android:textSize="25sp"
                 android:fontFamily="@font/youyuan"
-                />
+                android:text="我的番茄周期："
+                android:textSize="25sp" />
             <TextView
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"

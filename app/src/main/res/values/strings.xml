@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">Joy Plan</string>
     <string name="info_fqz">●使用番茄钟设定一个【番茄周期】，在一个【番茄周期】内专注于一件工作。设定【番茄篮子】的大小，当番茄篮子满的时候，可以休息一个【番茄时长】。快来种番茄吧~</string>
+    <string name="cancel">取消</string>
+    <string name="title">请选择时间</string>
+    <string name="confirm">确定</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="hour">时</string>
+    <string name="minute">分</string>
+
+
+    <string name="select_date">选择日期</string>
+    <string name="current_date">当前日期</string>
+    <string name="select_time">选择时间</string>
+    <string name="current_time">当前时间</string>
 </resources>

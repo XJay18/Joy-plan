@@ -18,6 +18,8 @@
         </activity>
         <activity android:name=".HomeActivity"/>
         <activity android:name=".FqzActivity"></activity>
+        <activity android:name=".AddActivity"></activity>
+        <activity android:name=".ScheduleActivity"></activity>
     </application>
 
 </manifest>

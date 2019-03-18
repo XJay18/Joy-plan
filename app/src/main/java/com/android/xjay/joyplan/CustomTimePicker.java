@@ -157,7 +157,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     }
 
     @Override
-    public void onChoose(View view, String selected) {
+    public void onSelect(View view, String selected) {
         if (view == null || TextUtils.isEmpty(selected)) return;
 
         int timeUnit;

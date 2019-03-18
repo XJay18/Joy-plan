@@ -1,6 +1,7 @@
 package com.android.xjay.joyplan;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -72,6 +73,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(mContext,"你点击了番茄钟",Toast.LENGTH_SHORT).show();
         }else if(view.getId()==R.id.ll_ydhd) {
             Toast.makeText(mContext,"你点击了预定活动",Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent();
+            intent.setClass(this.getContext(),ScheduleActivity.class);
+            startActivity(intent);
+
+
         }else if(view.getId()==R.id.ll_rcq){
             Toast.makeText(mContext,"你点击了日程圈",Toast.LENGTH_SHORT).show();
         }else if(view.getId()==R.id.ll_sxj){

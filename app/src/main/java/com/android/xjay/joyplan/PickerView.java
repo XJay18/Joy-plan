@@ -55,8 +55,10 @@ public class PickerView extends View {
 
     // Interface for callback
     public interface OnSelectedListener {
-        void onChoose(View view, String selected);
+        void onSelect(View view, String selected);
     }
+
+
 
     private static class ScrollTimerTask extends TimerTask {
         private WeakReference<Handler> mWeakHandler;
@@ -256,7 +258,7 @@ public class PickerView extends View {
                 cancelTimerTask();
 
                 if (mOnSelectListener != null && mSelectedIndex < mDataList.size()) {
-                    mOnSelectListener.onChoose(this, mDataList.get(mSelectedIndex));
+                    mOnSelectListener.onSelect(this, mDataList.get(mSelectedIndex));
                 }
             }
         } else if (mScrollDistance > 0) {
