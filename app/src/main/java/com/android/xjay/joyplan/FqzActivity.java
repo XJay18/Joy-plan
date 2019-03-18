@@ -189,27 +189,4 @@ public class FqzActivity extends AppCompatActivity
             hour += ahour;
         return new int[]{hour, minute};
     }
-//
-//    class BasicSelectedListener implements AdapterView.OnItemSelectedListener {
-//        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//            if (auxSize&&view.getId() == R.id.sp_fqz_size) {
-//                view.setVisibility(View.INVISIBLE);
-//                auxSize = false;
-//            } else if(view.getId() == R.id.sp_fqz_size) {
-//                fqz_size = Integer.parseInt(sizeArray[position]);
-//            }
-//
-//            if (auxBreak&&view.getId() == R.id.sp_fqz_break) {
-//                view.setVisibility(View.INVISIBLE);
-//                auxBreak = false;
-//            } else if (view.getId() == R.id.sp_fqz_break) {
-//                fqz_break = Integer.parseInt(breakArray[position]);
-//
-//
-//            }
-//        }
-//
-//        public void onNothingSelected(AdapterView<?> arg0) {
-//        }
-//    }
 }

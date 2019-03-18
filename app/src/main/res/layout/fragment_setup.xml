@@ -13,8 +13,8 @@
         <ImageView
             android:layout_marginStart="10dp"
             android:id="@+id/profile_photo"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="left"
             android:src="@drawable/ic_act"/>
 
@@ -22,15 +22,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp">
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:text="等级："
-                android:textSize="30sp"
+                android:textSize="20sp"
                 android:layout_marginLeft="5dp"
                 style="@style/font_yy"
                 />
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="昵称："
-                android:textSize="30sp"
+                android:textSize="20sp"
                 android:layout_marginLeft="10dp"
                 style="@style/font_yy"
                 />
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:text="用户ID："
-                android:textSize="30sp"
+                android:textSize="20sp"
                 android:layout_marginLeft="5dp"
                 style="@style/font_yy"
                 />
@@ -57,7 +57,7 @@
     <LinearLayout
         android:id="@+id/ll_setup_fc1"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
         android:layout_marginTop="25dp"
         android:orientation="horizontal"
         android:clickable="true"
@@ -67,15 +67,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:gravity="start"
             android:text="功能1"
-            android:textSize="36sp"
+            style="@style/function_bar_text"
             android:layout_weight="1"
             />
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:background="@drawable/ic_right"
             android:layout_marginEnd="25dp"
@@ -85,7 +84,7 @@
     <LinearLayout
         android:id="@+id/ll_setup_fc2"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
         android:layout_marginTop="12dp"
         android:orientation="horizontal"
         android:clickable="true"
@@ -95,15 +94,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:gravity="start"
             android:text="功能2"
-            android:textSize="36sp"
+            style="@style/function_bar_text"
             android:layout_weight="1"
             />
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:background="@drawable/ic_right"
             android:layout_marginEnd="25dp"
@@ -113,7 +111,7 @@
     <LinearLayout
         android:id="@+id/ll_setup_fc3"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
         android:layout_marginTop="12dp"
         android:orientation="horizontal"
         android:clickable="true"
@@ -123,15 +121,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:gravity="start"
             android:text="功能3"
-            android:textSize="36sp"
+            style="@style/function_bar_text"
             android:layout_weight="1"
             />
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:background="@drawable/ic_right"
             android:layout_marginEnd="25dp"
@@ -141,7 +138,7 @@
     <LinearLayout
         android:id="@+id/ll_setup_fc4"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
         android:layout_marginTop="12dp"
         android:orientation="horizontal"
         android:clickable="true"
@@ -151,15 +148,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:gravity="start"
             android:text="功能4"
-            android:textSize="36sp"
+            style="@style/function_bar_text"
             android:layout_weight="1"
             />
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:background="@drawable/ic_right"
             android:layout_marginEnd="25dp"

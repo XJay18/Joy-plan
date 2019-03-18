@@ -26,8 +26,22 @@
     <style name="fqz_ctext">
         <item name="android:textSize">15sp</item>
     </style>
+
+    <!-- The text style for function bars -->
+    <style name="function_bar_text">
+        <item name="android:textSize">24sp</item>
+        <item name="android:gravity">start|center</item>
+    </style>
+
+    <!-- The style for the left icon of function bars-->
+    <style name="function_bar_lefticon">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
     <!-- Font Library -->
-    <style name="font_yy" >
+    <style name="font_yy">
         <item name="android:fontFamily">@font/youyuan</item>
     </style>
 </resources>

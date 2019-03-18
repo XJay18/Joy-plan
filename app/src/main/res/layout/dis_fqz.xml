@@ -166,7 +166,7 @@
                 android:layout_marginTop="10dp"
                 android:clickable="true"
                 android:gravity="center"
-                android:text="删除"
+                android:text="管理我的番茄钟"
                 android:textColor="@color/date_picker_text_light"
                 android:textSize="25sp"
                 android:textStyle="bold" />

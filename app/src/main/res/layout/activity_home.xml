@@ -21,7 +21,7 @@
         android:layout_marginBottom="0dp"
         android:background="?android:attr/windowBackground"
 
-        app:itemIconSize="40dp"
+        app:itemIconSize="30dp"
         app:itemIconTint="@drawable/navigation_selector"
         app:itemTextAppearanceActive="@style/bottom_text"
         app:itemTextColor="@drawable/navigation_selector"
