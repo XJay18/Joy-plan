@@ -1,31 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activity_discovery"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_marginStart="10dp"
+            android:id="@+id/profile_photo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="left"
+            android:src="@drawable/ic_act"/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="等级："
+                android:textSize="20sp"
+                android:layout_marginLeft="5dp"
+                style="@style/font_yy"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="昵称："
+                android:textSize="20sp"
+                android:layout_marginLeft="10dp"
+                style="@style/font_yy"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="用户ID："
+                android:textSize="20sp"
+                android:layout_marginLeft="5dp"
+                style="@style/font_yy"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_setup_fc1"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        android:clickable="true"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:text="功能1"
+            style="@style/function_bar_text"
+            android:layout_weight="1"
+            />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_right"
+            android:layout_marginEnd="25dp"
+            android:layout_weight="0"/>
+    </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_fqz"
+        android:id="@+id/ll_setup_fc2"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
         android:layout_marginTop="12dp"
         android:orientation="horizontal"
         android:clickable="true"
         >
-        <ImageView
-            style="@style/function_bar_lefticon"
-            android:layout_marginStart="15dp"
-            android:background="@drawable/ic_clock"
-            android:layout_weight="0"
-            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:text="番茄钟"
+            android:text="功能2"
             style="@style/function_bar_text"
             android:layout_weight="1"
             />
@@ -39,32 +108,20 @@
             android:layout_weight="0"/>
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/line"
-        android:layout_gravity="center"
-        android:layout_marginTop="6dp"/>
-
     <LinearLayout
-        android:id="@+id/ll_ydhd"
+        android:id="@+id/ll_setup_fc3"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="6dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="12dp"
         android:orientation="horizontal"
         android:clickable="true"
         >
-        <ImageView
-            style="@style/function_bar_lefticon"
-            android:layout_marginStart="15dp"
-            android:background="@drawable/ic_act"
-            android:layout_weight="0"
-            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:text="预定活动"
+            android:text="功能3"
             style="@style/function_bar_text"
             android:layout_weight="1"
             />
@@ -78,32 +135,20 @@
             android:layout_weight="0"/>
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/line"
-        android:layout_gravity="center"
-        android:layout_marginTop="6dp"/>
-
     <LinearLayout
-        android:id="@+id/ll_rcq"
+        android:id="@+id/ll_setup_fc4"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="6dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="12dp"
         android:orientation="horizontal"
         android:clickable="true"
         >
-        <ImageView
-            style="@style/function_bar_lefticon"
-            android:layout_marginStart="15dp"
-            android:background="@drawable/ic_memory"
-            android:layout_weight="0"
-            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:text="日程圈"
+            android:text="功能4"
             style="@style/function_bar_text"
             android:layout_weight="1"
             />
@@ -116,43 +161,9 @@
             android:layout_marginEnd="25dp"
             android:layout_weight="0"/>
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/line"
-        android:layout_gravity="center"
-        android:layout_marginTop="6dp"/>
-
-    <LinearLayout
-        android:id="@+id/ll_sxj"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="6dp"
-        android:orientation="horizontal"
-        android:clickable="true"
-        >
-        <ImageView
-            style="@style/function_bar_lefticon"
-            android:layout_marginStart="15dp"
-            android:background="@drawable/ic_note"
-            android:layout_weight="0"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:text="随心记"
-            style="@style/function_bar_text"
-            android:layout_weight="1"
-            />
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_right"
-            android:layout_marginEnd="25dp"
-            android:layout_weight="0"/>
-    </LinearLayout>
 </LinearLayout>

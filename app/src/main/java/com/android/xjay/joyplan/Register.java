@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.view.*;
 import android.content.Intent;
+
 public class Register extends AppCompatActivity {
     EditText username;
     EditText useraccount;
