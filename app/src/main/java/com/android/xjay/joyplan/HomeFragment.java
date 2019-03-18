@@ -80,6 +80,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(mContext,"你点击了日程圈",Toast.LENGTH_SHORT).show();
         }else if(view.getId()==R.id.ll_sxj){
             Toast.makeText(mContext,"你点击了随心记",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            intent.setClass(mContext,SxjActivity.class);
+            startActivity(intent);
         }
     }
 }
