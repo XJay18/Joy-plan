@@ -3,6 +3,9 @@ package com.android.xjay.joyplan;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,7 +26,9 @@ public class Register extends AppCompatActivity {
         userpassword=(EditText)findViewById(R.id.regi_password);
         userpassword2=(EditText)findViewById(R.id.regi_password2);
         btn_submit.setOnClickListener(new MyOnClickListener());
-
+        username.addTextChangedListener(new JumpTextWatcher(username,useraccount));
+        useraccount.addTextChangedListener(new JumpTextWatcher(useraccount,userpassword));
+        userpassword.addTextChangedListener(new JumpTextWatcher(userpassword,userpassword2));
     }
     class MyOnClickListener implements View.OnClickListener{
         @Override
@@ -67,5 +72,35 @@ public class Register extends AppCompatActivity {
             Toast.makeText(this, "用户注册失败", Toast.LENGTH_LONG).show();
         }
         database.close();
+    }
+    private class JumpTextWatcher implements TextWatcher {
+        private EditText mThisView;
+        private View mNextView;
+        public JumpTextWatcher(EditText vThis,View vNext)
+        {
+            super();
+            mThisView=vThis;
+            if(vNext!=null){
+                mNextView=vNext;
+            }
+        }
+        @Override
+        public void beforeTextChanged(CharSequence s,int start,int count,int after){}
+        @Override
+        public void onTextChanged(CharSequence s, int start,int before,int count){}
+        @Override
+        public void afterTextChanged(Editable s){
+            String str=s.toString();
+            if(str.contains("\r")||str.contains("\n")){
+                mThisView.setText(str.replace("\r"," ").replace("\n",""));
+                if(mNextView!=null){
+                    mNextView.requestFocus();
+                    if(mNextView instanceof EditText){
+                        EditText et=(EditText)mNextView;
+                        et.setSelection(et.getText().length());
+                    }
+                }
+            }
+        }
     }
 }

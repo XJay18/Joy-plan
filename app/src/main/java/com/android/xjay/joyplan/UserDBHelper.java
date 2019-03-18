@@ -10,11 +10,11 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     public static final String TB_NAME = "user";
     public static final String ID = "id";
-    public static final String NAME = "userid";//用户账号
-    public static final String UerPwd = "userpwd";//用户密码
+    public static final String NAME = "userid";//user's name
+    public static final String UerPwd = "userpwd";//user's password
     public UserDBHelper(Context context, String name, CursorFactory factory,
                         int version) {
-        super(context, name, factory, version);
+        super(context, "userdata.db", null, 1);
         this.getWritableDatabase();
         // TODO Auto-generated constructor stub
     }
@@ -32,8 +32,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // TODO Auto-generated method stub
-
+        db.execSQL("CREATE TABLE person(personid INTEGER PRIMARY KEY AUTOINCREMENT,name VARCHAR(20))");
     }
     //关闭数据库
     public void close()

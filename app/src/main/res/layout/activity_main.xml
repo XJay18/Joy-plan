@@ -43,7 +43,7 @@
                     android:textSize="24sp"
                     android:textStyle="normal" />
                 <EditText
-                    android:id="@+id/input_account"
+                    android:id="@+id/et_account"
                     android:layout_toRightOf="@+id/account"
                     android:layout_marginTop="15dp"
                     android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                     android:textSize="24sp" />
 
                 <EditText
-                    android:id="@+id/input_password"
+                    android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="50sp"
                     android:layout_alignTop="@+id/password"
