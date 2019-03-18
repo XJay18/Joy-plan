@@ -26,7 +26,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
     String[] INFOS=new String[20];
 
-    private UserDBHelper mHelper;
+    private UserDBHelper_schedule mHelper;
     Cursor c;
 
 
@@ -35,7 +35,7 @@ public class ScheduleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_schedule);
 
         //get cursor c to get record in DB
-        mHelper=UserDBHelper.getInstance(this,1);
+        mHelper= UserDBHelper_schedule.getInstance(this,1);
         SQLiteDatabase dbRead=mHelper.getReadableDatabase();
         c=dbRead.query("user_info",null,null
                 ,null,null,null,null);

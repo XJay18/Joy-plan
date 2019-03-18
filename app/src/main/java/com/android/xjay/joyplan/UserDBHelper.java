@@ -2,110 +2,57 @@ package com.android.xjay.joyplan;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.ContentObservable;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.ContactsContract;
 
-import java.util.ArrayList;
+public class UserDBHelper extends SQLiteOpenHelper{
 
-public class UserDBHelper extends SQLiteOpenHelper {
-
-    private static final String DB_NAME="user.db";
-    private static final int DB_VERSION=1;
-    private static UserDBHelper mHelper=null;
-    private SQLiteDatabase mDB=null;
-    public static final String TABLE_NAME="user_info";
-
-    private UserDBHelper(Context context){
-        super(context,DB_NAME,null,DB_VERSION);
-
-    }
-    private UserDBHelper(Context context,int version){
-        super(context,DB_NAME,null,version);
-    }
-    public static UserDBHelper getInstance(Context context,int version){
-        if(version>0&&mHelper==null) {
-            mHelper = new UserDBHelper(context, version);
-        }
-        else if(mHelper==null){
-            mHelper=new UserDBHelper(context);
-        }
-        return mHelper;
-    }
-
-    public SQLiteDatabase openReadLink(){
-        if(mDB==null||!mDB.isOpen()){
-            mDB=mHelper.getReadableDatabase();
-        }
-        return mDB;
-    }
-
-    public SQLiteDatabase openWriteLink(){
-        if(mDB==null||!mDB.isOpen()){
-            mDB=mHelper.getWritableDatabase();
-        }
-        return mDB;
-    }
-
-    public void closeLink(){
-        if(mDB!=null&&mDB.isOpen()){
-            mDB.close();
-            mDB=null;
-        }
-    }
-
-
-
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        String drop_sql="DROP TABLE IF EXISTS "+TABLE_NAME+";";
-        db.execSQL(drop_sql);
-        String create_sql="CREATE TABLE IF NOT EXISTS "+TABLE_NAME+"("+"id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL,"+"title VARCHAR NOT NULL,"+"info VARCHAR NOT NULL,"+"date VARCHAR NOT NULL,"+"address VARCHAR NOT NULL"+");";
-        db.execSQL(create_sql);
-    }
-
-    public void reset(){
-        String drop_sql="DROP TABLE IF EXISTS "+TABLE_NAME+";";
-        mDB.execSQL(drop_sql);
-        String create_sql="CREATE TABLE IF NOT EXISTS "+TABLE_NAME+"("+"id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL,"+"title VARCHAR NOT NULL,"+"info VARCHAR NOT NULL,"+"date VARCHAR NOT NULL,"+"address VARCHAR NOT NULL"+");";
-        mDB.execSQL(create_sql);
+    public static final String TB_NAME = "user";
+    public static final String ID = "id";
+    public static final String NAME = "userid";//user's name
+    public static final String UerPwd = "userpwd";//user's password
+    public UserDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory,
+                        int version) {
+        super(context, "userdata.db", null, 1);
+        this.getWritableDatabase();
+        // TODO Auto-generated constructor stub
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
-
-    public int delete(String condition){
-        return mDB.delete(TABLE_NAME,condition,null);
+    //建立表
+    public void onCreate(SQLiteDatabase arg0) {
+        // TODO Auto-generated method stub
+        arg0.execSQL("CREATE TABLE IF NOT EXISTS "
+                + TB_NAME + " ("
+                + ID + " INTEGER PRIMARY KEY,"
+                + NAME + " VARCHAR,"
+                + UerPwd + " VARCHAR)");
     }
 
-    public void clean(){
-        clean_help(mDB);
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("CREATE TABLE person(personid INTEGER PRIMARY KEY AUTOINCREMENT,name VARCHAR(20))");
     }
-
-    public void drop(){
-        drop_help(mDB);
+    //关闭数据库
+    public void close()
+    {
+        this.getWritableDatabase().close();
     }
-
-    private void clean_help(SQLiteDatabase db){
-        db.execSQL("delete from"+" "+TABLE_NAME);
-    }
-    private void drop_help(SQLiteDatabase db) {db.execSQL("DROP TABLE"+" "+TABLE_NAME);}
-
-    public long insert(StudentActivityInfo info){
-        long result=-1;
-        ContentValues cv=new ContentValues();
-        cv.put("title",info.title);
-        cv.put("info",info.info);
-        cv.put("date",info.date);
-        cv.put("address",info.address);
-        result=mDB.insert(TABLE_NAME,"",cv);
-        return result;
-    }
-
-    public int update(StudentActivityInfo info,String condition){
-        return  0;
+    //添加新用户
+    public boolean AddUser(String userid,String userpwd)
+    {
+        try
+        {
+            ContentValues cv = new ContentValues();
+            cv.put(this.NAME, userid);//添加用户名
+            cv.put(this.UerPwd,userpwd);//添加密码
+            this.getWritableDatabase().insert(this.TB_NAME,null,cv);
+            return true;
+        }
+        catch(Exception ex)
+        {
+            return false;
+        }
     }
 
 }

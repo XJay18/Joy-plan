@@ -1,6 +1,5 @@
 package com.android.xjay.joyplan;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,7 +14,7 @@ import android.widget.Toast;
 import com.android.xjay.joyplan.Utils.DateFormat;
 
 public class AddActivity extends AppCompatActivity {
-    private UserDBHelper mHelper;//SQLite helper
+    private UserDBHelper_schedule mHelper;//SQLite helper
     private CustomTimePicker myTimePicker;
     private TextView tv_select_date;
 
@@ -35,7 +34,7 @@ public class AddActivity extends AppCompatActivity {
         });
 
         //get single instance of DB
-        mHelper = UserDBHelper.getInstance(this, 1);
+        mHelper = UserDBHelper_schedule.getInstance(this, 1);
 
 
         final EditText editText_title = (EditText) findViewById(R.id.editText_title);
@@ -91,7 +90,7 @@ public class AddActivity extends AppCompatActivity {
 
     protected void onResume () {
         super.onResume();
-        mHelper = UserDBHelper.getInstance(this, 1);
+        mHelper = UserDBHelper_schedule.getInstance(this, 1);
         mHelper.openWriteLink();
     }
 
@@ -101,10 +100,10 @@ public class AddActivity extends AppCompatActivity {
     }
 
     private void initTimePicker() {
-        String beginTime = "2018-10-17 18:00";
-        String endTime = DateFormat.long2Str(System.currentTimeMillis(), true);
 
-        tv_select_date.setText(endTime);
+        long beginTime = System.currentTimeMillis();
+        long endTime = System.currentTimeMillis();
+        tv_select_date.setText(DateFormat.long2Str(endTime,true));
 
         // 通过日期字符串初始化日期，格式请用：yyyy-MM-dd HH:mm
        myTimePicker = new CustomTimePicker(AddActivity.this, new CustomTimePicker.Callback() {
@@ -112,7 +111,7 @@ public class AddActivity extends AppCompatActivity {
             public void onTimeSelected(long timestamp) {
                 tv_select_date.setText(DateFormat.long2Str(timestamp, true));
             }
-        }, beginTime, endTime);
+        }, beginTime, endTime,"请选择时间",23);
         //允许点击屏幕或物理返回键关闭
         myTimePicker.setCancelable(true);
         // 显示时和分

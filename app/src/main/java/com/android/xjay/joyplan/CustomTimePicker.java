@@ -8,12 +8,14 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+
 import com.android.xjay.joyplan.Utils.*;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 public class CustomTimePicker implements View.OnClickListener, PickerView.OnSelectedListener {
 
@@ -28,8 +30,12 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
 
     private int mBeginYear, mBeginMonth, mBeginDay, mBeginHour, mBeginMinute,
             mEndYear, mEndMonth, mEndDay, mEndHour, mEndMinute;
-    private List<String> mYearUnits = new ArrayList<>(), mMonthUnits = new ArrayList<>(), mDayUnits = new ArrayList<>(),
-            mHourUnits = new ArrayList<>(), mMinuteUnits = new ArrayList<>();
+    private List<String> mYearUnits = new ArrayList<>(),
+            mMonthUnits = new ArrayList<>(),
+            mDayUnits = new ArrayList<>(),
+            mHourUnits = new ArrayList<>(),
+            mMinuteUnits = new ArrayList<>();
+
     private DecimalFormat mDecimalFormat = new DecimalFormat("00");
 
     private boolean mCanShowPreciseTime;
@@ -45,13 +51,18 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
      * the maximum of the time unit
      */
     private static final int MAX_MINUTE_UNIT = 59;
-    private static int MAX_HOUR_UNIT = 23;
+    private int MAX_HOUR_UNIT = 23;
     private static final int MAX_MONTH_UNIT = 12;
 
-    // The max of hour unit may be changed when choosing the time span
-    private void setMaxHourUnit(int max){
-        MAX_HOUR_UNIT=max;
+    /**
+     * The max of hour unit may be changed when choosing the time span
+     *
+     * @param max maximum of hour
+     */
+    private void setMaxHourUnit(int max) {
+        MAX_HOUR_UNIT = max;
     }
+
     /**
      * linkage rolling delay time
      */
@@ -72,9 +83,11 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
      * @param beginDateStr date str yyyy-MM-dd HH:mm
      * @param endDateStr   date str yyyy-MM-dd HH:mm
      */
-    public CustomTimePicker(Context context, Callback callback, String beginDateStr, String endDateStr) {
+    CustomTimePicker(Context context, Callback callback,
+                     String beginDateStr, String endDateStr,
+                     String title) {
         this(context, callback, DateFormat.str2Long(beginDateStr, true),
-                DateFormat.str2Long(endDateStr, true));
+                DateFormat.str2Long(endDateStr, true), title, 23);
     }
 
     /**
@@ -84,8 +97,12 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
      * @param callback       results callback
      * @param beginTimestamp in millisecond
      * @param endTimestamp   in millisecond
+     * @param title          the title of the picker
+     * @param maxOfHour      maximum of hour, may not be exactly 23 in different scenes.
      */
-    public CustomTimePicker(Context context, Callback callback, long beginTimestamp, long endTimestamp) {
+    CustomTimePicker(Context context, Callback callback,
+                     long beginTimestamp, long endTimestamp,
+                     String title, int maxOfHour) {
         if (context == null || callback == null || beginTimestamp <= 0 || beginTimestamp >= endTimestamp) {
             mCanDialogShow = false;
             return;
@@ -99,15 +116,18 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
         mEndTime.setTimeInMillis(endTimestamp);
         mSelectedTime = Calendar.getInstance();
 
-        initView();
-        initData();
+        initView(title);
+        initData(maxOfHour);
         mCanDialogShow = true;
     }
 
-    private void initView() {
-        mPickerDialog = new Dialog(mContext, R.style.date_picker_dialog);
+    private void initView(String title) {
+        mPickerDialog = new Dialog(mContext, R.style.time_picker_dialog);
         mPickerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mPickerDialog.setContentView(R.layout.time_picker_dialog);
+        TextView tp_title = mPickerDialog.findViewById(R.id.tv_tp_title);
+        tp_title.setText(title);
+
 
         Window window = mPickerDialog.getWindow();
         if (window != null) {
@@ -120,9 +140,9 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
 
         mPickerDialog.findViewById(R.id.tv_cancel).setOnClickListener(this);
         mPickerDialog.findViewById(R.id.tv_confirm).setOnClickListener(this);
-        mTvYearUnit=mPickerDialog.findViewById(R.id.tv_year_unit);
-        mTvMonthUnit=mPickerDialog.findViewById(R.id.tv_month_unit);
-        mTvDayUnit=mPickerDialog.findViewById(R.id.tv_day_unit);
+        mTvYearUnit = mPickerDialog.findViewById(R.id.tv_year_unit);
+        mTvMonthUnit = mPickerDialog.findViewById(R.id.tv_month_unit);
+        mTvDayUnit = mPickerDialog.findViewById(R.id.tv_day_unit);
         mTvHourUnit = mPickerDialog.findViewById(R.id.tv_hour_unit);
         mTvMinuteUnit = mPickerDialog.findViewById(R.id.tv_minute_unit);
 
@@ -539,7 +559,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
 
     public void show() {
         if (!canShow()) return;
-            mPickerDialog.show();
+        mPickerDialog.show();
     }
 
     private boolean canShow() {
@@ -561,8 +581,8 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     /**
      * Set the chosen time for the timepicker
      *
-     * @param timestamp  String of date
-     * @param showAnim whether to show animation
+     * @param timestamp String of date
+     * @param showAnim  whether to show animation
      * @return whether setting is successful
      */
     public boolean setSelectedTime(long timestamp, boolean showAnim) {
@@ -675,5 +695,4 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
             mDpvMinute.onDestroy();
         }
     }
-
 }
