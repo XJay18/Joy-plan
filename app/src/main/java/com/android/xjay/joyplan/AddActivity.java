@@ -24,7 +24,7 @@ public class AddActivity extends AppCompatActivity {
 
         //textView to select date&time
         tv_select_date=findViewById(R.id.tv_select_date);
-        initTimePicker();
+
         //On textView click open timePicker
         tv_select_date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,7 +32,7 @@ public class AddActivity extends AppCompatActivity {
                 myTimePicker.show(tv_select_date.getText().toString());
             }
         });
-
+        initTimePicker();
         //get single instance of DB
         mHelper = UserDBHelper_schedule.getInstance(this, 1);
 
@@ -85,7 +85,6 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     protected void onResume () {
@@ -101,7 +100,7 @@ public class AddActivity extends AppCompatActivity {
 
     private void initTimePicker() {
 
-        long beginTime = System.currentTimeMillis();
+        long beginTime = DateFormat.str2Long("2010-00-00 18:00", true);
         long endTime = System.currentTimeMillis();
         tv_select_date.setText(DateFormat.long2Str(endTime,true));
 
@@ -121,4 +120,5 @@ public class AddActivity extends AppCompatActivity {
         // 允许滚动动画
         myTimePicker.setCanShowAnim(true);
     }
+
 }
