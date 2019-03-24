@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     //服务器返回的数据
     private String infoString;
     //返回主线程更新数据
-    private static Handler handler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     class MyOnClickListener implements View.OnClickListener {
         @Override
         public void onClick( View v) {
-            switch(v.getId()){
+           /* switch(v.getId()){
                 case R.id.btn_login:
                     //检查网络状况
                     if (!checkNetwork()) {
@@ -64,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, Register.class);
                     startActivity(intent);
                     break;
-            }
-            /*if (v.getId() == R.id.btn_login) {
+            }*/
+            if (v.getId() == R.id.btn_login) {
                 Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent);
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 if (v.getId() == R.id.btn_register) {
                 Intent intent = new Intent(MainActivity.this, Register.class);
                 startActivity(intent);
-                }*/
+                }
         }
     }
     public class MyThread implements Runnable{
@@ -85,20 +84,6 @@ public class MainActivity extends AppCompatActivity {
            showResponse(infoString);
         }
     }
-    /*public class MyThread implements Runnable {
-        @Override
-        public void run() {
-            info = WebService.executeHttpGet(username.getText().toString(), password.getText().toString());
-            // info = WebServicePost.executeHttpPost(username.getText().toString(), password.getText().toString());
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    infotv.setText(info);
-                    dialog.dismiss();
-                }
-            });
-        }
-    }*/
     private boolean checkNetwork() {
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connManager.getActiveNetworkInfo() !=null ) {
