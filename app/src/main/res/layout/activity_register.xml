@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Register">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -29,7 +28,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="20sp"
                 android:layout_marginTop="10dp"
-                android:text="用户名："
+                android:text="昵称："
                 android:textSize="20sp" />
 
             <EditText
@@ -38,11 +37,9 @@
                 android:layout_height="50sp"
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="6dp"
-                android:layout_marginTop="0dp"
                 android:layout_toRightOf="@+id/username"
                 android:hint="请输入"
                 android:maxLength="6" />
-
             <TextView
                 android:id="@+id/useraccount"
                 android:layout_width="wrap_content"
@@ -100,6 +97,22 @@
                 android:layout_toRightOf="@+id/userpassword"
                 android:inputType="textPassword" />
 
+            <TextView
+                style="@style/Widget.AppCompat.AutoCompleteTextView"
+                android:id="@+id/university"
+                android:layout_width="wrap_content"
+                android:layout_height="50sp"
+                android:layout_below="@+id/regi_password2"
+                android:text="请选择在读大学:"
+                android:layout_marginLeft="20sp"/>
+            <Spinner
+                android:id="@+id/sp_university"
+                android:layout_width="200sp"
+                android:layout_height="50sp"
+                android:layout_below="@+id/regi_password2"
+                android:layout_alignLeft="@+id/regi_password2"
+                android:layout_marginLeft="70sp">
+            </Spinner>
             <Button
                 android:id="@+id/btn_submit"
                 android:layout_width="wrap_content"

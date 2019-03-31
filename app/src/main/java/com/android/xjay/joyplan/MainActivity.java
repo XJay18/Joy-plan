@@ -20,8 +20,10 @@ import com.android.xjay.joyplan.web.WebServicePost;
 
  */
 public class MainActivity extends AppCompatActivity {
-    EditText et_account;
-    EditText et_password;
+    private EditText et_account;
+    private EditText et_password;
+    private Button btn_login;
+    private Button btn_register;
     //提示框
     private ProgressDialog dialog;
     //服务器返回的数据
@@ -31,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button btn_login=findViewById(R.id.btn_login);
+        btn_login=findViewById(R.id.btn_login);
         btn_login.setOnClickListener(new MyOnClickListener());
-        Button btn_register=findViewById(R.id.btn_register);
+        btn_register=findViewById(R.id.btn_register);
         btn_register.setOnClickListener(new MyOnClickListener());
         et_account=(EditText)findViewById(R.id.et_account);
         et_password=(EditText)findViewById(R.id.et_password);
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 }
                 if (v.getId() == R.id.btn_register) {
-                Intent intent = new Intent(MainActivity.this, Register.class);
+                Intent intent = new Intent(MainActivity.this, PhoneActivity.class);
                 startActivity(intent);
                 }
         }
@@ -84,13 +86,13 @@ public class MainActivity extends AppCompatActivity {
            showResponse(infoString);
         }
     }
-    private boolean checkNetwork() {
+    /*private boolean checkNetwork() {
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connManager.getActiveNetworkInfo() !=null ) {
             return connManager.getActiveNetworkInfo().isAvailable();
         }
         return false;
-    }
+    }*/
     private void showResponse(final String response){
         runOnUiThread(new Runnable() {
             //更新UI
