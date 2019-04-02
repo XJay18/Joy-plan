@@ -19,11 +19,10 @@ android {
     packagingOptions {
         exclude 'META-INF/INDEX.LIST'
     }
-    /*compileOptions {
+    compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }*/
-
+    }
     buildToolsVersion '28.0.3'
 }
 
@@ -38,6 +37,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation files('libs/mysql-connector-java-8.0.15.jar')
     implementation 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
+    implementation files('libs/MobCommons-2019.0321.1845.jar')
+    implementation files('libs/MobTools-2019.0318.2036.jar')
+    implementation files('libs/SMSSDK-3.3.0.jar')
+
 }
 
 

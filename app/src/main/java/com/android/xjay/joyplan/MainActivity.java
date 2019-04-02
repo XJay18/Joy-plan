@@ -20,21 +20,22 @@ import com.android.xjay.joyplan.web.WebServicePost;
 
  */
 public class MainActivity extends AppCompatActivity {
-    EditText et_account;
-    EditText et_password;
+    private EditText et_account;
+    private EditText et_password;
+    private Button btn_login;
+    private Button btn_register;
     //提示框
     private ProgressDialog dialog;
     //服务器返回的数据
     private String infoString;
     //返回主线程更新数据
-    private static Handler handler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button btn_login=findViewById(R.id.btn_login);
+        btn_login=findViewById(R.id.btn_login);
         btn_login.setOnClickListener(new MyOnClickListener());
-        Button btn_register=findViewById(R.id.btn_register);
+        btn_register=findViewById(R.id.btn_register);
         btn_register.setOnClickListener(new MyOnClickListener());
         et_account=(EditText)findViewById(R.id.et_account);
         et_password=(EditText)findViewById(R.id.et_password);
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     class MyOnClickListener implements View.OnClickListener {
         @Override
         public void onClick( View v) {
-            switch(v.getId()){
+           /* switch(v.getId()){
                 case R.id.btn_login:
                     //检查网络状况
                     if (!checkNetwork()) {
@@ -64,16 +65,16 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, Register.class);
                     startActivity(intent);
                     break;
-            }
-            /*if (v.getId() == R.id.btn_login) {
+            }*/
+            if (v.getId() == R.id.btn_login) {
                 Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent);
                 }
                 if (v.getId() == R.id.btn_register) {
-                Intent intent = new Intent(MainActivity.this, Register.class);
+                Intent intent = new Intent(MainActivity.this, PhoneActivity.class);
                 startActivity(intent);
-                }*/
+                }
         }
     }
     public class MyThread implements Runnable{
@@ -85,27 +86,13 @@ public class MainActivity extends AppCompatActivity {
            showResponse(infoString);
         }
     }
-    /*public class MyThread implements Runnable {
-        @Override
-        public void run() {
-            info = WebService.executeHttpGet(username.getText().toString(), password.getText().toString());
-            // info = WebServicePost.executeHttpPost(username.getText().toString(), password.getText().toString());
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    infotv.setText(info);
-                    dialog.dismiss();
-                }
-            });
-        }
-    }*/
-    private boolean checkNetwork() {
+    /*private boolean checkNetwork() {
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connManager.getActiveNetworkInfo() !=null ) {
             return connManager.getActiveNetworkInfo().isAvailable();
         }
         return false;
-    }
+    }*/
     private void showResponse(final String response){
         runOnUiThread(new Runnable() {
             //更新UI

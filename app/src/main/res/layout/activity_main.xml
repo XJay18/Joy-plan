@@ -47,7 +47,7 @@
                     android:layout_toRightOf="@+id/account"
                     android:layout_marginTop="15dp"
                     android:layout_width="match_parent"
-                    android:hint="请输入您的账号"
+                    android:hint="请输入您的账号或手机号码"
                     android:layout_height="50sp" />
 
                 <TextView
