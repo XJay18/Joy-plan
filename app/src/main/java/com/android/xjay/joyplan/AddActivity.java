@@ -29,8 +29,13 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
         mContext = getApplicationContext();
         //textView to select date&time
+
         tv_select_date = findViewById(R.id.tv_select_date);
         initTimePicker();
+
+
+
+
         //On textView click open timePicker
         tv_select_date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,7 +43,7 @@ public class AddActivity extends AppCompatActivity {
                 myTimePicker.show(tv_select_date.getText().toString());
             }
         });
-
+        initTimePicker();
         //get single instance of DB
         mHelper = UserDBHelper_schedule.getInstance(this, 1);
 
@@ -93,6 +98,7 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
+
         protected void onResume() {
             super.onResume();
             mHelper = UserDBHelper_schedule.getInstance(mContext, 1);
@@ -127,3 +133,5 @@ public class AddActivity extends AppCompatActivity {
             myTimePicker.setCanShowAnim(true);
         }
     }
+
+

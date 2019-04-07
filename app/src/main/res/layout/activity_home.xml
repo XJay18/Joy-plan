@@ -26,6 +26,7 @@
         app:itemTextAppearanceActive="@style/bottom_text"
         app:itemTextColor="@drawable/navigation_selector"
         app:labelVisibilityMode="labeled"
+        app:itemHorizontalTranslationEnabled="false"
         app:menu="@menu/bottom_menu">
 
     </android.support.design.widget.BottomNavigationView>

@@ -82,6 +82,7 @@
             android:text="请输入活动描述"/>
         <TextView
             android:id="@+id/tv_select_date"
+            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"

@@ -41,7 +41,10 @@ public class HomeActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.vp_home);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+        // To disable the shift mode, we can simply add
+        // 'app:itemHorizontalTranslationEnabled="false"'
+        // to BottomNavigationView in the activity_home.xml instead using the function below.
+        // BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -73,6 +76,7 @@ public class HomeActivity extends AppCompatActivity {
             //                  getting larger when the page is scrolled to the right
             //                  and vice versa.
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//                findViewById(R.)
             }
 
             @Override
