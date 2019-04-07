@@ -31,14 +31,11 @@ public class WebServiceGet {
                 connection.setRequestMethod("GET");
                 connection.setConnectTimeout(10000);//建立连接超时
                 connection.setReadTimeout(8000);//传递数据超时
-
                 in = connection.getInputStream();
                 return parseInfo(in);
             } catch (MalformedURLException e) {
-                System.out.println("出现异常MalformedURLException");
                 e.printStackTrace();
             } catch (IOException e) {
-                System.out.println("出现异常");
                 e.printStackTrace();
             }
          }catch (Exception e) {
@@ -60,7 +57,6 @@ public class WebServiceGet {
     }
 
     //得到字节输入流，将字节输入流转化为String类型
-
     /*public static String parseInfo(InputStream inputStream){
         BufferedReader reader = null;
         String line = "";

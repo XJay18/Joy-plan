@@ -19,7 +19,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btn_cancel"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
                 android:background="@color/transparent"
@@ -38,7 +38,7 @@
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/addButton"
+                android:id="@+id/btn_add"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
                 android:background="@drawable/btn_shape"
@@ -103,7 +103,7 @@
             android:textColor="@color/add_activity_text_color_lite"
             android:textAlignment="gravity"
             android:text="请输入活动地点"/>
-        <Button
+        <!--Button
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -111,16 +111,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_shape"
-            android:text="学校端"/>
-        <Button
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:id="@+id/btn_changeTo_reserve"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_shape"
-            android:text="学生端"/>
+            android:text="学校端"/-->
 
     </LinearLayout>
 

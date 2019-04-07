@@ -32,7 +32,7 @@ public class ReserveActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reserve);
+        setContentView(R.layout.fragment_reserve);
 
         mHelper = UserDBHelper_schedule.getInstance(this, 1);
         SQLiteDatabase dbRead = mHelper.getReadableDatabase();
