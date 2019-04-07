@@ -73,9 +73,11 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
+
         //btn to listActivity
-        Button changeButton = findViewById(R.id.btn_activity_added);
-        changeButton.setOnClickListener(new View.OnClickListener() {
+        Button btn_changeTo_Schedule = findViewById(R.id.btn_changeTo_schedule);
+        Button btn_changeTo_Reserve = findViewById(R.id.btn_changeTo_reserve);
+                btn_changeTo_Schedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -84,6 +86,15 @@ public class AddActivity extends AppCompatActivity {
                 AddActivity.this.finish();
             }
         });
+                btn_changeTo_Reserve.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent=new Intent();
+                        intent.setClass(AddActivity.this,ReserveActivity.class);
+                        startActivity(intent);
+                        AddActivity.this.finish();
+                    }
+                });
 
 
     }
@@ -102,8 +113,8 @@ public class AddActivity extends AppCompatActivity {
     private void initTimePicker() {
 
         long beginTime = System.currentTimeMillis();
-        long endTime = System.currentTimeMillis();
-        tv_select_date.setText(DateFormat.long2Str(endTime,true));
+        String endTime = "2019-04-07 18:00";
+        tv_select_date.setText(endTime);
 
         // 通过日期字符串初始化日期，格式请用：yyyy-MM-dd HH:mm
        myTimePicker = new CustomTimePicker(AddActivity.this, new CustomTimePicker.Callback() {
@@ -111,7 +122,7 @@ public class AddActivity extends AppCompatActivity {
             public void onTimeSelected(long timestamp) {
                 tv_select_date.setText(DateFormat.long2Str(timestamp, true));
             }
-        }, beginTime, endTime,"请选择时间",23);
+        }, beginTime, DateFormat.str2Long(endTime,true),"请选择时间",23);
         //允许点击屏幕或物理返回键关闭
         myTimePicker.setCancelable(true);
         // 显示时和分

@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorGray">#C8C8C8</color>
     <color name="add_activity_text_color_lite">#BFBFBF</color>
     <color name="add_activity_bth">#2BA245</color>
     <color name="fragment_plan_background">#EFEFEF</color>

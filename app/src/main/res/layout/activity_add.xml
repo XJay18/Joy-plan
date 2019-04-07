@@ -42,7 +42,7 @@
                 android:layout_width="80dp"
                 android:layout_height="40dp"
                 android:background="@drawable/btn_shape"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:layout_gravity="center_vertical"
                 android:textSize="20sp"
                 android:text="添加"
@@ -53,7 +53,7 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
         <EditText
             android:id="@+id/editText_title"
@@ -107,11 +107,20 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:id="@+id/btn_activity_added"
+            android:id="@+id/btn_changeTo_schedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_shape"
-            android:text="已添加活动页面"/>
+            android:text="学校端"/>
+        <Button
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/btn_changeTo_reserve"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_shape"
+            android:text="学生端"/>
 
     </LinearLayout>
 

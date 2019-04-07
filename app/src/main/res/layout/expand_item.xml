@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/list_item"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@drawable/btn_shape">
+
+    <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
+        app:shape_mode="round_rect"
+        app:round_radius="10dp"
+        android:id="@+id/indicator_image"
+        android:layout_width="match_parent"
+        android:background="@drawable/btn_shape"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        />
+
+    <RelativeLayout
+        android:id="@+id/indicator_container"
+        android:background="@color/colorAccent"
+        android:layout_below="@id/indicator_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/icon_indicator_top"
+            android:background="@drawable/btn_shape"
+            android:layout_width="420dp"
+            android:layout_height="wrap_content">
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/icon_indicator_middle"
+            android:layout_width="420dp"
+            android:layout_height="0dp"
+            android:layout_below="@id/icon_indicator_top"
+            android:layout_marginTop="-25dp"
+            android:background="@android:color/transparent"/>
+
+        <View
+
+            android:id="@+id/icon_indicator_bottom"
+            android:layout_width="420dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/icon_indicator_middle"
+            android:layout_marginTop="-25dp"
+            android:background="@drawable/btn_shape"/>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/base_list_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/indicator_image"
+        android:layout_toLeftOf="@id/icon_indicator_top"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"/>
+
+    <LinearLayout
+        android:id="@+id/base_sub_list_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/base_list_layout"
+        android:layout_alignLeft="@id/base_list_layout"
+        android:layout_alignRight="@id/base_list_layout"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <ViewStub
+        android:id="@+id/base_separator_stub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/base_sub_list_layout"/>
+
+
+
+</android.widget.RelativeLayout>

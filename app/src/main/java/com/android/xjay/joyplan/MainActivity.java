@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     class MyOnClickListener implements View.OnClickListener {
         @Override
         public void onClick( View v) {
-            switch(v.getId()){
+           /*switch(v.getId()){
                 case R.id.btn_login:
                     //检查网络状况
                     if (!checkNetwork()) {
@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, Register.class);
                     startActivity(intent);
                     break;
-            }
-            /*if (v.getId() == R.id.btn_login) {
+            }*/
+            if (v.getId() == R.id.btn_login) {
                 Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent);
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 if (v.getId() == R.id.btn_register) {
                 Intent intent = new Intent(MainActivity.this, Register.class);
                 startActivity(intent);
-                }*/
+                }
         }
     }
     public class MyThread implements Runnable{
@@ -111,10 +111,10 @@ public class MainActivity extends AppCompatActivity {
             //更新UI
             @Override
             public void run() {
-                if(response.equals("false")){
+              /*  if(response.equals("false")){
                     Toast.makeText(MainActivity.this,"登陆失败！", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                }*/
+                /*else*/ {
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }

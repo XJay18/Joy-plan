@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomItem">
+
+        <attr name="animation_duration" format="integer"/>
+        <attr name="item_layout" format="reference"/>
+        <attr name="sub_item_layout" format="reference"/>
+        <attr name="separator_layout" format="reference"/>
+        <attr name="indicator_height" format="dimension"/>
+        <attr name="indicator_width" format="dimension"/>
+        <attr name="indicator_margin_top" format="dimension"/>
+        <attr name="indicator_margin_bottom" format="dimension"/>
+        <attr name="indicator_margin_left" format="dimension"/>
+        <attr name="indicator_margin_right" format="dimension"/>
+        <attr name="show_indicator" format="boolean"/>
+        <attr name="show_animation" format="boolean"/>
+        <attr name="start_collapsed" format="boolean"/>
+
+    </declare-styleable>
+
+    <declare-styleable name="ShapedImageView">
+        <attr name="shape_mode" format="enum">
+            <enum name="round_rect" value="1" />
+            <enum name="circle" value="2" />
+        </attr>
+        <attr name="round_radius" format="dimension" />
+    </declare-styleable>
+
+</resources>
