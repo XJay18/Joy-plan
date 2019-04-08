@@ -78,11 +78,7 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             //更新UI
             @Override
-            public void run() {
-                if(response.equals("false")){
-                    Toast.makeText(MainActivity.this,"登陆失败！", Toast.LENGTH_SHORT).show();
-                }
-                else {
+            public void run() { {
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }

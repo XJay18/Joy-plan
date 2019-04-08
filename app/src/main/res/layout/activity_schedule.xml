@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.widget.LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorGray"
+
     android:orientation="vertical">
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+   <com.android.xjay.joyplan.CustomExpanding.ExpandingList
+       android:id="@+id/schedule_expanding_list"
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:layout_weight="1"
+       android:background="@color/transparent"></com.android.xjay.joyplan.CustomExpanding.ExpandingList>
     <Button
-        android:id="@+id/changeButton2"
+        android:id="@+id/changeButton_schedule"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/btn_shape"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:text="返回添加活动页面"/>
+        android:text="发布活动"/>
 
 </android.widget.LinearLayout>

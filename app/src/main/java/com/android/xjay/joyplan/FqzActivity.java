@@ -1,6 +1,4 @@
 package com.android.xjay.joyplan;
-
-
 import android.app.TimePickerDialog;
 
 import android.content.Intent;
@@ -130,7 +128,7 @@ public class FqzActivity extends AppCompatActivity
 //
 //            TODO
 //            how to DISMISS ALARM by alarm search mode label ???
-//
+//            https://developer.android.google.cn/reference/android/provider/AlarmClock.html?hl=zh-cn#
 //            Bundle bundle = new Bundle();
 //            bundle.putString(AlarmClock.ALARM_SEARCH_MODE_LABEL,"继续耕耘吧");
 //            deleteAlarm.putExtras(bundle);
@@ -164,7 +162,7 @@ public class FqzActivity extends AppCompatActivity
             }
         }, beginTimestamp, endTimestamp, "请选择番茄周期", 2);
 
-        mTimePicker.setCancelable(false);
+        mTimePicker.setCancelable(true);
         mTimePicker.setCanShowPreciseTime(false);
         mTimePicker.setScrollLoop(true);
         mTimePicker.setCanShowAnim(false);

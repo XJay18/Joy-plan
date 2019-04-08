@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
 import cn.smssdk.SMSSDK;
 import cn.smssdk.EventHandler;
 public class PhoneActivity extends AppCompatActivity {

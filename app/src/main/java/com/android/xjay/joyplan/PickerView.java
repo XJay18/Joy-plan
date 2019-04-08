@@ -284,7 +284,7 @@ public class PickerView extends View {
     }
 
     /**
-     * Choose the item
+     * Choose the custom_item
      */
     public void setSelected(int index) {
         if (index >= mDataList.size()) return;

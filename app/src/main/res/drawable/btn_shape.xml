@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/add_activity_bth"/>
-    <corners android:topLeftRadius="10dip"
-        android:topRightRadius="10dip"
-        android:bottomRightRadius="10dip"
-        android:bottomLeftRadius="10dip" />
+    <solid android:color="@color/colorWhite"/>
+    <corners android:topLeftRadius="15dp"
+        android:topRightRadius="15dp"
+        android:bottomRightRadius="15dp"
+        android:bottomLeftRadius="15dp" />
     <!--圆角矩形白色背景-->
 </shape>
