@@ -8,6 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- No action bar. -->
+    <style name="AppAlterTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+
     <!-- Bottom Navigation text style -->
     <style name="bottom_text">
         <item name="android:textSize">18sp</item>

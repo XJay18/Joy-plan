@@ -9,7 +9,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +44,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // get the name of this fragment (Agenda or Planning or Discovery or Setup)
         String info=getArguments().getString("info");
         switch (info){
+            case "日程": {
+                View view = inflater.inflate(R.layout.fragment_agenda, null);
+                return view;
+            }
             // deal with the fragment_discovery
             case "发现":
             {
@@ -51,11 +58,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 view.findViewById(R.id.ll_sxj).setOnClickListener(this);
                 return view;
             }
-            case "规划":
+            case "活动":
             {
                 View view=inflater.inflate(R.layout.fragment_reserve,null);
-
-
                 //TODO
                 int[] IMAGES = {R.drawable.cc, R.drawable.cc};
 

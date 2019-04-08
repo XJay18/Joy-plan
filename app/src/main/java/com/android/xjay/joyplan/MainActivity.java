@@ -44,31 +44,29 @@ public class MainActivity extends AppCompatActivity {
     //按钮监听器
     class MyOnClickListener implements View.OnClickListener {
         @Override
-        public void onClick( View v) {
-
-            switch(v.getId()){
-
-                case R.id.btn_login:
-                    //检查网络状况
-                    if (!checkNetwork()) {
-                        Toast toast = Toast.makeText(MainActivity.this,"网络未连接", Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        toast.show();
-                        break;
-                    }
-                    dialog = new ProgressDialog(MainActivity.this);
-                    dialog.setTitle("正在登陆");
-                    dialog.setMessage("请稍后");
-                    dialog.setCancelable(true);//设置可以通过back键取消
-                    dialog.show();
-                    new Thread(new MyThread()).start();
-                    break;
-                case R.id.btn_register:
-                    Intent intent = new Intent(MainActivity.this, Register.class);
-                    startActivity(intent);
-                    break;
-            }
-           /* if (v.getId() == R.id.btn_login) {
+        public void onClick(View v) {
+//            switch(v.getId()){
+//                case R.id.btn_login:
+//                    //检查网络状况
+//                    if (!checkNetwork()) {
+//                        Toast toast = Toast.makeText(MainActivity.this,"网络未连接", Toast.LENGTH_SHORT);
+//                        toast.setGravity(Gravity.CENTER, 0, 0);
+//                        toast.show();
+//                        break;
+//                    }
+//                    dialog = new ProgressDialog(MainActivity.this);
+//                    dialog.setTitle("正在登陆");
+//                    dialog.setMessage("请稍后");
+//                    dialog.setCancelable(true);//设置可以通过back键取消
+//                    dialog.show();
+//                    new Thread(new MyThread()).start();
+//                    break;
+//                case R.id.btn_register:
+//                    Intent intent = new Intent(MainActivity.this, Register.class);
+//                    startActivity(intent);
+//                    break;
+//            }
+            if (v.getId() == R.id.btn_login) {
                 Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent);
@@ -76,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 if (v.getId() == R.id.btn_register) {
                 Intent intent = new Intent(MainActivity.this, PhoneActivity.class);
                 startActivity(intent);
-                }*/
+                }
         }
     }
     public class MyThread implements Runnable{
