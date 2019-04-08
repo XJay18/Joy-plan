@@ -18,7 +18,7 @@ import cn.smssdk.EventHandler;
 public class PhoneActivity extends AppCompatActivity {
     private EditText et_phone;
     private EditText et_cord;
-    private Button btn_reg_phone;
+    private Button btn_phone_register;
     private Button btn_getcord;
     EventHandler eventHandler;
     private String phone_number;
@@ -31,7 +31,7 @@ public class PhoneActivity extends AppCompatActivity {
         setContentView(R.layout.activity_phone);
         getId();
 
-        eventHandler=new EventHandler(){
+        /*eventHandler=new EventHandler(){
             @Override
             public void afterEvent(int event, int result, Object data) {
                 Message msg=new Message();
@@ -41,7 +41,7 @@ public class PhoneActivity extends AppCompatActivity {
                 handler.sendMessage(msg);
             }
         };
-        SMSSDK.registerEventHandler(eventHandler);
+        SMSSDK.registerEventHandler(eventHandler);*/
     }
     @Override
     protected void onDestroy() {
@@ -49,7 +49,7 @@ public class PhoneActivity extends AppCompatActivity {
         SMSSDK.unregisterEventHandler(eventHandler);
     }
 
-    /**
+    /*
      * 使用Handler来分发Message对象到主线程中，处理事件
      */
     Handler handler=new Handler()
@@ -102,9 +102,9 @@ public class PhoneActivity extends AppCompatActivity {
     private void getId(){
         et_phone=findViewById(R.id.et_phonenumber);
         et_cord=findViewById(R.id.et_cord);
-        btn_reg_phone=findViewById(R.id.btn_reg_phone);
+        btn_phone_register=findViewById(R.id.btn_phone_register);
         btn_getcord=findViewById(R.id.btn_getcord);
-        btn_reg_phone.setOnClickListener(new MyOnClickListener());
+        btn_phone_register.setOnClickListener(new MyOnClickListener());
         btn_getcord.setOnClickListener(new MyOnClickListener());
     }
     /**
@@ -121,10 +121,17 @@ public class PhoneActivity extends AppCompatActivity {
                         et_cord.requestFocus();
                     }
                     break;
-                case R.id.btn_reg_phone:
-                    if (judCord())
+                case R.id.btn_phone_register:
+                    /*if (judCord())
                         SMSSDK.submitVerificationCode("86", phone_number, cord_number);
-                    flag = false;
+                    flag = false;*/
+                    //可删除
+                    Intent intent=new Intent(PhoneActivity.this,Register.class);
+                    if(et_phone.toString().length()>0){
+                        intent.setClass(PhoneActivity.this,Register.class);
+                        intent.putExtra("data",et_phone.getText().toString());
+                    }
+                    startActivity(intent);
                     break;
                 default:
                     break;

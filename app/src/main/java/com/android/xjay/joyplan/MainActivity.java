@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText et_account;
     private EditText et_password;
     private Button btn_login;
-    private Button btn_register;
     //提示框
     private ProgressDialog dialog;
     //服务器返回的数据
@@ -33,10 +32,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getID();
+    }
+    private void getID(){
         btn_login=findViewById(R.id.btn_login);
         btn_login.setOnClickListener(new MyOnClickListener());
-        btn_register=findViewById(R.id.btn_register);
-        btn_register.setOnClickListener(new MyOnClickListener());
         et_account=(EditText)findViewById(R.id.et_account);
         et_password=(EditText)findViewById(R.id.et_password);
         et_account.addTextChangedListener(new JumpTextWatcher(et_account,et_password));
@@ -45,15 +45,8 @@ public class MainActivity extends AppCompatActivity {
     class MyOnClickListener implements View.OnClickListener {
         @Override
         public void onClick( View v) {
-           /* switch(v.getId()){
+            /*switch(v.getId()){
                 case R.id.btn_login:
-                    //检查网络状况
-                    if (!checkNetwork()) {
-                        Toast toast = Toast.makeText(MainActivity.this,"网络未连接", Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        toast.show();
-                        break;
-                    }
                     dialog = new ProgressDialog(MainActivity.this);
                     dialog.setTitle("正在登陆");
                     dialog.setMessage("请稍后");
@@ -61,18 +54,10 @@ public class MainActivity extends AppCompatActivity {
                     dialog.show();
                     new Thread(new MyThread()).start();
                     break;
-                case R.id.btn_register:
-                    Intent intent = new Intent(MainActivity.this, Register.class);
-                    startActivity(intent);
-                    break;
             }*/
             if (v.getId() == R.id.btn_login) {
                 Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                startActivity(intent);
-                }
-                if (v.getId() == R.id.btn_register) {
-                Intent intent = new Intent(MainActivity.this, PhoneActivity.class);
                 startActivity(intent);
                 }
         }
@@ -80,19 +65,15 @@ public class MainActivity extends AppCompatActivity {
     public class MyThread implements Runnable{
         @Override
         public void run() {
-            //infoString = WebServicePost.executeHttpPost(et_account.getText().toString(),et_password.getText().toString(),"LogLet");//获取服务器返回的数据
-            infoString = WebServiceGet.executeHttpGet(et_account.getText().toString(),et_password.getText().toString(),"LogLet");//获取服务器返回的数据
+            infoString = WebServicePost.loginPost(et_account.getText().toString(),et_password.getText().toString(),"LogLet");//获取服务器返回的数据
+            //infoString = WebServiceGet.loginHttpGet(et_account.getText().toString(),et_password.getText().toString(),"LogLet");//获取服务器返回的数据
             //更新UI，使用runOnUiThread()方法
            showResponse(infoString);
         }
     }
-    /*private boolean checkNetwork() {
-        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connManager.getActiveNetworkInfo() !=null ) {
-            return connManager.getActiveNetworkInfo().isAvailable();
-        }
-        return false;
-    }*/
+    /*
+     * 跳转页面
+     */
     private void showResponse(final String response){
         runOnUiThread(new Runnable() {
             //更新UI
@@ -109,7 +90,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    //实现换行
+    /*
+     * 实现换行功能
+     */
     private class JumpTextWatcher implements TextWatcher{
         private EditText mThisView;
         private View mNextView;
