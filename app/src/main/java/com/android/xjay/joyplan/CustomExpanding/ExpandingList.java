@@ -57,6 +57,14 @@ public class ExpandingList extends ScrollView {
         throw new RuntimeException("The layout id not an instance of com.diegodobelo.expandinganimlib.ExpandingItem");
     }
 
+
+    /**
+     * Method to clear the LinearLayout(mContainer)
+     */
+    public void Clear_mContainer(){
+        mContainer.removeAllViews();
+    }
+
     /**
      * Method to get an Item from the ExpandingList by its index.
      * @param index The index of the custom_item.

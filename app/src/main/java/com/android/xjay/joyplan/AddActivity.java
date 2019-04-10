@@ -1,11 +1,13 @@
 package com.android.xjay.joyplan;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -77,7 +79,7 @@ public class AddActivity extends AppCompatActivity {
                     String s2 = editText_info.getText().toString();
                     String s3 = tv_select_date.getText().toString();
                     String s4 = editText_address.getText().toString();
-
+                    //mHelper.clean();
                     //put the information into a stuInfo
                     StudentActivityInfo info = new StudentActivityInfo(s1, s2, s3, s4);
 
@@ -92,12 +94,22 @@ public class AddActivity extends AppCompatActivity {
                     //show the number of record in DB
                     Toast toast = Toast.makeText(getApplicationContext(), i.toString(), Toast.LENGTH_SHORT);
                     toast.show();
+                    sentBroadcast();
                     break;
                 }
             }
         }
     }
 
+
+
+
+        private void sentBroadcast(){
+        Intent intent=new Intent();
+        intent.setAction("ADD ACTIVITY");
+        intent.putExtra("sele","广播测试");
+        sendBroadcast(intent);
+        }
 
         protected void onResume() {
             super.onResume();

@@ -3,24 +3,30 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/colorGray">
 
+    <Button
+        android:id="@+id/changeButton_reserve"
+        android:text="我的活动"
+        android:textColor="@color/colorBlack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_shape"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+
+        android:layout_marginRight="10dp"/>
 
     <com.android.xjay.joyplan.CustomExpanding.ExpandingList
         android:id="@+id/reserve_expanding_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="5dp"
+        android:layout_weight="1"
         android:background="@color/transparent">
 
     </com.android.xjay.joyplan.CustomExpanding.ExpandingList>
 
-<Button
-    android:id="@+id/changeButton_reserve"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/btn_shape"
-    android:layout_marginTop="20dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"/>
+
 </android.widget.LinearLayout>
