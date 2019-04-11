@@ -13,6 +13,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private MenuItem menuItem;
     private BottomNavigationView bottomNavigationView;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,10 @@ public class HomeActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.vp_home);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        mToolbar=findViewById(R.id.tb_fragment);
+
+        // Initialize the page, set the toolbar title as agenda.
+        mToolbar.setTitle("日程");
 
         // To disable the shift mode, we can simply add
         // 'app:itemHorizontalTranslationEnabled="false"'
@@ -90,6 +97,29 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 menuItem = bottomNavigationView.getMenu().getItem(position);
                 menuItem.setChecked(true);
+                Log.v("SELECT: ",position+". ");
+                switch (position){
+                    case 0:{
+                        mToolbar.setTitle("日程");
+                        break;
+                    }
+                    case 1:{
+                        mToolbar.setTitle("活动");
+                        break;
+                    }
+                    case 2:{
+                        mToolbar.setTitle("发现");
+                        break;
+                    }
+                    case 3:{
+                        mToolbar.setTitle("设置");
+                        break;
+                    }
+                    default:{
+                        Toast.makeText(HomeActivity.this, "错误！", Toast.LENGTH_SHORT).show();
+                        Log.e("NoExistError","Page not exist.");
+                    }
+                }
             }
 
             @Override
@@ -109,7 +139,7 @@ public class HomeActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         adapter.addFragment(HomeFragment.newInstance("日程"));
-        adapter.addFragment(HomeFragment.newInstance("规划"));
+        adapter.addFragment(HomeFragment.newInstance("活动"));
         adapter.addFragment(HomeFragment.newInstance("发现"));
         adapter.addFragment(HomeFragment.newInstance("设置"));
         viewPager.setAdapter(adapter);

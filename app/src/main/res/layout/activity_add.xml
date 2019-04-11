@@ -66,7 +66,7 @@
             android:background="@drawable/edtext_shape"
             android:textColor="@color/add_activity_text_color_lite"
             android:textAlignment="gravity"
-            android:text="请输入活动标题"/>
+            android:hint="请输入活动标题"/>
 
         <EditText
             android:id="@+id/editText_info"
@@ -79,7 +79,7 @@
             android:background="@drawable/edtext_shape"
             android:textColor="@color/add_activity_text_color_lite"
             android:textAlignment="gravity"
-            android:text="请输入活动描述"/>
+            android:hint="请输入活动描述"/>
         <TextView
             android:id="@+id/tv_select_date"
             android:clickable="true"
@@ -103,7 +103,7 @@
             android:background="@drawable/edtext_shape"
             android:textColor="@color/add_activity_text_color_lite"
             android:textAlignment="gravity"
-            android:text="请输入活动地点"/>
+            android:hint="请输入活动地点"/>
         <!--Button
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"

@@ -11,8 +11,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
-import android.view.Gravity;
+
+
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +52,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // get the name of this fragment (Agenda or Planning or Discovery or Setup)
         String info=getArguments().getString("info");
         switch (info){
+            case "日程": {
+                View view = inflater.inflate(R.layout.fragment_agenda, null);
+                return view;
+            }
             // deal with the fragment_discovery
             case "发现":
             {
@@ -60,9 +67,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 view.findViewById(R.id.ll_sxj).setOnClickListener(this);
                 return view;
             }
-            case "规划":
+            case "活动":
             {
                 View view=inflater.inflate(R.layout.fragment_reserve,null);
+
 
                 IntentFilter intentFilter=new IntentFilter();
                 intentFilter.addAction("ADD ACTIVITY");
@@ -72,13 +80,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 RedrawExpandingList();
 
 
+
                 Button btn_changeTo_addActivity = view.findViewById(R.id.changeButton_reserve);
                 btn_changeTo_addActivity.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent();
-                        intent.setClass(mContext, AddActivity.class);
-                        startActivity(intent);
                     }
                 });
 
@@ -128,7 +134,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             INFOS[i] = c.getString(2).toString();
             TIMES[i]=c.getString(3).toString();
             String[] s=new String[]{INFOS[i],INFOS[i],INFOS[i],INFOS[i]};
-            addItem(TITLES[i],s,TIMES[i],R.color.colorWhite,iconRes);
+            addItem(TITLES[i],s,TIMES[i],R.color.transparent,iconRes);
             c.move(1);
         }
     }

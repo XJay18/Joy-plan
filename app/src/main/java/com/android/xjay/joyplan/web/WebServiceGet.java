@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * 使用get方法获取Http服务器数据
@@ -18,13 +19,13 @@ import java.net.URL;
 
 public class WebServiceGet {
 
-    public static String executeHttpGet(String username,String password,String address){
+    public static String loginHttpGet(String username,String password,String address){
         HttpURLConnection connection = null;
         InputStream in = null;
 
         try{
-            String Url = "http://110.64.91.150:8080/joyweb2.0/"+address;
-            String path = Url + "?username=" + username + "&password=" + password;
+            String Url = "http://110.64.91.150:8080/joyplan3.0/"+address;
+            String path = Url + "?phone_number=" + username + "&password=" + password;
             try {
                 URL url = new URL(path);
                 connection = (HttpURLConnection)url.openConnection();
@@ -55,7 +56,52 @@ public class WebServiceGet {
         }
         return null;
     }
+    public static String registerHttpGet(String phone_number,String password,String nick_name,String university,String address){
+        HttpURLConnection connection = null;
+        InputStream in = null;
 
+        try{
+            String Url = "http://110.64.91.150:8080/joyplan3.0/"+address;
+            String path = Url + "?username=" + URLEncoder.encode(phone_number,"UTF-8") + "&password=" + URLEncoder.encode(password,"UTF-8")
+                    +"&nick_name="+URLEncoder.encode(nick_name,"UTF-8")
+                    +"&university="+URLEncoder.encode(university,"UTF-8");
+           /* String path=Url + "?username=" + phone_number+ "&password=" + password
+                    +"&nick_name="+nick_name
+                    +"&university="+university;*/
+            try {
+                System.out.println("问题1");
+                URL url = new URL(path);
+                System.out.println("问题2");
+                connection = (HttpURLConnection)url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setConnectTimeout(10000);//建立连接超时
+                connection.setReadTimeout(8000);//传递数据超时
+                in = connection.getInputStream();
+                System.out.println("问题3");
+                return parseInfo(in);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            //意外退出时，连接关闭保护
+            if(connection != null){
+                connection.disconnect();
+            }
+            if(in != null){
+                try{
+                    in.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        System.out.println("问题4");
+        return null;
+    }
     //得到字节输入流，将字节输入流转化为String类型
     /*public static String parseInfo(InputStream inputStream){
         BufferedReader reader = null;
@@ -85,6 +131,7 @@ public class WebServiceGet {
     private static String parseInfo(InputStream inStream) throws Exception {
         byte[] data = read(inStream);
         // 转化为字符串
+        System.out.println("问题5");
         return new String(data, "UTF-8");
     }
 
