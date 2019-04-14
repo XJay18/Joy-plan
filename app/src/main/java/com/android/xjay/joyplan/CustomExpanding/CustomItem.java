@@ -20,6 +20,8 @@ import android.widget.RelativeLayout;
 import com.android.xjay.joyplan.R;
 
 public class CustomItem extends RelativeLayout {
+
+    private int index;
     /**
      * Constant defining default animation duration in milliseconds.
      */
@@ -254,6 +256,26 @@ public class CustomItem extends RelativeLayout {
         expandSubItemsWithAnimation(0f);
         //expandIconIndicator(0f);
         animateSubItemsIn();
+        int indexExpanded=mParent.getIndexExpanded();
+        if(index==indexExpanded){
+            mParent.setIndexExpanded(-1);
+        }
+        else if(indexExpanded==-1)
+        {
+            mParent.setIndexExpanded(index);
+        }
+        else if(indexExpanded!=-1)
+            {
+                mParent.unExpandItem();
+                mParent.setIndexExpanded(index);
+            }
+    }
+
+    /**
+     * Method to set index
+     */
+    public void setIndex(int i){
+         index=i;
     }
 
     /**
@@ -723,6 +745,12 @@ public class CustomItem extends RelativeLayout {
             mSeparatorStub.setLayoutResource(mSeparatorLayoutId);
             mSeparatorStub.inflate();
         }
+        mIndicatorImage.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleExpanded();
+            }
+        });
     }
 
     /**

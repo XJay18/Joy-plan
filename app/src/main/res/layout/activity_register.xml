@@ -34,7 +34,7 @@
             android:layout_height="325.5dp"
             android:layout_centerHorizontal="true"
             android:layout_alignTop="@id/background1"
-            android:layout_marginTop="220dp"
+            android:layout_marginTop="200dp"
             android:background="@drawable/background_register2">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@id/txv_username_container"
-                    android:layout_marginTop="2dp">
+                    android:layout_marginTop="4dp">
                     <TextView
                         android:id="@+id/userpassword"
                         android:layout_width="wrap_content"
@@ -94,7 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="4dp"
                     android:layout_below="@id/txv_password_container">
                     <TextView
                         android:id="@+id/userpassword_confirm"
@@ -119,7 +119,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="4dp"
                     android:layout_below="@id/txv_password_confirm_container">
                     <TextView
                         android:id="@+id/txv_school"
@@ -150,7 +150,8 @@
             android:id="@+id/btn_submit_background"
             android:layout_width="280dp"
             android:layout_height="54dp"
-            android:layout_marginTop="-50dp"
+            android:layout_alignTop="@id/background2"
+            android:layout_marginTop="280dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/btn_register"
             android:layout_below="@id/background2">
