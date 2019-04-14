@@ -18,8 +18,8 @@
             android:id="@+id/et_phonenumber"
             android:layout_width="260sp"
             android:layout_height="60sp"
-            android:layout_above="@+id/btn_reg_phone"
-            android:layout_alignStart="@+id/btn_reg_phone"
+            android:layout_above="@+id/btn_phone_register"
+            android:layout_alignStart="@+id/btn_phone_register"
             android:layout_marginBottom="112dp"
             android:hint="请输入手机号码" />
 
@@ -28,8 +28,8 @@
             android:id="@+id/et_cord"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/btn_reg_phone"
-            android:layout_alignStart="@+id/btn_reg_phone"
+            android:layout_above="@+id/btn_phone_register"
+            android:layout_alignStart="@+id/btn_phone_register"
             android:layout_marginBottom="30dp"
             android:layout_toStartOf="@+id/btn_getcord"
             android:hint="请输入验证码" />
@@ -38,14 +38,14 @@
             android:id="@+id/btn_getcord"
             android:layout_width="wrap_content"
             android:layout_height="50sp"
-            android:layout_above="@+id/btn_reg_phone"
-            android:layout_alignEnd="@+id/btn_reg_phone"
+            android:layout_above="@+id/btn_phone_register"
+            android:layout_alignEnd="@+id/btn_phone_register"
             android:layout_marginBottom="30dp"
             android:text="获取验证码"
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/btn_reg_phone"
+            android:id="@+id/btn_phone_register"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

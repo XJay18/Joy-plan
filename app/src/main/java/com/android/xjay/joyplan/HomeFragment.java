@@ -1,8 +1,10 @@
 package com.android.xjay.joyplan;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -11,8 +13,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+
+
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +30,11 @@ import com.android.xjay.joyplan.CustomExpanding.ExpandingList;
 public class HomeFragment extends Fragment implements View.OnClickListener {
     protected Context mContext;
     private ExpandingList expandingList;
+    DynamicReceiver dynamicReceiver;
+    String[] TITLES;
+    String[] INFOS;
+    String[] TIMES;
+    View fragment_reserve_view;
     public static HomeFragment newInstance(String info) {
         Bundle args = new Bundle();
         HomeFragment fragment = new HomeFragment();
@@ -51,6 +59,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             // deal with the fragment_discovery
             case "发现":
             {
+                fragment_reserve_view=inflater.inflate(R.layout.fragment_reserve,null);
                 View view = inflater.inflate(R.layout.fragment_discovery, null);
                 view.findViewById(R.id.ll_fqz).setOnClickListener(this);
                 view.findViewById(R.id.ll_ydhd).setOnClickListener(this);
@@ -61,42 +70,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case "活动":
             {
                 View view=inflater.inflate(R.layout.fragment_reserve,null);
-                //TODO
-                int[] IMAGES = {R.drawable.cc, R.drawable.cc};
 
-                String[] TITLES = new String[20];
 
-                String[] INFOS = new String[20];
-                UserDBHelper_schedule mHelper;
+                IntentFilter intentFilter=new IntentFilter();
+                intentFilter.addAction("ADD ACTIVITY");
+                dynamicReceiver=new DynamicReceiver();
+                mContext.registerReceiver(dynamicReceiver,intentFilter);
+                expandingList=view.findViewById(R.id.reserve_expanding_list);
+                RedrawExpandingList();
 
-                Cursor c;
 
-                mHelper = UserDBHelper_schedule.getInstance(getContext(), 1);
-                SQLiteDatabase dbRead = mHelper.getReadableDatabase();
-                c = dbRead.query("user_info", null, null
-                        , null, null, null, null);
-
-                int length = c.getCount();
-                c.moveToFirst();
-
-                expandingList = view.findViewById(R.id.reserve_expanding_list);
-                expandingList.setItemPadding(0);
-                int iconRes=R.drawable.duck;
-                for (int i = 0; i < length; i++) {
-                    TITLES[i] = c.getString(1).toString();
-                    INFOS[i] = c.getString(2).toString();
-                    String[] s=new String[]{INFOS[i],INFOS[i],INFOS[i],INFOS[i]};
-                    addItem(TITLES[i],s,R.color.colorWhite,iconRes);
-                    c.move(1);
-                }
 
                 Button btn_changeTo_addActivity = view.findViewById(R.id.changeButton_reserve);
                 btn_changeTo_addActivity.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent();
-                        intent.setClass(mContext, AddActivity.class);
-                        startActivity(intent);
                     }
                 });
 
@@ -122,6 +110,34 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    public void RedrawExpandingList(){
+        //TODO
+        expandingList.Clear_mContainer();
+        TITLES= new String[20];
+
+        INFOS = new String[20];
+
+        TIMES=new String[20];
+        UserDBHelper_schedule mHelper;
+        Cursor c;
+
+        mHelper = UserDBHelper_schedule.getInstance(getContext(), 1);
+        SQLiteDatabase dbRead = mHelper.getReadableDatabase();
+        c = dbRead.query("user_info", null, null
+                , null, null, null, null);
+
+        int length = c.getCount();
+        c.moveToFirst();
+        int iconRes=R.drawable.duck;
+        for (int i = 0; i < length; i++) {
+            TITLES[i] = c.getString(1).toString();
+            INFOS[i] = c.getString(2).toString();
+            TIMES[i]=c.getString(3).toString();
+            String[] s=new String[]{INFOS[i],INFOS[i],INFOS[i],INFOS[i]};
+            addItem(TITLES[i],s,TIMES[i],R.color.transparent,iconRes);
+            c.move(1);
+        }
+    }
     @Override
     public void onClick(View view){
         if(view.getId()==R.id.ll_fqz){
@@ -146,17 +162,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void addItem(String title, String[] subItems, int colorRes, int iconRes) {
+    private void addItem(String title, String[] subItems,String time,int colorRes, int iconRes) {
         //Let's create an custom_item with R.layout.expanding_layout
         final CustomItem item = expandingList.createNewItem(R.layout.expanding_layout);
-
+        String Date=time.substring(0,10);
         //If custom_item creation is successful, let's configure it
         if (item != null) {
             item.setIndicatorColorRes(colorRes);
             item.setIndicatorIconRes(iconRes);
             //It is possible to get any view inside the inflated layout. Let's set the text in the custom_item
             ((TextView) item.findViewById(R.id.title)).setText(title);
-
+            ((TextView) item.findViewById(R.id.time)).setText(Date);
             //We can create items in batch.
             item.createSubItems(subItems.length);
             for (int i = 0; i < item.getSubItemsCount(); i++) {
@@ -187,7 +203,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-
+    /**
+     * method to accept Broadcast and refresh the ExpandingList
+     */
+    class DynamicReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            RedrawExpandingList();
+        }
+    }
 
     private void configureSubItem(final CustomItem item, final View view, String subTitle) {
         ((TextView) view.findViewById(R.id.sub_title)).setText(subTitle);

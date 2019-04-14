@@ -16,6 +16,10 @@ public class ExpandingList extends ScrollView {
      */
     private LinearLayout mContainer;
 
+    private int indexExpanded;
+
+    private int itemNum;
+
     /**
      * The constructor.
      * @param context The View Context.
@@ -25,6 +29,8 @@ public class ExpandingList extends ScrollView {
         super(context, attrs);
         mContainer = new LinearLayout(context);
         mContainer.setOrientation(LinearLayout.VERTICAL);
+        itemNum=-1;
+        indexExpanded=-1;
         addView(mContainer);
     }
 
@@ -52,9 +58,19 @@ public class ExpandingList extends ScrollView {
             CustomItem customItem = (CustomItem) item;
             customItem.setParent(this);
             addItem(customItem);
+            itemNum++;
+            customItem.setIndex(itemNum);
             return customItem;
         }
         throw new RuntimeException("The layout id not an instance of com.diegodobelo.expandinganimlib.ExpandingItem");
+    }
+
+
+    /**
+     * Method to clear the LinearLayout(mContainer)
+     */
+    public void Clear_mContainer(){
+        mContainer.removeAllViews();
     }
 
     /**
@@ -69,6 +85,20 @@ public class ExpandingList extends ScrollView {
         return (CustomItem) mContainer.getChildAt(index);
     }
 
+    public void setIndexExpanded(int i){
+        indexExpanded=i;
+    }
+
+    public void unExpandItem(){
+        if(indexExpanded>=0&&indexExpanded<getItemsCount()){
+        CustomItem customItem=getItemByIndex(indexExpanded);
+        customItem.toggleExpanded();
+    }
+    }
+
+    public int getIndexExpanded(){
+        return indexExpanded;
+    }
     /**
      * Return the items count.
      * @return Items count.
