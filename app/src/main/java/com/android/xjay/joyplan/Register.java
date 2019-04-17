@@ -77,7 +77,6 @@ public class Register extends AppCompatActivity {
         @Override
         public void run() {
             //获取服务器返回数据
-           // String RegRet = WebServiceGet.registerHttpGet(phone_number,userpassword.getText().toString(),username.getText().toString(),university,"RegLet");
             String RegRet = WebServicePost.registerPost(phone_number,userpassword.getText().toString(),username.getText().toString(),university,"RegLet");
             //更新UI，界面处理
             showReq(RegRet);
