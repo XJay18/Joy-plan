@@ -73,7 +73,7 @@ public class Register extends AppCompatActivity {
 
         }
     }
-    public class RegThread implements Runnable{
+    private class RegThread implements Runnable{
         @Override
         public void run() {
             //获取服务器返回数据
