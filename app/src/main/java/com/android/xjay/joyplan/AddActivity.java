@@ -17,7 +17,7 @@ import com.android.xjay.joyplan.Utils.DateFormat;
 import com.android.xjay.joyplan.web.WebServicePost;
 
 public class AddActivity extends AppCompatActivity {
-    private UserDBHelper_schedule mHelper;//SQLite helper
+    private UserDBHelper mHelper;//SQLite helper
     private CustomTimePicker myTimePicker;
     private TextView tv_select_time;
     private EditText editText_title;
@@ -51,7 +51,7 @@ public class AddActivity extends AppCompatActivity {
         });
         initTimePicker();
         //get single instance of DB
-        mHelper = UserDBHelper_schedule.getInstance(this, 1);
+        mHelper = UserDBHelper.getInstance(this, 1);
 
         editText_title = (EditText) findViewById(R.id.editText_title);
         editText_description = (EditText) findViewById(R.id.editText_info);
@@ -130,7 +130,7 @@ public class AddActivity extends AppCompatActivity {
 
         protected void onResume() {
             super.onResume();
-            mHelper = UserDBHelper_schedule.getInstance(mContext, 1);
+            mHelper = UserDBHelper.getInstance(mContext, 1);
             mHelper.openWriteLink();
         }
 
