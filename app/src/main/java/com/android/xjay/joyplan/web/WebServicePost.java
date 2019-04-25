@@ -197,6 +197,63 @@ public class WebServicePost {
         }
         return null;
     }
+    public static String checkphonePost(String phone_number,String address){
+        HttpURLConnection connection = null;
+        InputStream in = null;
+
+        try{
+            String Url = "http://110.64.91.150:8080/joyplan3.0/" + address;
+            try {
+                URL url = new URL(Url);
+                connection = (HttpURLConnection)url.openConnection();
+
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                connection.setReadTimeout(8000);//传递数据超时
+
+                connection.setUseCaches(false);
+                connection.setRequestProperty("Content-Type","application/x-www-form-urlencoded;charset=utf-8");
+
+                connection.connect();
+
+                DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+                String data = "phone_number=" + URLEncoder.encode(phone_number,"UTF-8");
+                System.out.println(data);
+                out.writeBytes(data);
+                out.flush();
+                out.close();
+
+                int resultCode = connection.getResponseCode();
+                if(HttpURLConnection.HTTP_OK == resultCode) {
+                    in = connection.getInputStream();
+
+                    return parseInfo(in);
+                }
+                return null;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                System.out.println("出现错误");
+                e.printStackTrace();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            //意外退出时，连接关闭保护
+            if(connection != null){
+                connection.disconnect();
+            }
+            if(in != null){
+                try{
+                    in.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
     //得到字节输入流，将字节输入流转化为String类型
     public static String parseInfo(InputStream inputStream){
         BufferedReader reader = null;

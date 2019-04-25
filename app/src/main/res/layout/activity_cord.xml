@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <Button
-            android:id="@+id/phone_return"
+            android:id="@+id/cord_return"
             android:layout_width="10.5dp"
             android:layout_height="16.5dp"
             android:layout_marginTop="42dp"
@@ -22,23 +22,22 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="133.5dp"
             android:layout_marginLeft="55.5dp"
-            android:text="请输入手机号码"
+            android:text="请输入验证码"
             android:textSize="26sp"/>
         <EditText
-            android:id="@+id/et_phonenumber"
+            android:id="@+id/et_cord"
             android:layout_width="295.2dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tips"
             android:layout_alignStart="@+id/tips"
             android:layout_marginTop="97.5dp"
             android:background="@drawable/et_login"
-            android:maxLength="11"
-            android:hint="请输入手机号码" />
+            android:hint="请输入验证码" />
         <Button
-            android:id="@+id/btn_phone_next"
+            android:id="@+id/btn_cord_next"
             android:layout_width="267dp"
             android:layout_height="52.5dp"
-            android:layout_below="@+id/et_phonenumber"
+            android:layout_below="@+id/et_cord"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:background="@drawable/bg_btn_blue"

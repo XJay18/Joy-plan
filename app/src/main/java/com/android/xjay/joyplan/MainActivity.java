@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText et_account;
     private EditText et_password;
     private Button btn_login;
+    private Button btn_return;
     //提示框
     private ProgressDialog dialog;
     //服务器返回的数据
@@ -36,7 +37,9 @@ public class MainActivity extends AppCompatActivity {
     }
     private void getID(){
         btn_login=findViewById(R.id.btn_login);
+        btn_return=findViewById(R.id.main_return);
         btn_login.setOnClickListener(new MyOnClickListener());
+        btn_return.setOnClickListener(new MyOnClickListener());
         et_account=(EditText)findViewById(R.id.et_account);
         et_password=(EditText)findViewById(R.id.et_password);
         et_account.addTextChangedListener(new JumpTextWatcher(et_account,et_password));
@@ -54,19 +57,26 @@ public class MainActivity extends AppCompatActivity {
                     dialog.show();
                     new Thread(new MyThread()).start();
                     break;
+                case R.id.main_return:
+                    Intent intent=new Intent(MainActivity.this,WelcomeActivity.class);
+                    startActivity(intent);
+                    break;
             }*/
             if (v.getId() == R.id.btn_login) {
                 Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent);
                 }
+                if(v.getId()==R.id.main_return){
+                Intent intent=new Intent(MainActivity.this,WelcomeActivity.class);
+                startActivity(intent);
+                }
         }
     }
-    public class MyThread implements Runnable{
+    private class MyThread implements Runnable{
         @Override
         public void run() {
             infoString = WebServicePost.loginPost(et_account.getText().toString(),et_password.getText().toString(),"LogLet");//获取服务器返回的数据
-            //infoString = WebServiceGet.loginHttpGet(et_account.getText().toString(),et_password.getText().toString(),"LogLet");//获取服务器返回的数据
             //更新UI，使用runOnUiThread()方法
            showResponse(infoString);
         }
