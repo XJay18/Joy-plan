@@ -16,6 +16,9 @@ public class ExpandingList extends ScrollView {
      */
     private LinearLayout mContainer;
 
+    /**
+     * Index of expanded item
+     */
     private int indexExpanded;
 
     private int itemNum;
@@ -99,6 +102,8 @@ public class ExpandingList extends ScrollView {
     public int getIndexExpanded(){
         return indexExpanded;
     }
+
+
     /**
      * Return the items count.
      * @return Items count.

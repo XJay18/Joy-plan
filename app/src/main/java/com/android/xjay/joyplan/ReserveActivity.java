@@ -26,7 +26,7 @@ public class ReserveActivity extends AppCompatActivity {
     String[] TITLES = new String[20];
 
     String[] INFOS = new String[20];
-    private UserDBHelper_schedule mHelper;
+    private UserDBHelper mHelper;
 
     Cursor c;
 
@@ -34,7 +34,7 @@ public class ReserveActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_reserve);
 
-        mHelper = UserDBHelper_schedule.getInstance(this, 1);
+        mHelper = UserDBHelper.getInstance(this, 1);
         SQLiteDatabase dbRead = mHelper.getReadableDatabase();
         c = dbRead.query("user_info", null, null
                 , null, null, null, null);

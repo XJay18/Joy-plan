@@ -161,7 +161,7 @@ public class WebServicePost {
                 DataOutputStream out = new DataOutputStream(connection.getOutputStream());
                 String data = "title=" + URLEncoder.encode(title,"UTF-8") + "&time=" + URLEncoder.encode(time,"UTF-8")
                         +"&description="+URLEncoder.encode(description,"UTF-8")
-                        +"&addr="+URLEncoder.encode(addr,"UTF-8");
+                        +"&address="+URLEncoder.encode(addr,"UTF-8");
                 System.out.println(data);
                 out.writeBytes(data);
                 out.flush();
