@@ -36,17 +36,12 @@
         </activity>
         <activity android:name=".MainActivity"/>
         <activity android:name=".PhoneActivity"/>
+        <activity android:name=".CordActivity"/>
         <activity android:name=".HomeActivity"/>
-
         <activity android:name=".ReserveActivity"/>
         <activity android:name=".FqzActivity"></activity>
         <activity android:name=".AddActivity"></activity>
         <activity android:name=".ScheduleActivity"></activity>
-
-
-
-
-
         <activity android:name=".Register" />
         <activity android:name=".SxjActivity"/>
         <activity

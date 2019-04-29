@@ -10,7 +10,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private Button login;
     private Button register;
     @Override
-    protected void onCreate(Bundle saveInstanceState){
+    protected void onCreate(Bundle saveInstanceState){ ;
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_welcome);
         getID();

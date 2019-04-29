@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="347dp"
             android:layout_marginTop="-7dp"
-            android:background="@drawable/background_register"
+            android:background="@drawable/bg_register"
             android:orientation="horizontal">
 
         </RelativeLayout>
@@ -86,7 +86,8 @@
                         android:layout_width="280dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/userpassword"
-                        android:maxLength="6" />
+                        android:inputType="textPassword"
+                        android:maxLength="10" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -110,7 +111,8 @@
                         android:layout_width="280dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/userpassword_confirm"
-                        android:maxLength="6" />
+                        android:inputType="textPassword"
+                        android:maxLength="10" />
                 </RelativeLayout>
 
 
@@ -153,7 +155,7 @@
             android:layout_alignTop="@id/background2"
             android:layout_marginTop="280dp"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/btn_register"
+            android:background="@drawable/bg_btn_blue"
             android:layout_below="@id/background2">
 
             <Button

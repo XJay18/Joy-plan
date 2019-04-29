@@ -27,6 +27,7 @@ public class Register extends AppCompatActivity {
     String phone_number;
     String university;
     ProgressDialog dialog;
+    boolean legal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +35,7 @@ public class Register extends AppCompatActivity {
         getID();
     }
     private void getID(){
+        legal=false;
         Button btn_submit=findViewById(R.id.btn_submit);
         username=(EditText)findViewById(R.id.regi_nick_name);
         userpassword=(EditText)findViewById(R.id.regi_password);
@@ -51,11 +53,13 @@ public class Register extends AppCompatActivity {
             //setUser();
             switch (v.getId()) {
                 case R.id.btn_submit:
+                    legal=setUser();
+                    if(legal){
                     dialog = new ProgressDialog(Register.this);
                     dialog.setTitle("正在注册");
                     dialog.setMessage("请稍后");
                     dialog.show();
-                    new Thread(new RegThread()).start();
+                    new Thread(new RegThread()).start();}
             }
         }
     }
@@ -93,6 +97,9 @@ public class Register extends AppCompatActivity {
                     builder.setMessage("注册成功");
                     builder.setCancelable(false);
                     builder.setPositiveButton("OK",new DialogInterface.OnClickListener(){
+                        /*
+                         *注册成功后的页面跳转
+                         */
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Intent intent = new Intent(Register.this,MainActivity.class);
@@ -107,6 +114,9 @@ public class Register extends AppCompatActivity {
                     builder.setMessage("注册失败");
                     builder.setCancelable(false);
                     builder.setPositiveButton("OK",new DialogInterface.OnClickListener(){
+                        /*
+                         *注册失败后的页面跳转
+                         */
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             /*Intent intent = new Intent(Register.this,WelcomeActivity.class);
@@ -118,52 +128,28 @@ public class Register extends AppCompatActivity {
             }
         });
     }
-
-
-
-
-
-
-
-
-
-    /*private void setUser(){
-        UserDBHelper database=new UserDBHelper(Register.this,"LoginInfo",null,1);
-
-
-        if(username.getText().toString().length()<=0||useraccount.getText().toString().length()<=0||userpassword.getText().toString().length()<=0||userpassword2.getText().toString().length()<=0)
+    /*
+     *对输入注册信息进行判断
+     */
+    private boolean setUser(){
+        if(username.getText().toString().length()<=0)
         {
-            Toast.makeText(this, "用户名或密码不能为空", Toast.LENGTH_LONG).show();
-            return;
+            Toast.makeText(this, "昵称不能为空", Toast.LENGTH_LONG).show();
+            return false;
         }
-        if(username.getText().toString().length()>0)
+        if(userpassword.getText().toString().length()<=0||userpassword2.getText().toString().length()<=0)
         {
-            String sql="select * from user where userid=?";
-            Cursor cursor=database.getWritableDatabase().rawQuery(sql, new String[]{username.getText().toString()});
-            if(cursor.moveToFirst())
-            {
-                Toast.makeText(this, "用户名已经存在", Toast.LENGTH_LONG).show();
-                return;
-            }
+            Toast.makeText(this, "密码不能为空", Toast.LENGTH_LONG).show();
+            return false;
         }
         if(!userpassword.getText().toString().equals(userpassword2.getText().toString()))
         {
             Toast.makeText(this, "两次输入的密码不同", Toast.LENGTH_LONG).show();
-            return;
+            return false;
         }
-        if(database.AddUser(username.getText().toString(), userpassword.getText().toString()))
-        {
-            Toast.makeText(this, "用户注册成功", Toast.LENGTH_LONG).show();
-            Intent intent=new Intent();
-            intent.setClass(this, MainActivity.class);
-            startActivity(intent);
-        }
-        else
-        {
-            Toast.makeText(this, "用户注册失败", Toast.LENGTH_LONG).show();
-        }
-        database.close();
-    }*/
+
+        return true;
+    }
     /*
      * 实现换行功能
      */
