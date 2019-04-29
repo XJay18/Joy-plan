@@ -20,6 +20,7 @@
     <color name="transparent">#00FFFFFF</color>
     <color name="tab_checked">#3F51B5</color>
     <color name="tab_unchecked">#757575</color>
+    <color name="colorGreen">#00FF7F</color>
 
 
 </resources>

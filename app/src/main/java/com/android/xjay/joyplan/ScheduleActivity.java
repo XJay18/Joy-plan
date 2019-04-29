@@ -87,8 +87,12 @@ public class ScheduleActivity extends AppCompatActivity {
 
         //If custom_item creation is successful, let's configure it
         if (item != null) {
+            //item color
             item.setIndicatorColorRes(colorRes);
+
+            //item picture resource
             item.setIndicatorIconRes(iconRes);
+
             //It is possible to get any view inside the inflated layout. Let's set the text in the custom_item
             ((TextView) item.findViewById(R.id.title)).setText(title);
 
