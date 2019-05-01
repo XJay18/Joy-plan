@@ -4,11 +4,10 @@ import android.content.Context;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.AttributeSet;
 import android.view.View;
-import com.android.xjay.joyplan.Calendar.MonthView;
-import com.android.xjay.joyplan.Calendar.Calendar;
 
+import com.android.xjay.calendarview.Calendar;
+import com.android.xjay.calendarview.MonthView;
 
 /**
  * 高仿魅族日历布局

@@ -7,6 +7,9 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.android.xjay.calendarview.Calendar;
+import com.android.xjay.calendarview.WeekView;
+
 
 /**
  * 简单周视图
