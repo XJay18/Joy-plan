@@ -10,11 +10,10 @@
     <LinearLayout
         android:id="@+id/ll_fqz"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_marginTop="12dp"
         android:orientation="horizontal"
-        android:clickable="true"
-        >
+        android:clickable="true">
         <ImageView
             style="@style/function_bar_lefticon"
             android:layout_marginStart="15dp"
@@ -31,8 +30,8 @@
             />
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:background="@drawable/ic_right"
             android:layout_marginEnd="25dp"
@@ -44,91 +43,13 @@
         android:layout_height="wrap_content"
         android:src="@drawable/line"
         android:layout_gravity="center"
-        android:layout_marginTop="6dp"/>
-
-    <LinearLayout
-        android:id="@+id/ll_ydhd"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="6dp"
-        android:orientation="horizontal"
-        android:clickable="true"
-        >
-        <ImageView
-            style="@style/function_bar_lefticon"
-            android:layout_marginStart="15dp"
-            android:background="@drawable/ic_act"
-            android:layout_weight="0"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:text="预定活动"
-            style="@style/function_bar_text"
-            android:layout_weight="1"
-            />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_right"
-            android:layout_marginEnd="25dp"
-            android:layout_weight="0"/>
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/line"
-        android:layout_gravity="center"
-        android:layout_marginTop="6dp"/>
-
-    <LinearLayout
-        android:id="@+id/ll_rcq"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="6dp"
-        android:orientation="horizontal"
-        android:clickable="true"
-        >
-        <ImageView
-            style="@style/function_bar_lefticon"
-            android:layout_marginStart="15dp"
-            android:background="@drawable/ic_memory"
-            android:layout_weight="0"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:text="日程圈"
-            style="@style/function_bar_text"
-            android:layout_weight="1"
-            />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_right"
-            android:layout_marginEnd="25dp"
-            android:layout_weight="0"/>
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/line"
-        android:layout_gravity="center"
-        android:layout_marginTop="6dp"/>
+        android:layout_marginTop="12dp"/>
 
     <LinearLayout
         android:id="@+id/ll_sxj"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="6dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
         android:orientation="horizontal"
         android:clickable="true"
         >
@@ -138,21 +59,68 @@
             android:background="@drawable/ic_note"
             android:layout_weight="0"
             />
+
         <TextView
+            style="@style/function_bar_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:text="随心记"
-            style="@style/function_bar_text"
             android:layout_weight="1"
-            />
+            android:text="随心记" />
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:background="@drawable/ic_right"
             android:layout_marginEnd="25dp"
             android:layout_weight="0"/>
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/line"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_ydhd"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        android:clickable="true"
+        >
+        <ImageView
+            style="@style/function_bar_lefticon"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/ic_table"
+            android:layout_weight="0"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:text="数据图表"
+            style="@style/function_bar_text"
+            android:layout_weight="1"
+            />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_right"
+            android:layout_marginEnd="25dp"
+            android:layout_weight="0"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/line"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"/>
+
 </LinearLayout>

@@ -25,10 +25,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.xjay.joyplan.Calendar.Calendar;
-import com.android.xjay.joyplan.Calendar.CalendarLayout;
-import com.android.xjay.joyplan.Calendar.CalendarUtil;
-import com.android.xjay.joyplan.Calendar.CalendarView;
+import com.android.xjay.calendarview.Calendar;
+import com.android.xjay.calendarview.CalendarLayout;
+import com.android.xjay.calendarview.CalendarUtil;
+import com.android.xjay.calendarview.CalendarView;
 import com.android.xjay.joyplan.Calendar.CustomListAdapter;
 import com.android.xjay.joyplan.Calendar.ScrollDisabledListView;
 import com.android.xjay.joyplan.CustomExpanding.CustomItem;
@@ -144,16 +144,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
             // deal with the fragment_discovery
             case "发现":
             {
-
                 View view = inflater.inflate(R.layout.fragment_discovery, null);
-
-
-
-
-
                 view.findViewById(R.id.ll_fqz).setOnClickListener(this);
                 view.findViewById(R.id.ll_ydhd).setOnClickListener(this);
-                view.findViewById(R.id.ll_rcq).setOnClickListener(this);
                 view.findViewById(R.id.ll_sxj).setOnClickListener(this);
                 return view;
 
@@ -321,9 +314,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
             startActivity(intent);
 
 
-        }else if(view.getId()==R.id.ll_rcq){
-            Toast.makeText(mContext,"你点击了日程圈",Toast.LENGTH_SHORT).show();
-        }else if(view.getId()==R.id.ll_sxj){
+        } else if(view.getId()==R.id.ll_sxj){
             Toast.makeText(mContext,"你点击了随心记",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
             intent.setClass(mContext,SxjActivity.class);

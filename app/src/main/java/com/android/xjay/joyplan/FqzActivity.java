@@ -45,6 +45,8 @@ public class FqzActivity extends AppCompatActivity
         findViewById(R.id.ll_fqz_cycle).setOnClickListener(this);
         findViewById(R.id.tv_fqz_confirm).setOnClickListener(this);
         findViewById(R.id.tv_fqz_delete).setOnClickListener(this);
+        findViewById(R.id.ll_fqz_back).setOnClickListener(this);
+        findViewById(R.id.ll_fqz_stat).setOnClickListener(this);
         tv_hour = findViewById(R.id.tv_fqz_hour);
         tv_minute = findViewById(R.id.tv_fqz_minute);
         initTimePicker();
@@ -133,6 +135,10 @@ public class FqzActivity extends AppCompatActivity
 //            bundle.putString(AlarmClock.ALARM_SEARCH_MODE_LABEL,"继续耕耘吧");
 //            deleteAlarm.putExtras(bundle);
             startActivity(deleteAlarm);
+        } else if (v.getId()==R.id.ll_fqz_back) {
+            this.finish();
+        } else if(v.getId()==R.id.ll_fqz_stat){
+            Toast.makeText(this, "你点击了番茄钟的统计信息", Toast.LENGTH_SHORT).show();
         }
     }
 
