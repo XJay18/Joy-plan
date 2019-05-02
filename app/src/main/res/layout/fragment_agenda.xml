@@ -101,7 +101,7 @@
          android:background="#fff"
          app:calendar_padding="10dp"
          app:month_view="com.android.xjay.joyplan.Calendar.SimpleMonthView"
-         app:calendar_height="46dp"
+         app:calendar_height="45dp"
          app:current_month_lunar_text_color="#CFCFCF"
          app:current_month_text_color="#333333"
          app:min_year="2004"
