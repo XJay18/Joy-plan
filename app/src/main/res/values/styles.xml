@@ -28,12 +28,14 @@
     <!-- Fqz Activity Common text -->
     <style name="fqz_ctext">
         <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
     </style>
 
     <!-- The text style for function bars -->
     <style name="function_bar_text">
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">30sp</item>
         <item name="android:gravity">start|center</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <!-- The style for the left icon of function bars-->
