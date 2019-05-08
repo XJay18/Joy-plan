@@ -30,7 +30,7 @@ public class WeekBar extends LinearLayout {
 
     public WeekBar(Context context) {
         super(context);
-        if ("com.android.xjay.joyplan.Calendar.WeekBar".equals(getClass().getName())) {
+        if ("com.android.xjay.calendarview.WeekBar".equals(getClass().getName())) {
             LayoutInflater.from(context).inflate(R.layout.cv_week_bar, this, true);
         }
     }
@@ -42,7 +42,7 @@ public class WeekBar extends LinearLayout {
      */
     void setup(CalendarViewDelegate delegate) {
         this.mDelegate = delegate;
-        if ("com.android.xjay.joyplan.Calendar.WeekBar".equalsIgnoreCase(getClass().getName())) {
+        if ("com.android.xjay.calendarview.WeekBar".equalsIgnoreCase(getClass().getName())) {
             setTextSize(mDelegate.getWeekTextSize());
             setTextColor(delegate.getWeekTextColor());
             setBackgroundColor(delegate.getWeekBackground());
@@ -91,7 +91,7 @@ public class WeekBar extends LinearLayout {
      * @param weekStart 周起始
      */
     protected void onWeekStartChange(int weekStart) {
-        if (!"com.android.xjay.joyplan.Calendar.WeekBar".equalsIgnoreCase(getClass().getName())) {
+        if (!"com.android.xjay.calendarview.WeekBar".equalsIgnoreCase(getClass().getName())) {
             return;
         }
         for (int i = 0; i < getChildCount(); i++) {

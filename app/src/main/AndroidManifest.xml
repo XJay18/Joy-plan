@@ -44,6 +44,8 @@
         <activity android:name=".ScheduleActivity"></activity>
         <activity android:name=".Register" />
         <activity android:name=".SxjActivity"/>
+        <activity android:name=".AddAgendaActivity"/>
+        <activity android:name=".AgendaDetailActivity"/>
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"

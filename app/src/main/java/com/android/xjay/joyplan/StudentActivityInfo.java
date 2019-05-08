@@ -4,12 +4,14 @@ package com.android.xjay.joyplan;
 public class StudentActivityInfo {
     String title;
     String info;
-    String date;
+    String starttime;
+    String endtime;
     String address;
-    public StudentActivityInfo(String Title,String Info,String Date,String Address){
+    public StudentActivityInfo(String Title,String Info,String starttime,String endtime,String Address){
         title=Title;
         info=Info;
-        date=Date;
+        this.starttime =starttime;
+        this.endtime=endtime;
         address=Address;
     }
 

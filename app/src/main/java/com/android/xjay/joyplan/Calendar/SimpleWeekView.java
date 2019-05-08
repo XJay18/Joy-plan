@@ -24,7 +24,7 @@ public class SimpleWeekView extends WeekView {
         super(context);
         setLayerType(View.LAYER_TYPE_SOFTWARE,mSelectedPaint);
         //4.0以上硬件加速会导致无效
-        mSelectedPaint.setMaskFilter(new BlurMaskFilter(25, BlurMaskFilter.Blur.SOLID));
+        //mSelectedPaint.setMaskFilter(new BlurMaskFilter(25, BlurMaskFilter.Blur.SOLID));
     }
 
 

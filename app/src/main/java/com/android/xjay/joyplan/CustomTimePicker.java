@@ -80,8 +80,8 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
      *
      * @param context      Activity Context
      * @param callback     results callback
-     * @param beginDateStr date str yyyy-MM-dd HH:mm
-     * @param endDateStr   date str yyyy-MM-dd HH:mm
+     * @param beginDateStr starttime str yyyy-MM-dd HH:mm
+     * @param endDateStr   starttime str yyyy-MM-dd HH:mm
      */
     CustomTimePicker(Context context, Callback callback,
                      String beginDateStr, String endDateStr,
@@ -538,7 +538,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     /**
      * Display the timepicker
      *
-     * @param dateStr String of the date, yyyy-MM-dd or yyyy-MM-dd HH:mm
+     * @param dateStr String of the starttime, yyyy-MM-dd or yyyy-MM-dd HH:mm
      */
     public void show(String dateStr) {
         if (!canShow() || TextUtils.isEmpty(dateStr)) return;
@@ -569,7 +569,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     /**
      * Set the chosen time for the timepicker
      *
-     * @param dateStr  String of date
+     * @param dateStr  String of starttime
      * @param showAnim whether to show animation
      * @return whether setting is successful
      */
@@ -581,7 +581,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     /**
      * Set the chosen time for the timepicker
      *
-     * @param timestamp String of date
+     * @param timestamp String of starttime
      * @param showAnim  whether to show animation
      * @return whether setting is successful
      */
@@ -615,7 +615,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     }
 
     /**
-     * Sets whether the date control displays time and minutes
+     * Sets whether the starttime control displays time and minutes
      */
     public void setCanShowPreciseTime(boolean canShowPreciseTime) {
         if (!canShow()) return;
@@ -655,7 +655,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     }
 
     /**
-     * Sets whether the date control can be rotated in circulation
+     * Sets whether the starttime control can be rotated in circulation
      */
     public void setScrollLoop(boolean canLoop) {
         if (!canShow()) return;
@@ -668,7 +668,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     }
 
     /**
-     * Sets whether the date control displays a scrolling animation
+     * Sets whether the starttime control displays a scrolling animation
      */
     public void setCanShowAnim(boolean canShowAnim) {
         if (!canShow()) return;

@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#eeeeee">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="#ffffff">
+        <TextView
+            android:id="@+id/tv_agenda_cancel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:padding="10dp"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#f8463e"
+            android:text="取消"/>
+        <TextView
+            android:padding="10dp"
+            android:layout_centerHorizontal="true"
+            android:text="新建任务"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"/>
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/tv_agenda_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="添加"
+            android:textSize="16sp"
+            android:textColor="#999999" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="15dp"
+        android:background="@drawable/btn_shape"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="100dp">
+    <LinearLayout
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:padding="10dp"
+            android:id="@+id/editText_agenda_title"
+            android:layout_width="match_parent"
+            android:gravity="left"
+            android:textSize="15sp"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:cursorVisible="false"
+            android:textColor="#999999"
+            android:textAlignment="gravity"
+            android:hint="活动标题"/>
+        <EditText
+            android:textSize="15sp"
+            android:padding="10dp"
+            android:id="@+id/editText_classification"
+            android:layout_width="match_parent"
+            android:gravity="left"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:cursorVisible="false"
+            android:textColor="#999999"
+            android:textAlignment="gravity"
+            android:hint="活动地点"/>
+    </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@drawable/btn_shape"
+        android:layout_marginTop="7.5dp"
+        android:layout_width="match_parent"
+        android:layout_height="110dp">
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:padding="10dp"
+                    android:id="@+id/tv_agenda_start_time"
+                    android:background="@color/transparent"
+                    android:text="开始"
+                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:padding="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:textColor="#999999"
+                    android:id="@+id/tv_select_agenda_start_time"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="15sp"
+                    android:padding="10dp"
+                    android:id="@+id/tv_agenda_end_time"
+                    android:background="@color/transparent"
+                    android:text="结束"
+                    android:textColor="#333333"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:padding="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:textColor="#999999"
+                    android:id="@+id/tv_select_agenda_end_time"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="7.5dp"
+        android:background="@drawable/btn_shape"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="100dp">
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:gravity="left"
+                android:textSize="15sp"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:cursorVisible="false"
+                android:textColor="#333333"
+                android:textAlignment="gravity"
+                android:text="提醒"/>
+            <TextView
+                android:textSize="15sp"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:gravity="left"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:cursorVisible="false"
+                android:textColor="#333333"
+                android:textAlignment="gravity"
+                android:text="标记为"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="15sp"
+        android:layout_marginBottom="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/btn_shape">
+        <EditText
+            android:textSize="15sp"
+            android:padding="10dp"
+            android:id="@+id/editText_notation"
+            android:layout_width="match_parent"
+            android:gravity="left"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:cursorVisible="false"
+            android:textColor="#999999"
+            android:textAlignment="gravity"
+            android:hint="备注"/>
+    </RelativeLayout>
+
+    <!--RelativeLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_clock_agenda" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:text="日程"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/agenda_btn_shape2"
+                android:letterSpacing="0.1"
+                android:text="  \n  需要设置时间\n  系统推送消息提醒\n  如：下午五点开会\n"
+                android:textColor="@color/colorWhite"
+                android:textSize="17sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_list" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:text="清单"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/agenda_btn_shape2"
+                android:letterSpacing="0.1"
+                android:text="  \n  无需要设置时间\n  记录将要做的事项\n  如：买水果\n"
+                android:textColor="@color/colorWhite"
+                android:textSize="17sp" />
+        </LinearLayout>
+    </RelativeLayout-->
+
+    <!--RelativeLayout
+        android:id="@+id/dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="220dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/agenda_btn_shape2">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <EditText
+            android:letterSpacing="0.3"
+            android:textSize="19sp"
+            android:id="@+id/edittext_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:hint="请输入内容"
+            android:textColorHint="@color/colorWhite"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_alignParentLeft="true"
+                android:textSize="19sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="时间"
+                android:letterSpacing="0.3"
+                android:textColor="@color/colorWhite"/>
+            <TextView
+                android:layout_marginRight="15dp"
+                android:letterSpacing="0.3"
+                android:textColor="@color/colorWhite"
+                android:layout_alignParentRight="true"
+                android:textSize="19sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_time"/>
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</RelativeLayout-->
+
+</android.widget.LinearLayout>

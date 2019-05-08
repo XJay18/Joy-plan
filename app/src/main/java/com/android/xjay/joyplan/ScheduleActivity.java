@@ -55,7 +55,7 @@ public class ScheduleActivity extends AppCompatActivity {
         for (int i = 0; i < length; i++) {
             TITLES[i] = c.getString(1).toString();
             INFOS[i] = c.getString(2).toString();
-            String[] s=new String[]{INFOS[i],INFOS[i],INFOS[i],INFOS[i]};
+            String[] s=new String[]{INFOS[i]};
             addItem(TITLES[i],s,R.color.colorWhite,iconRes);
             c.move(1);
         }
@@ -137,12 +137,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
     private void configureSubItem(final CustomItem item, final View view, String subTitle) {
         ((TextView) view.findViewById(R.id.sub_title)).setText(subTitle);
-        view.findViewById(R.id.remove_sub_item).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                item.removeSubItem(view);
-            }
-        });
+
     }
 
     private void showInsertDialog(final ReserveActivity.OnItemCreated positive) {

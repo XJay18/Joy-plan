@@ -1,5 +1,6 @@
 package com.android.xjay.joyplan;
 
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,10 +15,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 
 
-
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -33,6 +36,7 @@ import com.android.xjay.joyplan.Calendar.CustomListAdapter;
 import com.android.xjay.joyplan.Calendar.ScrollDisabledListView;
 import com.android.xjay.joyplan.CustomExpanding.CustomItem;
 import com.android.xjay.joyplan.CustomExpanding.ExpandingList;
+import com.android.xjay.joyplan.Utils.ScreenSizeUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,7 +51,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
     DynamicReceiver dynamicReceiver;
     String[] TITLES;
     String[] INFOS;
-    String[] TIMES;
+    String[] STARTTIMES;
+    //String[] ENDTIMES;
+    String[] ADDRESSES;
 
     //used by fragment_agenda
     TextView mTextMonthDay;
@@ -275,11 +281,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
     public void RedrawExpandingList(){
         //TODO
         expandingList.Clear_mContainer();
-        TITLES= new String[20];
+        TITLES= new String[100];
 
-        INFOS = new String[20];
+        INFOS = new String[100];
 
-        TIMES=new String[20];
+        STARTTIMES =new String[100];
+
+        //ENDTIMES=new String[100];
+
+        ADDRESSES=new String[100];
         UserDBHelper mHelper;
         Cursor c;
 
@@ -294,9 +304,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
         for (int i = 0; i < length; i++) {
             TITLES[i] = c.getString(1).toString();
             INFOS[i] = c.getString(2).toString();
-            TIMES[i]=c.getString(3).toString();
-            String[] s=new String[]{INFOS[i],INFOS[i],INFOS[i],INFOS[i]};
-            addItem(TITLES[i],s,TIMES[i],R.color.transparent,iconRes);
+            STARTTIMES[i]=c.getString(3).toString();
+            //ENDTIMES[i]=c.getString(4).toString();
+            ADDRESSES[i]=c.getString(5).toString();
+            String[] s=new String[]{INFOS[i]};
+            addItem(TITLES[i],INFOS[i],STARTTIMES[i],ADDRESSES[i],R.color.transparent,iconRes);
             c.move(1);
         }
     }
@@ -322,42 +334,33 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
         }
         else if(view.getId()==R.id.btn_mission){
             final int position=(int)view.getTag();
-            Toast.makeText(mContext,"点击了button"+position,Toast.LENGTH_SHORT).show();
+            customDialog();
         }
 
     }
 
-    private void addItem(String title, String[] subItems,String time,int colorRes, int iconRes) {
+    private void addItem(String title,String info,String starttime,String address,int colorRes, int iconRes) {
         //Let's create an custom_item with R.layout.expanding_layout
         final CustomItem item = expandingList.createNewItem(R.layout.expanding_layout);
-        String Date=time.substring(0,10);
+        String Date=starttime.substring(0,10);
         //If custom_item creation is successful, let's configure it
         if (item != null) {
             item.setIndicatorColorRes(colorRes);
             item.setIndicatorIconRes(iconRes);
+            item.createSubItems(1);
+            final View view = item.getSubItemView(0);
+            //Let's set some values in
+            configureSubItem(item, view, info);
             //It is possible to get any view inside the inflated layout. Let's set the text in the custom_item
             ((TextView) item.findViewById(R.id.title)).setText(title);
-            ((TextView) item.findViewById(R.id.time)).setText(Date);
+            ((TextView)item.findViewById(R.id.address)).setText(address);
+            ((TextView) item.findViewById(R.id.starttime)).setText(Date);
             //We can create items in batch.
-            item.createSubItems(subItems.length);
-            for (int i = 0; i < item.getSubItemsCount(); i++) {
-                //Let's get the created custom_sub_item custom_item by its index
-                final View view = item.getSubItemView(i);
 
-                //Let's set some values in
-                configureSubItem(item, view, subItems[i]);
-            }
-            item.findViewById(R.id.add_more_sub_items).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                    Context context=mContext;
-                    CharSequence text="添加成功";
-                    int duration=Toast.LENGTH_SHORT;
-                    Toast toast=Toast.makeText(context,text,duration);
-                    toast.show();
-                }
-            });
+
+
+
 
             /*item.findViewById(R.id.remove_item).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -372,12 +375,37 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
     public boolean onLongClick(View v) {
         switch (v.getId()){
             case R.id.btn_mission:
-                final int position=(int)v.getTag();
-                Toast.makeText(mContext,"长按了button"+ position,Toast.LENGTH_SHORT).show();
+                /*final int position=(int)v.getTag();
+                Intent intent = new Intent();
+                intent.setClass(mContext,AgendaDetailActivity.class);
+                startActivity(intent);*/
+
+                Intent intent = new Intent();
+                intent.setClass(mContext,AddAgendaActivity.class);
+                startActivity(intent);
                 return true;
         }
         return false;
     }
+
+    private void customDialog() {
+        final Dialog dialog = new Dialog(mContext, R.style.NormalDialogStyle);
+        View view = View.inflate(mContext, R.layout.dialog_normal, null);
+        dialog.setContentView(view);
+        //使得点击对话框外部不消失对话框
+        dialog.setCanceledOnTouchOutside(true);
+        //设置对话框的大小
+        view.setMinimumHeight((int) (ScreenSizeUtils.getInstance(mContext).getScreenHeight() * 0.4f));
+        Window dialogWindow = dialog.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.width = (int) (ScreenSizeUtils.getInstance(mContext).getScreenWidth() * 0.9f);
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+        dialogWindow.setAttributes(lp);
+
+        dialog.show();
+    }
+
 
     @Override
     public void onYearChange(int year) {
@@ -409,14 +437,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
         }
     }
 
-    private void configureSubItem(final CustomItem item, final View view, String subTitle) {
-        ((TextView) view.findViewById(R.id.sub_title)).setText(subTitle);
-        view.findViewById(R.id.remove_sub_item).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                item.removeSubItem(view);
-            }
-        });
+    private void configureSubItem(final CustomItem item, final View view, String info) {
+        ((TextView) view.findViewById(R.id.sub_title)).setText(info);
+
     }
 
     private void showInsertDialog(final ReserveActivity.OnItemCreated positive) {
