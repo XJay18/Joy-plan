@@ -1,6 +1,8 @@
 package com.android.xjay.joyplan;
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.AlarmClock;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +38,6 @@ public class FqzActivity extends AppCompatActivity
     // default fqz cycle 1
     private int fqz_size = 1;
     private int fqz_break = 5;
-    private boolean auxSize = true, auxBreak = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +45,10 @@ public class FqzActivity extends AppCompatActivity
         setContentView(R.layout.dis_fqz);
         findViewById(R.id.ll_fqz_cycle).setOnClickListener(this);
         findViewById(R.id.tv_fqz_confirm).setOnClickListener(this);
-        findViewById(R.id.tv_fqz_delete).setOnClickListener(this);
+        findViewById(R.id.tv_fqz_setup).setOnClickListener(this);
         findViewById(R.id.ll_fqz_back).setOnClickListener(this);
         findViewById(R.id.ll_fqz_stat).setOnClickListener(this);
+        findViewById(R.id.ll_fqz_help).setOnClickListener(this);
         tv_hour = findViewById(R.id.tv_fqz_hour);
         tv_minute = findViewById(R.id.tv_fqz_minute);
         initTimePicker();
@@ -117,28 +119,27 @@ public class FqzActivity extends AppCompatActivity
                 intents.get(t).putExtra(AlarmClock.EXTRA_MINUTES, time[1]);
                 if (t % 2 == 0)
                     intents.get(t).putExtra(
-                            AlarmClock.EXTRA_MESSAGE, "番茄成熟啦");
+                            AlarmClock.EXTRA_MESSAGE, "番茄钟结束");
                 else
-                    intents.get(t).putExtra(AlarmClock.EXTRA_MESSAGE,"继续耕耘吧");
+                    intents.get(t).putExtra(AlarmClock.EXTRA_MESSAGE,"番茄钟开始");
                 intents.get(t).putExtra(AlarmClock.EXTRA_SKIP_UI, true);
                 startActivity(intents.get(t));
             }
             Toast.makeText(this, "番茄钟设置成功，认真耕耘吧~", Toast.LENGTH_SHORT).show();
 
-        } else if (v.getId() == R.id.tv_fqz_delete) {
+        } else if (v.getId() == R.id.tv_fqz_setup) {
             Intent deleteAlarm=new Intent(AlarmClock.ACTION_DISMISS_ALARM);
-//
-//            TODO
-//            how to DISMISS ALARM by alarm search mode label ???
-//            https://developer.android.google.cn/reference/android/provider/AlarmClock.html?hl=zh-cn#
-//            Bundle bundle = new Bundle();
-//            bundle.putString(AlarmClock.ALARM_SEARCH_MODE_LABEL,"继续耕耘吧");
-//            deleteAlarm.putExtras(bundle);
             startActivity(deleteAlarm);
         } else if (v.getId()==R.id.ll_fqz_back) {
             this.finish();
         } else if(v.getId()==R.id.ll_fqz_stat){
             Toast.makeText(this, "你点击了番茄钟的统计信息", Toast.LENGTH_SHORT).show();
+        } else if(v.getId()==R.id.ll_fqz_help){
+            AlertDialog.Builder mBuilder=new AlertDialog.Builder(this);
+            mBuilder.setTitle("番茄钟使用简介");
+            mBuilder.setMessage(R.string.info_fqz);
+            AlertDialog mAlert=mBuilder.create();
+            mAlert.show();
         }
     }
 
@@ -150,7 +151,7 @@ public class FqzActivity extends AppCompatActivity
     private void initTimePicker() {
         tv_hour.setText("0");
         tv_minute.setText("25");
-        long beginTimestamp = DateFormat.str2Long("2010-00-00", false);
+        long beginTimestamp = DateFormat.str2Long("2010-00-00 00:00", true);
         long endTimestamp = System.currentTimeMillis();
 
         mTimePicker = new CustomTimePicker(this, new CustomTimePicker.Callback() {
@@ -169,7 +170,7 @@ public class FqzActivity extends AppCompatActivity
         }, beginTimestamp, endTimestamp, "请选择番茄周期", 2);
 
         mTimePicker.setCancelable(true);
-        mTimePicker.setCanShowPreciseTime(false);
+        mTimePicker.setTimePickerShowMode(1);
         mTimePicker.setScrollLoop(true);
         mTimePicker.setCanShowAnim(false);
     }

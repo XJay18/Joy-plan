@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="#EEEEEE">
 
 
     <LinearLayout
@@ -12,53 +12,47 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="12dp"
-        android:orientation="horizontal"
-        android:clickable="true">
+        android:background="@color/colorWhite"
+        android:clickable="true"
+        android:orientation="horizontal">
+
         <ImageView
             style="@style/function_bar_lefticon"
             android:layout_marginStart="15dp"
-            android:background="@drawable/ic_clock"
             android:layout_weight="0"
-            />
+            android:background="@drawable/ic_clock" />
+
         <TextView
+            style="@style/function_bar_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:text="番茄钟"
-            style="@style/function_bar_text"
             android:layout_weight="1"
-            />
+            android:text="番茄钟" />
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:background="@drawable/ic_right"
             android:layout_marginEnd="25dp"
-            android:layout_weight="0"/>
+            android:layout_weight="0"
+            android:background="@drawable/ic_right" />
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/line"
-        android:layout_gravity="center"
-        android:layout_marginTop="12dp"/>
 
     <LinearLayout
         android:id="@+id/ll_sxj"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="12dp"
-        android:orientation="horizontal"
+        android:background="@color/colorWhite"
         android:clickable="true"
-        >
+        android:orientation="horizontal">
+
         <ImageView
             style="@style/function_bar_lefticon"
             android:layout_marginStart="15dp"
-            android:background="@drawable/ic_note"
             android:layout_weight="0"
-            />
+            android:background="@drawable/ic_note" />
 
         <TextView
             style="@style/function_bar_text"
@@ -72,55 +66,41 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:background="@drawable/ic_right"
             android:layout_marginEnd="25dp"
-            android:layout_weight="0"/>
+            android:layout_weight="0"
+            android:background="@drawable/ic_right" />
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/line"
-        android:layout_gravity="center"
-        android:layout_marginTop="12dp"/>
 
     <LinearLayout
         android:id="@+id/ll_ydhd"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="12dp"
-        android:orientation="horizontal"
+        android:background="@color/colorWhite"
         android:clickable="true"
-        >
+        android:orientation="horizontal">
+
         <ImageView
             style="@style/function_bar_lefticon"
             android:layout_marginStart="15dp"
-            android:background="@drawable/ic_table"
             android:layout_weight="0"
-            />
+            android:background="@drawable/ic_table" />
+
         <TextView
+            style="@style/function_bar_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:text="数据图表"
-            style="@style/function_bar_text"
             android:layout_weight="1"
-            />
+            android:text="数据图表" />
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:background="@drawable/ic_right"
             android:layout_marginEnd="25dp"
-            android:layout_weight="0"/>
+            android:layout_weight="0"
+            android:background="@drawable/ic_right" />
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/line"
-        android:layout_gravity="center"
-        android:layout_marginTop="12dp"/>
 
 </LinearLayout>

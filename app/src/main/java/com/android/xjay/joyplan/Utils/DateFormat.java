@@ -40,6 +40,10 @@ public class DateFormat {
         return str2Long(dateStr, getFormatPattern(isPreciseTime));
     }
 
+    public static long str2Long(String dateStr, int isPreciseTime) {
+        return str2Long(dateStr, getFormatPattern(isPreciseTime));
+    }
+
     private static long str2Long(String dateStr, String pattern) {
         try {
             return new SimpleDateFormat(pattern, Locale.CHINA).parse(dateStr).getTime();

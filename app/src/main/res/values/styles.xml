@@ -27,7 +27,7 @@
 
     <!-- Fqz Activity Common text -->
     <style name="fqz_ctext">
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 
@@ -46,7 +46,5 @@
     </style>
 
     <!-- Font Library -->
-    <style name="font_yy">
-        <item name="android:fontFamily">@font/youyuan</item>
-    </style>
+
 </resources>

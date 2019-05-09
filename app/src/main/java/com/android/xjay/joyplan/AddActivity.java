@@ -155,7 +155,7 @@ public class AddActivity extends AppCompatActivity {
             //允许点击屏幕或物理返回键关闭
             myTimePicker.setCancelable(true);
             // 显示时和分
-            myTimePicker.setCanShowPreciseTime(true);
+            myTimePicker.setTimePickerShowMode(0);
             // 允许循环滚动
             myTimePicker.setScrollLoop(true);
             // 允许滚动动画

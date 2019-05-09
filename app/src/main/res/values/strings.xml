@@ -2,7 +2,7 @@
     tools:ignore="MissingTranslation">
 
     <string name="app_name">Joy Plan</string>
-    <string name="info_fqz">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;使用番茄钟设定一个【番茄周期】，在一个【番茄周期】内专注于一件工作。设定【番茄篮子】的大小，当番茄篮子满的时候，可以休息一个【番茄时长】。快来种番茄吧~</string>
+    <string name="info_fqz">使用番茄钟设定一个【番茄周期】，在一个【番茄周期】内专注于一件工作。设定【番茄篮子】的大小，当番茄篮子满的时候，可以休息一个【番茄时长】。\n\n快来种番茄吧~</string>
     <string name="cancel">取消</string>
     <string name="title">请选择时间</string>
     <string name="confirm">确定</string>

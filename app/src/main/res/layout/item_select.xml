@@ -5,5 +5,4 @@
     android:singleLine="true"
     android:gravity="center"
     style="@style/fqz_ctext"
-    android:fontFamily="@font/youyuan"
     />

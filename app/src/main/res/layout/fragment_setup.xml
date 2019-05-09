@@ -32,7 +32,6 @@
                 android:text="等级："
                 android:textSize="20sp"
                 android:layout_marginLeft="5dp"
-                style="@style/font_yy"
                 />
             <TextView
                 android:layout_width="match_parent"
@@ -41,7 +40,6 @@
                 android:text="昵称："
                 android:textSize="20sp"
                 android:layout_marginLeft="10dp"
-                style="@style/font_yy"
                 />
             <TextView
                 android:layout_width="match_parent"
@@ -50,7 +48,6 @@
                 android:text="用户ID："
                 android:textSize="20sp"
                 android:layout_marginLeft="5dp"
-                style="@style/font_yy"
                 />
         </RelativeLayout>
     </LinearLayout>
