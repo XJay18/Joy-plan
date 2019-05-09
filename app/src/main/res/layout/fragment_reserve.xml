@@ -22,9 +22,9 @@
         android:id="@+id/reserve_expanding_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp"
         android:layout_weight="1"
-        android:background="@color/transparent">
+        android:background="@color/transparent"
+        android:padding="5dp">
 
     </com.android.xjay.joyplan.CustomExpanding.ExpandingList>
 

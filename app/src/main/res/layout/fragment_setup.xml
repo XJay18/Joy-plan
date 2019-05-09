@@ -3,11 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBG">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#69AEFD">
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/toolbar_blue">
         <RelativeLayout
             android:id="@+id/rl_setup_portrait"
             android:layout_marginTop="30dp"
@@ -16,13 +18,13 @@
             android:layout_marginStart="20dp"
             android:layout_marginBottom="45dp"
             android:background="@drawable/bg_setup_portrait"
-       >
-        <com.android.xjay.joyplan.CircleImageView
-            android:layout_width="105dp"
-            android:layout_height="105dp"
-            android:layout_centerInParent="true"
-            android:src="@drawable/portrait"
-       />
+            >
+            <com.android.xjay.joyplan.CircleImageView
+                android:layout_width="105dp"
+                android:layout_height="105dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/portrait"
+                />
 
         </RelativeLayout>
         <TextView
@@ -32,7 +34,7 @@
             android:layout_marginTop="40dp"
             android:layout_marginLeft="30dp"
             android:text="用户名"
-
+            android:textColor="@color/colorWhite"
             style="@style/function_bar_text"
             />
     </RelativeLayout>
@@ -44,221 +46,222 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-    <LinearLayout
-        android:id="@+id/ll_setup_accountnsafety"
-        android:layout_width="match_parent"
-        android:layout_height="33dp"
-        android:layout_marginTop="25dp"
-        android:orientation="horizontal"
-        android:clickable="true"
-        android:background="@drawable/bg_setup_button"
-        >
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_setup_lock"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"/>
+            <LinearLayout
+                android:id="@+id/ll_setup_accountnsafety"
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:layout_marginTop="25dp"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:background="@drawable/bg_setup_button"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_setup_lock"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:text="账号与安全"
-            style="@style/function_bar_text"
-            android:textSize="17dp"
-            android:layout_weight="1"
-            />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:text="账号与安全"
+                    style="@style/function_bar_text"
+                    android:textSize="17dp"
+                    android:layout_weight="1"
+                    />
 
-        <Button
-            android:id="@+id/bt_setup_accountnsafety"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_right"
-            android:layout_marginEnd="25dp"
-            android:layout_weight="0"/>
-    </LinearLayout>
+                <Button
+                    android:id="@+id/bt_setup_accountnsafety"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_right"
+                    android:layout_marginEnd="25dp"
+                    android:layout_weight="0"/>
+            </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_setup_addfriends"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="12dp"
-        android:orientation="horizontal"
-        android:clickable="true"
-        android:background="@drawable/bg_setup_button"
-        >
+            <LinearLayout
+                android:id="@+id/ll_setup_addfriends"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:background="@drawable/bg_setup_button"
+                >
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_setup_addfriend"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_setup_addfriend"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:text="二维码添加好友"
-            style="@style/function_bar_text"
-            android:textSize="17dp"
-            android:layout_weight="1"
-            />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:text="二维码添加好友"
+                    style="@style/function_bar_text"
+                    android:textSize="17dp"
+                    android:layout_weight="1"
+                    />
 
-        <Button
-            android:id="@+id/bt_setup_addfriends"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_right"
-            android:layout_marginEnd="25dp"
-            android:layout_weight="0"/>
-    </LinearLayout>
+                <Button
+                    android:id="@+id/bt_setup_addfriends"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_right"
+                    android:layout_marginEnd="25dp"
+                    android:layout_weight="0"/>
+            </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_setup_personality"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:clickable="true"
-        android:background="@drawable/bg_setup_button"
-        >
+            <LinearLayout
+                android:id="@+id/ll_setup_personality"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:background="@drawable/bg_setup_button"
+                >
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_setup_personality"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_setup_personality"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:text="个性化"
-            style="@style/function_bar_text"
-            android:textSize="17dp"
-            android:layout_weight="1"
-            />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:text="个性化"
+                    style="@style/function_bar_text"
+                    android:textSize="17dp"
+                    android:layout_weight="1"
+                    />
 
-        <Button
-            android:id="@+id/bt_setup_personality"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_right"
-            android:layout_marginEnd="25dp"
-            android:layout_weight="0"/>
-    </LinearLayout>
+                <Button
+                    android:id="@+id/bt_setup_personality"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_right"
+                    android:layout_marginEnd="25dp"
+                    android:layout_weight="0"/>
+            </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_setup_switchmode"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:clickable="true"
-        android:background="@drawable/bg_setup_button"
-    >
+            <LinearLayout
+                android:id="@+id/ll_setup_switchmode"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:background="@drawable/bg_setup_button"
+                >
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_setup_modeswitch"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_setup_modeswitch"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
-        android:text="模式切换"
-        style="@style/function_bar_text"
-        android:textSize="17dp"
-        android:layout_weight="1"
-        />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:text="模式切换"
+                    style="@style/function_bar_text"
+                    android:textSize="17dp"
+                    android:layout_weight="1"
+                    />
 
-    <Button
-        android:id="@+id/bt_setup_switchmode"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_gravity="center"
-        android:background="@drawable/ic_right"
-        android:layout_marginEnd="25dp"
-        android:layout_weight="0"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/ll_setup_notenfeedback"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:clickable="true"
-        android:background="@drawable/bg_setup_button"
-        >
+                <Button
+                    android:id="@+id/bt_setup_switchmode"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_right"
+                    android:layout_marginEnd="25dp"
+                    android:layout_weight="0"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_setup_notenfeedback"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:background="@drawable/bg_setup_button"
+                >
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/ic_setup_help" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/ic_setup_help" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:text="备注与反馈"
-            style="@style/function_bar_text"
-            android:textSize="17dp"
-            android:layout_weight="1"
-            />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:text="备注与反馈"
+                    style="@style/function_bar_text"
+                    android:textSize="17dp"
+                    android:layout_weight="1"
+                    />
 
-        <Button
-            android:id="@+id/bt_setup_notenfeedback"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:layout_marginEnd="25dp"
-            android:layout_weight="0"
-            android:background="@drawable/ic_right" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/ll_setup_about"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal"
-        android:clickable="true"
-        android:background="@drawable/bg_setup_button"
-        >
+                <Button
+                    android:id="@+id/bt_setup_notenfeedback"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="25dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/ic_right" />
+            </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_setup_menu"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"/>
+            <LinearLayout
+                android:id="@+id/ll_setup_about"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:background="@drawable/bg_setup_button"
+                >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:text="关于"
-            style="@style/function_bar_text"
-            android:textSize="17dp"
-            android:layout_weight="1"
-            />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_setup_menu"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"/>
 
-        <Button
-            android:id="@+id/bt_setup_about"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_right"
-            android:layout_marginEnd="25dp"
-            android:layout_weight="0"/>
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:text="关于"
+                    style="@style/function_bar_text"
+                    android:textSize="17dp"
+                    android:layout_weight="1"
+                    />
+
+                <Button
+                    android:id="@+id/bt_setup_about"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_right"
+                    android:layout_marginEnd="25dp"
+                    android:layout_weight="0"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
     <TextView

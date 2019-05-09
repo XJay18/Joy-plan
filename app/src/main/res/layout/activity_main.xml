@@ -108,8 +108,8 @@
             android:layout_alignTop="@+id/login"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="261dp"
+            android:background="@drawable/bg_btn_blue"
             android:text="登录"
-            android:textSize="14.6sp"
-            android:background="@drawable/bg_btn_blue" />
+            android:textSize="14.6sp" />
     </RelativeLayout>
 </android.widget.RelativeLayout>

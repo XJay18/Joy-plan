@@ -284,6 +284,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
         }
         return map;
     }
+
     public void RedrawExpandingList(){
         //TODO
         expandingList.Clear_mContainer();
@@ -293,13 +294,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
 
         STARTTIMES =new String[100];
 
-        //ENDTIMES=new String[100];
+//        ENDTIMES=new String[100];
 
         ADDRESSES=new String[100];
         UserDBHelper mHelper;
         Cursor c;
-
         mHelper = UserDBHelper.getInstance(getContext(), 1);
+//        mHelper.reset();
         SQLiteDatabase dbRead = mHelper.getReadableDatabase();
         c = dbRead.query("user_info", null, null
                 , null, null, null, null);
@@ -311,7 +312,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
             TITLES[i] = c.getString(1).toString();
             INFOS[i] = c.getString(2).toString();
             STARTTIMES[i]=c.getString(3).toString();
-            //ENDTIMES[i]=c.getString(4).toString();
+//            ENDTIMES[i]=c.getString(4).toString();
             ADDRESSES[i]=c.getString(5).toString();
             String[] s=new String[]{INFOS[i]};
             addItem(TITLES[i],INFOS[i],STARTTIMES[i],ADDRESSES[i],R.color.transparent,iconRes);
@@ -327,9 +328,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
             startActivity(intent);
         }else if(view.getId()==R.id.ll_ydhd) {
             Toast.makeText(mContext,"你点击了预定活动",Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent();
-            intent.setClass(this.getContext(),ScheduleActivity.class);
-            startActivity(intent);
+//            Intent intent=new Intent();
+//            intent.setClass(this.getContext(),ScheduleActivity.class);
+//            startActivity(intent);
 
 
         } else if(view.getId()==R.id.ll_sxj){

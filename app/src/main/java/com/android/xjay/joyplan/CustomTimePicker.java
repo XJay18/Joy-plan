@@ -15,7 +15,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 
 public class CustomTimePicker implements View.OnClickListener, PickerView.OnSelectedListener {
 
@@ -38,7 +37,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
 
     private DecimalFormat mDecimalFormat = new DecimalFormat("00");
 
-    private boolean mCanShowPreciseTime;
+    private int mTimePickerShowMode;
     private int mScrollUnits = SCROLL_UNIT_HOUR + SCROLL_UNIT_MINUTE;
 
     /**
@@ -575,7 +574,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
      */
     public boolean setSelectedTime(String dateStr, boolean showAnim) {
         return canShow() && !TextUtils.isEmpty(dateStr)
-                && setSelectedTime(DateFormat.str2Long(dateStr, mCanShowPreciseTime), showAnim);
+                && setSelectedTime(DateFormat.str2Long(dateStr, mTimePickerShowMode), showAnim);
     }
 
     /**
@@ -615,18 +614,25 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     }
 
     /**
-     * Sets whether the starttime control displays time and minutes
+     * Sets the Time Picker Show Mode
+     * @param
+     * timePickerShowMode 0: show YEAR MONTH DAY HOUR MINUTE
+     *                    1: show HOUR MINUTE
      */
-    public void setCanShowPreciseTime(boolean canShowPreciseTime) {
+    public void setTimePickerShowMode(int timePickerShowMode) {
         if (!canShow()) return;
 
-        if (canShowPreciseTime) {
+        // show YEAR MONTH DAY HOUR MINUTE
+        if (timePickerShowMode==0) {
             initScrollUnit();
             mDpvHour.setVisibility(View.VISIBLE);
             mTvHourUnit.setVisibility(View.VISIBLE);
             mDpvMinute.setVisibility(View.VISIBLE);
             mTvMinuteUnit.setVisibility(View.VISIBLE);
-        } else {
+
+        }
+        // show HOUR MINUTE
+        else if(timePickerShowMode==1){
             //initScrollUnit(SCROLL_UNIT_HOUR, SCROLL_UNIT_MINUTE);
             initScrollUnit();
             mDpvYear.setVisibility(View.GONE);
@@ -641,7 +647,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
             mDpvMinute.setVisibility(View.VISIBLE);
             mTvMinuteUnit.setVisibility(View.VISIBLE);
         }
-        mCanShowPreciseTime = canShowPreciseTime;
+        mTimePickerShowMode = timePickerShowMode;
     }
 
     private void initScrollUnit(Integer... units) {
