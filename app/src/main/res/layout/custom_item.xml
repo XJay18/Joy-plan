@@ -3,52 +3,69 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp">
+    android:layout_marginTop="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical|start"
+                    android:textColor="#666666"
+                    android:textSize="10sp" />
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp"
-        android:fontFamily="@font/muli"
-        android:gravity="center_vertical|start"
-        android:textColor="@color/colorBlack"
-        android:textSize="22sp" />
 
-    <ImageView
-        android:id="@+id/add_more_sub_items"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        app:srcCompat="@drawable/ic_action_add_black"/>
 
-   <!--ImageView
-        android:id="@+id/remove_item"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_toStartOf="@id/add_more_sub_items"
-        android:layout_toLeftOf="@id/add_more_sub_items"
-        android:padding="12dp"
-        app:srcCompat="@drawable/ic_delete_black"-->
+                <!--ImageView
+                     android:id="@+id/remove_item"
+                     android:layout_width="48dp"
+                     android:layout_height="48dp"
+                     android:layout_centerVertical="true"
+                     android:layout_marginEnd="8dp"
+                     android:layout_marginRight="8dp"
+                     android:layout_toStartOf="@id/add_more_sub_items"
+                     android:layout_toLeftOf="@id/add_more_sub_items"
+                     android:padding="12dp"
+                     app:srcCompat="@drawable/ic_delete_black"-->
 
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2019-04-07"
-        android:layout_centerVertical="true"
-        android:fontFamily="@font/muli"
-        android:textColor="@color/colorBlack"
-        android:layout_toRightOf="@+id/title"
-        android:layout_marginLeft="40dp"
-        android:textSize="22sp" />
+                <TextView
+                    android:id="@+id/starttime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2019-04-07"
+                    android:layout_centerVertical="true"
+                    android:textColor="#666666"
+                    android:layout_toRightOf="@+id/title"
+                    android:layout_marginLeft="80dp"
+                    android:textSize="10sp" />
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_toRightOf="@id/starttime"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="80dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#666666"
+                    android:textSize="10sp"
+                    android:text="地点：华南理工大学A5-506"/>
+                <ImageView
+                    android:id="@+id/add_more_sub_items"
+                    android:layout_width="15dp"
+                    android:layout_height="7.5dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    app:srcCompat="@color/transparent"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+    
 </RelativeLayout>

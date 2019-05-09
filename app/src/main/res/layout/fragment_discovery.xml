@@ -26,7 +26,7 @@
             style="@style/function_bar_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
             android:layout_weight="1"
             android:text="番茄钟" />
 
@@ -58,7 +58,7 @@
             style="@style/function_bar_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
             android:layout_weight="1"
             android:text="随心记" />
 
@@ -90,7 +90,7 @@
             style="@style/function_bar_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
             android:layout_weight="1"
             android:text="数据图表" />
 

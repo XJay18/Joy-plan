@@ -33,6 +33,7 @@
 
     <!-- The text style for function bars -->
     <style name="function_bar_text">
+        <item name="android:textColor">#707070</item>
         <item name="android:textSize">30sp</item>
         <item name="android:gravity">start|center</item>
         <item name="android:textStyle">bold</item>
@@ -46,5 +47,25 @@
     </style>
 
     <!-- Font Library -->
+
+    <!--对话框的样式-->
+    <style name="NormalDialogStyle">
+        <!--对话框背景 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!--没有标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 是否浮现在Activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!--背景透明 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 是否有覆盖 -->
+        <item name="android:windowContentOverlay">@null</item>
+        <!--进出的显示动画 -->
+        <!--item name="android:windowAnimationStyle">@style/normalDialogAnim</item-->
+        <!--背景变暗-->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
 
 </resources>

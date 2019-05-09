@@ -2,10 +2,12 @@
 <android.widget.LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#eeeeee"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:background="#ffffff"
         android:layout_height="55dp"
         android:orientation="horizontal"
         android:gravity="center_vertical">
@@ -20,12 +22,13 @@
 
             <Button
                 android:id="@+id/btn_cancel"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                android:background="@color/transparent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:textSize="20sp"
-                android:text="取消" />
+                android:background="@color/transparent"
+                android:text="取消"
+                android:textColor="#F8463e"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -41,8 +44,8 @@
                 android:id="@+id/btn_add"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
-                android:background="@drawable/btn_shape"
-                android:textColor="@color/colorBlack"
+                android:background="@color/transparent"
+                android:textColor="#999999"
                 android:layout_gravity="center_vertical"
                 android:textSize="20sp"
                 android:text="添加"
@@ -55,55 +58,143 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <EditText
-            android:id="@+id/editText_title"
+        <RelativeLayout
+            android:layout_marginTop="15dp"
+            android:background="@drawable/btn_shape"
             android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:gravity="left"
-            android:layout_height="40dp"
-            android:background="@drawable/edtext_shape"
-            android:textColor="@color/add_activity_text_color_lite"
-            android:textAlignment="gravity"
-            android:text="活动标题"/>
+            android:orientation="vertical"
+            android:layout_height="110dp">
+            <LinearLayout
+                android:layout_centerVertical="true"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:padding="10dp"
+                    android:id="@+id/editText_title"
+                    android:layout_width="match_parent"
+                    android:gravity="left"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:cursorVisible="false"
+                    android:textColor="#999999"
+                    android:textAlignment="gravity"
+                    android:text="活动标题"/>
+                <EditText
+                    android:padding="10dp"
+                    android:id="@+id/editText_address"
+                    android:layout_width="match_parent"
+                    android:gravity="left"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:cursorVisible="false"
+                    android:textColor="#999999"
+                    android:textAlignment="gravity"
+                    android:text="活动地点"/>
+            </LinearLayout>
 
-        <EditText
-            android:id="@+id/editText_info"
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:gravity="left"
-            android:layout_height="200dp"
-            android:background="@drawable/edtext_shape"
-            android:textColor="@color/add_activity_text_color_lite"
-            android:textAlignment="gravity"
-            android:text="活动描述"/>
-        <TextView
-            android:id="@+id/tv_select_date"
-            android:clickable="true"
-            android:layout_width="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_height="40dp"
-            android:background="@drawable/edtext_shape"
-            android:textColor="@color/add_activity_text_color_lite"
-            android:text="选择日期"/>
+        </RelativeLayout>
 
-        <EditText
-            android:id="@+id/editText_address"
+        <RelativeLayout
+            android:layout_marginTop="7.5dp"
             android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:gravity="left"
-            android:layout_height="40dp"
-            android:background="@drawable/edtext_shape"
-            android:textColor="@color/add_activity_text_color_lite"
-            android:textAlignment="gravity"
-            android:hint="活动地点"/>
+            android:layout_height="143dp"
+            android:background="@drawable/btn_shape">
+            <EditText
+                android:padding="10dp"
+                android:id="@+id/editText_detail"
+                android:layout_width="match_parent"
+                android:text="详情"
+                android:textColor="#999999"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:background="@color/transparent"/>
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:background="@drawable/btn_shape"
+            android:layout_marginTop="7.5dp"
+            android:layout_width="match_parent"
+            android:layout_height="110dp">
+            <LinearLayout
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:padding="10dp"
+                        android:id="@+id/tv_start_time"
+                        android:background="@color/transparent"
+                        android:hint="开始"
+                        android:textColor="#999999"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_alignParentRight="true"
+                        android:padding="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:textColor="#999999"
+                        android:id="@+id/tv_select_start_time"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:padding="10dp"
+                        android:id="@+id/tv_end_time"
+                        android:background="@color/transparent"
+                        android:hint="结束"
+                        android:textColor="#999999"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_alignParentRight="true"
+                        android:padding="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:textColor="#999999"
+                        android:id="@+id/tv_select_end_time"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/btn_shape"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_camera"
+                    android:layout_gravity="center_horizontal"
+                    />
+                <TextView
+                    android:layout_marginTop="7.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="点击添加图片"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
         <!--Button
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
