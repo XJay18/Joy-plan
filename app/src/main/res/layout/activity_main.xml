@@ -129,6 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/login"
             android:layout_marginBottom="-150dp"
+            android:textStyle="bold"
             android:text="Joyplan"
             android:textColor="#ffffff"
             android:textSize="33sp"

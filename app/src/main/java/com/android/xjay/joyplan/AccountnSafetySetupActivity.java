@@ -18,7 +18,7 @@ public class AccountnSafetySetupActivity extends AppCompatActivity implements Vi
     private void setListener(){
         findViewById(R.id.ll_setup_accountnsafety_fc1).setOnClickListener(this);
         findViewById(R.id.ll_setup_accountnsafety_fc2).setOnClickListener(this);
-        findViewById(R.id.ll_setup_accountnsafety_fc3).setOnClickListener(this);
+//        findViewById(R.id.ll_setup_accountnsafety_fc3).setOnClickListener(this);
         findViewById(R.id.bt_setup_back).setOnClickListener(this);
     }
 
@@ -31,9 +31,9 @@ public class AccountnSafetySetupActivity extends AppCompatActivity implements Vi
             case R.id.ll_setup_accountnsafety_fc2:
                 Toast.makeText(this,"权限设置",Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.ll_setup_accountnsafety_fc3:
-                Toast.makeText(this,"应用锁",Toast.LENGTH_SHORT).show();
-                break;
+//            case R.id.ll_setup_accountnsafety_fc3:
+////                Toast.makeText(this,"应用锁",Toast.LENGTH_SHORT).show();
+////                break;
             case R.id.bt_setup_back:
                 this.finish();
             default:break;

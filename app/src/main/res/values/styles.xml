@@ -13,7 +13,7 @@
 
     <!-- Bottom Navigation text style -->
     <style name="bottom_text">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <!-- Time picker style -->
@@ -28,6 +28,7 @@
     <!-- Fqz Activity Common text -->
     <style name="fqz_ctext">
         <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 
