@@ -105,6 +105,7 @@
             app:current_month_text_color="#333333"
             app:min_year="2004"
             app:month_view="com.android.xjay.joyplan.Calendar.SimpleMonthView"
+            app:month_view_show_mode="mode_only_current"
             app:other_month_text_color="#e1e1e1"
             app:scheme_text="假"
             app:scheme_text_color="#333"

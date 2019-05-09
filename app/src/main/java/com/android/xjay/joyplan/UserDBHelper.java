@@ -112,12 +112,13 @@ public class UserDBHelper extends SQLiteOpenHelper {
         long result=-1;
         openWriteLink();
         ContentValues cv=new ContentValues();
+        cv.put("title",agenda.title);
+        cv.put("starttime",agenda.start_time);
+        cv.put("endtime",agenda.end_time);
         cv.put("content",agenda.content);
-        int year=agenda.calendar.getYear();
-        int month=agenda.calendar.getMonth();
-        int day=agenda.calendar.getDay();
-        String date=year+"-"+month+"-"+day;
-        cv.put("starttime",date);
+        cv.put("address",agenda.address);
+
+
         result=mDB.insert(AGENDA_TABLE,"",cv);
         return result;
 

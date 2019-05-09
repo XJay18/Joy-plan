@@ -16,6 +16,8 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
 
     private UserDBHelper mHelper;
     private CustomTimePicker myTimePicker;
+    private TextView tv_agenda_title;
+    private TextView tv_agenda_address;
     private TextView tv_agenda_start_time;
     private TextView tv_agenda_end_time;
     private TextView tv_agenda_cancel;
@@ -80,20 +82,12 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 break;
             }
             case R.id.tv_agenda_confirm:{
-                Calendar calendar=new Calendar();
                 String start_time=tv_agenda_start_time.getText().toString();
                 String end_time=tv_agenda_end_time.getText().toString();
+                String title=tv_agenda_title.getText().toString();
+                String address=tv_agenda_address.getText().toString();
                 String content=editText_notation.getText().toString();
-                String yearstr=start_time.substring(0,4);
-                String monthstr=start_time.substring(5,7);
-                String daystr=start_time.substring(8,10);
-                int year=Integer.parseInt(yearstr);
-                int month=Integer.parseInt(monthstr);
-                int day=Integer.parseInt(daystr);
-                calendar.setDay(day);
-                calendar.setMonth(month);
-                calendar.setYear(year);
-                Agenda agenda=new Agenda(calendar,content);
+                Agenda agenda=new Agenda(title,start_time,end_time,content,address);
                 mHelper.insert_agenda(agenda);
             }
         }
