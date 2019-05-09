@@ -12,7 +12,8 @@ public class UserDBHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION=1;
     private static UserDBHelper mHelper=null;
     private SQLiteDatabase mDB=null;
-    public static final String TABLE_NAME="user_info";
+    public static final String ACTIVITY_TABLE ="user_info";
+    public static final String AGENDA_TABLE="agenda_table";
 
     private UserDBHelper(Context context){
         super(context,DB_NAME,null,DB_VERSION);
@@ -57,16 +58,21 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String drop_sql="DROP TABLE IF EXISTS "+TABLE_NAME+";";
+        String drop_sql="DROP TABLE IF EXISTS "+ ACTIVITY_TABLE +";";
         db.execSQL(drop_sql);
-        String create_sql="CREATE TABLE IF NOT EXISTS "+TABLE_NAME+"("+"id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL,"+"title VARCHAR NOT NULL,"+"info VARCHAR NOT NULL,"+"date VARCHAR NOT NULL,"+"address VARCHAR NOT NULL"+");";
+        String create_sql="CREATE TABLE IF NOT EXISTS "+ ACTIVITY_TABLE +"("+"id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL,"+"title VARCHAR NOT NULL,"+"info VARCHAR NOT NULL,"+"starttime DATETIME NOT NULL,"+"endtime DATETIME not null,"+"address VARCHAR NOT NULL"+");";
+        db.execSQL(create_sql);
+        create_sql="CREATE TABLE IF NOT EXISTS "+AGENDA_TABLE+"("+"id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"+"title VARCHAR NOT NULL,"+"starttime DATETIME NOT NULL,"+"endtime DATETIME NOT NULL,"+"content VARCHAR NOT NULL,"+"address VARCHAR NOT NULL"+");";
         db.execSQL(create_sql);
     }
 
     public void reset(){
-        String drop_sql="DROP TABLE IF EXISTS "+TABLE_NAME+";";
+        openWriteLink();
+        String drop_sql="DROP TABLE IF EXISTS "+ ACTIVITY_TABLE +";";
         mDB.execSQL(drop_sql);
-        String create_sql="CREATE TABLE IF NOT EXISTS "+TABLE_NAME+"("+"id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL,"+"title VARCHAR NOT NULL,"+"info VARCHAR NOT NULL,"+"date VARCHAR NOT NULL,"+"address VARCHAR NOT NULL"+");";
+        String create_sql="CREATE TABLE IF NOT EXISTS "+ ACTIVITY_TABLE +"("+"id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL,"+"title VARCHAR NOT NULL,"+"info VARCHAR NOT NULL,"+"starttime DATETIME NOT NULL,"+"endtime DATETIME not null,"+"address VARCHAR NOT NULL"+");";
+        mDB.execSQL(create_sql);
+        create_sql="CREATE TABLE IF NOT EXISTS "+AGENDA_TABLE+"("+"id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"+"title VARCHAR NOT NULL,"+"starttime DATETIME NOT NULL,"+"endtime DATETIME NOT NULL,"+"content VARCHAR NOT NULL,"+"address VARCHAR NOT NULL"+");";
         mDB.execSQL(create_sql);
     }
 
@@ -74,7 +80,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 
     public int delete(String condition){
-        return mDB.delete(TABLE_NAME,condition,null);
+        return mDB.delete(ACTIVITY_TABLE,condition,null);
     }
 
     public void clean(){
@@ -86,19 +92,35 @@ public class UserDBHelper extends SQLiteOpenHelper {
     }
 
     private void clean_help(SQLiteDatabase db){
-        db.execSQL("delete from"+" "+TABLE_NAME);
+        db.execSQL("delete from"+" "+ ACTIVITY_TABLE);
     }
-    private void drop_help(SQLiteDatabase db) {db.execSQL("DROP TABLE"+" "+TABLE_NAME);}
+    private void drop_help(SQLiteDatabase db) {db.execSQL("DROP TABLE"+" "+ ACTIVITY_TABLE);}
 
-    public long insert(StudentActivityInfo info){
+    public long insert_studentActivity(StudentActivityInfo info){
         long result=-1;
         ContentValues cv=new ContentValues();
         cv.put("title",info.title);
         cv.put("info",info.info);
-        cv.put("date",info.date);
+        cv.put("starttime",info.starttime);
+        cv.put("endtime",info.endtime);
         cv.put("address",info.address);
-        result=mDB.insert(TABLE_NAME,"",cv);
+        result=mDB.insert(ACTIVITY_TABLE,"",cv);
         return result;
+    }
+
+    public long insert_agenda(Agenda agenda){
+        long result=-1;
+        openWriteLink();
+        ContentValues cv=new ContentValues();
+        cv.put("content",agenda.content);
+        int year=agenda.calendar.getYear();
+        int month=agenda.calendar.getMonth();
+        int day=agenda.calendar.getDay();
+        String date=year+"-"+month+"-"+day;
+        cv.put("starttime",date);
+        result=mDB.insert(AGENDA_TABLE,"",cv);
+        return result;
+
     }
 
     public int update(StudentActivityInfo info,String condition){

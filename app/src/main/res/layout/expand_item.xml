@@ -4,8 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/list_item"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/btn_shape">
+
+
 
     <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
         app:shape_mode="round_rect"
@@ -13,7 +15,7 @@
         android:id="@+id/indicator_image"
         android:layout_width="match_parent"
         android:background="@drawable/btn_shape"
-        android:layout_height="150dp"
+        android:layout_height="111dp"
         android:scaleType="centerCrop"
         />
 
@@ -40,14 +42,16 @@
             android:layout_marginTop="-25dp"
             android:background="@android:color/transparent"/>
 
-        <View
+        <RelativeLayout
 
             android:id="@+id/icon_indicator_bottom"
             android:layout_width="420dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/icon_indicator_middle"
             android:layout_marginTop="-25dp"
-            android:background="@drawable/btn_shape"/>
+            android:background="@drawable/btn_shape">
+
+        </RelativeLayout>
 
 
     </RelativeLayout>
@@ -59,6 +63,7 @@
         android:layout_below="@id/indicator_image"
         android:layout_toLeftOf="@id/icon_indicator_top"
         android:gravity="center_horizontal"
+        android:layout_marginBottom="5dp"
         android:orientation="vertical"/>
 
     <LinearLayout
@@ -68,6 +73,7 @@
         android:layout_below="@id/base_list_layout"
         android:layout_alignLeft="@id/base_list_layout"
         android:layout_alignRight="@id/base_list_layout"
+        android:layout_marginBottom="5dp"
         android:orientation="vertical">
 
     </LinearLayout>
@@ -77,6 +83,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/base_sub_list_layout"/>
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="15dp"
+            android:layout_height="7.5dp"
+            android:src="@drawable/ic_triangle"/>
+
+    </RelativeLayout>
 
 
 

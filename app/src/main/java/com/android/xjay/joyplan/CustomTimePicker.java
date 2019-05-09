@@ -15,7 +15,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 
 public class CustomTimePicker implements View.OnClickListener, PickerView.OnSelectedListener {
 
@@ -38,7 +37,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
 
     private DecimalFormat mDecimalFormat = new DecimalFormat("00");
 
-    private boolean mCanShowPreciseTime;
+    private int mTimePickerShowMode;
     private int mScrollUnits = SCROLL_UNIT_HOUR + SCROLL_UNIT_MINUTE;
 
     /**
@@ -80,8 +79,8 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
      *
      * @param context      Activity Context
      * @param callback     results callback
-     * @param beginDateStr date str yyyy-MM-dd HH:mm
-     * @param endDateStr   date str yyyy-MM-dd HH:mm
+     * @param beginDateStr starttime str yyyy-MM-dd HH:mm
+     * @param endDateStr   starttime str yyyy-MM-dd HH:mm
      */
     CustomTimePicker(Context context, Callback callback,
                      String beginDateStr, String endDateStr,
@@ -538,7 +537,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     /**
      * Display the timepicker
      *
-     * @param dateStr String of the date, yyyy-MM-dd or yyyy-MM-dd HH:mm
+     * @param dateStr String of the starttime, yyyy-MM-dd or yyyy-MM-dd HH:mm
      */
     public void show(String dateStr) {
         if (!canShow() || TextUtils.isEmpty(dateStr)) return;
@@ -569,19 +568,19 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     /**
      * Set the chosen time for the timepicker
      *
-     * @param dateStr  String of date
+     * @param dateStr  String of starttime
      * @param showAnim whether to show animation
      * @return whether setting is successful
      */
     public boolean setSelectedTime(String dateStr, boolean showAnim) {
         return canShow() && !TextUtils.isEmpty(dateStr)
-                && setSelectedTime(DateFormat.str2Long(dateStr, mCanShowPreciseTime), showAnim);
+                && setSelectedTime(DateFormat.str2Long(dateStr, mTimePickerShowMode), showAnim);
     }
 
     /**
      * Set the chosen time for the timepicker
      *
-     * @param timestamp String of date
+     * @param timestamp String of starttime
      * @param showAnim  whether to show animation
      * @return whether setting is successful
      */
@@ -615,18 +614,25 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     }
 
     /**
-     * Sets whether the date control displays time and minutes
+     * Sets the Time Picker Show Mode
+     * @param
+     * timePickerShowMode 0: show YEAR MONTH DAY HOUR MINUTE
+     *                    1: show HOUR MINUTE
      */
-    public void setCanShowPreciseTime(boolean canShowPreciseTime) {
+    public void setTimePickerShowMode(int timePickerShowMode) {
         if (!canShow()) return;
 
-        if (canShowPreciseTime) {
+        // show YEAR MONTH DAY HOUR MINUTE
+        if (timePickerShowMode==0) {
             initScrollUnit();
             mDpvHour.setVisibility(View.VISIBLE);
             mTvHourUnit.setVisibility(View.VISIBLE);
             mDpvMinute.setVisibility(View.VISIBLE);
             mTvMinuteUnit.setVisibility(View.VISIBLE);
-        } else {
+
+        }
+        // show HOUR MINUTE
+        else if(timePickerShowMode==1){
             //initScrollUnit(SCROLL_UNIT_HOUR, SCROLL_UNIT_MINUTE);
             initScrollUnit();
             mDpvYear.setVisibility(View.GONE);
@@ -641,7 +647,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
             mDpvMinute.setVisibility(View.VISIBLE);
             mTvMinuteUnit.setVisibility(View.VISIBLE);
         }
-        mCanShowPreciseTime = canShowPreciseTime;
+        mTimePickerShowMode = timePickerShowMode;
     }
 
     private void initScrollUnit(Integer... units) {
@@ -655,7 +661,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     }
 
     /**
-     * Sets whether the date control can be rotated in circulation
+     * Sets whether the starttime control can be rotated in circulation
      */
     public void setScrollLoop(boolean canLoop) {
         if (!canShow()) return;
@@ -668,7 +674,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     }
 
     /**
-     * Sets whether the date control displays a scrolling animation
+     * Sets whether the starttime control displays a scrolling animation
      */
     public void setCanShowAnim(boolean canShowAnim) {
         if (!canShow()) return;

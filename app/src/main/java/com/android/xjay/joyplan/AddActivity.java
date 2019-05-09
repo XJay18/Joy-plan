@@ -19,13 +19,15 @@ import com.android.xjay.joyplan.web.WebServicePost;
 public class AddActivity extends AppCompatActivity {
     private UserDBHelper mHelper;//SQLite helper
     private CustomTimePicker myTimePicker;
-    private TextView tv_select_time;
+    private TextView tv_select_start_time;
+    private TextView tv_select_end_time;
     private EditText editText_title;
     private EditText editText_description;
     private EditText editText_address;
     private Context mContext;
     private String string_title;
-    private String string_time;
+    private String string_start_time;
+    private String string_end_time;
     private String string_description;
     private String string_address;
     private Button btn_add;
@@ -34,19 +36,26 @@ public class AddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
         mContext = getApplicationContext();
-        //textView to select date&time
+        //textView to select starttime&time
 
-        tv_select_time = findViewById(R.id.tv_select_date);
+        tv_select_start_time = findViewById(R.id.tv_select_start_time);
+        tv_select_end_time=findViewById(R.id.tv_select_end_time);
         initTimePicker();
 
 
 
 
         //On textView click open timePicker
-        tv_select_time.setOnClickListener(new View.OnClickListener() {
+        tv_select_start_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myTimePicker.show(tv_select_time.getText().toString());
+                myTimePicker.show(tv_select_start_time.getText().toString());
+            }
+        });
+        tv_select_end_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myTimePicker.show(tv_select_end_time.getText().toString());
             }
         });
         initTimePicker();
@@ -54,7 +63,7 @@ public class AddActivity extends AppCompatActivity {
         mHelper = UserDBHelper.getInstance(this, 1);
 
         editText_title = (EditText) findViewById(R.id.editText_title);
-        editText_description = (EditText) findViewById(R.id.editText_info);
+        editText_description = (EditText) findViewById(R.id.editText_detail);
         editText_address = (EditText) findViewById(R.id.editText_address);
         btn_add=findViewById(R.id.btn_add);
         btn_add.setOnClickListener(new MyOnClickListener());
@@ -81,15 +90,16 @@ public class AddActivity extends AppCompatActivity {
                 case R.id.btn_add: {
                     string_title = editText_title.getText().toString();
                     string_description = editText_description.getText().toString();
-                    string_time = tv_select_time.getText().toString();
+                    string_start_time = tv_select_start_time.getText().toString();
+                    string_end_time=tv_select_end_time.getText().toString();
                     string_address = editText_address.getText().toString();
-                    //mHelper.clean();
+
                     //put the information into a stuInfo
 
-                    StudentActivityInfo info = new StudentActivityInfo(string_title, string_description, string_time, string_address);
+                    StudentActivityInfo info = new StudentActivityInfo(string_title, string_description, string_start_time,string_end_time,string_address);
 
-                    //insert the stuInfo
-                    mHelper.insert(info);
+                    //insert_studentActivity the stuInfo
+                    mHelper.insert_studentActivity(info);
 
 
                     SQLiteDatabase dbRead = mHelper.getReadableDatabase();
@@ -112,9 +122,9 @@ public class AddActivity extends AppCompatActivity {
             //获取服务器返回数据
             System.out.println("wenti"+string_title);
             System.out.println("wenti"+string_description);
-            System.out.println("wenti"+string_time);
+            System.out.println("wenti"+ string_start_time);
             System.out.println("wenti"+string_address);
-            String RegRet = WebServicePost.activityPost(string_title,string_time,string_description,string_address,"ActiLet");
+            String RegRet = WebServicePost.activityPost(string_title, string_start_time,string_description,string_address,"ActiLet");
             //更新UI，界面处理
             //showReq(RegRet);
         }
@@ -143,19 +153,20 @@ public class AddActivity extends AppCompatActivity {
 
             long beginTime = System.currentTimeMillis();
             String endTime = "2020-04-07 18:00";
-            tv_select_time.setText(endTime);
+            tv_select_start_time.setText(endTime);
+            tv_select_end_time.setText(endTime);
 
             // 通过日期字符串初始化日期，格式请用：yyyy-MM-dd HH:mm
             myTimePicker = new CustomTimePicker(AddActivity.this, new CustomTimePicker.Callback() {
                 @Override
                 public void onTimeSelected(long timestamp) {
-                    tv_select_time.setText(DateFormat.long2Str(timestamp, true));
+                    tv_select_start_time.setText(DateFormat.long2Str(timestamp, true));
                 }
             }, beginTime, DateFormat.str2Long(endTime, true), "请选择时间", 23);
             //允许点击屏幕或物理返回键关闭
             myTimePicker.setCancelable(true);
             // 显示时和分
-            myTimePicker.setCanShowPreciseTime(true);
+            myTimePicker.setTimePickerShowMode(0);
             // 允许循环滚动
             myTimePicker.setScrollLoop(true);
             // 允许滚动动画

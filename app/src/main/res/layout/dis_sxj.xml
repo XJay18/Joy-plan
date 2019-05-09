@@ -4,14 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ScrollView
-
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
         <EditText
             android:id="@+id/et_content"
+            android:background="@drawable/edtext_selector"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:hint="    请输入你要记录的内容~"/>
     </ScrollView>
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,14 +24,14 @@
             android:id="@+id/btn_takephoto"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Take Photo"
+            android:text="拍照"
             android:textAllCaps="false"
             android:layout_weight="1"/>
         <Button
             android:id="@+id/btn_choosephoto"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:text="Choose Photo"
+            android:text="选择相片"
             android:textAllCaps="false"
             android:layout_weight="1"/>
         <Button
@@ -35,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="Record"
+            android:text="语音"
             android:textAllCaps="false"/>
     </LinearLayout>
 

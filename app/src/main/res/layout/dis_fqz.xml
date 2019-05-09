@@ -32,7 +32,21 @@
             android:textSize="25sp"
             android:textStyle="bold"
             android:textColor="@color/colorWhite"
-            android:layout_weight="20"/>
+            android:layout_weight="10"/>
+        <LinearLayout
+            android:id="@+id/ll_fqz_help"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center|right"
+            android:layout_weight="5">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/ic_help_white"
+                />
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/ll_fqz_stat"
             android:layout_width="wrap_content"
@@ -56,21 +70,8 @@
         android:layout_marginTop="20dp"
         android:orientation="vertical"
         android:gravity="center">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/info_fqz"
-            android:textSize="10sp"
-            android:textColor="@color/colorWhite"
-            />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/ic_fqz_fq" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -88,7 +89,6 @@
                 style="@style/fqz_ctext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/youyuan"
                 android:text="我的番茄周期：" />
 
             <LinearLayout
@@ -103,7 +103,6 @@
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:fontFamily="@font/youyuan"
                     android:gravity="right" />
 
                 <TextView
@@ -111,7 +110,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/youyuan"
                     android:text="小时" />
 
                 <TextView
@@ -120,7 +118,6 @@
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:fontFamily="@font/youyuan"
                     android:gravity="right" />
 
                 <TextView
@@ -128,7 +125,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/youyuan"
                     android:text="分钟" />
 
             </LinearLayout>
@@ -146,7 +142,6 @@
                 style="@style/fqz_ctext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/youyuan"
                 android:gravity="right"
                 android:text="我的番茄篮子大小：" />
 
@@ -171,7 +166,6 @@
                 style="@style/fqz_ctext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/youyuan"
                 android:gravity="right"
                 android:text="我的番茄采摘时间：" />
 
@@ -205,7 +199,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_fqz_delete"
+                android:id="@+id/tv_fqz_setup"
                 android:layout_width="250dp"
                 android:layout_height="40dp"
                 android:background="@drawable/bg_btn_blue"

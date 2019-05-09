@@ -34,7 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private MenuItem menuItem;
     private BottomNavigationView bottomNavigationView;
-    private Toolbar mToolbar;
+    private TextView tv_tb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +43,9 @@ public class HomeActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.vp_home);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        mToolbar=findViewById(R.id.tb_fragment);
-
+        tv_tb=findViewById(R.id.tv_toolbar);
         // Initialize the page, set the toolbar title as agenda.
-        mToolbar.setTitle("日程");
+        tv_tb.setText("日程");
 
         // To disable the shift mode, we can simply add
         // 'app:itemHorizontalTranslationEnabled="false"'
@@ -100,19 +99,19 @@ public class HomeActivity extends AppCompatActivity {
                 Log.v("SELECT: ",position+". ");
                 switch (position){
                     case 0:{
-                        mToolbar.setTitle("日程");
+                        tv_tb.setText("日程");
                         break;
                     }
                     case 1:{
-                        mToolbar.setTitle("活动");
+                        tv_tb.setText("活动");
                         break;
                     }
                     case 2:{
-                        mToolbar.setTitle("发现");
+                        tv_tb.setText("发现");
                         break;
                     }
                     case 3:{
-                        mToolbar.setTitle("设置");
+                        tv_tb.setText("设置");
                         break;
                     }
                     default:{
