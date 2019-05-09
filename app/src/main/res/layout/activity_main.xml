@@ -44,6 +44,7 @@
                 android:layout_marginBottom="240dp"
                 android:text="帐号："
                 android:textSize="15sp"
+                android:textColor="#ff999999"
                 android:textStyle="normal" />
 
             <EditText
@@ -54,8 +55,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="58.5dp"
                 android:layout_marginBottom="208.5dp"
-                android:background="@drawable/et_login"
-                android:hint="请输入您的手机号码" />
+                android:background="@drawable/et_login" />
 
             <TextView
                 android:id="@+id/password"
@@ -66,6 +66,7 @@
                 android:layout_marginStart="54dp"
                 android:layout_marginBottom="169.5dp"
                 android:text="密码："
+                android:textColor="#ff999999"
                 android:textSize="15sp" />
 
             <EditText
@@ -77,7 +78,6 @@
                 android:layout_marginStart="58.5dp"
                 android:layout_marginBottom="139.5dp"
                 android:background="@drawable/et_login"
-                android:hint="请输入您的密码"
                 android:inputType="textPassword" />
 
             <CheckBox
@@ -89,6 +89,7 @@
                 android:layout_marginEnd="62dp"
                 android:layout_marginBottom="83dp"
                 android:text="记住密码"
+                android:textColor="#CCCCCC"
                 android:textSize="9.3sp" />
         </RelativeLayout>
 
@@ -108,8 +109,55 @@
             android:layout_alignTop="@+id/login"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="261dp"
+            android:textColor="#ffffff"
             android:text="登录"
-            android:textSize="14.6sp"
+            android:textSize="19sp"
             android:background="@drawable/bg_btn_blue" />
+
+        <TextView
+            android:id="@+id/text_ps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_login"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp"
+            android:text="第三方账户登录"
+            android:textSize="10sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/login"
+            android:layout_marginBottom="-150dp"
+            android:text="Joyplan"
+            android:textColor="#ffffff"
+            android:textSize="33sp"
+            android:layout_centerHorizontal="true"/>
+
+        <ImageView
+            android:layout_width="19.5dp"
+            android:layout_height="16.5dp"
+            android:layout_below="@+id/text_ps"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="79.5dp"
+            android:layout_toStartOf="@+id/logo_blog"
+            android:background="@drawable/logo_wechat" />
+        <ImageView
+            android:id="@+id/logo_blog"
+            android:layout_width="19.5dp"
+            android:layout_height="16.5dp"
+            android:layout_below="@+id/text_ps"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/logo_blog"/>
+
+        <ImageView
+            android:layout_width="19.5dp"
+            android:layout_height="16.5dp"
+            android:layout_below="@+id/text_ps"
+            android:layout_marginStart="79.5dp"
+            android:layout_marginTop="12dp"
+            android:layout_toEndOf="@+id/logo_blog"
+            android:background="@drawable/logo_qq" />
     </RelativeLayout>
 </android.widget.RelativeLayout>

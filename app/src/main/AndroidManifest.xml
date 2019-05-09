@@ -39,11 +39,12 @@
         <activity android:name=".CordActivity"/>
         <activity android:name=".HomeActivity"/>
         <activity android:name=".ReserveActivity"/>
-        <activity android:name=".FqzActivity"></activity>
-        <activity android:name=".AddActivity"></activity>
-        <activity android:name=".ScheduleActivity"></activity>
+        <activity android:name=".FqzActivity"/>
+        <activity android:name=".AddActivity"/>
+        <activity android:name=".ScheduleActivity"/>
         <activity android:name=".Register" />
         <activity android:name=".SxjActivity"/>
+        <activity android:name=".StatisticsActivity"/>
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"

@@ -24,17 +24,26 @@
             android:layout_marginTop="133.5dp"
             android:layout_marginLeft="55.5dp"
             android:text="请输入手机号码"
-            android:textSize="26sp"/>
+            android:textColor="#333333"
+            android:textSize="39sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tips"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="0dp"
+            android:text="注册即代表阅读并同意使用条款和隐私政策"
+            android:textColor="#CCCCCC"
+            android:textSize="9sp" />
         <EditText
             android:id="@+id/et_phonenumber"
             android:layout_width="295.2dp"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
             android:layout_below="@+id/tips"
             android:layout_alignStart="@+id/tips"
-            android:layout_marginTop="97.5dp"
+            android:layout_marginTop="61.5dp"
             android:background="@drawable/et_login"
-            android:maxLength="11"
-            android:hint="请输入手机号码" />
+            android:maxLength="11" />
         <Button
             android:id="@+id/btn_phone_next"
             android:layout_width="267dp"
@@ -44,6 +53,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/bg_btn_blue"
             android:text="下一步"
-            android:textSize="30sp" />
+            android:textSize="19.5sp"
+            android:textColor="#ffffff"/>
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
