@@ -32,55 +32,84 @@
     </RelativeLayout>
 
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="13dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_cirangrec_blue"
+                android:text="    邮箱    "
+                android:textSize="20sp"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold" />
+
             <EditText
-            android:id="@+id/et_setup_mailaddress"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="20dp"
-            android:padding="10dp"
-            android:background="@drawable/bg_setup_button"
-            android:hint="请输入您的邮箱地址，以便我们联系"
-            android:textSize="15dp"
-            android:maxLines="2"/>
+                android:id="@+id/et_setup_mailaddress"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_setup_button"
+                android:hint="请输入您的邮箱地址，以便我们联系"
+                android:maxLines="2"
+                android:padding="10dp"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="13dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_cirangrec_blue"
+                android:text="    您要反馈的内容    "
+                android:textSize="20sp"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/et_setup_feedback"
                 android:layout_width="match_parent"
+                android:layout_height="200dp"
                 android:layout_below="@id/et_setup_mailaddress"
                 android:layout_marginStart="10dp"
+
                 android:layout_marginEnd="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_height="200dp"
                 android:background="@drawable/bg_setup_button"
-                android:paddingTop="15dp"
+                android:gravity="top"
+                android:hint="我们真诚地倾听您珍贵的意见来为您改善体验"
+                android:maxLines="10"
                 android:paddingLeft="10dp"
+                android:paddingTop="15dp"
                 android:paddingEnd="10dp"
                 android:paddingBottom="20dp"
-                android:hint="我们亟需您珍贵的意见来为您改善体验"
-                android:gravity="top"
-                android:textSize="15dp"
-                android:maxLines="10"/>
+                android:textSize="15sp" />
+        </LinearLayout>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="50sp"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="10dp"
-                android:background="@drawable/btn_white"
-                android:text="提交"
-                android:textColor="#6BB6FF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_white"
+            android:text="提交"
+            android:textColor="#6BB6FF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-        </RelativeLayout>
+    </RelativeLayout>
 
 
 
