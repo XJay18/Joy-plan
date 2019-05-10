@@ -34,6 +34,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".HelpnfeedbackSetupActivity"/>
+        <activity android:name=".AboutSetupActivity"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".PhoneActivity"/>
         <activity android:name=".CordActivity"/>

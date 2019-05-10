@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout   xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="#EEEEEE"
+    android:orientation="vertical">
+
+    <!--头部-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/toolbar_blue">
+
+        <Button
+            android:id="@+id/bt_setup_helpnfeedback_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/ic_left_white"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:text="帮助与反馈"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            style="@style/AppTheme"
+            android:textColor="#FFFFFF"/>
+
+    </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+            android:id="@+id/et_setup_mailaddress"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:background="@drawable/bg_setup_button"
+            android:hint="请输入您的邮箱地址，以便我们联系"
+            android:textSize="15dp"
+            android:maxLines="2"/>
+
+            <EditText
+                android:id="@+id/et_setup_feedback"
+                android:layout_width="match_parent"
+                android:layout_below="@id/et_setup_mailaddress"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_height="200dp"
+                android:background="@drawable/bg_setup_button"
+                android:paddingTop="15dp"
+                android:paddingLeft="10dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="20dp"
+                android:hint="我们亟需您珍贵的意见来为您改善体验"
+                android:gravity="top"
+                android:textSize="15dp"
+                android:maxLines="10"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_white"
+                android:text="提交"
+                android:textColor="#6BB6FF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                />
+
+        </RelativeLayout>
+
+
+
+
+</LinearLayout>

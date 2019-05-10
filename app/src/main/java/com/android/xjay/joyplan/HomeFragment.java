@@ -344,8 +344,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
             startActivity(intent);
         } else if(view.getId()==R.id.ll_setup_notenfeedback){
             Toast.makeText(mContext,"你点击了反馈",Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(mContext,HelpnfeedbackSetupActivity.class);
+            startActivity(intent);
         } else if(view.getId()==R.id.ll_setup_about){
             Toast.makeText(mContext,"你点击了关于",Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(mContext,AboutSetupActivity.class);
+            startActivity(intent);
         }
 
     }
