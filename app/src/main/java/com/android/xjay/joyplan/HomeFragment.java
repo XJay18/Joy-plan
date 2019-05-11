@@ -319,17 +319,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
     @Override
     public void onClick(View view){
         if(view.getId()==R.id.ll_fqz){
-            Toast.makeText(mContext,"你点击了番茄钟",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext,"你点击了番茄钟",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
             intent.setClass(mContext,FqzActivity.class);
             startActivity(intent);
         }else if(view.getId()==R.id.ll_sjtb) {
-            Toast.makeText(mContext,"你点击了数据图表",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext,"你点击了数据图表",Toast.LENGTH_SHORT).show();
             Intent intent=new Intent();
             intent.setClass(this.getContext(),StatisticsActivity.class);
             startActivity(intent);
         } else if(view.getId()==R.id.ll_sxj){
-            Toast.makeText(mContext,"你点击了随心记",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext,"你点击了随心记",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
             intent.setClass(mContext,SxjActivity.class);
             startActivity(intent);
@@ -373,10 +373,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
             //We can create items in batch.
 
 
-
-
-
-
             /*item.findViewById(R.id.remove_item).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -389,7 +385,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
     @Override
     public boolean onLongClick(View v) {
         switch (v.getId()){
-            case R.id.btn_mission:
+            case R.id.btn_mission:{
                 /*final int position=(int)v.getTag();
                 Intent intent = new Intent();
                 intent.setClass(mContext,AgendaDetailActivity.class);
@@ -399,6 +395,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
                 intent.setClass(mContext,AddAgendaActivity.class);
                 startActivity(intent);
                 return true;
+            }
         }
         return false;
     }
