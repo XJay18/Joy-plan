@@ -169,7 +169,6 @@
                 android:text="注册"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"/>
-
         </RelativeLayout>
 
     </RelativeLayout>

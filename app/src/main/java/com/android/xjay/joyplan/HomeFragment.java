@@ -162,7 +162,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
             {
                 View view = inflater.inflate(R.layout.fragment_discovery, null);
                 view.findViewById(R.id.ll_fqz).setOnClickListener(this);
-                view.findViewById(R.id.ll_ydhd).setOnClickListener(this);
+                view.findViewById(R.id.ll_sjtb).setOnClickListener(this);
                 view.findViewById(R.id.ll_sxj).setOnClickListener(this);
                 return view;
 
@@ -190,9 +190,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
             {
                 View view=inflater.inflate(R.layout.fragment_setup,null);
                 view.findViewById(R.id.ll_setup_accountnsafety).setOnClickListener(this);
-                view.findViewById(R.id.ll_setup_addfriends).setOnClickListener(this);
-                view.findViewById(R.id.ll_setup_personality).setOnClickListener(this);
-                view.findViewById(R.id.ll_setup_switchmode).setOnClickListener(this);
                 view.findViewById(R.id.ll_setup_notenfeedback).setOnClickListener(this);
                 view.findViewById(R.id.ll_setup_about).setOnClickListener(this);
                 return view;
@@ -344,13 +341,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
             Intent intent = new Intent();
             intent.setClass(mContext,FqzActivity.class);
             startActivity(intent);
-        }else if(view.getId()==R.id.ll_ydhd) {
-            Toast.makeText(mContext,"你点击了预定活动",Toast.LENGTH_SHORT).show();
-//            Intent intent=new Intent();
-//            intent.setClass(this.getContext(),ScheduleActivity.class);
-//            startActivity(intent);
-
-
+        }else if(view.getId()==R.id.ll_sjtb) {
+            Toast.makeText(mContext,"你点击了数据图表",Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent();
+            intent.setClass(this.getContext(),StatisticsActivity.class);
+            startActivity(intent);
         } else if(view.getId()==R.id.ll_sxj){
             Toast.makeText(mContext,"你点击了随心记",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
@@ -368,19 +363,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
             Toast.makeText(mContext,"你点击了账号与安全",Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(mContext,AccountnSafetySetupActivity.class);
             startActivity(intent);
-        }
-        else if(view.getId()==R.id.ll_setup_addfriends){
-            Toast.makeText(mContext,"你点击了添加好友",Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(mContext,AddfriendSetupActivity.class);
-            startActivity(intent);
-        } else if(view.getId()==R.id.ll_setup_personality){
-            Toast.makeText(mContext,"你点击了个性",Toast.LENGTH_SHORT).show();
-        } else if(view.getId()==R.id.ll_setup_switchmode){
-            Toast.makeText(mContext,"你点击了切换模式",Toast.LENGTH_SHORT).show();
         } else if(view.getId()==R.id.ll_setup_notenfeedback){
             Toast.makeText(mContext,"你点击了反馈",Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(mContext,HelpnfeedbackSetupActivity.class);
+            startActivity(intent);
         } else if(view.getId()==R.id.ll_setup_about){
             Toast.makeText(mContext,"你点击了关于",Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(mContext,AboutSetupActivity.class);
+            startActivity(intent);
         }
 
     }
