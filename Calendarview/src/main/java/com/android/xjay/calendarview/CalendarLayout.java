@@ -38,6 +38,7 @@ import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 
 /**
@@ -288,6 +289,8 @@ public class CalendarLayout extends LinearLayout {
         requestLayout();
     }
 
+
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -320,7 +323,7 @@ public class CalendarLayout extends LinearLayout {
             case MotionEvent.ACTION_MOVE:
                 if (mGestureMode == GESTURE_MODE_DISABLED ||
                         mCalendarShowMode == CALENDAR_SHOW_MODE_ONLY_MONTH_VIEW ||
-                        mCalendarShowMode == CALENDAR_SHOW_MODE_ONLY_WEEK_VIEW) {//禁用手势，或者只显示某种视图
+                        mCalendarShowMode == CALENDAR_SHOW_MODE_ONLY_WEEK_VIEW||y>mCalendarView.getHeight()) {//禁用手势，或者只显示某种视图
                     return false;
                 }
 
@@ -336,6 +339,7 @@ public class CalendarLayout extends LinearLayout {
                 //向上滑动，并且contentView平移到最大距离，显示周视图
                 if (dy < 0 && mContentView.getTranslationY() == -mContentViewTranslateY) {
                     //mContentView.onTouchEvent(event);
+
                     mLastY = y;
                     return false;
                 }
@@ -344,6 +348,7 @@ public class CalendarLayout extends LinearLayout {
                 //向下滑动，并且contentView已经完全平移到底部
                 if (dy > 0 && mContentView.getTranslationY() + dy >= 0) {
                     mContentView.setTranslationY(0);
+
                     translationViewPager();
                     mLastY = y;
                     return super.onTouchEvent(event);
@@ -391,6 +396,7 @@ public class CalendarLayout extends LinearLayout {
                     expand();
                 } else {
                     shrink();
+
                 }
                 break;
         }
@@ -622,6 +628,12 @@ public class CalendarLayout extends LinearLayout {
         return expand(240);
     }
 
+    public void mContentViewScrollToUp(){
+        if(mContentView instanceof ScrollView){
+            mContentView=(ScrollView)mContentView;
+            ((ScrollView) mContentView).fullScroll(ScrollView.FOCUS_UP);
+        }
+    }
 
     /**
      * 展开
@@ -843,6 +855,7 @@ public class CalendarLayout extends LinearLayout {
     final void hideContentView() {
         if (mContentView == null)
             return;
+
         mContentView.animate()
                 .translationY(getHeight() - mMonthView.getHeight())
                 .setDuration(220)

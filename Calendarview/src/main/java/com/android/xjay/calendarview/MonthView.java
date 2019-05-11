@@ -17,6 +17,7 @@ package com.android.xjay.calendarview;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -141,6 +142,9 @@ public abstract class MonthView extends BaseMonthView {
         if (mParentLayout != null) {
             if (calendar.isCurrentMonth()) {
                 mParentLayout.updateSelectPosition(mItems.indexOf(calendar));
+                Calendar weekStart=CalendarUtil.getStartInWeek(calendar,CalendarViewDelegate.WEEK_START_WITH_SUN);
+                String s=weekStart.toString();
+                Log.v("test11",s);
             } else {
                 mParentLayout.updateSelectWeek(CalendarUtil.getWeekFromDayInMonth(calendar, mDelegate.getWeekStart()));
             }

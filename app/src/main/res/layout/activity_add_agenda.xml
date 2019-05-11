@@ -68,7 +68,7 @@
         <EditText
             android:textSize="15sp"
             android:padding="10dp"
-            android:id="@+id/editText_classification"
+            android:id="@+id/editText_agenda_address"
             android:layout_width="match_parent"
             android:gravity="left"
             android:layout_height="wrap_content"
