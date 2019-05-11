@@ -16,22 +16,29 @@ public class CustomListAdapter extends BaseAdapter {
 
     private final View.OnLongClickListener longClickListener;
     private final View.OnClickListener clicklistener;
-    List<String> list;
+    private int tag;
+    List<String> mlist;
 
-    public CustomListAdapter(View.OnClickListener clicklistener,View.OnLongClickListener longClickListener,List<String> list){
+    public CustomListAdapter(View.OnClickListener clicklistener,View.OnLongClickListener longClickListener,List<String> list,int tag){
         this.clicklistener=clicklistener;
         this.longClickListener=longClickListener;
-        this.list=list;
+        this.mlist =list;
+        this.tag=tag;
 
     }
     @Override
     public int getCount() {
-        return list.size();
+        return mlist.size();
+    }
+
+    public void refresh(List<String> list){
+        mlist=list;
+        notifyDataSetChanged();
     }
 
     @Override
     public Object getItem(int position) {
-        return list.get(position);
+        return mlist.get(position);
     }
 
     @Override
@@ -45,8 +52,10 @@ public class CustomListAdapter extends BaseAdapter {
         if(convertView==null){
             holder=new ViewHolder();
             convertView= LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_list_example,parent,false);
+
             holder.button=(Button)convertView.findViewById(R.id.btn_mission);
             holder.textView=(TextView)convertView.findViewById(R.id.tv_mission) ;
+
             convertView.setTag(holder);
         }
         else {
@@ -54,8 +63,8 @@ public class CustomListAdapter extends BaseAdapter {
         }
         holder.button.setOnClickListener(clicklistener);
         holder.button.setOnLongClickListener(longClickListener);
-        holder.button.setTag(position);
-        holder.textView.setText(list.get(position));
+        holder.button.setTag(tag*10+position);
+        holder.textView.setText(mlist.get(position));
 
         return convertView;
     }

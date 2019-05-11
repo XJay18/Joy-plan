@@ -105,6 +105,7 @@
             app:current_month_text_color="#333333"
             app:min_year="2004"
             app:month_view="com.android.xjay.joyplan.Calendar.SimpleMonthView"
+            app:month_view_show_mode="mode_only_current"
             app:other_month_text_color="#e1e1e1"
             app:scheme_text="假"
             app:scheme_text_color="#333"
@@ -181,13 +182,25 @@
 
             <android.widget.ScrollView
                 android:layout_width="match_parent"
-                android:background="@color/colorWhite"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/colorWhite">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
+
+                    <com.android.xjay.joyplan.Calendar.ScrollDisabledListView
+                        android:id="@+id/time_listview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:padding="5dp"
+                        android:dividerHeight="5dp"
+                        android:divider="#eeeeee"
+                        android:background="#eeeeee">
+
+                    </com.android.xjay.joyplan.Calendar.ScrollDisabledListView>
 
                     <com.android.xjay.joyplan.Calendar.ScrollDisabledListView
 

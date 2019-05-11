@@ -45,6 +45,7 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp" />
             <TextView
+                android:id="@+id/tv_agenda_dialog_start_time"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:textSize="20sp"
@@ -64,6 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <TextView
+            android:id="@+id/tv_agenda_dialog_title"
             android:layout_marginLeft="42dp"
             android:textSize="20sp"
             android:textColor="@color/colorBlack"
@@ -84,6 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
+            android:id="@+id/editText_agenda_dialog_notation"
             android:background="@null"
             android:hint="备注"
             android:layout_width="match_parent"

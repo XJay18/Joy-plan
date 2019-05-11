@@ -3,8 +3,12 @@ package com.android.xjay.joyplan;
 import android.content.ContentValues;
 import android.content.Context;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDBHelper extends SQLiteOpenHelper {
 
@@ -60,8 +64,10 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String drop_sql="DROP TABLE IF EXISTS "+ ACTIVITY_TABLE +";";
         db.execSQL(drop_sql);
+
         String create_sql="CREATE TABLE IF NOT EXISTS "+ ACTIVITY_TABLE +"("+"id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL,"+"title VARCHAR NOT NULL,"+"info VARCHAR NOT NULL,"+"starttime DATETIME NOT NULL,"+"endtime DATETIME not null,"+"address VARCHAR NOT NULL"+");";
         db.execSQL(create_sql);
+
         create_sql="CREATE TABLE IF NOT EXISTS "+AGENDA_TABLE+"("+"id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"+"title VARCHAR NOT NULL,"+"starttime DATETIME NOT NULL,"+"endtime DATETIME NOT NULL,"+"content VARCHAR NOT NULL,"+"address VARCHAR NOT NULL"+");";
         db.execSQL(create_sql);
     }
@@ -69,6 +75,8 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public void reset(){
         openWriteLink();
         String drop_sql="DROP TABLE IF EXISTS "+ ACTIVITY_TABLE +";";
+        mDB.execSQL(drop_sql);
+        drop_sql="DROP TABLE IF EXISTS "+AGENDA_TABLE+";";
         mDB.execSQL(drop_sql);
         String create_sql="CREATE TABLE IF NOT EXISTS "+ ACTIVITY_TABLE +"("+"id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL,"+"title VARCHAR NOT NULL,"+"info VARCHAR NOT NULL,"+"starttime DATETIME NOT NULL,"+"endtime DATETIME not null,"+"address VARCHAR NOT NULL"+");";
         mDB.execSQL(create_sql);
@@ -112,17 +120,48 @@ public class UserDBHelper extends SQLiteOpenHelper {
         long result=-1;
         openWriteLink();
         ContentValues cv=new ContentValues();
+        cv.put("title",agenda.title);
+        cv.put("starttime",agenda.start_time);
+        cv.put("endtime",agenda.end_time);
         cv.put("content",agenda.content);
-        int year=agenda.calendar.getYear();
-        int month=agenda.calendar.getMonth();
-        int day=agenda.calendar.getDay();
-        String date=year+"-"+month+"-"+day;
-        cv.put("starttime",date);
+        cv.put("address",agenda.address);
+
+
         result=mDB.insert(AGENDA_TABLE,"",cv);
         return result;
 
     }
 
+    public ArrayList<Agenda> getAgendaListWithDate(String date){
+        openReadLink();
+        Cursor cursor=null;
+        Agenda agenda;
+        cursor=mDB.query(AGENDA_TABLE,null,createSelectAction(),new String[]{date},null,null,null);
+        if(cursor!=null&&cursor.moveToFirst()){
+            int length=cursor.getCount();
+            ArrayList<Agenda> list=new ArrayList<>();
+            for(int i=0;i<length;i++)
+            {String title=cursor.getString(1);
+            String starttime=cursor.getString(2);
+            String endtime=cursor.getString(3);
+            String content=cursor.getString(4);
+            String address=cursor.getString(5);
+            agenda=new Agenda(title,starttime,endtime,content,address);
+            list.add(agenda);
+            }
+            return list;
+        }
+        else return new ArrayList<>();
+    }
+
+    public String createSelectAction(){
+        StringBuffer stringBuffer=new StringBuffer();
+        stringBuffer.append("strftime('%Y%m%d',");
+        stringBuffer.append("starttime");
+        stringBuffer.append(")=?");
+        return  stringBuffer.toString();
+
+    }
     public int update(StudentActivityInfo info,String condition){
         return  0;
     }

@@ -158,6 +158,35 @@ public final class CalendarUtil {
         return preCalendar;
     }
 
+
+    /**获取一天所在周的第一天
+     *
+     * @param calendar
+     * @param weekStart 默认周一
+     * @return 所在周第一天的calendar
+     */
+    public  static Calendar getStartInWeek(Calendar calendar,int weekStart){
+        if(weekStart==CalendarViewDelegate.WEEK_START_WITH_SAT){
+            while(CalendarUtil.getWeekFormCalendar(calendar)!=6){
+                calendar=CalendarUtil.getPreCalendar(calendar);
+            }
+            return calendar;
+        }
+        else if(weekStart==CalendarViewDelegate.WEEK_START_WITH_SUN){
+            while(CalendarUtil.getWeekFormCalendar(calendar)!=0){
+                calendar=CalendarUtil.getPreCalendar(calendar);
+            }
+            return calendar;
+        }
+        else {
+            while(CalendarUtil.getWeekFormCalendar(calendar)!=CalendarViewDelegate.WEEK_START_WITH_MON){
+                calendar=CalendarUtil.getPreCalendar(calendar);
+            }
+            return calendar;
+        }
+    }
+
+
     public static Calendar getNextCalendar(Calendar calendar) {
         java.util.Calendar date = java.util.Calendar.getInstance();
 

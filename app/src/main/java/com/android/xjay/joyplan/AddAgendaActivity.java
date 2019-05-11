@@ -1,6 +1,8 @@
 package com.android.xjay.joyplan;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import android.provider.ContactsContract;
@@ -9,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.xjay.calendarview.Calendar;
 import com.android.xjay.joyplan.Utils.DateFormat;
@@ -19,6 +22,9 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
     private UserDBHelper mHelper;
     private CustomTimePicker myStartTimePicker;
     private CustomTimePicker myEndTimePicker;
+
+    private EditText editText_agenda_title;
+    private EditText editText_agenda_address;
     private TextView tv_agenda_start_time;
     private TextView tv_agenda_end_time;
     private TextView tv_agenda_cancel;
@@ -27,8 +33,18 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        String date = bundle.getString("date", "000000");
+        String nextDate = bundle.getString("nextDate", "000000");
+        date = date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8);
+        nextDate = nextDate.substring(0, 4) + "-" + nextDate.substring(4, 6) + "-" + nextDate.substring(6, 8);
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_agenda);
+        editText_agenda_title = findViewById(R.id.editText_agenda_title);
+        editText_agenda_address = findViewById(R.id.editText_agenda_address);
         tv_agenda_start_time = findViewById(R.id.tv_select_agenda_start_time);
         tv_agenda_end_time = findViewById(R.id.tv_select_agenda_end_time);
         editText_notation = findViewById(R.id.editText_notation);
@@ -36,8 +52,13 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
         tv_agenda_confirm = findViewById(R.id.tv_agenda_confirm);
         initTimePicker();
         tv_agenda_confirm.setOnClickListener(this);
+
         tv_agenda_start_time.setOnClickListener(this);
         tv_agenda_end_time.setOnClickListener(this);
+        tv_agenda_start_time.setText(date);
+        tv_agenda_end_time.setText(nextDate);
+
+
         tv_agenda_cancel.setOnClickListener(this);
         mHelper = UserDBHelper.getInstance(this, 1);
     }
@@ -46,6 +67,7 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
 
         long start_beginTime = System.currentTimeMillis();
         String endTime = "2020-04-07 18:00";
+
         String str_BT = DateFormat.long2Str(start_beginTime, true);
         String str_trans_BT = str_BT.substring(5);
         tv_agenda_start_time.setText(str_trans_BT);
@@ -71,7 +93,7 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 String str_trans_temp = str_temp.substring(5);
 //                Log.v("str_trans_temp",str_trans_temp);
                 tv_agenda_end_time.setText(str_trans_temp);
-                myEndTimePicker.setSelectedTime(temp_beginTime,false);
+                myEndTimePicker.setSelectedTime(temp_beginTime, false);
 //                Log.v("boolean",t+"");
             }
         }, start_beginTime, DateFormat.str2Long(endTime, true), "请选择时间");
@@ -129,21 +151,21 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 break;
             }
             case R.id.tv_agenda_confirm: {
-                Calendar calendar = new Calendar();
                 String start_time = tv_agenda_start_time.getText().toString();
                 String end_time = tv_agenda_end_time.getText().toString();
+                String title = editText_agenda_title.getText().toString();
+                String address = editText_agenda_address.getText().toString();
                 String content = editText_notation.getText().toString();
-                String yearstr = start_time.substring(0, 4);
-                String monthstr = start_time.substring(5, 7);
-                String daystr = start_time.substring(8, 10);
-                int year = Integer.parseInt(yearstr);
-                int month = Integer.parseInt(monthstr);
-                int day = Integer.parseInt(daystr);
-                calendar.setDay(day);
-                calendar.setMonth(month);
-                calendar.setYear(year);
-                Agenda agenda = new Agenda(calendar, content);
+                Agenda agenda = new Agenda(title, start_time, end_time, content, address);
+                //mHelper.reset();
                 mHelper.insert_agenda(agenda);
+                SQLiteDatabase dbRead = mHelper.getReadableDatabase();
+                Cursor c;
+                c = dbRead.query("agenda_table", null, null, null, null, null, null);
+                int length = c.getCount();
+                String s = new Integer(length).toString();
+                Toast toast = Toast.makeText(this, s, Toast.LENGTH_SHORT);
+                toast.show();
             }
         }
     }
