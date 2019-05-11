@@ -211,29 +211,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
 
 
     private void initScrollDisabledListView(){
-        Map<String,List<String>> map=CustomerAdapter_getDataMap();
 
 
-        int year = mCalendarView.getCurYear();
-        int month = mCalendarView.getCurMonth();
-        int day=mCalendarView.getCurDay();
-        Calendar calendar=new Calendar();
-        String key;
 
         for(int i=0;i<7;i++){
-            if(i==0){
-                calendar.setYear(year);
-                calendar.setMonth(month);
-                calendar.setDay(day);
-                key=calendar.toString();
-            }
-            else{
-
-                calendar= CalendarUtil.getNextCalendar(calendar);
-                key=calendar.toString();
-            }
-            List<String> list=map.get(key);
-            CustomListAdapter customListAdapter=new CustomListAdapter(this,this,list,i);
+            ArrayList<String> arrayList=new ArrayList<String>();
+            CustomListAdapter customListAdapter=new CustomListAdapter(this,this,arrayList,i);
             adapterArrayList.add(customListAdapter);
 
         }
@@ -261,7 +244,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
         listView7.setTag(6);
     }
 
-    private Map<String,List<String>> CustomerAdapter_getDataMap(){
+    /*private Map<String,List<String>> CustomerAdapter_getDataMap(){
         Map<String,List<String>> map=new HashMap<>();
         for(int y=2018;y<2025;y++){
             for(int m=1;m<=12;m++){
@@ -297,7 +280,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
             }
         }
         return map;
-    }
+    }*/
 
 
 
@@ -526,6 +509,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
                 }
 
                 adapterArrayList.get(i).refresh(titleList);
+
             }
         }
     }
