@@ -102,6 +102,7 @@ public class PieFragment extends Fragment implements OnChartValueSelectedListene
             mPieChart.setCenterText("科研目标");
         if(mPieChart==mPieChart4)
             mPieChart.setCenterText("其他目标");
+        mPieChart.setCenterTextColor(Color.rgb(74,64,53));
         mPieChart.setCenterTextSize(15f);
         //设置文本你字体大小
         mPieChart.setDrawEntryLabels(false);
@@ -138,7 +139,7 @@ public class PieFragment extends Fragment implements OnChartValueSelectedListene
         dataSet.setValueLinePart1OffsetPercentage(80f);
         dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         //数据和颜色
-        int[] colors1=new int[]{Color.rgb(255,0,0),Color.rgb(255,255,255)};
+        int[] colors1=new int[]{Color.rgb(242,123,31),Color.rgb(255,255,255)};
         dataSet.setColors(colors1);
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter());
