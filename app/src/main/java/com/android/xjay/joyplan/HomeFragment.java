@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,7 @@ import com.android.xjay.calendarview.CalendarLayout;
 import com.android.xjay.calendarview.CalendarUtil;
 import com.android.xjay.calendarview.CalendarView;
 import com.android.xjay.joyplan.Calendar.CustomListAdapter;
+import com.android.xjay.joyplan.Calendar.CustomTimeListAdapter;
 import com.android.xjay.joyplan.Calendar.ScrollDisabledListView;
 import com.android.xjay.joyplan.CustomExpanding.CustomItem;
 import com.android.xjay.joyplan.CustomExpanding.ExpandingList;
@@ -46,6 +48,7 @@ import java.util.Map;
 public class HomeFragment extends Fragment implements View.OnClickListener,CalendarView.OnCalendarSelectListener,
         CalendarView.OnYearChangeListener,View.OnLongClickListener {
 
+    UserDBHelper mHelper;
     protected Context mContext;
     private ExpandingList expandingList;
     DynamicReceiver dynamicReceiver;
@@ -54,9 +57,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
     String[] STARTTIMES;
     //String[] ENDTIMES;
     String[] ADDRESSES;
+    ArrayList<CustomListAdapter> adapterArrayList=new ArrayList<>();
 
     //used by fragment_agenda
     TextView mTextMonthDay;
+
     TextView mTextYear;
 
     TextView mTextLunar;
@@ -69,6 +74,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
 
     LinearLayout mRecyclerView;
 
+    ScrollDisabledListView timeListView;
     ScrollDisabledListView listView1;
     ScrollDisabledListView listView2;
     ScrollDisabledListView listView3;
@@ -81,6 +87,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
     CalendarLayout mCalendarLayout;
 
     public static HomeFragment newInstance(String info) {
+
         Bundle args = new Bundle();
         HomeFragment fragment = new HomeFragment();
         args.putString("info", info);
@@ -101,6 +108,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
                View view = inflater.inflate(R.layout.fragment_agenda, null);
 
                 //initView()
+                timeListView=view.findViewById(R.id.time_listview);
                 listView1= view.findViewById(R.id.listView1);
                 listView2=  view.findViewById(R.id.listView2);
                 listView3=  view.findViewById(R.id.listView3);
@@ -108,6 +116,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
                 listView5=  view.findViewById(R.id.listView5);
                 listView6=  view.findViewById(R.id.listView6);
                 listView7=  view.findViewById(R.id.listView7);
+
+                timeListView.setAdapter(new CustomTimeListAdapter());
 
                 mTextMonthDay = view.findViewById(R.id.tv_month_day);
                 mTextYear =  view.findViewById(R.id.tv_year);
@@ -201,50 +211,40 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
 
 
     private void initScrollDisabledListView(){
-        Map<String,List<String>> map=CustomerAdapter_getDataMap();
-        ArrayList<CustomListAdapter> adapterArrayList=new ArrayList<>();
 
-        int year = mCalendarView.getCurYear();
-        int month = mCalendarView.getCurMonth();
-        int day=mCalendarView.getCurDay();
-        Calendar calendar=new Calendar();
-        String key;
+
 
         for(int i=0;i<7;i++){
-            if(i==0){
-                calendar.setYear(year);
-                calendar.setMonth(month);
-                calendar.setDay(day);
-                key=calendar.toString();
-            }
-            else{
-
-                calendar= CalendarUtil.getNextCalendar(calendar);
-                key=calendar.toString();
-            }
-            List<String> list=map.get(key);
-            CustomListAdapter customListAdapter=new CustomListAdapter(this,this,list);
+            ArrayList<String> arrayList=new ArrayList<String>();
+            CustomListAdapter customListAdapter=new CustomListAdapter(this,this,arrayList,i);
             adapterArrayList.add(customListAdapter);
 
         }
 
 
         listView1.setAdapter(adapterArrayList.get(0));
+        listView1.setTag(0);
 
         listView2.setAdapter(adapterArrayList.get(1));
+        listView2.setTag(1);
 
         listView3.setAdapter(adapterArrayList.get(2));
+        listView3.setTag(2);
 
         listView4.setAdapter(adapterArrayList.get(3));
+        listView4.setTag(3);
 
         listView5.setAdapter(adapterArrayList.get(4));
+        listView5.setTag(4);
 
         listView6.setAdapter(adapterArrayList.get(5));
+        listView6.setTag(5);
 
         listView7.setAdapter(adapterArrayList.get(6));
+        listView7.setTag(6);
     }
 
-    private Map<String,List<String>> CustomerAdapter_getDataMap(){
+    /*private Map<String,List<String>> CustomerAdapter_getDataMap(){
         Map<String,List<String>> map=new HashMap<>();
         for(int y=2018;y<2025;y++){
             for(int m=1;m<=12;m++){
@@ -280,7 +280,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
             }
         }
         return map;
-    }
+    }*/
+
+
 
     public void RedrawExpandingList(){
         //TODO
@@ -294,10 +296,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
 //        ENDTIMES=new String[100];
 
         ADDRESSES=new String[100];
-        UserDBHelper mHelper;
         Cursor c;
-        mHelper = UserDBHelper.getInstance(getContext(), 1);
-        //mHelper.reset();
+//        mHelper.reset();
+        mHelper=UserDBHelper.getInstance(getContext(),1);
         SQLiteDatabase dbRead = mHelper.getReadableDatabase();
         c = dbRead.query("user_info", null, null
                 , null, null, null, null);
@@ -319,24 +320,27 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
     @Override
     public void onClick(View view){
         if(view.getId()==R.id.ll_fqz){
-            Toast.makeText(mContext,"你点击了番茄钟",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext,"你点击了番茄钟",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
             intent.setClass(mContext,FqzActivity.class);
             startActivity(intent);
         }else if(view.getId()==R.id.ll_sjtb) {
-            Toast.makeText(mContext,"你点击了数据图表",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext,"你点击了数据图表",Toast.LENGTH_SHORT).show();
             Intent intent=new Intent();
             intent.setClass(this.getContext(),StatisticsActivity.class);
             startActivity(intent);
         } else if(view.getId()==R.id.ll_sxj){
-            Toast.makeText(mContext,"你点击了随心记",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext,"你点击了随心记",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
             intent.setClass(mContext,SxjActivity.class);
             startActivity(intent);
         }
         else if(view.getId()==R.id.btn_mission){
+            int tag=(int)view.getTag();
+            int listIndex=tag/10;
+            int buttonIndex=tag%10;
             final int position=(int)view.getTag();
-            customDialog();
+            customDialog(listIndex,buttonIndex);
         }
         else if(view.getId()==R.id.ll_setup_accountnsafety){
             Toast.makeText(mContext,"你点击了账号与安全",Toast.LENGTH_SHORT).show();
@@ -373,10 +377,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
             //We can create items in batch.
 
 
-
-
-
-
             /*item.findViewById(R.id.remove_item).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -389,23 +389,44 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
     @Override
     public boolean onLongClick(View v) {
         switch (v.getId()){
-            case R.id.btn_mission:
-                /*final int position=(int)v.getTag();
-                Intent intent = new Intent();
-                intent.setClass(mContext,AgendaDetailActivity.class);
-                startActivity(intent);*/
-
+            case R.id.btn_mission: {
                 Intent intent = new Intent();
                 intent.setClass(mContext,AddAgendaActivity.class);
+                Bundle bundle=new Bundle();
+
+
+                Calendar selectedCalendar=mCalendarView.getSelectedCalendar();
+                Calendar weekStartCalendar=CalendarUtil.getStartInWeek(selectedCalendar,1);
+                Calendar clickedListCalendar=weekStartCalendar;
+
+                Object tag=v.getTag();
+                int ListIndex=(int)tag;
+                ListIndex=ListIndex/10;
+                for(int i=0;i<ListIndex;i++){
+                    clickedListCalendar=CalendarUtil.getNextCalendar(clickedListCalendar);
+                }
+                String date=clickedListCalendar.toString();
+                bundle.putString("date",date);
+                String nextDate=CalendarUtil.getNextCalendar(clickedListCalendar).toString();
+                bundle.putString("nextDate",nextDate);
+
+                intent.putExtras(bundle);
                 startActivity(intent);
                 return true;
+            }
         }
         return false;
     }
 
-    private void customDialog() {
+    private void customDialog(int listIndex,int buttonIndex) {
         final Dialog dialog = new Dialog(mContext, R.style.NormalDialogStyle);
         View view = View.inflate(mContext, R.layout.dialog_normal, null);
+
+        TextView tv_title=view.findViewById(R.id.tv_agenda_dialog_title);
+        TextView tv_time=view.findViewById(R.id.tv_agenda_dialog_start_time);
+        EditText editText_notation=view.findViewById(R.id.editText_agenda_dialog_notation);
+
+
         dialog.setContentView(view);
         //使得点击对话框外部不消失对话框
         dialog.setCanceledOnTouchOutside(true);
@@ -418,8 +439,32 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
         lp.gravity = Gravity.CENTER;
         dialogWindow.setAttributes(lp);
 
+        mHelper=UserDBHelper.getInstance(getContext(),1);
+        ArrayList<Agenda> agendaList=mHelper.getAgendaListWithDate(getListCilckedCalendar(listIndex).toString());
+        Agenda agenda;
+
+        if(agendaList.size()>0) {agenda=agendaList.get(buttonIndex);
+        tv_title.setText(agenda.title);
+        tv_time.setText(agenda.start_time);
+        editText_notation.setText(agenda.content);
+        }
+        else{
+            tv_title.setText("无");
+            tv_time.setText("00-00-00");
+        }
+
         dialog.show();
     }
+
+    public Calendar getListCilckedCalendar(int index){
+        Calendar selectedCalendar=mCalendarView.getSelectedCalendar();
+        Calendar weekStartCalendar=CalendarUtil.getStartInWeek(selectedCalendar,1);
+        for(int i=0;i<index;i++){
+            weekStartCalendar=CalendarUtil.getNextCalendar(weekStartCalendar);
+        }
+        return weekStartCalendar;
+    }
+
 
 
     @Override
@@ -440,7 +485,36 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
         mTextYear.setText(String.valueOf(calendar.getYear()));
         mTextLunar.setText(calendar.getLunar());
         mYear = calendar.getYear();
+        Calendar weekStartCalendar=CalendarUtil.getStartInWeek(calendar,1);
+        updateAgenda(weekStartCalendar);
     }
+
+    public void updateAgenda(Calendar calendar){
+        for(int i=0;i<7;i++){
+            String date=calendar.toString();
+            Log.v("test12",date);
+            calendar=CalendarUtil.getNextCalendar(calendar);
+            mHelper=UserDBHelper.getInstance(getContext(),1);
+            ArrayList<Agenda> AgendaList=mHelper.getAgendaListWithDate(date);
+            int length=AgendaList.size();
+            if(length==0){
+                ArrayList<String> nullList=new ArrayList<String>();
+                adapterArrayList.get(i).refresh(nullList);
+            }
+            else {
+                ArrayList<String> titleList = new ArrayList<String>();
+                for (int j = 0; j < length; j++) {
+                    String title = AgendaList.get(j).title;
+                    titleList.add(title);
+                }
+
+                adapterArrayList.get(i).refresh(titleList);
+
+            }
+        }
+    }
+
+
 
     /**
      * method to accept Broadcast and refresh the ExpandingList

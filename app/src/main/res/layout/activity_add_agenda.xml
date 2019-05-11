@@ -43,7 +43,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="7.5dp"
         android:background="@drawable/btn_shape"
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -68,7 +68,7 @@
         <EditText
             android:textSize="15sp"
             android:padding="10dp"
-            android:id="@+id/editText_classification"
+            android:id="@+id/editText_agenda_address"
             android:layout_width="match_parent"
             android:gravity="left"
             android:layout_height="wrap_content"
@@ -175,8 +175,8 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_marginTop="15sp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="7.5dp"
+        android:layout_marginBottom="7.5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/btn_shape">

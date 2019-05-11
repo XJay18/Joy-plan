@@ -162,7 +162,7 @@ public class AddActivity extends AppCompatActivity {
                 public void onTimeSelected(long timestamp) {
                     tv_select_start_time.setText(DateFormat.long2Str(timestamp, true));
                 }
-            }, beginTime, DateFormat.str2Long(endTime, true), "请选择时间", 23);
+            }, beginTime, DateFormat.str2Long(endTime, true), "请选择时间");
             //允许点击屏幕或物理返回键关闭
             myTimePicker.setCancelable(true);
             // 显示时和分

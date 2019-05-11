@@ -45,51 +45,57 @@
             android:layout_marginTop="20dp"
             android:src="@drawable/logo"/>
 
-        <LinearLayout
-        android:id="@+id/ll_setup_about_version"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/iv_setup_about_logo"
-        android:layout_marginTop="50dp"
-        android:padding="10dp">
-        <TextView
-            android:id="@+id/tv_setup_about_version"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="版本号："
-            android:textSize="30dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="v1.0.0"
-            android:textSize="30dp"/>
-    </LinearLayout>
 
 
         <LinearLayout
-            android:id="@+id/ll_setup_about_others"
+            android:id="@+id/ll_setup_about_version"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:orientation="horizontal"
-            android:layout_below="@+id/ll_setup_about_version"
+            android:layout_below="@+id/iv_setup_about_logo"
+            android:layout_marginTop="50dp"
             android:padding="10dp"
-            android:clickable="true">
+            android:background="@drawable/bg_setup_button">
+
             <TextView
-                android:id="@+id/tv_setup_about_others"
+                android:id="@+id/tv_setup_about_version"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="其他："
-                android:textSize="30dp"/>
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="0dp"
+                android:layout_gravity="center"
+                android:text="版本号："
+                style="@style/function_bar_text" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_right"/>
+                android:text="v1.0.0"
+                style="@style/function_bar_text"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_setup_about_other"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_setup_button"
+            android:layout_below="@id/ll_setup_about_version"
+            android:clickable="true"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/function_bar_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="其他" />
+
+            <ImageView
+                style="@style/function_bar_lefticon"
+                android:layout_marginEnd="25dp"
+                android:layout_weight="0"
+                android:background="@drawable/ic_right" />
         </LinearLayout>
     </RelativeLayout>
 
