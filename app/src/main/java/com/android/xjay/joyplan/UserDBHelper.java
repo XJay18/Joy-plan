@@ -156,7 +156,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     public String createSelectAction(){
         StringBuffer stringBuffer=new StringBuffer();
-        stringBuffer.append("strftime('%Y%m%d',");
+        stringBuffer.append("strftime('%m%d',");
         stringBuffer.append("starttime");
         stringBuffer.append(")=?");
         return  stringBuffer.toString();

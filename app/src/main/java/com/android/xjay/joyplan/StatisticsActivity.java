@@ -11,21 +11,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.android.xjay.joyplan.StatisticsFragment.BarFragment;
 import com.android.xjay.joyplan.StatisticsFragment.PieFragment;
 
 import java.util.ArrayList;
 
-public class StatisticsActivity extends AppCompatActivity {
+public class StatisticsActivity extends AppCompatActivity implements View.OnClickListener{
     private TabLayout mTabLayout;
-    private ViewPager mViewPager;
-    private Toolbar mToolbar;
-    private ArrayList<String> TitleList = new ArrayList<>();
+    private ViewPager mViewPager;private ArrayList<String> TitleList = new ArrayList<>();
     private ArrayList<Fragment> ViewList = new ArrayList<>();
 
     private Fragment BarFragment;
     private Fragment PieFragment;
+
+    private Button btn_back;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -34,9 +35,11 @@ public class StatisticsActivity extends AppCompatActivity {
         initView();
     }
     private void initView(){
-        mToolbar=findViewById(R.id.tb_statistics);
         mViewPager=findViewById(R.id.viewpager);
         mTabLayout=findViewById(R.id.mytab);
+        btn_back=findViewById(R.id.bt_statistics_back);
+
+        btn_back.setOnClickListener(this);
 
         BarFragment=new BarFragment();
         PieFragment=new PieFragment();
@@ -75,7 +78,15 @@ public class StatisticsActivity extends AppCompatActivity {
         mViewPager.setAdapter(mAdapter);
         //tab与viewpager绑定
         mTabLayout.setupWithViewPager(mViewPager);
-        mToolbar.setTitle("数据图表");
     }
+    @Override
+    public void onClick(View v){
+        switch (v.getId()){
+            case R.id.bt_statistics_back:
+                finish();
+                break;
+        }
+    }
+    //获取本周日期
 
 }

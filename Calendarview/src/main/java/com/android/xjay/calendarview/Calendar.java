@@ -380,6 +380,10 @@ public final class Calendar implements Serializable, Comparable<Calendar> {
         return year + "" + (month < 10 ? "0" + month : month) + "" + (day < 10 ? "0" + day : day);
     }
 
+    public String toStringWithoutYear(){
+        return (month < 10 ? "0" + month : month) + "" + (day < 10 ? "0" + day : day);
+    }
+
 //    @Override
 //    public int compare(Calendar lhs, Calendar rhs) {
 //        if (lhs == null || rhs == null) {

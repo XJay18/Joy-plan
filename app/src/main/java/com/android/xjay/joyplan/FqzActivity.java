@@ -1,8 +1,8 @@
 package com.android.xjay.joyplan;
+import android.animation.Animator;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.AlarmClock;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.xjay.joyplan.Utils.DateFormat;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class FqzActivity extends AppCompatActivity
     private CustomTimePicker mTimePicker;
     private String[] sizeArray = {"1", "2", "3", "4"};
     private String[] breakArray = {"5", "10", "15", "20", "30"};
+    private LottieAnimationView animationView;
 
     // default fqz size 00:25
     private int fqz_hour = 0;
@@ -89,6 +91,8 @@ public class FqzActivity extends AppCompatActivity
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
+
+        animationView=findViewById(R.id.fqz_anim_okay_blue);
     }
 
     @Override
@@ -125,7 +129,33 @@ public class FqzActivity extends AppCompatActivity
                 intents.get(t).putExtra(AlarmClock.EXTRA_SKIP_UI, true);
                 startActivity(intents.get(t));
             }
-            Toast.makeText(this, "番茄钟设置成功，认真耕耘吧~", Toast.LENGTH_SHORT).show();
+
+            animationView.setAnimation("okay_blue.json");
+            animationView.loop(false);
+            Animator.AnimatorListener mAnimationListener=new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    animationView.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    animationView.setVisibility(View.INVISIBLE);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            };
+            animationView.addAnimatorListener(mAnimationListener);
+            animationView.playAnimation();
+            Toast.makeText(this, "番茄钟设置成功", Toast.LENGTH_SHORT).show();
 
         } else if (v.getId() == R.id.tv_fqz_setup) {
             Intent deleteAlarm=new Intent(AlarmClock.ACTION_DISMISS_ALARM);
@@ -149,9 +179,10 @@ public class FqzActivity extends AppCompatActivity
     }
 
     private void initTimePicker() {
+        // default values
         tv_hour.setText("0");
         tv_minute.setText("25");
-        long beginTimestamp = DateFormat.str2Long("2010-00-00 00:00", true);
+        long beginTimestamp = DateFormat.str2Long("2010-00-00 00:25", true);
         long endTimestamp = System.currentTimeMillis();
 
         mTimePicker = new CustomTimePicker(this, new CustomTimePicker.Callback() {
@@ -167,7 +198,7 @@ public class FqzActivity extends AppCompatActivity
 //                Log.d("set hour ",String.valueOf(fqz_hour));
 //                Log.d("set minute ",String.valueOf(fqz_min));
             }
-        }, beginTimestamp, endTimestamp, "请选择番茄周期", 2);
+        }, beginTimestamp, endTimestamp, "请选择番茄周期", 2, new int[]{0,0,0,0,25});
 
         mTimePicker.setCancelable(true);
         mTimePicker.setTimePickerShowMode(1);
