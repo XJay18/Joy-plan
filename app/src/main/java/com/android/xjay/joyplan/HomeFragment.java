@@ -297,7 +297,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
         UserDBHelper mHelper;
         Cursor c;
         mHelper = UserDBHelper.getInstance(getContext(), 1);
-//        mHelper.reset();
+        //mHelper.reset();
         SQLiteDatabase dbRead = mHelper.getReadableDatabase();
         c = dbRead.query("user_info", null, null
                 , null, null, null, null);

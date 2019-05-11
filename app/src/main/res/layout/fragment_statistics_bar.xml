@@ -7,28 +7,63 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/mBarChart"
-        android:layout_width="match_parent"
-        android:layout_height="300dp" />
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+            <TextView
+                android:id="@+id/show_week_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+        </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/mBarChart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp" />
 
         <Button
-            android:id="@+id/btn_last_month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="上一月"/>
+            android:id="@+id/btn_last_week_b"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/mBarChart"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="50dp"
+            android:background="@drawable/btn_white"
+            android:text="上一周" />
+
         <Button
-            android:id="@+id/btn_next_month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/btn_next_week_b"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/mBarChart"
             android:layout_alignParentRight="true"
-            android:text="下一月"/>
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/btn_white"
+            android:text="下一周" />
     </RelativeLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

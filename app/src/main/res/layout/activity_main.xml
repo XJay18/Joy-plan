@@ -113,17 +113,6 @@
             android:text="登录"
             android:textSize="19sp"
             android:background="@drawable/bg_btn_blue" />
-
-        <TextView
-            android:id="@+id/text_ps"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btn_login"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="70dp"
-            android:text="第三方账户登录"
-            android:textSize="10sp"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -134,8 +123,17 @@
             android:textColor="#ffffff"
             android:textSize="33sp"
             android:layout_centerHorizontal="true"/>
-
-        <ImageView
+       <!--
+       <TextView
+            android:id="@+id/text_ps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_login"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp"
+            android:text="第三方账户登录"
+            android:textSize="10sp"/>
+       <ImageView
             android:layout_width="19.5dp"
             android:layout_height="16.5dp"
             android:layout_below="@+id/text_ps"
@@ -159,6 +157,6 @@
             android:layout_marginStart="79.5dp"
             android:layout_marginTop="12dp"
             android:layout_toEndOf="@+id/logo_blog"
-            android:background="@drawable/logo_qq" />
+            android:background="@drawable/logo_qq" />-->
     </RelativeLayout>
 </android.widget.RelativeLayout>
