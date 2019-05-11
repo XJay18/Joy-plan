@@ -393,6 +393,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
     @Override
     public boolean onLongClick(View v) {
         switch (v.getId()){
+            case R.id.listView1:
+
             case R.id.btn_mission:
 
                 Intent intent = new Intent();

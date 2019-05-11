@@ -50,6 +50,7 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
 
         tv_agenda_start_time.setOnClickListener(this);
         tv_agenda_end_time.setOnClickListener(this);
+
         tv_agenda_start_time.setText(date);
         tv_agenda_end_time.setText(nextDate);
 
