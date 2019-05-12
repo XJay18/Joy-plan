@@ -1,5 +1,6 @@
 package com.android.xjay.joyplan;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,8 +11,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 
 
@@ -34,6 +37,7 @@ import com.android.xjay.calendarview.Calendar;
 import com.android.xjay.calendarview.CalendarLayout;
 import com.android.xjay.calendarview.CalendarUtil;
 import com.android.xjay.calendarview.CalendarView;
+import com.android.xjay.calendarview.YearViewPager;
 import com.android.xjay.joyplan.Calendar.CustomListAdapter;
 import com.android.xjay.joyplan.Calendar.CustomTimeListAdapter;
 import com.android.xjay.joyplan.Calendar.ScrollDisabledListView;
@@ -50,6 +54,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
         CalendarView.OnYearChangeListener,View.OnLongClickListener {
 
     UserDBHelper mHelper;
+
     ArrayList<ArrayList<String>> AgendaTitleArrayList;
     protected Context mContext;
     private ExpandingList expandingList;
@@ -63,6 +68,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
 
     //used by fragment_agenda
     TextView mTextMonthDay;
+
+    YearViewPager mYearViewPager;
 
     TextView mTextYear;
 
@@ -141,7 +148,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
                 mRelativeTool =  view.findViewById(R.id.rl_tool);
                 mCalendarView =  view.findViewById(R.id.calendarView);
                 mTextCurrentDay =  view.findViewById(R.id.tv_current_day);
-
+                mCalendarView.setOnSelectMonthListener(new CalendarView.onSelectMonthListener() {
+                    @Override
+                    public void onSelectMonth() {
+                        ((FragmentActivity)mContext).findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
+                    }
+                });
                 /*linearLayout=view.findViewById(R.id.linearLayout_agenda);
                 linearLayout.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
@@ -160,6 +172,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
                             mCalendarLayout.expand();
                             return;
                         }
+                        ((FragmentActivity)mContext).findViewById(R.id.bottom_navigation).setVisibility(View.GONE);
+                        /*BottomNavigationView bottomNavigationView=new BottomNavigationView(this);
+                        view.findViewById(R.id.bottom_navigation).setVisibility(View.GONE);*/
                         mCalendarView.showYearSelectLayout(mYear);
                         mTextLunar.setVisibility(View.GONE);
                         mTextYear.setVisibility(View.GONE);
