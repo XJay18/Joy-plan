@@ -17,13 +17,12 @@ import android.widget.Toast;
 import com.android.xjay.joyplan.CustomExpanding.CustomItem;
 import com.android.xjay.joyplan.CustomExpanding.ExpandingList;
 
-public class ScheduleActivity extends AppCompatActivity {
+public class ScheduleActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ExpandingList expandingList;
 
     //TODO
     int[] IMAGES = {R.drawable.cc, R.drawable.cc};
-
 
     String[] TITLES = new String[20];
 
@@ -32,11 +31,12 @@ public class ScheduleActivity extends AppCompatActivity {
     private UserDBHelper mHelper;
     Cursor c;
 
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
 
+        findViewById(R.id.btn_schedule_back).setOnClickListener(this);
+        findViewById(R.id.ll_schedule_help).setOnClickListener(this);
 
         //get cursor c to get record in DB
         mHelper = UserDBHelper.getInstance(this, 1);
@@ -49,7 +49,6 @@ public class ScheduleActivity extends AppCompatActivity {
 
         c.moveToFirst();
 
-
         expandingList=findViewById(R.id.schedule_expanding_list);
         int iconRes=R.drawable.cat;
         for (int i = 0; i < length; i++) {
@@ -59,12 +58,6 @@ public class ScheduleActivity extends AppCompatActivity {
             addItem(TITLES[i],s,R.color.colorWhite,iconRes);
             c.move(1);
         }
-
-
-
-
-
-
 
         //btn to MainActivity
         Button btn_changeTo_addActivity = findViewById(R.id.changeButton_schedule);
@@ -133,8 +126,6 @@ public class ScheduleActivity extends AppCompatActivity {
         }
     }
 
-
-
     private void configureSubItem(final CustomItem item, final View view, String subTitle) {
         ((TextView) view.findViewById(R.id.sub_title)).setText(subTitle);
 
@@ -153,6 +144,19 @@ public class ScheduleActivity extends AppCompatActivity {
         });
         builder.setNegativeButton(android.R.string.cancel, null);
         builder.show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.btn_schedule_back){
+            finish();
+        } else if(v.getId()==R.id.ll_schedule_help){
+            android.app.AlertDialog.Builder mBuilder = new android.app.AlertDialog.Builder(this);
+            mBuilder.setTitle("发布活动");
+            mBuilder.setMessage(R.string.info_fbhd);
+            android.app.AlertDialog mAlert = mBuilder.create();
+            mAlert.show();
+        }
     }
 
     interface OnItemCreated {

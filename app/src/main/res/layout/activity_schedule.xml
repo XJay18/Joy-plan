@@ -1,27 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout   xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:background="#eeeeee"
-
+    android:layout_width="match_parent"
+    android:background="#EEEEEE"
     android:orientation="vertical">
-   <com.android.xjay.joyplan.CustomExpanding.ExpandingList
-       android:id="@+id/schedule_expanding_list"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:background="@color/transparent"></com.android.xjay.joyplan.CustomExpanding.ExpandingList>
-    <Button
-        android:id="@+id/changeButton_schedule"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:padding="10dp"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/ic_circle_add"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
+    <LinearLayout
+        style="@style/top_toor_bar"
+        android:background="@drawable/toolbar_blue">
+        <Button
+            android:id="@+id/btn_schedule_back"
+            style="@style/top_tb_btnSize"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/ic_left_white"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发布活动"
+            style="@style/top_tb_text_discovery"
+            android:layout_weight="56"/>
 
-</android.widget.RelativeLayout>
+        <LinearLayout
+            android:id="@+id/ll_schedule_help"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center|end">
+
+            <ImageView
+                style="@style/top_tb_btnRightSize"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/ic_help_white" />
+        </LinearLayout>
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_weight="5">-->
+            <!--<ImageView-->
+                <!--android:layout_width="30dp"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_marginEnd="10dp"-->
+                <!--android:background="@drawable/ic_fqz_statistics"-->
+                <!--/>-->
+        <!--</LinearLayout>-->
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#eeeeee"
+        android:orientation="vertical">
+
+        <com.android.xjay.joyplan.CustomExpanding.ExpandingList
+            android:id="@+id/schedule_expanding_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent">
+
+        </com.android.xjay.joyplan.CustomExpanding.ExpandingList>
+        <Button
+            android:id="@+id/changeButton_schedule"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:padding="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/ic_circle_add"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+    </RelativeLayout>
+</LinearLayout>

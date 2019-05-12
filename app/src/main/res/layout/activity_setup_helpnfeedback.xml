@@ -8,27 +8,21 @@
 
     <!--头部-->
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
+        style="@style/top_toor_bar"
         android:background="@drawable/toolbar_blue">
 
         <Button
             android:id="@+id/bt_setup_helpnfeedback_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            style="@style/top_tb_btnSize"
             android:layout_centerVertical="true"
             android:layout_marginStart="5dp"
             android:background="@drawable/ic_left_white"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="10dp"
             android:text="帮助与反馈"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            style="@style/AppTheme"
-            android:textColor="#FFFFFF"/>
+            style="@style/top_tb_text_relative"
+            />
 
     </RelativeLayout>
 
@@ -113,15 +107,10 @@
                 app:lottie_autoPlay="true" />
             <Button
                 android:id="@+id/btn_setup_confirm"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                style="@style/btn_confirm"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="10dp"
-                android:background="@drawable/btn_white"
-                android:text="提交"
-                android:textColor="#6BB6FF"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:text="提交"/>
         </LinearLayout>
     </RelativeLayout>
 

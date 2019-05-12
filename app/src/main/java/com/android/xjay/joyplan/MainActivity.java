@@ -1,6 +1,7 @@
 package com.android.xjay.joyplan;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.view.*;
 import android.content.Intent;
+
+import com.android.xjay.joyplan.Notification.NotificationReceiver;
 import com.android.xjay.joyplan.web.WebServiceGet;
 import com.android.xjay.joyplan.web.WebServicePost;
 
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText et_password;
     private Button btn_login;
     private Button btn_return;
+    private NotificationReceiver notificationReceiver;
     //提示框
     private ProgressDialog dialog;
     //服务器返回的数据
@@ -34,7 +38,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getID();
+        notificationReceiver=new NotificationReceiver();
+        regReceiver();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //取消注册notificationReceiver
+        unregisterReceiver(notificationReceiver);
+    }
+
     private void getID(){
         btn_login=findViewById(R.id.btn_login);
         btn_return=findViewById(R.id.main_return);
@@ -129,4 +143,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    private void regReceiver() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.example.notification");
+        registerReceiver(notificationReceiver, intentFilter);
+    }
+
 }

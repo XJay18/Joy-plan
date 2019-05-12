@@ -4,45 +4,104 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="10dp"
     android:background="@color/colorBG">
 
-
     <LinearLayout
-        android:id="@+id/ll_fqz"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="6dp"
+        android:layout_height="200dp"
         android:background="@drawable/bg_setup_button"
-        android:clickable="true"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/ll_fqz"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="6dp"
+            android:clickable="true"
+            android:orientation="horizontal">
 
-        <ImageView
-            style="@style/function_bar_lefticon"
-            android:layout_marginStart="15dp"
-            android:layout_weight="0"
-            android:background="@drawable/ic_clock" />
+            <ImageView
+                style="@style/function_bar_lefticon"
+                android:layout_marginStart="15dp"
+                android:layout_weight="0"
+                android:background="@drawable/ic_clock" />
 
-        <TextView
-            style="@style/function_bar_text"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:layout_weight="1"
-            android:text="番茄钟" />
+            <TextView
+                style="@style/function_bar_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:text="番茄钟" />
 
-        <ImageView
-            style="@style/function_bar_lefticon"
-            android:layout_marginEnd="25dp"
-            android:layout_weight="0"
-            android:background="@drawable/ic_right" />
+            <ImageView
+                style="@style/function_bar_lefticon"
+                android:layout_marginEnd="25dp"
+                android:layout_weight="0"
+                android:background="@drawable/ic_right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_sxj"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:clickable="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                style="@style/function_bar_lefticon"
+                android:layout_marginStart="15dp"
+                android:layout_weight="0"
+                android:background="@drawable/ic_note" />
+
+            <TextView
+                style="@style/function_bar_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:text="随心记" />
+
+            <ImageView
+                style="@style/function_bar_lefticon"
+                android:layout_marginEnd="25dp"
+                android:layout_weight="0"
+                android:background="@drawable/ic_right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_sjtb"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:clickable="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                style="@style/function_bar_lefticon"
+                android:layout_marginStart="15dp"
+                android:layout_weight="0"
+                android:background="@drawable/ic_table" />
+
+            <TextView
+                style="@style/function_bar_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:text="数据图表" />
+
+            <ImageView
+                style="@style/function_bar_lefticon"
+                android:layout_marginEnd="25dp"
+                android:layout_weight="0"
+                android:background="@drawable/ic_right" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_sxj"
+        android:id="@+id/ll_tjkcb"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="6dp"
         android:background="@drawable/bg_setup_button"
         android:clickable="true"
         android:orientation="horizontal">
@@ -51,7 +110,7 @@
             style="@style/function_bar_lefticon"
             android:layout_marginStart="15dp"
             android:layout_weight="0"
-            android:background="@drawable/ic_note" />
+            android:background="@drawable/ic_coursetable" />
 
         <TextView
             style="@style/function_bar_text"
@@ -59,39 +118,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="20dp"
             android:layout_weight="1"
-            android:text="随心记" />
-
-        <ImageView
-            style="@style/function_bar_lefticon"
-            android:layout_marginEnd="25dp"
-            android:layout_weight="0"
-            android:background="@drawable/ic_right" />
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:id="@+id/ll_sjtb"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="6dp"
-        android:background="@drawable/bg_setup_button"
-        android:clickable="true"
-        android:orientation="horizontal">
-
-        <ImageView
-            style="@style/function_bar_lefticon"
-            android:layout_marginStart="15dp"
-            android:layout_weight="0"
-            android:background="@drawable/ic_table" />
-
-        <TextView
-            style="@style/function_bar_text"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:layout_weight="1"
-            android:text="数据图表" />
+            android:text="添加课程表" />
 
         <ImageView
             style="@style/function_bar_lefticon"

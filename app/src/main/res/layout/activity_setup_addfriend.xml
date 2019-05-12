@@ -6,26 +6,20 @@
 
     <!--头部-->
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="72dp"
+        style="@style/top_toor_bar"
         android:background="#6BB6FF">
 
         <Button
             android:id="@+id/bt_setup_addfriend_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            style="@style/top_tb_btnSize"
             android:layout_centerVertical="true"
             android:layout_marginStart="5dp"
             android:background="@drawable/ic_left_white"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="10dp"
             android:text="账号与安全"
-            android:textSize="25dp"
-            style="@style/AppTheme"
-            android:textColor="#FFFFFF"/>
+            style="@style/top_tb_text_relative"/>
 
 
     </RelativeLayout>

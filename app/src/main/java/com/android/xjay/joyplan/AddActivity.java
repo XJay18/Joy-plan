@@ -42,9 +42,6 @@ public class AddActivity extends AppCompatActivity {
         tv_select_end_time=findViewById(R.id.tv_select_end_time);
         initTimePicker();
 
-
-
-
         //On textView click open timePicker
         tv_select_start_time.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,11 +67,6 @@ public class AddActivity extends AppCompatActivity {
         btn_add.setOnClickListener(new MyOnClickListener());
         btn_cancel=findViewById(R.id.btn_cancel);
         btn_cancel.setOnClickListener(new MyOnClickListener());
-
-
-
-
-
     }
 
     class MyOnClickListener implements View.OnClickListener {

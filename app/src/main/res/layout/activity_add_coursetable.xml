@@ -9,7 +9,7 @@
         style="@style/top_toor_bar"
         android:background="@drawable/toolbar_blue">
         <Button
-            android:id="@+id/btn_fqz_back"
+            android:id="@+id/btn_course_back"
             style="@style/top_tb_btnSize"
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
@@ -17,14 +17,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:text="番茄钟"
+            android:text="添加课程表"
             style="@style/top_tb_text_discovery"
             android:layout_weight="56"/>
 
         <LinearLayout
-            android:id="@+id/ll_fqz_help"
+            android:id="@+id/ll_course_help"
             android:layout_width="56dp"
             android:layout_height="match_parent"
             android:layout_weight="5"
@@ -36,21 +34,6 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/ic_help_white" />
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_fqz_stat"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_weight="5">
-            <ImageView
-                style="@style/top_tb_btnRightSize"
-                android:layout_gravity="center"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/ic_fqz_statistics"
-                />
-        </LinearLayout>
-
     </LinearLayout>
 
 
@@ -70,10 +53,10 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/fqz_anim_grow"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_gravity="center"
-            app:lottie_fileName="fqz.json"
+            app:lottie_fileName="course.json"
             app:lottie_autoPlay="true"/>
 
         <LinearLayout
@@ -86,7 +69,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginTop="6dp"
                 android:clickable="true"
                 android:orientation="horizontal">
 
@@ -94,7 +76,7 @@
                     style="@style/function_bar_lefticon"
                     android:layout_marginStart="15dp"
                     android:layout_weight="0"
-                    android:background="@drawable/ic_cycle" />
+                    android:background="@drawable/ic_school" />
 
                 <TextView
                     style="@style/function_bar_text"
@@ -102,76 +84,16 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    android:text="番茄周期" />
-
-                <LinearLayout
-                    android:id="@+id/ll_fqz_cycle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center">
-
-                    <TextView
-                        android:id="@+id/tv_fqz_hour"
-                        style="@style/fqz_ctext"
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="20dp"
-                        android:gravity="end" />
-
-                    <TextView
-                        style="@style/function_bar_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="小时" />
-
-                    <TextView
-                        android:id="@+id/tv_fqz_minute"
-                        style="@style/fqz_ctext"
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="20dp"
-                        android:gravity="right" />
-
-                    <TextView
-                        style="@style/function_bar_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginEnd="20dp"
-                        android:text="分钟" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:clickable="true"
-                android:orientation="horizontal">
-
-                <ImageView
-                    style="@style/function_bar_lefticon"
-                    android:layout_marginStart="15dp"
-                    android:layout_weight="0"
-                    android:background="@drawable/ic_basket" />
-
-                <TextView
-                    style="@style/function_bar_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="20dp"
-                    android:layout_weight="1"
-                    android:text="番茄篮子大小" />
+                    android:text="请选择学校" />
 
                 <Spinner
-                    android:id="@+id/sp_fqz_size"
+                    android:id="@+id/sp_course_choose_school"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
+                    android:layout_weight="3"
                     android:spinnerMode="dropdown" />
             </LinearLayout>
 
@@ -185,7 +107,7 @@
                     style="@style/function_bar_lefticon"
                     android:layout_marginStart="15dp"
                     android:layout_weight="0"
-                    android:background="@drawable/ic_pick" />
+                    android:background="@drawable/ic_sno" />
 
                 <TextView
                     style="@style/function_bar_text"
@@ -193,25 +115,58 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    android:text="番茄采摘时间" />
+                    android:text="请输入学号" />
 
-                <Spinner
-                    android:id="@+id/sp_fqz_break"
-                    android:layout_width="100dp"
+                <EditText
+                    android:id="@+id/et_coursetable_sno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="20dp"
+                    android:hint="学号"
+                    android:gravity="center"
+                    android:background="@drawable/edtext_selector"
+                    android:layout_weight="3"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <ImageView
+                    style="@style/function_bar_lefticon"
+                    android:layout_marginStart="15dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/ic_name" />
+
+                <TextView
+                    style="@style/function_bar_text"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="end"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginEnd="10dp"
-                    android:spinnerMode="dropdown" />
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    android:text="请输入姓名" />
+
+                <EditText
+                    android:id="@+id/et_coursetable_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="20dp"
+                    android:hint="姓名"
+                    android:gravity="center"
+                    android:background="@drawable/edtext_selector"
+                    android:layout_weight="3"/>
+
             </LinearLayout>
         </LinearLayout>
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/fqz_anim_okay_blue"
+            android:id="@+id/coursetable_anim_okay_blue"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="60dp"
             app:lottie_autoPlay="true" />
 
         <LinearLayout
@@ -224,16 +179,11 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_fqz_confirm"
+                android:id="@+id/tv_coursetable_confirm"
                 style="@style/btn_confirm"
                 android:layout_marginTop="20dp"
-                android:text="确认设定" />
+                android:text="确认添加课程表"/>
 
-            <TextView
-                android:id="@+id/tv_fqz_setup"
-                style="@style/btn_confirm"
-                android:layout_marginTop="10dp"
-                android:text="管理我的番茄钟"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

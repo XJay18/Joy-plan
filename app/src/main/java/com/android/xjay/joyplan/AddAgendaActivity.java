@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import android.provider.ContactsContract;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.xjay.calendarview.Calendar;
+import com.android.xjay.joyplan.Notification.NotificationTool;
 import com.android.xjay.joyplan.Utils.DateFormat;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class AddAgendaActivity extends AppCompatActivity implements View.OnClickListener {
@@ -159,9 +165,21 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
             }
             case R.id.tv_agenda_confirm: {
                 String start_time = tv_agenda_start_time.getText().toString();
-                start_time="2019-"+start_time;
+                start_time = "2019-" + start_time;
                 String end_time = tv_agenda_end_time.getText().toString();
-                end_time="2019-"+end_time;
+                end_time = "2019-" + end_time;
+
+                //创建延时通知
+                Date begin_date = null;
+                try {
+                    begin_date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(start_time);
+                } catch (ParseException ex) {
+                    ex.printStackTrace();
+                }
+                /*Log.e("begin_time",start_time);
+                Log.e("begin_date:before para", begin_date.toString());*/
+                new NotificationTool(this).createPendingNotification(begin_date);
+
                 String title = editText_agenda_title.getText().toString();
                 String address = editText_agenda_address.getText().toString();
                 String content = editText_notation.getText().toString();
