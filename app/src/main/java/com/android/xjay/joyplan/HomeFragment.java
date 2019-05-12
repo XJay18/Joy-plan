@@ -41,6 +41,7 @@ import com.android.xjay.joyplan.Calendar.CustomTimeListAdapter;
 import com.android.xjay.joyplan.Calendar.ScrollDisabledListView;
 import com.android.xjay.joyplan.CustomExpanding.CustomItem;
 import com.android.xjay.joyplan.CustomExpanding.ExpandingList;
+import com.android.xjay.joyplan.Notification.NotificationTool;
 import com.android.xjay.joyplan.Utils.ScreenSizeUtils;
 
 import java.util.ArrayList;
@@ -159,11 +160,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                 mTextMonthDay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        ((FragmentActivity)mContext).findViewById(R.id.bottom_navigation).setVisibility(View.GONE);
                         if (!mCalendarLayout.isExpand()) {
                             mCalendarLayout.expand();
                             return;
                         }
-                        ((FragmentActivity)mContext).findViewById(R.id.bottom_navigation).setVisibility(View.GONE);
                         mCalendarView.showYearSelectLayout(mYear);
                         mTextLunar.setVisibility(View.GONE);
                         mTextYear.setVisibility(View.GONE);
