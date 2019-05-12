@@ -4,10 +4,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:background="@drawable/calendar_list_item_shape"
+    android:background="@color/transparent"
     android:layout_height="wrap_content">
 
     <FrameLayout
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -19,7 +22,7 @@
                 android:id="@+id/btn_mission"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:background="@drawable/calendar_list_item_shape" />
+                android:background="@drawable/btn_shape_agenda_blue" />
 
 
         </LinearLayout>

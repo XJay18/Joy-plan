@@ -145,9 +145,7 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 break;
             }
             case R.id.tv_agenda_cancel: {
-                Intent intent = new Intent();
-                intent.setClass(this, HomeActivity.class);
-                startActivity(intent);
+                finish();
                 break;
             }
             case R.id.listView1:

@@ -20,6 +20,8 @@ public class CustomListAdapter extends BaseAdapter {
     List<String> mlist;
     List<Integer> heightList;
 
+
+
     public CustomListAdapter(View.OnClickListener clicklistener,View.OnLongClickListener longClickListener,List<String> list,List<Integer> heightList,int tag){
         this.clicklistener=clicklistener;
         this.longClickListener=longClickListener;
@@ -66,6 +68,12 @@ public class CustomListAdapter extends BaseAdapter {
         holder.button.setOnLongClickListener(longClickListener);
         holder.button.setTag(tag*10+position);
         holder.textView.setText(mlist.get(position));
+        if(mlist.get(position)==""){
+            holder.button.setBackgroundResource(R.drawable.btn_shape_agenda_white);
+        }
+        else{
+            holder.button.setBackgroundResource(R.drawable.btn_shape_agenda_blue);
+        }
 
         return convertView;
     }

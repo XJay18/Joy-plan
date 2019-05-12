@@ -192,6 +192,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
                 view.findViewById(R.id.ll_fqz).setOnClickListener(this);
                 view.findViewById(R.id.ll_sjtb).setOnClickListener(this);
                 view.findViewById(R.id.ll_sxj).setOnClickListener(this);
+                view.findViewById(R.id.ll_fbhd).setOnClickListener(this);
                 return view;
 
             }
@@ -374,6 +375,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
             intent.setClass(mContext,SxjActivity.class);
             startActivity(intent);
         }
+        else if(view.getId()==R.id.ll_fbhd){
+            Intent intent=new Intent();
+            intent.setClass(mContext,ScheduleActivity.class);
+            startActivity(intent);
+        }
         else if(view.getId()==R.id.btn_mission){
             int tag=(int)view.getTag();
             int listIndex=tag/10;
@@ -486,10 +492,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
         dialogWindow.setAttributes(lp);
 
         mHelper=UserDBHelper.getInstance(getContext(),1);
-        ArrayList<Agenda> agendaList=mHelper.getAgendaListWithDate(getListCilckedCalendar(listIndex).toStringWithoutYear());
-        Agenda agenda;
+        String time=getListCilckedCalendar(listIndex).toStringWithoutYear();
+        time=time+(buttonIndex<10?"0"+buttonIndex:buttonIndex);
+        Agenda agenda=mHelper.getAgendaWithTime(time);
 
-        if(agendaList.size()>0) {agenda=agendaList.get(buttonIndex);
+
+
+        if(agenda!=null) {
         tv_title.setText(agenda.title);
         tv_time.setText(agenda.start_time);
         editText_notation.setText(agenda.content);
@@ -502,6 +511,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
         dialog.show();
     }
 
+    //返回当前选择日期所在周的第一天
     public Calendar getListCilckedCalendar(int index){
         Calendar selectedCalendar=mCalendarView.getSelectedCalendar();
         Calendar weekStartCalendar=CalendarUtil.getStartInWeek(selectedCalendar,1);
