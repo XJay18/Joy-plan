@@ -18,11 +18,13 @@ public class CustomListAdapter extends BaseAdapter {
     private final View.OnClickListener clicklistener;
     private int tag;
     List<String> mlist;
+    List<Integer> heightList;
 
-    public CustomListAdapter(View.OnClickListener clicklistener,View.OnLongClickListener longClickListener,List<String> list,int tag){
+    public CustomListAdapter(View.OnClickListener clicklistener,View.OnLongClickListener longClickListener,List<String> list,List<Integer> heightList,int tag){
         this.clicklistener=clicklistener;
         this.longClickListener=longClickListener;
         this.mlist =list;
+        this.heightList=heightList;
         this.tag=tag;
 
     }
@@ -31,8 +33,7 @@ public class CustomListAdapter extends BaseAdapter {
         return mlist.size();
     }
 
-    public void refresh(List<String> list){
-        mlist=list;
+    public void refresh(){
         notifyDataSetChanged();
     }
 
@@ -72,4 +73,6 @@ public class CustomListAdapter extends BaseAdapter {
         Button button;
         TextView textView;
     }
+
+
 }

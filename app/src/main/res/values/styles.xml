@@ -29,7 +29,7 @@
     <style name="fqz_ctext">
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textColor">#6BB6FF</item>
     </style>
 
     <!-- The text style for function bars -->

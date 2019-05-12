@@ -35,12 +35,6 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        String date = bundle.getString("date", "000000");
-        String nextDate = bundle.getString("nextDate", "000000");
-        date = date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8);
-        nextDate = nextDate.substring(0, 4) + "-" + nextDate.substring(4, 6) + "-" + nextDate.substring(6, 8);
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_agenda);
         editText_agenda_title = findViewById(R.id.editText_agenda_title);
@@ -55,12 +49,18 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
 
         tv_agenda_start_time.setOnClickListener(this);
         tv_agenda_end_time.setOnClickListener(this);
-        tv_agenda_start_time.setText(date);
-        tv_agenda_end_time.setText(nextDate);
-
 
         tv_agenda_cancel.setOnClickListener(this);
         mHelper = UserDBHelper.getInstance(this, 1);
+        if(bundle!=null)
+        {String date = bundle.getString("date", "000000");
+        String nextDate = bundle.getString("nextDate", "000000");
+        date = date.substring(0, 2) + "-" + date.substring(2, 4) + " " + date.substring(4, 6)+":"+date.substring(6,8);
+        nextDate = nextDate.substring(0, 2) + "-" + nextDate.substring(2, 4)+" "+nextDate.substring(4,6)+":"+nextDate.substring(6, 8);
+        tv_agenda_start_time.setText(date);
+        tv_agenda_end_time.setText(nextDate);
+        }
+
     }
 
     private void initTimePicker() {
@@ -150,14 +150,24 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 startActivity(intent);
                 break;
             }
+            case R.id.listView1:
+            case R.id.listView2:
+            case R.id.listView3:
+            case R.id.listView4:
+            case R.id.listView5:
+            case  R.id.listView6:
+            case R.id.listView7:{
+
+            }
             case R.id.tv_agenda_confirm: {
                 String start_time = tv_agenda_start_time.getText().toString();
+                start_time="2019-"+start_time;
                 String end_time = tv_agenda_end_time.getText().toString();
+                end_time="2019-"+end_time;
                 String title = editText_agenda_title.getText().toString();
                 String address = editText_agenda_address.getText().toString();
                 String content = editText_notation.getText().toString();
                 Agenda agenda = new Agenda(title, start_time, end_time, content, address);
-                //mHelper.reset();
                 mHelper.insert_agenda(agenda);
                 SQLiteDatabase dbRead = mHelper.getReadableDatabase();
                 Cursor c;
@@ -166,7 +176,9 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 String s = new Integer(length).toString();
                 Toast toast = Toast.makeText(this, s, Toast.LENGTH_SHORT);
                 toast.show();
+                break;
             }
+
         }
     }
 }
