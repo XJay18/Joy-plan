@@ -1,6 +1,5 @@
 package com.android.xjay.joyplan;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,7 +10,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -46,9 +44,6 @@ import com.android.xjay.joyplan.CustomExpanding.ExpandingList;
 import com.android.xjay.joyplan.Utils.ScreenSizeUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class HomeFragment extends Fragment implements View.OnClickListener, CalendarView.OnCalendarSelectListener,
         CalendarView.OnYearChangeListener, View.OnLongClickListener {
@@ -56,9 +51,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
     UserDBHelper mHelper;
 
     ArrayList<ArrayList<String>> AgendaTitleArrayList;
+    ArrayList<ArrayList<String>> CourseArrayList;
     protected Context mContext;
     private ExpandingList expandingList;
-    DynamicReceiver dynamicReceiver;
+    DynamicReceiverAddActivity dynamicReceiver;
     String[] TITLES;
     String[] INFOS;
     String[] STARTTIMES;
@@ -117,8 +113,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         String info = getArguments().getString("info");
         switch (info) {
             case "日程": {
-                View view = inflater.inflate(R.layout.fragment_agenda, null);
+                DynamicReceiverAddCourseTable dynamicReceiverAddCourseTable;
+                IntentFilter intentFilter = new IntentFilter();
+                intentFilter.addAction("ADD COURSE TABLE");
+                dynamicReceiverAddCourseTable=new DynamicReceiverAddCourseTable();
+                mContext.registerReceiver(dynamicReceiverAddCourseTable, intentFilter);
 
+                View view = inflater.inflate(R.layout.fragment_agenda, null);
                 //initView()
                 timeListView = view.findViewById(R.id.time_listview);
                 listView1 = view.findViewById(R.id.listView1);
@@ -203,7 +204,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                 View view = inflater.inflate(R.layout.fragment_reserve, null);
                 IntentFilter intentFilter = new IntentFilter();
                 intentFilter.addAction("ADD ACTIVITY");
-                dynamicReceiver = new DynamicReceiver();
+                dynamicReceiver = new DynamicReceiverAddActivity();
                 mContext.registerReceiver(dynamicReceiver, intentFilter);
                 expandingList = view.findViewById(R.id.reserve_expanding_list);
                 RedrawExpandingList();
@@ -242,17 +243,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     private void initScrollDisabledListView() {
         AgendaTitleArrayList = new ArrayList<>();
-
+        CourseArrayList=new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             ArrayList<String> arrayList = new ArrayList<String>();
+            ArrayList<String> courseList = new ArrayList<String>();
             for (int j = 0; j < 24; j++) {
                 arrayList.add("");
+                courseList.add("");
             }
             AgendaTitleArrayList.add(arrayList);
+            CourseArrayList.add(courseList);
 
-            ArrayList<Integer> heightList = new ArrayList<Integer>();
 
-            CustomListAdapter customListAdapter = new CustomListAdapter(this, this, arrayList, heightList, i);
+
+            CustomListAdapter customListAdapter = new CustomListAdapter(this, this, arrayList, courseList, i);
             adapterArrayList.add(customListAdapter);
 
         }
@@ -583,11 +587,54 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
     /**
      * method to accept Broadcast and refresh the ExpandingList
      */
-    class DynamicReceiver extends BroadcastReceiver {
+    class DynamicReceiverAddActivity extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             RedrawExpandingList();
         }
+    }
+
+    class DynamicReceiverAddCourseTable extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            AddCourseTable();
+        }
+    }
+
+    private void AddCourseTable(){
+
+        CourseArrayList.get(1).set(14,"定向越野");
+        CourseArrayList.get(1).set(15,"定向越野");
+        CourseArrayList.get(1).set(16,"毛概");
+        CourseArrayList.get(1).set(17,"毛概");
+
+        CourseArrayList.get(2).set(10,"UML");
+        CourseArrayList.get(2).set(11,"UML");
+        CourseArrayList.get(2).set(14,"编译技术");
+        CourseArrayList.get(2).set(15,"编译技术");
+        CourseArrayList.get(2).set(19,"大学美育");
+        CourseArrayList.get(2).set(20,"大学美育");
+
+        CourseArrayList.get(3).set(8,"计网");
+        CourseArrayList.get(3).set(9,"计网");
+        CourseArrayList.get(3).set(14,"数据库");
+        CourseArrayList.get(3).set(15,"数据库");
+        CourseArrayList.get(3).set(16,"毛概");
+        CourseArrayList.get(3).set(17,"毛概");
+        CourseArrayList.get(3).set(19,"大学语文");
+        CourseArrayList.get(3).set(20,"大学语文");
+
+        CourseArrayList.get(4).set(10,"UML");
+        CourseArrayList.get(4).set(11,"UML");
+
+        CourseArrayList.get(5).set(8,"计网");
+        CourseArrayList.get(5).set(9,"计网");
+        CourseArrayList.get(5).set(14,"数据库");
+        CourseArrayList.get(5).set(15,"数据库");
+        for(int i=0;i<7;i++){
+            adapterArrayList.get(i).refresh();
+        }
+
     }
 
     private void configureSubItem(final CustomItem item, final View view, String info) {
