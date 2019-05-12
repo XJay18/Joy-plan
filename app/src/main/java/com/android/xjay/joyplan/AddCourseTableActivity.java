@@ -3,6 +3,7 @@ package com.android.xjay.joyplan;
 import android.animation.Animator;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -14,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 
@@ -104,7 +104,8 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
             };
             confirmAnimationView.addAnimatorListener(mAnimationListener);
             confirmAnimationView.playAnimation();
-            Toast.makeText(this, "课程表添加成功", Toast.LENGTH_SHORT).show();
+            sentBroadcast();
+            //Toast.makeText(this, "课程表添加成功", Toast.LENGTH_SHORT).show();
         } else if (v.getId() == R.id.btn_course_back) {
             finish();
         } else if (v.getId() == R.id.ll_course_help) {
@@ -115,6 +116,15 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
             mAlert.show();
         }
     }
+
+
+    private void sentBroadcast(){
+        Intent intent=new Intent();
+        intent.setAction("ADD COURSE TABLE");
+        intent.putExtra("sele","广播测试");
+        sendBroadcast(intent);
+    }
+
 
     private class JumpTextWatcher implements TextWatcher {
 

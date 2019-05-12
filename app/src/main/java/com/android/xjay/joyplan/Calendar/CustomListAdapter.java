@@ -17,22 +17,23 @@ public class CustomListAdapter extends BaseAdapter {
     private final View.OnLongClickListener longClickListener;
     private final View.OnClickListener clicklistener;
     private int tag;
-    List<String> mlist;
+    List<String> agendaList;
+    List<String> couresList;
     List<Integer> heightList;
 
 
 
-    public CustomListAdapter(View.OnClickListener clicklistener,View.OnLongClickListener longClickListener,List<String> list,List<Integer> heightList,int tag){
+    public CustomListAdapter(View.OnClickListener clicklistener,View.OnLongClickListener longClickListener,List<String> list,List<String> courseList,int tag){
         this.clicklistener=clicklistener;
         this.longClickListener=longClickListener;
-        this.mlist =list;
-        this.heightList=heightList;
+        this.agendaList =list;
+        this.couresList=courseList;
         this.tag=tag;
 
     }
     @Override
     public int getCount() {
-        return mlist.size();
+        return agendaList.size();
     }
 
     public void refresh(){
@@ -41,7 +42,7 @@ public class CustomListAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return mlist.get(position);
+        return agendaList.get(position);
     }
 
     @Override
@@ -56,7 +57,8 @@ public class CustomListAdapter extends BaseAdapter {
             holder=new ViewHolder();
             convertView= LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_list_example,parent,false);
 
-            holder.button=(Button)convertView.findViewById(R.id.btn_mission);
+            holder.btn_agenda =(Button)convertView.findViewById(R.id.btn_mission);
+            holder.btn_course=(Button) convertView.findViewById(R.id.btn_course);
             holder.textView=(TextView)convertView.findViewById(R.id.tv_mission) ;
 
             convertView.setTag(holder);
@@ -64,21 +66,32 @@ public class CustomListAdapter extends BaseAdapter {
         else {
             holder=(ViewHolder)convertView.getTag();
         }
-        holder.button.setOnClickListener(clicklistener);
-        holder.button.setOnLongClickListener(longClickListener);
-        holder.button.setTag(tag*10+position);
-        holder.textView.setText(mlist.get(position));
-        if(mlist.get(position)==""){
-            holder.button.setBackgroundResource(R.drawable.btn_shape_agenda_white);
+        holder.btn_agenda.setOnClickListener(clicklistener);
+        holder.btn_course.setOnClickListener(clicklistener);
+        holder.btn_agenda.setOnLongClickListener(longClickListener);
+        holder.btn_agenda.setTag(tag*10+position);
+        holder.btn_course.setTag(tag*10+position);
+        holder.btn_course.setText(couresList.get(position));
+        holder.textView.setText(agendaList.get(position));
+        if(agendaList.get(position)==""){
+            holder.btn_agenda.setBackgroundResource(R.drawable.btn_shape_agenda_white);
         }
         else{
-            holder.button.setBackgroundResource(R.drawable.btn_shape_agenda_blue);
+            holder.btn_agenda.setBackgroundResource(R.drawable.btn_shape_agenda_blue);
+        }
+
+        if(couresList.get(position)==""){
+            holder.btn_course.setBackgroundResource(R.drawable.btn_shape_agenda_white);
+        }
+        else{
+            holder.btn_course.setBackgroundResource(R.drawable.btn_shape_agenda_green);
         }
 
         return convertView;
     }
     class ViewHolder{
-        Button button;
+        Button btn_agenda;
+        Button btn_course;
         TextView textView;
     }
 
