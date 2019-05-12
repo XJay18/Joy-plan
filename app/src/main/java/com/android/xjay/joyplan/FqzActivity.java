@@ -34,7 +34,6 @@ public class FqzActivity extends AppCompatActivity
     private String[] sizeArray = {"1", "2", "3", "4"};
     private String[] breakArray = {"5", "10", "15", "20", "30"};
     private LottieAnimationView confirmAnimationView;
-    private LottieAnimationView growAnimationView;
 
     // default fqz size 00:25
     private int fqz_hour = 0;
@@ -193,9 +192,9 @@ public class FqzActivity extends AppCompatActivity
                 // mTvSelectedDate.setText(DateFormatUtils.long2Str(timestamp, false));
                 String hh_mm = DateFormat.long2Str(timestamp, 2);
                 String[] hm = hh_mm.split(":");
-                tv_hour.setText(hm[0]);
+                tv_hour.setText(hm[0].substring(1));
                 tv_minute.setText(hm[1]);
-                fqz_hour = Integer.parseInt(hm[0]);
+                fqz_hour = Integer.parseInt(hm[0].substring(1));
                 fqz_min = Integer.parseInt(hm[1]);
 //                Log.d("set hour ",String.valueOf(fqz_hour));
 //                Log.d("set minute ",String.valueOf(fqz_min));
