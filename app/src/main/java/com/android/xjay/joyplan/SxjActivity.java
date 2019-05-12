@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,17 +21,34 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.View;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.NotActiveException;
+import java.io.OutputStreamWriter;
+import java.security.spec.ECField;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import static android.widget.Toast.LENGTH_LONG;
 
 
 public class SxjActivity extends AppCompatActivity {
@@ -44,6 +62,9 @@ public class SxjActivity extends AppCompatActivity {
 
     private Button btn_takephoto;
 
+    private ArrayList<String> photos_path = new ArrayList<>(10);
+    private int photos_num = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,11 +72,11 @@ public class SxjActivity extends AppCompatActivity {
         Button button1 = (Button) findViewById(R.id.btn_takephoto);
         Button button2 = (Button) findViewById(R.id.btn_choosephoto);
         Button button3 = (Button) findViewById(R.id.btn_record);
-        et_content = (EditText) findViewById(R.id.et_content)
-        ;
+        et_content = (EditText) findViewById(R.id.et_content);
         button1.setOnClickListener(new NoteOnClickListener());
         button2.setOnClickListener(new NoteOnClickListener());
         button3.setOnClickListener(new NoteOnClickListener());
+        showRecord("1");
     }
 
     class NoteOnClickListener implements View.OnClickListener {
@@ -97,6 +118,23 @@ public class SxjActivity extends AppCompatActivity {
 
     }
 
+    //重新加载之前的内容
+    private void showRecord(String time) {
+        try {
+            if (!TextUtils.isEmpty(time)) {
+                StringBuffer path = new StringBuffer(getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString());
+
+                path.append("/" + time + ".jpeg");
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(path.toString()));
+                Bitmap bitmap = BitmapFactory.decodeStream(bufferedInputStream);
+                insertImg(this, bitmap, path.toString());
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     //选择图片并插入
     private void choosePhoto() {
         checkPermission();
@@ -129,7 +167,6 @@ public class SxjActivity extends AppCompatActivity {
             default:
                 break;
 
-
         }
     }
 
@@ -142,22 +179,27 @@ public class SxjActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        //文件储存路径
+        String path = "";
         switch (requestCode) {
             case TAKE_PHOTO:
                 if (resultCode == RESULT_OK) {
-                    try {
-                        Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(img_uri));
-                        insertImg(SxjActivity.this, img_uri);
-                    } catch (FileNotFoundException ex) {
-                        ex.printStackTrace();
-                    }
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyymmdd-hhmmss");
+                    saveImage(img_uri, simpleDateFormat.format(new Date()));
+
+                    insertImg(SxjActivity.this, img_uri, path);
                 }
                 break;
 
             case ChOOSE_PHOTO:
                 if (resultCode == RESULT_OK) {
+
                     img_uri = data.getData();
-                    insertImg(SxjActivity.this, img_uri);
+
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
+
+                    saveImage(img_uri, simpleDateFormat.format(new Date()));
+                    insertImg(SxjActivity.this, img_uri, path);
                 }
                 break;
             default:
@@ -165,19 +207,27 @@ public class SxjActivity extends AppCompatActivity {
         }
     }
 
-    /*
-     * 向Edittext中插入图片
-     * 传入图片的Uri
-     * */
-    private void insertImg(Context context, Uri uri) {
-        Bitmap bitmap = null;
+    //向Picture文件中传入图片
+    private String saveImage(Uri image_uri, String time) {
+        StringBuffer path = new StringBuffer(getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString());
+
+        path.append("/" + time + ".jpeg");
+
         try {
-            //将uri转换成Bitmap对象
-            bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
-        } catch (FileNotFoundException ex) {
+            photos_path.add(path.toString());
+            photos_num++;
+
+            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(path.toString()));
+            BitmapFactory.decodeStream(getContentResolver().openInputStream(image_uri)).compress(Bitmap.CompressFormat.JPEG, 80, bufferedOutputStream);
+            bufferedOutputStream.flush();
+            bufferedOutputStream.close();
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        //创建ImageSpan对象
+        return path.toString();
+    }
+
+    private void insertImg(Context context, Bitmap bitmap, String path) {
         ImageSpan img_span = new ImageSpan(context, bitmap);
 
         SpannableString spannableString = new SpannableString("test");
@@ -185,6 +235,7 @@ public class SxjActivity extends AppCompatActivity {
         spannableString.setSpan(img_span, 0, "test".length(), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         Editable editable = et_content.getEditableText();
+
         //获取光标位置
         int index = et_content.getSelectionStart();
         if (index < 0 || index > et_content.length()) {
@@ -193,6 +244,75 @@ public class SxjActivity extends AppCompatActivity {
             editable.insert(index, spannableString);
         }
         et_content.append("\n");
+
+    }
+
+    /*
+     * 向Edittext中插入图片
+     * 传入图片的Uri
+     * */
+    private void insertImg(Context context, Uri uri, String path) {
+        Bitmap bitmap = null;
+        try {
+            //将uri转换成Bitmap对象
+            bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        insertImg(context, bitmap, path);
+    }
+
+    //Save All content in notebook
+    private void saveNoteContnet() {
+        String content = et_content.getText().toString();
+        if (!TextUtils.isEmpty(content)) {
+            String doc_path = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString();
+
+            FileOutputStream fileOutputStream = null;
+            BufferedWriter bufferedWriter = null;
+            try {
+                fileOutputStream = new FileOutputStream(doc_path + "/NoteContent");
+                bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+                bufferedWriter.write(content);
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } finally {
+                try {
+                    if (bufferedWriter != null)
+                        bufferedWriter.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
+
+    //Complete the jobs which are to load data and to show in et_content
+    private void loadContent(){
+        StringBuffer content=null;
+        String doc_path = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString();
+        FileInputStream fileInputStream = null;
+        BufferedReader bufferedReader = null;
+        try {
+            fileInputStream = new FileInputStream(doc_path + "/NoteContent");
+            bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+            String content_line = null;
+            while ((content_line = bufferedReader.readLine()) != null) {
+                content.append(content_line);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                bufferedReader.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+
     }
 
 }
