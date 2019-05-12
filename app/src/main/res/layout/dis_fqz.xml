@@ -6,13 +6,11 @@
     android:layout_height="match_parent"
     android:background="#EEEEEE">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
+        style="@style/top_toor_bar"
         android:background="@drawable/toolbar_blue">
         <Button
             android:id="@+id/btn_fqz_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            style="@style/top_tb_btnSize"
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:background="@drawable/ic_left_white"/>
@@ -20,12 +18,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
             android:text="番茄钟"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            style="@style/AppTheme"
-            android:textColor="#FFFFFF"
+            style="@style/top_tb_text_discovery"
             android:layout_weight="56"/>
 
         <LinearLayout
@@ -36,8 +31,7 @@
             android:gravity="center|end">
 
             <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                style="@style/top_tb_btnRightSize"
                 android:layout_gravity="center"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/ic_help_white" />
@@ -50,8 +44,7 @@
             android:gravity="center"
             android:layout_weight="5">
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                style="@style/top_tb_btnRightSize"
                 android:layout_gravity="center"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/ic_fqz_statistics"
@@ -218,7 +211,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="50dp"
             app:lottie_autoPlay="true" />
 
         <LinearLayout
@@ -232,31 +225,15 @@
 
             <TextView
                 android:id="@+id/tv_fqz_confirm"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/btn_white"
+                style="@style/btn_confirm"
                 android:layout_marginTop="20dp"
-                android:clickable="true"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="确认设定"
-                android:textColor="#6BB6FF"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:text="确认设定" />
 
             <TextView
                 android:id="@+id/tv_fqz_setup"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/btn_white"
+                style="@style/btn_confirm"
                 android:layout_marginTop="10dp"
-                android:clickable="true"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="管理我的番茄钟"
-                android:textColor="#6BB6FF"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:text="管理我的番茄钟"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -7,27 +7,20 @@
 
     <!--头部-->
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
+        style="@style/top_toor_bar"
         android:background="@drawable/toolbar_blue">
 
         <Button
             android:id="@+id/bt_setup_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            style="@style/top_tb_btnSize"
             android:layout_centerVertical="true"
             android:layout_marginStart="5dp"
             android:background="@drawable/ic_left_white"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="10dp"
             android:text="账号与安全"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            style="@style/AppTheme"
-            android:textColor="#FFFFFF"/>
+            style="@style/top_tb_text_relative" />
 
     </RelativeLayout>
     <ScrollView
@@ -53,8 +46,7 @@
                   android:layout_height="match_parent"
                   android:layout_marginStart="10dp"
                   android:layout_weight="1"
-                  android:text="账号"
-                  android:textSize="20dp" />
+                  android:text="账号" />
 
               <TextView
                   android:layout_width="42dp"
@@ -81,8 +73,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
-                    android:text="手机号"
-                    android:textSize="20dp" />
+                    android:text="手机号" />
 
                 <TextView
                     android:layout_width="0dp"

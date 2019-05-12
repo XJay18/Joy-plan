@@ -159,11 +159,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                 mTextMonthDay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        ((FragmentActivity)mContext).findViewById(R.id.bottom_navigation).setVisibility(View.GONE);
                         if (!mCalendarLayout.isExpand()) {
                             mCalendarLayout.expand();
                             return;
                         }
-                        ((FragmentActivity)mContext).findViewById(R.id.bottom_navigation).setVisibility(View.GONE);
                         mCalendarView.showYearSelectLayout(mYear);
                         mTextLunar.setVisibility(View.GONE);
                         mTextYear.setVisibility(View.GONE);
