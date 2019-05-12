@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.android.xjay.joyplan.StatisticsFragment.BarFragment;
 import com.android.xjay.joyplan.StatisticsFragment.PieFragment;
@@ -26,7 +27,7 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
     private Fragment BarFragment;
     private Fragment PieFragment;
 
-    private Button btn_back;
+    private LinearLayout btn_back;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);

@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.android.xjay.joyplan.CustomExpanding.CustomItem;
 import com.android.xjay.joyplan.CustomExpanding.ExpandingList;
 
-public class ScheduleActivity extends AppCompatActivity {
+public class ScheduleActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ExpandingList expandingList;
 
@@ -37,6 +37,7 @@ public class ScheduleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
 
+        findViewById(R.id.btn_schedule_back).setOnClickListener(this);
 
         //get cursor c to get record in DB
         mHelper = UserDBHelper.getInstance(this, 1);
@@ -59,12 +60,6 @@ public class ScheduleActivity extends AppCompatActivity {
             addItem(TITLES[i],s,R.color.colorWhite,iconRes);
             c.move(1);
         }
-
-
-
-
-
-
 
         //btn to MainActivity
         Button btn_changeTo_addActivity = findViewById(R.id.changeButton_schedule);
@@ -133,8 +128,6 @@ public class ScheduleActivity extends AppCompatActivity {
         }
     }
 
-
-
     private void configureSubItem(final CustomItem item, final View view, String subTitle) {
         ((TextView) view.findViewById(R.id.sub_title)).setText(subTitle);
 
@@ -153,6 +146,13 @@ public class ScheduleActivity extends AppCompatActivity {
         });
         builder.setNegativeButton(android.R.string.cancel, null);
         builder.show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.btn_schedule_back){
+            finish();
+        }
     }
 
     interface OnItemCreated {

@@ -50,6 +50,7 @@
         <activity android:name=".AddAgendaActivity"/>
         <activity android:name=".AgendaDetailActivity"/>
         <activity android:name=".AddfriendSetupActivity"/>
+        <activity android:name=".StatisticsFragment.FqzStatistic"/>
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"

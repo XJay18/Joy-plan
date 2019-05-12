@@ -8,9 +8,7 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,12 +21,12 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="20" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="2">
+                android:layout_weight="0.5">
 
                 <TextView
                     android:id="@+id/show_week_pie"
@@ -40,7 +38,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="20" />
         </LinearLayout>
 
         <RelativeLayout
@@ -91,7 +89,9 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="50dp"
                 android:background="@drawable/btn_white"
-                android:text="上一周" />
+                android:text="上一周"
+                android:textColor="#6BB6FF"
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/btn_next_week_p"
@@ -100,15 +100,23 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="50dp"
                 android:background="@drawable/btn_white"
-                android:text="下一周" />
+                android:text="下一周"
+                android:textColor="#6BB6FF"
+                android:textStyle="bold"/>
         </RelativeLayout>
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="61dp"
+            android:text="一周目标完成度"
+            android:textSize="17sp" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
