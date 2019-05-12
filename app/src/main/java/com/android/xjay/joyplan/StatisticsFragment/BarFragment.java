@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.android.xjay.joyplan.R;
 import com.android.xjay.joyplan.ValueFormatter.MyValueFormatter;
 import com.android.xjay.joyplan.ValueFormatter.MyYAxisValueFormatter;
+import com.android.xjay.joyplan.ValueFormatter.StringAxisValueFormatter;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -40,6 +41,7 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
         private TextView show_week;
         private Date date;
         private Calendar cal;
+        private String[] value=new String[]{"周一","周二","周三","周四","周五","周六","周日"};
         @Override
         public void onAttach(Context context){
             super.onAttach(context);
@@ -92,12 +94,14 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
             //yAxis.setStartAtZero(false);
             mBarChart.getAxisRight().setEnabled(false);
 
+            StringAxisValueFormatter formatter=new StringAxisValueFormatter(value);
             XAxis xAxis = mBarChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             //设置坐标数值的字体大小
             xAxis.setTextSize(15f);
             xAxis.setDrawAxisLine(true);
             xAxis.setDrawGridLines(false);
+            xAxis.setValueFormatter(formatter);
             mBarChart.getAxisLeft().setDrawAxisLine(false);
 
             Legend l = mBarChart.getLegend();
@@ -114,7 +118,7 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
         private void setData() {
             show_week.setText(currentDate);
             ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
-                for (int i = 1; i < 7 + 1; i++) {
+                for (int i = 0; i < 7 ; i++) {
                         float mult = (40);
                         int val1 = (int) ((Math.random() * mult) + mult)%10+1 ;
                         int val2 = (int) ((Math.random() * mult) + mult)%10+1 ;

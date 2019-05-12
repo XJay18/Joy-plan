@@ -20,7 +20,6 @@ public class MyYAxisValueFormatter implements IAxisValueFormatter {
         // "value" represents the position of the label on the axis (x or y)
         return mFormat.format(value)+"" /*+ " $"*/;
     }
-
     /** this is only needed if numbers are returned, else return 0 */
    // @Override
     public int getDecimalDigits() { return 1; }

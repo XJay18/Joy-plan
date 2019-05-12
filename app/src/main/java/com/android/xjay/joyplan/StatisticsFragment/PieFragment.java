@@ -139,7 +139,7 @@ public class PieFragment extends Fragment implements OnChartValueSelectedListene
         dataSet.setValueLinePart1OffsetPercentage(80f);
         dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         //数据和颜色
-        int[] colors1=new int[]{Color.rgb(242,123,31),Color.rgb(255,255,255)};
+        int[] colors1=new int[]{Color.rgb(242,123,31),Color.rgb(204,204,214)};
         dataSet.setColors(colors1);
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter());
