@@ -48,6 +48,7 @@
         <activity android:name=".SxjActivity"/>
         <activity android:name=".StatisticsActivity"/>
         <activity android:name=".AddAgendaActivity"/>
+        <activity android:name=".AddCourseTableActivity"/>
         <activity android:name=".AgendaDetailActivity"/>
         <activity android:name=".AddfriendSetupActivity"/>
         <activity android:name=".StatisticsFragment.FqzStatistic"/>

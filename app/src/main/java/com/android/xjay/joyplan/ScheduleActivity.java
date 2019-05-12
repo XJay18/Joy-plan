@@ -24,7 +24,6 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
     //TODO
     int[] IMAGES = {R.drawable.cc, R.drawable.cc};
 
-
     String[] TITLES = new String[20];
 
     String[] INFOS = new String[20];
@@ -32,12 +31,12 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
     private UserDBHelper mHelper;
     Cursor c;
 
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
 
         findViewById(R.id.btn_schedule_back).setOnClickListener(this);
+        findViewById(R.id.ll_schedule_help).setOnClickListener(this);
 
         //get cursor c to get record in DB
         mHelper = UserDBHelper.getInstance(this, 1);
@@ -49,7 +48,6 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
         int length = c.getCount();
 
         c.moveToFirst();
-
 
         expandingList=findViewById(R.id.schedule_expanding_list);
         int iconRes=R.drawable.cat;
@@ -152,6 +150,12 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         if(v.getId()==R.id.btn_schedule_back){
             finish();
+        } else if(v.getId()==R.id.ll_schedule_help){
+            android.app.AlertDialog.Builder mBuilder = new android.app.AlertDialog.Builder(this);
+            mBuilder.setTitle("发布活动");
+            mBuilder.setMessage(R.string.info_fbhd);
+            android.app.AlertDialog mAlert = mBuilder.create();
+            mAlert.show();
         }
     }
 
