@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.xjay.joyplan.R;
@@ -38,6 +39,7 @@ public class FqzStatistic extends AppCompatActivity implements OnChartValueSelec
     private BarChart mBarChart;
     private Button btn_last_month;
     private Button btn_next_month;
+    private LinearLayout btn_back;
     private SimpleDateFormat dateFormat;
     private String currentDate;
     private TextView show_week;
@@ -64,6 +66,8 @@ public class FqzStatistic extends AppCompatActivity implements OnChartValueSelec
         btn_last_month.setOnClickListener(this);
         btn_next_month=findViewById(R.id.btn_next_week_fqz);
         btn_next_month.setOnClickListener(this);
+        btn_back=findViewById(R.id.bt_statistics_fqz_back);
+        btn_back.setOnClickListener(this);
         //堆叠条形图
         mBarChart = (BarChart)findViewById(R.id.mBarChart_fqz);
         //这里写加载布局的代码
@@ -83,9 +87,9 @@ public class FqzStatistic extends AppCompatActivity implements OnChartValueSelec
         // 改变y标签的位置
         YAxis yAxis = mBarChart.getAxisLeft();
         yAxis.setValueFormatter(new MyYAxisValueFormatter());
-        yAxis.setAxisMaximum(15f);
+        yAxis.setAxisMaximum(10f);
         //设置坐标数值的字体大小
-        yAxis.setTextSize(10f);
+        yAxis.setTextSize(15f);
         yAxis.setAxisMinimum(0f);
         //yAxis.setStartAtZero(false);
         mBarChart.getAxisRight().setEnabled(false);
@@ -176,6 +180,9 @@ public class FqzStatistic extends AppCompatActivity implements OnChartValueSelec
                 mBarChart.animateXY(1000,1000);
                 currentDate=getTimeInterval("next");
                 setData();
+                break;
+            case R.id.bt_statistics_fqz_back:
+                finish();
                 break;
         }
     }

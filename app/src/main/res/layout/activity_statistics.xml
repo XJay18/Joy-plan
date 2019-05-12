@@ -8,13 +8,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:background="@color/colorBG">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:background="@drawable/toolbar_blue">
             <LinearLayout
                 android:id="@+id/bt_statistics_back"
                 android:layout_width="wrap_content"
@@ -32,18 +32,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_gravity="center"
+                android:layout_margin="10dp"
                 android:text="数据图表"
                 android:textSize="25sp"
                 android:textStyle="bold"
+                style="@style/AppTheme"
                 android:textColor="@color/colorWhite"
-                android:layout_weight="10"/>
+                android:layout_weight="66"/>
         </LinearLayout>
         <android.support.design.widget.TabLayout
             android:id="@+id/mytab"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textStyle="bold"/>
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
