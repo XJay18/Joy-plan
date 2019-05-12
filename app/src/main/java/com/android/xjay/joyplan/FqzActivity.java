@@ -1,4 +1,5 @@
 package com.android.xjay.joyplan;
+
 import android.animation.Animator;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
@@ -32,7 +33,8 @@ public class FqzActivity extends AppCompatActivity
     private CustomTimePicker mTimePicker;
     private String[] sizeArray = {"1", "2", "3", "4"};
     private String[] breakArray = {"5", "10", "15", "20", "30"};
-    private LottieAnimationView animationView;
+    private LottieAnimationView confirmAnimationView;
+    private LottieAnimationView growAnimationView;
 
     // default fqz size 00:25
     private int fqz_hour = 0;
@@ -48,7 +50,7 @@ public class FqzActivity extends AppCompatActivity
         findViewById(R.id.ll_fqz_cycle).setOnClickListener(this);
         findViewById(R.id.tv_fqz_confirm).setOnClickListener(this);
         findViewById(R.id.tv_fqz_setup).setOnClickListener(this);
-        findViewById(R.id.ll_fqz_back).setOnClickListener(this);
+        findViewById(R.id.btn_fqz_back).setOnClickListener(this);
         findViewById(R.id.ll_fqz_stat).setOnClickListener(this);
         findViewById(R.id.ll_fqz_help).setOnClickListener(this);
         tv_hour = findViewById(R.id.tv_fqz_hour);
@@ -92,7 +94,7 @@ public class FqzActivity extends AppCompatActivity
             }
         });
 
-        animationView=findViewById(R.id.fqz_anim_okay_blue);
+        confirmAnimationView = findViewById(R.id.fqz_anim_okay_blue);
     }
 
     @Override
@@ -125,22 +127,22 @@ public class FqzActivity extends AppCompatActivity
                     intents.get(t).putExtra(
                             AlarmClock.EXTRA_MESSAGE, "番茄钟结束");
                 else
-                    intents.get(t).putExtra(AlarmClock.EXTRA_MESSAGE,"番茄钟开始");
+                    intents.get(t).putExtra(AlarmClock.EXTRA_MESSAGE, "番茄钟开始");
                 intents.get(t).putExtra(AlarmClock.EXTRA_SKIP_UI, true);
                 startActivity(intents.get(t));
             }
 
-            animationView.setAnimation("okay_blue.json");
-            animationView.loop(false);
-            Animator.AnimatorListener mAnimationListener=new Animator.AnimatorListener() {
+            confirmAnimationView.setAnimation("okay_blue.json");
+            confirmAnimationView.loop(false);
+            Animator.AnimatorListener mAnimationListener = new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animation) {
-                    animationView.setVisibility(View.VISIBLE);
+                    confirmAnimationView.setVisibility(View.VISIBLE);
                 }
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    animationView.setVisibility(View.INVISIBLE);
+                    confirmAnimationView.setVisibility(View.INVISIBLE);
                 }
 
                 @Override
@@ -153,22 +155,22 @@ public class FqzActivity extends AppCompatActivity
 
                 }
             };
-            animationView.addAnimatorListener(mAnimationListener);
-            animationView.playAnimation();
+            confirmAnimationView.addAnimatorListener(mAnimationListener);
+            confirmAnimationView.playAnimation();
             Toast.makeText(this, "番茄钟设置成功", Toast.LENGTH_SHORT).show();
 
         } else if (v.getId() == R.id.tv_fqz_setup) {
-            Intent deleteAlarm=new Intent(AlarmClock.ACTION_DISMISS_ALARM);
+            Intent deleteAlarm = new Intent(AlarmClock.ACTION_DISMISS_ALARM);
             startActivity(deleteAlarm);
-        } else if (v.getId()==R.id.ll_fqz_back) {
+        } else if (v.getId() == R.id.btn_fqz_back) {
             this.finish();
-        } else if(v.getId()==R.id.ll_fqz_stat){
+        } else if (v.getId() == R.id.ll_fqz_stat) {
             Toast.makeText(this, "你点击了番茄钟的统计信息", Toast.LENGTH_SHORT).show();
-        } else if(v.getId()==R.id.ll_fqz_help){
-            AlertDialog.Builder mBuilder=new AlertDialog.Builder(this);
+        } else if (v.getId() == R.id.ll_fqz_help) {
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
             mBuilder.setTitle("番茄钟使用简介");
             mBuilder.setMessage(R.string.info_fqz);
-            AlertDialog mAlert=mBuilder.create();
+            AlertDialog mAlert = mBuilder.create();
             mAlert.show();
         }
     }
@@ -198,7 +200,7 @@ public class FqzActivity extends AppCompatActivity
 //                Log.d("set hour ",String.valueOf(fqz_hour));
 //                Log.d("set minute ",String.valueOf(fqz_min));
             }
-        }, beginTimestamp, endTimestamp, "请选择番茄周期", 2, new int[]{0,0,0,0,25});
+        }, beginTimestamp, endTimestamp, "请选择番茄周期", 2, new int[]{0, 0, 0, 0, 25});
 
         mTimePicker.setCancelable(true);
         mTimePicker.setTimePickerShowMode(1);

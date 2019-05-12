@@ -363,6 +363,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,Calen
             Intent intent = new Intent();
             intent.setClass(mContext,FqzActivity.class);
             startActivity(intent);
+            Log.v("**","right");
         }else if(view.getId()==R.id.ll_sjtb) {
 //            Toast.makeText(mContext,"你点击了数据图表",Toast.LENGTH_SHORT).show();
             Intent intent=new Intent();
