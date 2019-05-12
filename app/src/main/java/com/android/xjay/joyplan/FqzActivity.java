@@ -18,6 +18,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.android.xjay.joyplan.StatisticsFragment.FqzStatistic;
 import com.android.xjay.joyplan.Utils.DateFormat;
 
 import java.util.ArrayList;
@@ -164,7 +165,9 @@ public class FqzActivity extends AppCompatActivity
         } else if (v.getId() == R.id.btn_fqz_back) {
             this.finish();
         } else if (v.getId() == R.id.ll_fqz_stat) {
-            Toast.makeText(this, "你点击了番茄钟的统计信息", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "你点击了番茄钟的统计信息", Toast.LENGTH_SHORT).show();
+            Intent fqz_sts=new Intent(FqzActivity.this,FqzStatistic.class);
+            startActivity(fqz_sts);
         } else if (v.getId() == R.id.ll_fqz_help) {
             AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
             mBuilder.setTitle("番茄钟使用简介");
