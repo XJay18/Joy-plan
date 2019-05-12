@@ -77,6 +77,8 @@ public class CalendarView extends FrameLayout {
      */
     CalendarLayout mParentLayout;
 
+    onSelectMonthListener onSelectMonthListener;
+
 
     public CalendarView(@NonNull Context context) {
         this(context, null);
@@ -226,10 +228,19 @@ public class CalendarView extends FrameLayout {
                 int position = 12 * (year - mDelegate.getMinYear()) + month - mDelegate.getMinYearMonth();
                 closeSelectLayout(position);
                 mDelegate.isShowYearSelectedLayout = false;
+                onSelectMonthListener.onSelectMonth();
             }
         });
         mYearViewPager.setup(mDelegate);
         mWeekPager.updateSelected(mDelegate.createCurrentDate(), false);
+    }
+
+    public void setOnSelectMonthListener(CalendarView.onSelectMonthListener onSelectMonthListener) {
+        this.onSelectMonthListener = onSelectMonthListener;
+    }
+
+    public interface onSelectMonthListener{
+        void onSelectMonth();
     }
 
     /**

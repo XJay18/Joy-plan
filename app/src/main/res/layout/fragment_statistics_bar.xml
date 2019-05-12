@@ -12,16 +12,17 @@
             android:layout_height="20dp">
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/layout_date"
             android:layout_width="match_parent"
             android:layout_height="40dp">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="20"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="2">
+                android:layout_weight="0.5">
             <TextView
                 android:id="@+id/show_week_bar"
                 android:layout_width="wrap_content"
@@ -31,7 +32,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="20"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,18 +40,21 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="20"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="   一周完成活动数量统计图"
+                android:layout_weight="0.5"
+                android:text="一周完成活动数量统计图"
                 android:textSize="17sp"
-                android:layout_weight="0.5"/>
+                android:gravity="center" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="20"/>
         </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -133,7 +133,7 @@ public class FqzStatistic extends AppCompatActivity implements OnChartValueSelec
             mBarChart.getData().notifyDataChanged();
             mBarChart.notifyDataSetChanged();
         } else {
-            set1 = new BarDataSet(yVals1, "一周使用番茄钟总数");
+            set1 = new BarDataSet(yVals1, "一天使用番茄钟总数");
             set1.setColors(getColors());
             set1.setStackLabels(new String[]{"数量"});
             //设置顶点值字体大小

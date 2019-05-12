@@ -30,6 +30,7 @@ public final class YearRecyclerView extends RecyclerView {
     private YearViewAdapter mAdapter;
     private OnMonthSelectedListener mListener;
 
+
     public YearRecyclerView(Context context) {
         this(context, null);
     }
