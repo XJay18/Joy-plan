@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class UserDBHelper extends SQLiteOpenHelper {
 
@@ -136,7 +135,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
         openReadLink();
         Cursor cursor=null;
         Agenda agenda;
-        cursor=mDB.query(AGENDA_TABLE,null,createSelectAction(),new String[]{date},null,null,null);
+        cursor=mDB.query(AGENDA_TABLE,null, createSelectActionDate(),new String[]{date},null,null,null);
         if(cursor!=null&&cursor.moveToFirst()){
             int length=cursor.getCount();
             ArrayList<Agenda> list=new ArrayList<>();
@@ -154,9 +153,37 @@ public class UserDBHelper extends SQLiteOpenHelper {
         else return new ArrayList<>();
     }
 
-    public String createSelectAction(){
+    public Agenda getAgendaWithTime(String date){
+        openReadLink();
+        Cursor cursor=null;
+        Agenda agenda;
+        cursor=mDB.query(AGENDA_TABLE,null,createSelectActionTime(),new String[]{date},null,null,null);
+        if(cursor!=null&&cursor.moveToFirst()){
+
+
+                String title=cursor.getString(1);
+                String starttime=cursor.getString(2);
+                String endtime=cursor.getString(3);
+                String content=cursor.getString(4);
+                String address=cursor.getString(5);
+                agenda=new Agenda(title,starttime,endtime,content,address);
+                return agenda;
+            }
+            else return null;
+    }
+
+    public String createSelectActionDate(){
         StringBuffer stringBuffer=new StringBuffer();
         stringBuffer.append("strftime('%m%d',");
+        stringBuffer.append("starttime");
+        stringBuffer.append(")=?");
+        return  stringBuffer.toString();
+
+    }
+
+    public String createSelectActionTime(){
+        StringBuffer stringBuffer=new StringBuffer();
+        stringBuffer.append("strftime('%m%d%H',");
         stringBuffer.append("starttime");
         stringBuffer.append(")=?");
         return  stringBuffer.toString();

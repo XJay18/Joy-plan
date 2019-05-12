@@ -52,6 +52,7 @@ public class AddActivity extends AppCompatActivity {
                 myTimePicker.show(tv_select_start_time.getText().toString());
             }
         });
+
         tv_select_end_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,10 +82,7 @@ public class AddActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_cancel: {
-                    Intent intent = new Intent();
-                    intent.setClass(AddActivity.this, ScheduleActivity.class);
-                    startActivity(intent);
-                    AddActivity.this.finish();
+                    finish();
                     break;
                 }
                 case R.id.btn_add: {
