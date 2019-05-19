@@ -8,11 +8,13 @@
         <table width = "20%" ,align="center">
             <tr>
                 <th>主要界面</th>
-                <th>功能</th>   
+                <th>功能</th>  
+                <th>分工</th> 
             </tr>
             <tr>
                 <td rowspan="3" align="center">日程</td>    
                 <td align="center">清晰、方便地查看课程表以及安排的任务情况</td>
+                <td rowspan="3" align="center">陈潮宇</td>
             </tr>
             <tr>
                 <td align="center">明确目标的达成条件，记录每一次达成小目标的信息</td>
@@ -23,6 +25,7 @@
             <tr>
                 <td rowspan="2" align="center">活动</td>
                 <td align="center">快速查找校园内的活动，挑选有时间参与的活动并加入日程</td>
+                <td rowspan="2" align="center">林嘉轩</td>
             </tr>
             <tr>
                 <td align="center">学生组织及社团负责人可以在平台内发布活动信息</td>
@@ -30,6 +33,7 @@
             <tr>
                 <td rowspan="3" align="center">发现</td>
                 <td align="center">番茄钟</td>
+                <td rowspan="3" align="center">曹隽逸</td>
             </tr>
             <tr>
                 <td align="center">随心记</td>
@@ -40,6 +44,7 @@
             <tr>
                 <td rowspan="3" align="center">设置</td>
                 <td align="center">账户与安全</td>
+                <td rowspan="3" align="center">吴国楷</td>
             </tr>
             <tr>
                 <td align="center">帮助与反馈</td>
