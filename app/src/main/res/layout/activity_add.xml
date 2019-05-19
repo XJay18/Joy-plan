@@ -79,7 +79,7 @@
                     android:cursorVisible="false"
                     android:textColor="#999999"
                     android:textAlignment="gravity"
-                    android:text="活动标题"/>
+                    android:hint="活动标题"/>
                 <EditText
                     android:padding="10dp"
                     android:id="@+id/editText_address"
@@ -90,7 +90,7 @@
                     android:cursorVisible="false"
                     android:textColor="#999999"
                     android:textAlignment="gravity"
-                    android:text="活动地点"/>
+                    android:hint="活动地点"/>
             </LinearLayout>
 
         </RelativeLayout>
