@@ -19,13 +19,16 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:textColor="@color/colorWhite"
+
+                android:textColor="@color/colorBlack"
                 android:id="@+id/btn_course"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:background="@drawable/btn_shape_agenda_green"/>
             <Button
+                android:layout_gravity="bottom"
                 android:textColor="@color/colorWhite"
+                android:textStyle="bold"
                 android:id="@+id/btn_mission"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
