@@ -11,15 +11,15 @@
         android:background="@drawable/toolbar_blue">
         <RelativeLayout
             android:id="@+id/rl_setup_portrait"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="45dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="45dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="6dp"
             android:background="@drawable/bg_setup_portrait">
             <com.android.xjay.joyplan.CircleImageView
-                android:layout_width="105dp"
-                android:layout_height="105dp"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/portrait" />
 
@@ -28,23 +28,23 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/rl_setup_portrait"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="30dp"
+            android:layout_below="@id/rl_setup_portrait"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dp"
             android:text="用户名"
             android:textColor="@color/colorWhite"
-            android:textSize="25sp"
+            android:textSize="18sp"
             style="@style/function_bar_text" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/rl_setup_portrait"
-            android:layout_marginTop="100dp"
-            android:layout_marginLeft="30dp"
-            android:text="测试用户ABC"
-            android:textColor="@color/colorWhite"
-            style="@style/function_bar_text" />
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_toRightOf="@id/rl_setup_portrait"-->
+        <!--android:layout_marginTop="100dp"-->
+        <!--android:layout_marginLeft="30dp"-->
+        <!--android:text="测试用户ABC"-->
+        <!--android:textColor="@color/colorWhite"-->
+        <!--style="@style/function_bar_text" />
+    -->
     </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
             <LinearLayout
                 android:id="@+id/ll_setup_accountnsafety"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/bg_setup_button"
                 android:clickable="true"
@@ -78,7 +78,7 @@
                     android:text="账号与安全" />
 
                 <ImageView
-                    style="@style/function_bar_lefticon"
+                    style="@style/function_bar_righticon"
                     android:layout_marginEnd="25dp"
                     android:layout_weight="0"
                     android:background="@drawable/ic_right" />
@@ -176,15 +176,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:layout_height="115dp"
                 android:orientation="vertical"
                 android:background="@drawable/bg_setup_button">
                 <LinearLayout
                     android:id="@+id/ll_setup_notenfeedback"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:layout_marginTop="6dp"
-
                     android:clickable="true"
                     android:orientation="horizontal">
 
@@ -203,7 +202,7 @@
                         android:text="帮助与反馈" />
 
                     <ImageView
-                        style="@style/function_bar_lefticon"
+                        style="@style/function_bar_righticon"
                         android:layout_marginEnd="25dp"
                         android:layout_weight="0"
                         android:background="@drawable/ic_right" />
@@ -212,7 +211,7 @@
                 <LinearLayout
                     android:id="@+id/ll_setup_about"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:clickable="true"
                     android:orientation="horizontal">
 
@@ -231,7 +230,7 @@
                         android:text="关于" />
 
                     <ImageView
-                        style="@style/function_bar_lefticon"
+                        style="@style/function_bar_righticon"
                         android:layout_marginEnd="25dp"
                         android:layout_weight="0"
                         android:background="@drawable/ic_right" />

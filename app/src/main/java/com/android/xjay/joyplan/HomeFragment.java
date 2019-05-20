@@ -221,6 +221,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             }
             case "设置": {
                 View view = inflater.inflate(R.layout.fragment_setup, null);
+//                ((FragmentActivity)mContext).findViewById(R.id.activity_main_toolbar).setVisibility(View.GONE);
                 view.findViewById(R.id.ll_setup_accountnsafety).setOnClickListener(this);
                 view.findViewById(R.id.ll_setup_notenfeedback).setOnClickListener(this);
                 view.findViewById(R.id.ll_setup_about).setOnClickListener(this);

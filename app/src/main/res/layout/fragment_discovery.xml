@@ -9,13 +9,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="165dp"
         android:background="@drawable/bg_setup_button"
         android:orientation="vertical">
         <LinearLayout
             android:id="@+id/ll_fqz"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_marginTop="6dp"
             android:clickable="true"
             android:orientation="horizontal">
@@ -35,7 +35,7 @@
                 android:text="番茄钟" />
 
             <ImageView
-                style="@style/function_bar_lefticon"
+                style="@style/function_bar_righticon"
                 android:layout_marginEnd="25dp"
                 android:layout_weight="0"
                 android:background="@drawable/ic_right" />
@@ -44,7 +44,7 @@
         <LinearLayout
             android:id="@+id/ll_sxj"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:clickable="true"
             android:orientation="horizontal">
 
@@ -63,7 +63,7 @@
                 android:text="随心记" />
 
             <ImageView
-                style="@style/function_bar_lefticon"
+                style="@style/function_bar_righticon"
                 android:layout_marginEnd="25dp"
                 android:layout_weight="0"
                 android:background="@drawable/ic_right" />
@@ -72,7 +72,7 @@
         <LinearLayout
             android:id="@+id/ll_sjtb"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:clickable="true"
             android:orientation="horizontal">
 
@@ -91,7 +91,7 @@
                 android:text="数据图表" />
 
             <ImageView
-                style="@style/function_bar_lefticon"
+                style="@style/function_bar_righticon"
                 android:layout_marginEnd="25dp"
                 android:layout_weight="0"
                 android:background="@drawable/ic_right" />
@@ -101,7 +101,7 @@
     <LinearLayout
         android:id="@+id/ll_tjkcb"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@drawable/bg_setup_button"
         android:clickable="true"
         android:orientation="horizontal">
@@ -121,7 +121,7 @@
             android:text="添加课程表" />
 
         <ImageView
-            style="@style/function_bar_lefticon"
+            style="@style/function_bar_righticon"
             android:layout_marginEnd="25dp"
             android:layout_weight="0"
             android:background="@drawable/ic_right" />
@@ -130,7 +130,7 @@
     <LinearLayout
         android:id="@+id/ll_fbhd"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:layout_marginTop="6dp"
         android:background="@drawable/bg_setup_button"
         android:clickable="true"
@@ -151,7 +151,7 @@
             android:text="发布活动" />
 
         <ImageView
-            style="@style/function_bar_lefticon"
+            style="@style/function_bar_righticon"
             android:layout_marginEnd="25dp"
             android:layout_weight="0"
             android:background="@drawable/ic_right" />
