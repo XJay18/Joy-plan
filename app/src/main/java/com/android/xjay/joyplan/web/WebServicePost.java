@@ -46,7 +46,6 @@ public class WebServicePost {
                 String data = "phone_number=" + URLEncoder.encode(phone_number,"UTF-8") + "&password=" + URLEncoder.encode(password,"UTF-8")
                         +"&nick_name="+URLEncoder.encode(nick_name,"UTF-8")
                         +"&university="+URLEncoder.encode(university,"UTF-8");
-                System.out.println(data);
                 out.writeBytes(data);
                 out.flush();
                 out.close();
@@ -103,7 +102,6 @@ public class WebServicePost {
 
                 DataOutputStream out = new DataOutputStream(connection.getOutputStream());
                 String data = "phone_number=" + URLEncoder.encode(phone_number,"UTF-8") + "&password=" + URLEncoder.encode(password,"UTF-8");
-                System.out.println(data);
                 out.writeBytes(data);
                 out.flush();
                 out.close();
@@ -162,7 +160,6 @@ public class WebServicePost {
                 String data = "title=" + URLEncoder.encode(title,"UTF-8") + "&time=" + URLEncoder.encode(time,"UTF-8")
                         +"&description="+URLEncoder.encode(description,"UTF-8")
                         +"&address="+URLEncoder.encode(addr,"UTF-8");
-                System.out.println(data);
                 out.writeBytes(data);
                 out.flush();
                 out.close();
@@ -219,7 +216,6 @@ public class WebServicePost {
 
                 DataOutputStream out = new DataOutputStream(connection.getOutputStream());
                 String data = "phone_number=" + URLEncoder.encode(phone_number,"UTF-8");
-                System.out.println(data);
                 out.writeBytes(data);
                 out.flush();
                 out.close();

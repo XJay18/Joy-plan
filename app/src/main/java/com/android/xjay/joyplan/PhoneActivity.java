@@ -78,11 +78,13 @@ public class PhoneActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                 else{
-                    //TODO 此处为
+                    //TODO 此处为数据库中含有该电话号码时的时候
+
                 }
             }
         });
     }
+
     private Boolean setphone(){
         phone_number=et_phone.getText().toString().trim();
         if(phone_number.length()<=0)

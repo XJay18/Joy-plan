@@ -1,9 +1,11 @@
 package com.android.xjay.joyplan;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,11 +20,7 @@ import com.android.xjay.joyplan.Notification.NotificationReceiver;
 import com.android.xjay.joyplan.web.WebServiceGet;
 import com.android.xjay.joyplan.web.WebServicePost;
 
-/*
-    the main activity for login
-
- */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private EditText et_account;
     private EditText et_password;
     private Button btn_login;
@@ -32,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private ProgressDialog dialog;
     //服务器返回的数据
     private String infoString;
-    //返回主线程更新数据
+    //判断输入内容的合法性
+    private boolean legal;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -52,30 +51,32 @@ public class MainActivity extends AppCompatActivity {
     private void getID(){
         btn_login=findViewById(R.id.btn_login);
         btn_return=findViewById(R.id.main_return);
-        btn_login.setOnClickListener(new MyOnClickListener());
-        btn_return.setOnClickListener(new MyOnClickListener());
+        btn_login.setOnClickListener(this);
+        btn_return.setOnClickListener(this);
         et_account=(EditText)findViewById(R.id.et_account);
         et_password=(EditText)findViewById(R.id.et_password);
         et_account.addTextChangedListener(new JumpTextWatcher(et_account,et_password));
     }
-    //按钮监听器
-    class MyOnClickListener implements View.OnClickListener {
-        @Override
-        public void onClick( View v) {
-            /*switch(v.getId()){
-                case R.id.btn_login:
+
+    @Override
+    public void onClick( View v) {
+        /*switch(v.getId()){
+            case R.id.btn_login:
+                legal=setUser();
+                if(legal){
                     dialog = new ProgressDialog(MainActivity.this);
                     dialog.setTitle("正在登陆");
                     dialog.setMessage("请稍后");
                     dialog.setCancelable(true);//设置可以通过back键取消
                     dialog.show();
                     new Thread(new MyThread()).start();
-                    break;
-                case R.id.main_return:
-                    Intent intent=new Intent(MainActivity.this,WelcomeActivity.class);
-                    startActivity(intent);
-                    break;
-            }*/
+                }
+                break;
+            case R.id.main_return:
+                Intent intent=new Intent(MainActivity.this,WelcomeActivity.class);
+                startActivity(intent);
+                break;
+        }*/
             if (v.getId() == R.id.btn_login) {
                 Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
@@ -85,12 +86,12 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent=new Intent(MainActivity.this,WelcomeActivity.class);
                 startActivity(intent);
                 }
-        }
     }
     private class MyThread implements Runnable{
         @Override
         public void run() {
-            infoString = WebServicePost.loginPost(et_account.getText().toString(),et_password.getText().toString(),"LogLet");//获取服务器返回的数据
+            //获取服务器返回的数据
+            infoString = WebServicePost.loginPost(et_account.getText().toString(),et_password.getText().toString(),"LogLet");
             //更新UI，使用runOnUiThread()方法
            showResponse(infoString);
         }
@@ -102,17 +103,47 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             //更新UI
             @Override
-            public void run() { {
-                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    startActivity(intent);
+            public void run() {
+                if(response.equals("false")){
+                    //TODO 登陆失败后的操作
+                    dialog.dismiss();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("登陆信息");
+                    builder.setMessage("登陆失败");
+                    //builder.setMessage("登录帐号或密码错误");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton("OK",new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //TODO 登录失败后的页面跳转
+                        }
+                    });
+                    builder.show();
                 }
-                dialog.dismiss();
+                else{
+                    Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+                    startActivity(intent);
+                    dialog.dismiss();
+                }
             }
         });
     }
     /*
      * 实现换行功能
      */
+    private boolean setUser(){
+        if(et_account.getText().toString().length()<=0)
+        {
+            Toast.makeText(this, "帐号不能为空", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(et_password.getText().toString().length()<=0)
+        {
+            Toast.makeText(this, "密码不能为空", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
     private class JumpTextWatcher implements TextWatcher{
         private EditText mThisView;
         private View mNextView;

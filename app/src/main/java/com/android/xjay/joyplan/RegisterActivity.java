@@ -2,7 +2,6 @@ package com.android.xjay.joyplan;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,14 +15,15 @@ import android.widget.Toast;
 import android.view.*;
 import android.content.Intent;
 
-import com.android.xjay.joyplan.web.WebServiceGet;
 import com.android.xjay.joyplan.web.WebServicePost;
 
-public class Register extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
     private EditText username;
     private EditText userpassword;
     private EditText userpassword2;
     private Spinner spin_university;
+    private Button btn_return;
+    private Button btn_submit;
     String phone_number;
     String university;
     ProgressDialog dialog;
@@ -34,35 +34,42 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         getID();
     }
+
     private void getID(){
         legal=false;
-        Button btn_submit=findViewById(R.id.btn_submit);
+        btn_submit=findViewById(R.id.btn_submit);
+        btn_return=findViewById(R.id.register_return);
         username=(EditText)findViewById(R.id.regi_nick_name);
         userpassword=(EditText)findViewById(R.id.regi_password);
         userpassword2=(EditText)findViewById(R.id.regi_password_confirm);
         spin_university=(Spinner)findViewById(R.id.sp_university);
         phone_number=getIntent().getStringExtra("data");
-        btn_submit.setOnClickListener(new MyOnClickListener());
+        btn_submit.setOnClickListener(this);
         spin_university.setOnItemSelectedListener(new MyOnItemSelected());
         username.addTextChangedListener(new JumpTextWatcher(username,userpassword));
         userpassword.addTextChangedListener(new JumpTextWatcher(userpassword,userpassword2));
     }
-    class MyOnClickListener implements View.OnClickListener{
-        @Override
-        public void onClick(View v) {
-            //setUser();
-            switch (v.getId()) {
-                case R.id.btn_submit:
-                    legal=setUser();
-                    if(legal){
-                    dialog = new ProgressDialog(Register.this);
-                    dialog.setTitle("正在注册");
-                    dialog.setMessage("请稍后");
-                    dialog.show();
-                    new Thread(new RegThread()).start();}
-            }
+
+    @Override
+    public void onClick(View v) {
+        //setUser();
+        switch (v.getId()) {
+            case R.id.btn_submit:
+                legal=setUser();
+                if(legal){
+                 dialog = new ProgressDialog(RegisterActivity.this);
+                 dialog.setTitle("正在注册");
+                 dialog.setMessage("请稍后");
+                 dialog.show();
+                 new Thread(new RegThread()).start();}
+                 break;
+            case R.id.register_return:
+                Intent intent=new Intent(RegisterActivity.this,WelcomeActivity.class);
+                startActivity(intent);
+                break;
         }
     }
+
     class MyOnItemSelected implements AdapterView.OnItemSelectedListener{
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
@@ -92,7 +99,7 @@ public class Register extends AppCompatActivity {
             public void run() {
                 if(RegRet.equals("true")){
                     dialog.dismiss();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     builder.setTitle("注册信息");
                     builder.setMessage("注册成功");
                     builder.setCancelable(false);
@@ -102,14 +109,14 @@ public class Register extends AppCompatActivity {
                          */
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(Register.this,MainActivity.class);
+                            Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
                             startActivity(intent);
                         }
                     });
                     builder.show();
                 }else{
                     dialog.dismiss();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     builder.setTitle("注册信息");
                     builder.setMessage("注册失败");
                     builder.setCancelable(false);
@@ -119,7 +126,7 @@ public class Register extends AppCompatActivity {
                          */
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            /*Intent intent = new Intent(Register.this,WelcomeActivity.class);
+                            /*Intent intent = new Intent(RegisterActivity.this,WelcomeActivity.class);
                             startActivity(intent);*/
                         }
                     });

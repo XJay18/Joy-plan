@@ -1,5 +1,6 @@
 package com.android.xjay.joyplan;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -27,7 +28,7 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
     private Fragment BarFragment;
     private Fragment PieFragment;
 
-    private LinearLayout btn_back;
+    private Button btn_back;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -55,6 +56,7 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         //添加tab选项卡
         mTabLayout.addTab(mTabLayout.newTab().setText(TitleList.get(0)));
         mTabLayout.addTab(mTabLayout.newTab().setText(TitleList.get(1)));
+
 
         FragmentPagerAdapter mAdapter=new FragmentPagerAdapter(getSupportFragmentManager()){
 

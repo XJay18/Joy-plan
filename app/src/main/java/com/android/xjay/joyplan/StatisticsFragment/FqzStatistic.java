@@ -43,6 +43,7 @@ public class FqzStatistic extends AppCompatActivity implements OnChartValueSelec
     private SimpleDateFormat dateFormat;
     private String currentDate;
     private TextView show_week;
+    private TextView show_minutes;
     private Date date;
     private Calendar cal;
     private String[] value=new String[]{"周一","周二","周三","周四","周五","周六","周日"};
@@ -61,7 +62,12 @@ public class FqzStatistic extends AppCompatActivity implements OnChartValueSelec
         currentDate=getTimeInterval("now");
 
         show_week=findViewById(R.id.show_week_fqz);
-        show_week.setTextSize(17f);
+        show_week.setTextSize(22.5f);
+        show_week.setTextColor(Color.WHITE);
+        show_minutes=findViewById(R.id.minutes);
+        show_minutes.setTextSize(28.5f);
+        show_minutes.setTextColor(Color.WHITE);
+
         btn_last_month=findViewById(R.id.btn_last_week_fqz);
         btn_last_month.setOnClickListener(this);
         btn_next_month=findViewById(R.id.btn_next_week_fqz);
@@ -87,24 +93,29 @@ public class FqzStatistic extends AppCompatActivity implements OnChartValueSelec
         // 改变y标签的位置
         YAxis yAxis = mBarChart.getAxisLeft();
         yAxis.setValueFormatter(new MyYAxisValueFormatter());
-        yAxis.setAxisMaximum(10f);
+        yAxis.setAxisMaximum(150f);
         //设置坐标数值的字体大小
         yAxis.setTextSize(15f);
         yAxis.setAxisMinimum(0f);
-        //yAxis.setStartAtZero(false);
+        yAxis.setGridColor(Color.WHITE);
+        yAxis.setAxisLineColor(Color.WHITE);
+        yAxis.setTextColor(Color.WHITE);
         mBarChart.getAxisRight().setEnabled(false);
 
         StringAxisValueFormatter formatter=new StringAxisValueFormatter(value);
         XAxis xAxis = mBarChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         //设置坐标数值的字体大小
-        xAxis.setTextSize(10f);
+        xAxis.setTextSize(12f);
         xAxis.setDrawAxisLine(true);
         xAxis.setDrawGridLines(false);
+        xAxis.setAxisLineColor(Color.WHITE);
+        xAxis.setTextColor(Color.WHITE);
         xAxis.setValueFormatter(formatter);
         mBarChart.getAxisLeft().setDrawAxisLine(false);
 
         Legend l = mBarChart.getLegend();
+        l.setEnabled(false);
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
@@ -112,17 +123,21 @@ public class FqzStatistic extends AppCompatActivity implements OnChartValueSelec
         l.setFormSize(10f);
         l.setFormToTextSpace(4f);
         l.setXEntrySpace(6f);
+        l.setTextColor(Color.WHITE);
 
         setData();
     }
     private void setData() {
         show_week.setText(currentDate);
+        int total=0;
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
         for (int i = 0; i < 7 ; i++) {
-            float mult = (40);
-            int val1 = (int) ((Math.random() * mult) + mult)%10 ;
+            float mult = (1000);
+            int val1 = (int) (Math.random() * mult)%150 ;
+            total+=val1;
             yVals1.add(new BarEntry(i, new float[]{val1}));
         }
+        show_minutes.setText(total+"分钟");
 
         BarDataSet set1;
 
@@ -147,7 +162,7 @@ public class FqzStatistic extends AppCompatActivity implements OnChartValueSelec
 
             BarData data = new BarData(dataSets);
             //设置条形图宽度
-            data.setBarWidth(0.7f);
+            data.setBarWidth(0.3f);
             data.setValueFormatter(new MyValueFormatter());
             data.setValueTextColor(Color.WHITE);
             mBarChart.setData(data);
@@ -161,7 +176,8 @@ public class FqzStatistic extends AppCompatActivity implements OnChartValueSelec
     private int[] getColors() {
         //有尽可能多的颜色每项堆栈值
         //int[] colors = new int[]{Color.rgb(255,201,12),Color.rgb(248,223,114),Color.rgb(238,162,164),Color.rgb(240,124,130)};
-        int[] colors=new int[]{Color.rgb(255,201,12)};
+        //int[] colors=new int[]{Color.rgb(255,201,12)};
+        int [] colors=new int[]{Color.WHITE};
         return colors;
     }
     @Override

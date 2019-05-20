@@ -43,7 +43,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="43dp">
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/mPieChart1"
@@ -91,7 +92,7 @@
                 android:background="@drawable/btn_white"
                 android:text="上一周"
                 android:textColor="#6BB6FF"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btn_next_week_p"
