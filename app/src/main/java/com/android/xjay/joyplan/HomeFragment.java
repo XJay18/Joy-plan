@@ -121,6 +121,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                 mContext.registerReceiver(dynamicReceiverAddCourseTable, intentFilter);
 
                 View view = inflater.inflate(R.layout.fragment_agenda, null);
+//                ((FragmentActivity)mContext).findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
                 //initView()
                 timeListView = view.findViewById(R.id.time_listview);
                 listView1 = view.findViewById(R.id.listView1);
@@ -193,6 +194,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             // deal with the fragment_discovery
             case "发现": {
                 View view = inflater.inflate(R.layout.fragment_discovery, null);
+//                ((FragmentActivity)mContext).findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.ll_fqz).setOnClickListener(this);
                 view.findViewById(R.id.ll_sjtb).setOnClickListener(this);
                 view.findViewById(R.id.ll_sxj).setOnClickListener(this);
@@ -203,6 +205,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             }
             case "活动": {
                 View view = inflater.inflate(R.layout.fragment_reserve, null);
+//                ((FragmentActivity)mContext).findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
                 IntentFilter intentFilter = new IntentFilter();
                 intentFilter.addAction("ADD ACTIVITY");
                 dynamicReceiver = new DynamicReceiverAddActivity();
@@ -221,6 +224,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             }
             case "设置": {
                 View view = inflater.inflate(R.layout.fragment_setup, null);
+//                ((FragmentActivity)mContext).findViewById(R.id.activity_main_toolbar).setVisibility(View.GONE);
                 view.findViewById(R.id.ll_setup_accountnsafety).setOnClickListener(this);
                 view.findViewById(R.id.ll_setup_notenfeedback).setOnClickListener(this);
                 view.findViewById(R.id.ll_setup_about).setOnClickListener(this);
@@ -245,6 +249,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
     private void initScrollDisabledListView() {
         AgendaTitleArrayList = new ArrayList<>();
         CourseArrayList=new ArrayList<>();
+        adapterArrayList=new ArrayList<CustomListAdapter>();
         for (int i = 0; i < 7; i++) {
             ArrayList<String> arrayList = new ArrayList<String>();
             ArrayList<String> courseList = new ArrayList<String>();
@@ -390,9 +395,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             startActivity(intent);
         } else if (view.getId() == R.id.btn_mission) {
             int tag = (int) view.getTag();
-            int listIndex = tag / 10;
-            int buttonIndex = tag % 10;
+            int listIndex = tag / 100;
+            int buttonIndex = tag % 100;
             final int position = (int) view.getTag();
+            String s=new Integer(position).toString();
+            adapterArrayList.get(2).notifyDataSetChanged();
+            Log.v("buttonIndex",s);
             customDialog(listIndex, buttonIndex);
         } else if (view.getId() == R.id.ll_setup_accountnsafety) {
             Toast.makeText(mContext, "你点击了账号与安全", Toast.LENGTH_SHORT).show();
@@ -455,8 +463,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                 Calendar clickedListCalendar = weekStartCalendar;
 
                 int tag = (int) v.getTag();
-                int ListIndex = tag / 10;
-                int ButtonIndex = tag % 10;
+                int ListIndex = tag / 100;
+                int ButtonIndex = tag % 100;
                 for (int i = 0; i < ListIndex; i++) {
                     clickedListCalendar = CalendarUtil.getNextCalendar(clickedListCalendar);
                 }
@@ -547,8 +555,39 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         mYear = calendar.getYear();
         Calendar weekStartCalendar = CalendarUtil.getStartInWeek(calendar, 1);
         updateAgenda(weekStartCalendar);
+        updateCourse();
     }
 
+    public void updateCourse(){
+        mHelper = UserDBHelper.getInstance(getContext(), 1);
+        for(int i=1;i<=7;i++){
+            String dayofweek=new Integer(i).toString();
+            ArrayList<Course> courseArrayList=mHelper.getCourseWithDayOfWeek(dayofweek);
+            int length=courseArrayList.size();
+            for(int j=0;j<length;j++){
+                int index=Integer.parseInt(courseArrayList.get(j).startIndex);
+                String courseName=courseArrayList.get(j).courseName;
+                int numOfCourse=Integer.parseInt(courseArrayList.get(j).numOfCourse);
+                if(index<=4){
+                    for(int k=0;k<numOfCourse;k++){
+                        CourseArrayList.get(i).set(7+index+k,courseName);
+                    }
+
+                }
+                else if(index>4&&index<=8){
+                    for(int k=0;k<numOfCourse;k++){
+                        CourseArrayList.get(i).set(9+index+k,courseName);
+                    }
+
+                }
+                else if(index>8){
+                    for(int k=0;k<numOfCourse;k++){
+                        CourseArrayList.get(i).set(10+index+k,courseName);
+                    }
+                }
+            }
+        }
+    }
     public void updateAgenda(Calendar calendar) {
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 24; j++) {
@@ -556,6 +595,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             }
         }
         for (int i = 0; i < 7; i++) {
+            adapterArrayList.get(i).notifyDataSetChanged();
             String date = calendar.toStringWithoutYear();
             Log.v("test12", date);
             calendar = CalendarUtil.getNextCalendar(calendar);
@@ -563,22 +603,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             ArrayList<Agenda> AgendaList = mHelper.getAgendaListWithDate(date);
             int length = AgendaList.size();
             if (length == 0) {
-                ArrayList<String> nullList = new ArrayList<String>();
-                adapterArrayList.get(i).refresh();
+                adapterArrayList.get(i).refreshAgenda();
+                continue;
             } else {
                 ArrayList<String> titleList = new ArrayList<String>();
-                ArrayList<Integer> heightList = new ArrayList<Integer>();
                 for (int j = 0; j < length; j++) {
                     String title = AgendaList.get(j).title;
                     String startTime = AgendaList.get(j).start_time;
-                    String endTime = AgendaList.get(j).end_time;
+
                     int hour = Integer.parseInt(startTime.substring(11, 13));
 
 
                     AgendaTitleArrayList.get(i).set(hour, title);
                 }
 
-                adapterArrayList.get(i).refresh();
+                adapterArrayList.get(i).refreshAgenda();
 
             }
         }
@@ -604,36 +643,24 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     private void AddCourseTable(){
 
-        CourseArrayList.get(1).set(14,"定向越野");
-        CourseArrayList.get(1).set(15,"定向越野");
-        CourseArrayList.get(1).set(16,"毛概");
-        CourseArrayList.get(1).set(17,"毛概");
+        mHelper.resetCourseTable();
+        mHelper=UserDBHelper.getInstance(getContext(), 1);
+        mHelper.insert_course(new Course("定向越野",1,5,2));
+        mHelper.insert_course(new Course("毛概",1,7,2));
+        mHelper.insert_course(new Course("UML",2,3,2));
+        mHelper.insert_course(new Course("编译技术",2,5,2));
+        mHelper.insert_course(new Course("大学美育",2,9,2));
+        mHelper.insert_course(new Course("计网",3,1,2));
+        mHelper.insert_course(new Course("数据库",3,5,2));
+        mHelper.insert_course(new Course("毛概",3,7,2));
+        mHelper.insert_course(new Course("大学语文",3,9,2));
+        mHelper.insert_course(new Course("UML",4,3,2));
+        mHelper.insert_course(new Course("计网",5,1,2));
+        mHelper.insert_course(new Course("数据库",5,5,2));
 
-        CourseArrayList.get(2).set(10,"UML");
-        CourseArrayList.get(2).set(11,"UML");
-        CourseArrayList.get(2).set(14,"编译技术");
-        CourseArrayList.get(2).set(15,"编译技术");
-        CourseArrayList.get(2).set(19,"大学美育");
-        CourseArrayList.get(2).set(20,"大学美育");
-
-        CourseArrayList.get(3).set(8,"计网");
-        CourseArrayList.get(3).set(9,"计网");
-        CourseArrayList.get(3).set(14,"数据库");
-        CourseArrayList.get(3).set(15,"数据库");
-        CourseArrayList.get(3).set(16,"毛概");
-        CourseArrayList.get(3).set(17,"毛概");
-        CourseArrayList.get(3).set(19,"大学语文");
-        CourseArrayList.get(3).set(20,"大学语文");
-
-        CourseArrayList.get(4).set(10,"UML");
-        CourseArrayList.get(4).set(11,"UML");
-
-        CourseArrayList.get(5).set(8,"计网");
-        CourseArrayList.get(5).set(9,"计网");
-        CourseArrayList.get(5).set(14,"数据库");
-        CourseArrayList.get(5).set(15,"数据库");
+        updateCourse();
         for(int i=0;i<7;i++){
-            adapterArrayList.get(i).refresh();
+            adapterArrayList.get(i).refreshCourse();
         }
 
     }

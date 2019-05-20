@@ -23,6 +23,7 @@
             style="@style/top_tb_text_relative" />
 
     </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -32,44 +33,43 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="60dp"
-              android:layout_marginTop="12dp"
-              android:orientation="horizontal"
-              android:background="@drawable/bg_setup_button"
-        >
 
-              <TextView
-                  style="@style/function_bar_text"
-                  android:layout_width="wrap_content"
-                  android:layout_height="match_parent"
-                  android:layout_marginStart="10dp"
-                  android:layout_weight="1"
-                  android:text="账号" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_setup_button"
+                android:orientation="horizontal">
 
-              <TextView
-                  android:layout_width="42dp"
-                  android:layout_height="30dp"
-                  android:layout_gravity="center"
-                  android:layout_marginEnd="25dp"
-                  android:layout_weight="1"
-                  android:gravity="left|center_vertical"
-                  android:paddingLeft="10dp"
-                  android:text="测试用户ABC" />
+                <TextView
+                    style="@style/function_bar_text"
+                    android:layout_width="44dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:text="账号" />
+
+                <TextView
+                    android:layout_width="42dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="25dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="测试用户ABC" />
             </LinearLayout>
 
             <LinearLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:orientation="horizontal"
                 android:background="@drawable/bg_setup_button"
-                >
+                android:orientation="horizontal">
 
                 <TextView
                     style="@style/function_bar_text"
-                    android:layout_width="0dp"
+                    android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
@@ -80,10 +80,10 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginEnd="25dp"
-                    android:paddingLeft="10dp"
-                    android:text="12345678910"
                     android:layout_weight="1"
-                    android:gravity="left|center_vertical"/>
+                    android:gravity="right|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="12345678910" />
             </LinearLayout>
 
             <LinearLayout
@@ -92,6 +92,7 @@
                 android:layout_marginTop="50dp"
                 android:background="@drawable/bg_setup_button"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:id="@+id/ll_setup_accountnsafety_fc1"
                     android:layout_width="match_parent"
@@ -150,34 +151,34 @@
             </LinearLayout>
 
             <!--<LinearLayout-->
-                <!--android:id="@+id/ll_setup_accountnsafety_fc3"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="60dp"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:background="@drawable/bg_setup_button"-->
-                <!--android:clickable="true"-->
-                <!--&gt;-->
+            <!--android:id="@+id/ll_setup_accountnsafety_fc3"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:background="@drawable/bg_setup_button"-->
+            <!--android:clickable="true"-->
+            <!--&gt;-->
 
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_marginStart="10dp"-->
-                    <!--android:text="应用锁"-->
-                    <!--style="@style/function_bar_text"-->
-                    <!--android:textSize="20dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--/>-->
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginStart="10dp"-->
+            <!--android:text="应用锁"-->
+            <!--style="@style/function_bar_text"-->
+            <!--android:textSize="20dp"-->
+            <!--android:layout_weight="1"-->
+            <!--/>-->
 
-                <!--<Button-->
-                    <!--android:layout_width="20dp"-->
-                    <!--android:layout_height="20dp"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginEnd="25dp"-->
-                    <!--android:background="@drawable/ic_right"/>-->
+            <!--<Button-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_marginEnd="25dp"-->
+            <!--android:background="@drawable/ic_right"/>-->
             <!--</LinearLayout>-->
 
         </LinearLayout>
-</ScrollView>
+    </ScrollView>
 
 
 

@@ -3,46 +3,93 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <EditText
-            android:id="@+id/et_content"
-            android:background="@drawable/edtext_selector"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="    请输入你要记录的内容~"/>
-    </ScrollView>
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/btn_takephoto"
-            android:layout_width="0dp"
+        style="@style/top_toor_bar"
+        android:orientation="horizontal"
+        android:background="@drawable/toolbar_blue">
+        <LinearLayout
+            android:id="@+id/bt_sxj_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+            <ImageView
+                style="@style/top_tb_btnSize"
+                android:layout_marginStart="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_left_white" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="拍照"
-            android:textAllCaps="false"
-            android:layout_weight="1"/>
-        <Button
-            android:id="@+id/btn_choosephoto"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:text="选择相片"
-            android:textAllCaps="false"
-            android:layout_weight="1"/>
-        <Button
-            android:id="@+id/btn_record"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="语音"
-            android:textAllCaps="false"/>
+            android:text="随心记"
+            style="@style/top_tb_text_discovery"
+            android:layout_weight="66"/>
+
+        <LinearLayout
+            android:id="@+id/ll_sxj_help"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center|end">
+
+            <ImageView
+                style="@style/top_tb_btnRightSize"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/ic_help_white" />
+        </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorBG">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <EditText
+                android:id="@+id/et_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edtext_selector"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:hint="    请输入你要记录的内容~"/>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_sxj_takephoto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="拍照"
+                android:textAllCaps="false" />
+            <Button
+                android:id="@+id/btn_sxj_choosephoto"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:text="选择相片"
+                android:textAllCaps="false"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/btn_sxj_record"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="语音"
+                android:textAllCaps="false"/>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
 
 

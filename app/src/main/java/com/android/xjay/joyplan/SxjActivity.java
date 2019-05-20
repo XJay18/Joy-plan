@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -16,19 +15,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.View;
-import android.view.accessibility.AccessibilityManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -41,17 +36,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.NotActiveException;
 import java.io.OutputStreamWriter;
-import java.security.spec.ECField;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static android.widget.Toast.LENGTH_LONG;
 
-
-public class SxjActivity extends AppCompatActivity {
+public class SxjActivity extends AppCompatActivity implements View.OnClickListener{
 
     public static final int TAKE_PHOTO = 1;
     public static final int ChOOSE_PHOTO = 2;
@@ -69,9 +60,10 @@ public class SxjActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dis_sxj);
-        Button button1 = (Button) findViewById(R.id.btn_takephoto);
-        Button button2 = (Button) findViewById(R.id.btn_choosephoto);
-        Button button3 = (Button) findViewById(R.id.btn_record);
+        findViewById(R.id.bt_sxj_back).setOnClickListener(this);
+        Button button1 = (Button) findViewById(R.id.btn_sxj_takephoto);
+        Button button2 = (Button) findViewById(R.id.btn_sxj_choosephoto);
+        Button button3 = (Button) findViewById(R.id.btn_sxj_record);
         et_content = (EditText) findViewById(R.id.et_content);
         button1.setOnClickListener(new NoteOnClickListener());
         button2.setOnClickListener(new NoteOnClickListener());
@@ -79,12 +71,19 @@ public class SxjActivity extends AppCompatActivity {
         showRecord("1");
     }
 
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.bt_sxj_back){
+            finish();
+        }
+    }
+
     class NoteOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
 
             //如果是拍照
-            if (v.getId() == R.id.btn_takephoto) {
+            if (v.getId() == R.id.btn_sxj_takephoto) {
                 File outputImage = new File(getExternalCacheDir(), "output_image.jpg");
                 try {
                     if (outputImage.exists()) {
@@ -107,11 +106,11 @@ public class SxjActivity extends AppCompatActivity {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, img_uri);
                 startActivityForResult(intent, TAKE_PHOTO);
             }
-            if (v.getId() == R.id.btn_choosephoto) {
+            if (v.getId() == R.id.btn_sxj_choosephoto) {
                 choosePhoto();
             }
             //录音
-            if (v.getId() == R.id.btn_record) {
+            if (v.getId() == R.id.btn_sxj_record) {
 
             }
         }

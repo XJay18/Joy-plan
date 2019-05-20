@@ -79,6 +79,10 @@
         <item name="android:textColor">#6BB6FF</item>
     </style>
 
+    <style name="function_bar">
+        <item name="android:height">50dp</item>
+    </style>
+
     <!-- The text style for function bars -->
     <style name="function_bar_text">
         <item name="android:textColor">#FF707070</item>
@@ -94,6 +98,11 @@
         <item name="android:layout_gravity">center</item>
     </style>
 
+    <style name="function_bar_righticon">
+        <item name="android:layout_width">11dp</item>
+        <item name="android:layout_height">18dp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
     <!-- Font Library -->
 
     <!--对话框的样式-->

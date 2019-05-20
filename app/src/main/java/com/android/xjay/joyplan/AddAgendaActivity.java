@@ -154,16 +154,9 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 finish();
                 break;
             }
-            case R.id.listView1:
-            case R.id.listView2:
-            case R.id.listView3:
-            case R.id.listView4:
-            case R.id.listView5:
-            case  R.id.listView6:
-            case R.id.listView7:{
 
-            }
             case R.id.tv_agenda_confirm: {
+               // mHelper.reset();
                 String start_time = tv_agenda_start_time.getText().toString();
                 start_time = "2019-" + start_time;
                 String end_time = tv_agenda_end_time.getText().toString();
