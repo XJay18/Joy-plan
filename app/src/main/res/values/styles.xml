@@ -93,8 +93,8 @@
 
     <!-- The style for the left icon of function bars-->
     <style name="function_bar_lefticon">
-        <item name="android:layout_width">10.5dp</item>
-        <item name="android:layout_height">18dp</item>
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
         <item name="android:layout_gravity">center</item>
     </style>
 
