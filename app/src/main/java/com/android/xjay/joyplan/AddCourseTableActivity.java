@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -18,8 +19,11 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.xjay.joyplan.Utils.JumpTextWatcher;
+import com.android.xjay.joyplan.Utils.POIExcelProcesser;
+
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AddCourseTableActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -71,6 +75,19 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
         et_sno.addTextChangedListener(new JumpTextWatcher(this, et_sno, et_name));
         et_name.addTextChangedListener(new JumpTextWatcher(this, et_name, tv_confirm));
         confirmAnimationView = findViewById(R.id.coursetable_anim_okay_blue);
+
+        //Test ExcelRead
+        List<String> courses=POIExcelProcesser.setExceltoSchedule("/data/data/com.android.xjay.joyplan/files/123.xlsx");
+//        if(courses!=null)
+//        for(String course:courses){
+//            Log.e("courses:",course);
+//        }
+//        else{
+//            Log.e("mes","no return");
+//        }
+        UserDBHelper userDBHelper=UserDBHelper.getInstance(this,1);
+        Course course=new Course("a",1,2,3);
+        userDBHelper.insert_course(course);
     }
 
     @Override

@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.android.xjay.joyplan"
-        minSdkVersion 23
+        minSdkVersion 26
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -20,8 +20,10 @@ android {
         exclude 'META-INF/INDEX.LIST'
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
     buildToolsVersion '28.0.3'
 }
@@ -44,7 +46,7 @@ dependencies {
     implementation files('libs/MobTools-2019.0318.2036.jar')
     implementation files('libs/SMSSDK-3.3.0.jar')
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation files('libs/poi-ooxml-3.17.jar')
 }
-
 
 

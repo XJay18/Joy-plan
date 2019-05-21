@@ -40,6 +40,8 @@ import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class SxjActivity extends AppCompatActivity implements View.OnClickListener{
@@ -290,16 +292,31 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
 
     //Complete the jobs which are to load data and to show in et_content
     private void loadContent(){
-        StringBuffer content=null;
         String doc_path = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString();
+        File file=new File("doc_path + /NoteContent");
+        if(!file.exists()){
+            return;
+        }
+        StringBuffer content=null;
         FileInputStream fileInputStream = null;
         BufferedReader bufferedReader = null;
         try {
-            fileInputStream = new FileInputStream(doc_path + "/NoteContent");
+            fileInputStream = new FileInputStream(file);
             bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
             String content_line = null;
             while ((content_line = bufferedReader.readLine()) != null) {
-                content.append(content_line);
+                content.append(content_line+'\n');
+            }
+            String str_content=content.substring(0,content.length()-1).toString();
+            String regex="[0-9]{14}.jpeg";
+            Matcher matcher=null;
+            Pattern pattern=Pattern.compile(regex);
+            matcher=pattern.matcher(content);
+            while(matcher.find()) {
+//                str_content.substring(0,matcher.start());
+//                System.out.println(matcher.group());
+//                str=str.substring(matcher.end());
+//                matcher=Pattern.compile(regex).matcher(str);
             }
         } catch (IOException ex) {
             ex.printStackTrace();
