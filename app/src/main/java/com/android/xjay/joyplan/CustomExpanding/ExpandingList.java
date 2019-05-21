@@ -3,8 +3,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+
+import com.android.xjay.joyplan.R;
 
 /**
  * Created by diego on 5/9/16.
@@ -57,11 +60,14 @@ public class ExpandingList extends ScrollView {
     public CustomItem createNewItem(int layoutId) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         ViewGroup item = (ViewGroup) inflater.inflate(layoutId, this, false);
+        ImageView imageView=item.findViewById(R.id.img_delete_acitivty);
+
         if (item instanceof CustomItem) {
             CustomItem customItem = (CustomItem) item;
             customItem.setParent(this);
             addItem(customItem);
             itemNum++;
+            imageView.setTag(itemNum);
             customItem.setIndex(itemNum);
             return customItem;
         }

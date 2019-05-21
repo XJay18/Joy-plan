@@ -86,7 +86,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
         mDB.execSQL(create_sql);
         create_sql="CREATE TABLE IF NOT EXISTS "+AGENDA_TABLE+"("+"id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"+"title VARCHAR NOT NULL,"+"starttime DATETIME NOT NULL,"+"endtime DATETIME NOT NULL,"+"content VARCHAR NOT NULL,"+"address VARCHAR NOT NULL"+");";
         mDB.execSQL(create_sql);
-        create_sql="CREATE TABLE IF NOT EXISTS "+COURSE_TABLE+"("+"coursename VARCHAR NOT NULL,"+"dayofweek VARCHAR NOT NULL,"+"startindex INTEGER NOT NULL,"+"numofcourse INTEGER NOT NULL,"+"PRIMARY KEY(dayofweek,startindex)"+");";
+        create_sql="CREATE TABLE IF NOT EXISTS "+COURSE_TABLE+"("+"coursename VARCHAR NOT NULL,"+"dayofweek INTEGER NOT NULL,"+"startweek INTEGER NOT NULL,"+"endweek INTEGER NOT NULL,"+"startindex INTEGER NOT NULL,"+"numofcourse INTEGER NOT NULL,"+"address VARCHAR NOT NULL,"+"teachername VARCHAR NOT NULL,"+"PRIMARY KEY(dayofweek,startweek,startindex)"+");";
         mDB.execSQL(create_sql);
     }
 
@@ -94,7 +94,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
         openWriteLink();
         String drop_sql="DROP TABLE IF EXISTS "+ COURSE_TABLE +";";
         mDB.execSQL(drop_sql);
-        String create_sql="CREATE TABLE IF NOT EXISTS "+COURSE_TABLE+"("+"coursename VARCHAR NOT NULL,"+"dayofweek INTEGER NOT NULL,"+"startindex INTEGER NOT NULL,"+"numofcourse INTEGER NOT NULL,"+"PRIMARY KEY(dayofweek,startindex)"+");";
+        String create_sql="CREATE TABLE IF NOT EXISTS "+COURSE_TABLE+"("+"coursename VARCHAR NOT NULL,"+"dayofweek INTEGER NOT NULL,"+"startweek INTEGER NOT NULL,"+"endweek INTEGER NOT NULL,"+"startindex INTEGER NOT NULL,"+"numofcourse INTEGER NOT NULL,"+"address VARCHAR NOT NULL,"+"teachername VARCHAR NOT NULL,"+"PRIMARY KEY(dayofweek,startweek,startindex)"+");";
         mDB.execSQL(create_sql);
     }
 
@@ -103,6 +103,17 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     public int delete(String condition){
         return mDB.delete(ACTIVITY_TABLE,condition,null);
+    }
+
+    public int deleteAgendaWithIndex(int index){
+        String id=new Integer(index).toString();
+        return mDB.delete(AGENDA_TABLE,"id=?",new String[]{id});
+    }
+
+    public int deleteActivityWithIndex(int index){
+        String id=new Integer(index).toString();
+        openWriteLink();
+        return mDB.delete(ACTIVITY_TABLE,"id=?",new String[]{id});
     }
 
     public void clean(){
@@ -152,8 +163,12 @@ public class UserDBHelper extends SQLiteOpenHelper {
         ContentValues cv=new ContentValues();
         cv.put("coursename",course.courseName);
         cv.put("dayofweek",course.dayofweek);
+        cv.put("startweek",course.startWeek);
+        cv.put("endweek",course.endWeek);
         cv.put("startindex",course.startIndex);
         cv.put("numofcourse",course.numOfCourse);
+        cv.put("address",course.address);
+        cv.put("teachername",course.teacherName);
 
         result=mDB.insert(COURSE_TABLE,"",cv);
         return result;
@@ -175,6 +190,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
             String content=cursor.getString(4);
             String address=cursor.getString(5);
             agenda=new Agenda(title,starttime,endtime,content,address);
+            agenda.index=cursor.getInt(0);
             list.add(agenda);
             cursor.move(1);
             }
@@ -183,23 +199,43 @@ public class UserDBHelper extends SQLiteOpenHelper {
         else return new ArrayList<>();
     }
 
-    public ArrayList<Course> getCourseWithDayOfWeek(String str_dayofweek){
+    public ArrayList<Course> getCourseWithDayOfWeek(int week,int dayofweek){
         openReadLink();
         Cursor cursor=null;
         ArrayList<Course> courseArrayList=new ArrayList<>();
 
-        //cursor=mDB.query(COURSE_TABLE,null,createCourseSelectActionDayOfWeek(),new String[]{str_dayofweek},null,null,null);
+        String str_week=new Integer(week).toString();
+        String str_dayofweek=new Integer(dayofweek).toString();
+        Cursor testcursor;
+        testcursor=mDB.query(COURSE_TABLE,null,null,null,null,null,null,null);
+        String courseN;
+        if(testcursor!=null)
+        {
+            testcursor.moveToFirst();
+        courseN=testcursor.getString(0);
+        System.out.print(courseN);
+        }
+        cursor=mDB.query(COURSE_TABLE,null,createCourseSelectActionDayOfWeek(),new String[]{str_dayofweek,str_week,str_week},null,null,null);
+
+
+
+
         if(cursor!=null&&cursor.moveToFirst()){
             int length=cursor.getCount();
             for (int i=0;i<length;i++){
                 String courseName=cursor.getString(0);
+                String str_startWeek=cursor.getString(2);
+                String str_endWeek=cursor.getString(3);
+                String str_startIndex=cursor.getString(4);
+                String str_numOfCourse=cursor.getString(5);
+                String address=cursor.getString(6);
+                String teacherName=cursor.getString(7);
 
-                String str_startIndex=cursor.getString(2);
-                String str_numOfCourse=cursor.getString(3);
-                int dayofweek=Integer.parseInt(str_dayofweek);
                 int startIndex=Integer.parseInt(str_startIndex);
                 int numOfCourse=Integer.parseInt(str_numOfCourse);
-                Course course=new Course(courseName,dayofweek,startIndex,numOfCourse);
+                int startWeek=Integer.parseInt(str_startWeek);
+                int endWeek=Integer.parseInt(str_endWeek);
+                Course course=new Course(courseName,dayofweek,startWeek,endWeek,startIndex,numOfCourse,address,teacherName);
                 courseArrayList.add(course);
                 cursor.move(1);
             }
@@ -221,6 +257,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
                 String content=cursor.getString(4);
                 String address=cursor.getString(5);
                 agenda=new Agenda(title,starttime,endtime,content,address);
+                agenda.index=cursor.getInt(0);
                 return agenda;
             }
             else return null;
@@ -246,7 +283,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     public String createCourseSelectActionDayOfWeek(){
         StringBuffer stringBuffer=new StringBuffer();
-        stringBuffer.append("dayofweek=?");
+        stringBuffer.append("dayofweek=? and startweek<=? and endweek>=?");
         return stringBuffer.toString();
     }
     public int update(StudentActivityInfo info,String condition){

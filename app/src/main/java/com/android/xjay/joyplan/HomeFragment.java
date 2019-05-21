@@ -43,8 +43,12 @@ import com.android.xjay.joyplan.CustomExpanding.CustomItem;
 import com.android.xjay.joyplan.CustomExpanding.ExpandingList;
 import com.android.xjay.joyplan.Notification.NotificationTool;
 import com.android.xjay.joyplan.Utils.ScreenSizeUtils;
+import com.mysql.cj.util.Util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HomeFragment extends Fragment implements View.OnClickListener, CalendarView.OnCalendarSelectListener,
         CalendarView.OnYearChangeListener, View.OnLongClickListener {
@@ -445,6 +449,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         }
     }
 
+
+
     @Override
     public boolean onLongClick(View v) {
         switch (v.getId()) {
@@ -489,9 +495,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         final Dialog dialog = new Dialog(mContext, R.style.NormalDialogStyle);
         View view = View.inflate(mContext, R.layout.dialog_normal, null);
 
+
         TextView tv_title = view.findViewById(R.id.tv_agenda_dialog_title);
         TextView tv_time = view.findViewById(R.id.tv_agenda_dialog_start_time);
         EditText editText_notation = view.findViewById(R.id.editText_agenda_dialog_notation);
+
 
 
         dialog.setContentView(view);
@@ -521,6 +529,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             tv_time.setText("00-00-00");
         }
 
+        view.findViewById(R.id.btn_delete_agenda).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(agenda.index!=-1)
+                {
+                    int id=agenda.index;
+                    mHelper.deleteAgendaWithIndex(id);
+
+                    Calendar calendar=mCalendarView.getSelectedCalendar();
+                    Calendar weekStartCalenddar=CalendarUtil.getStartInWeek(calendar,1);
+                    updateAgenda(weekStartCalenddar);
+                    dialog.dismiss();
+                }
+            }
+        });
         dialog.show();
     }
 
@@ -559,34 +582,60 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
     }
 
     public void updateCourse(){
+
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 24; j++) {
+                CourseArrayList.get(i).set(j, "");
+            }
+        }
         mHelper = UserDBHelper.getInstance(getContext(), 1);
-        for(int i=1;i<=7;i++){
-            String dayofweek=new Integer(i).toString();
-            ArrayList<Course> courseArrayList=mHelper.getCourseWithDayOfWeek(dayofweek);
-            int length=courseArrayList.size();
-            for(int j=0;j<length;j++){
-                int index=Integer.parseInt(courseArrayList.get(j).startIndex);
-                String courseName=courseArrayList.get(j).courseName;
-                int numOfCourse=Integer.parseInt(courseArrayList.get(j).numOfCourse);
-                if(index<=4){
-                    for(int k=0;k<numOfCourse;k++){
-                        CourseArrayList.get(i).set(7+index+k,courseName);
-                    }
+        int year=mCalendarView.getSelectedCalendar().getYear();
+        int month=mCalendarView.getSelectedCalendar().getMonth();
+        int day=mCalendarView.getSelectedCalendar().getDay();
+        if(year>=2019&&((month>2)||month==2&&day>=25)){
+            for(int i=1;i<=7;i++){
 
+                Calendar selectedCalendar=mCalendarView.getSelectedCalendar();
+                String selectedDateString=selectedCalendar.toString();
+                SimpleDateFormat simFormat = new SimpleDateFormat("yyyyMMdd HHmmss");
+                Date selectedDate=new Date();
+                Date startWeekDate=new Date();
+                try{
+                    selectedDate= simFormat.parse(selectedDateString+" "+"000000");
+                    startWeekDate=simFormat.parse("20190225 000000");
+                }catch (ParseException e){
+                    e.printStackTrace();
                 }
-                else if(index>4&&index<=8){
-                    for(int k=0;k<numOfCourse;k++){
-                        CourseArrayList.get(i).set(9+index+k,courseName);
-                    }
 
-                }
-                else if(index>8){
-                    for(int k=0;k<numOfCourse;k++){
-                        CourseArrayList.get(i).set(10+index+k,courseName);
+                int days= com.android.xjay.joyplan.Utils.CalendarUtil.daysBetween(startWeekDate,selectedDate);
+                int week=(days+1)/7+1;
+                ArrayList<Course> courseArrayList=mHelper.getCourseWithDayOfWeek(week,i);
+                int length=courseArrayList.size();
+                for(int j=0;j<length;j++){
+                    int index=courseArrayList.get(j).startIndex;
+                    String courseName=courseArrayList.get(j).courseName;
+                    int numOfCourse=courseArrayList.get(j).numOfCourse;
+                    if(index<=4){
+                        for(int k=0;k<numOfCourse;k++){
+                            CourseArrayList.get(i).set(7+index+k,courseName);
+                        }
+
+                    }
+                    else if(index>4&&index<=8){
+                        for(int k=0;k<numOfCourse;k++){
+                            CourseArrayList.get(i).set(9+index+k,courseName);
+                        }
+
+                    }
+                    else if(index>8){
+                        for(int k=0;k<numOfCourse;k++){
+                            CourseArrayList.get(i).set(10+index+k,courseName);
+                        }
                     }
                 }
             }
         }
+
     }
     public void updateAgenda(Calendar calendar) {
         for (int i = 0; i < 7; i++) {
@@ -645,8 +694,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
         mHelper.resetCourseTable();
         mHelper=UserDBHelper.getInstance(getContext(), 1);
-        mHelper.insert_course(new Course("定向越野",1,5,2));
-        mHelper.insert_course(new Course("毛概",1,7,2));
+        mHelper.insert_course(new Course("定向越野",1,1,5,5,2,"田径场","老师"));
+       /* mHelper.insert_course(new Course("毛概",1,7,2));
         mHelper.insert_course(new Course("UML",2,3,2));
         mHelper.insert_course(new Course("编译技术",2,5,2));
         mHelper.insert_course(new Course("大学美育",2,9,2));
@@ -656,7 +705,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         mHelper.insert_course(new Course("大学语文",3,9,2));
         mHelper.insert_course(new Course("UML",4,3,2));
         mHelper.insert_course(new Course("计网",5,1,2));
-        mHelper.insert_course(new Course("数据库",5,5,2));
+        mHelper.insert_course(new Course("数据库",5,5,2));*/
 
         updateCourse();
         for(int i=0;i<7;i++){

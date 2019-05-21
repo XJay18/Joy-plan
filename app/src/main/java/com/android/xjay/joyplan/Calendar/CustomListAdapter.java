@@ -24,12 +24,16 @@ public class CustomListAdapter extends BaseAdapter {
 
 
 
+
+
     public CustomListAdapter(View.OnClickListener clicklistener,View.OnLongClickListener longClickListener,List<String> list,List<String> courseList,int tag){
         this.clicklistener=clicklistener;
         this.longClickListener=longClickListener;
         this.agendaList =list;
         this.couresList=courseList;
         this.tag=tag;
+
+
 
     }
     @Override
@@ -95,11 +99,13 @@ public class CustomListAdapter extends BaseAdapter {
         if(agendaList.get(position)!=""){
             holder.btn_agenda.setText(agendaList.get(position));
             holder.btn_agenda.setBackgroundResource(R.drawable.btn_shape_agenda_blue);
-          /*  if(couresList.get(position)!=""){
+            if(couresList.get(position)!=""){
                 ViewGroup.LayoutParams layoutParams=holder.btn_agenda.getLayoutParams();
-                layoutParams.height=90;
+                ViewGroup.LayoutParams layoutParams1=holder.btn_course.getLayoutParams();
+
+                layoutParams.height=(int)(0.7*(layoutParams1.height));
                 holder.btn_agenda.setLayoutParams(layoutParams);
-            }*/
+            }
         }
         else{
             holder.btn_agenda.setText("");
