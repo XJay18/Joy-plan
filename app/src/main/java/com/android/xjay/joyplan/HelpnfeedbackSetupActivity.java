@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -17,8 +18,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.android.xjay.joyplan.Utils.JumpTextWatcher;
 
 import org.w3c.dom.Text;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.transform.Templates;
 
@@ -33,6 +38,7 @@ public class HelpnfeedbackSetupActivity extends AppCompatActivity implements Vie
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_helpnfeedback);
+
         bt_back = (Button) findViewById(R.id.bt_setup_helpnfeedback_back);
         bt_confirm = (Button) findViewById(R.id.btn_setup_confirm);
         bt_confirm.setFocusable(true);
@@ -40,8 +46,8 @@ public class HelpnfeedbackSetupActivity extends AppCompatActivity implements Vie
         setListener();
         et_feedback = findViewById(R.id.et_setup_feedback);
         et_mailaddress = findViewById(R.id.et_setup_mailaddress);
-        et_mailaddress.addTextChangedListener(new JumpTextWatcher(et_mailaddress, et_feedback));
-        et_feedback.addTextChangedListener(new JumpTextWatcher(et_feedback, bt_confirm));
+        et_mailaddress.addTextChangedListener(new JumpTextWatcher(this, et_mailaddress, et_feedback));
+        et_feedback.addTextChangedListener(new JumpTextWatcher(this, et_feedback, bt_confirm));
         animationView = findViewById(R.id.setup_anim_okay_blue);
     }
 
@@ -86,8 +92,8 @@ public class HelpnfeedbackSetupActivity extends AppCompatActivity implements Vie
                     };
                     animationView.addAnimatorListener(mAnimationListener);
                     animationView.playAnimation();
-                    Log.v("email", et_mailaddress.getText().toString());
-                    Log.v("feedback", et_feedback.getText().toString());
+//                    Log.v("email", et_mailaddress.getText().toString());
+//                    Log.v("feedback", et_feedback.getText().toString());
                     Toast.makeText(this, "您的反馈已经提交，谢谢您！", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -96,59 +102,12 @@ public class HelpnfeedbackSetupActivity extends AppCompatActivity implements Vie
         }
     }
 
-    private class JumpTextWatcher implements TextWatcher {
-
-        private EditText mThisView = null;
-        private View mNextView = null;
-
-        public JumpTextWatcher(EditText vThis, View vNext) {
-            super();
-            mThisView = vThis;
-            if (vNext != null) {
-                mNextView = vNext;
-            }
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            String str = s.toString();
-            //发现输入回车符或换行符
-            if (str.indexOf("\r") >= 0 || str.indexOf("\n") >= 0) {
-                //去掉回车符和换行符
-                mThisView.setText(str.replace("\r", "").replace("\n", ""));
-                if (mNextView != null) {
-                    //让下一个视图获得焦点，即将光标移到下个视图
-                    mNextView.requestFocus();
-                    if (mNextView instanceof EditText) {
-                        EditText et = (EditText) mNextView;
-                        //让光标自动移到编辑框内部的文本末尾
-                        //方式一：直接调用EditText的setSelection方法
-                        et.setSelection(et.getText().length());
-                        //方式二：调用Selection类的setSelection方法
-                        //Editable edit = et.getText();
-                        //Selection.setSelection(edit, edit.length());
-                    } else {
-                        InputMethodManager imm = (InputMethodManager)
-                                getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(mThisView.getWindowToken(), 0);
-                    }
-                }
-            }
-        }
-    }
-
     private boolean checkHasInput() {
         Log.v("email", et_mailaddress.getText().toString());
         Log.v("feedback", et_feedback.getText().toString());
-        if (et_mailaddress.getText().toString() == "") {
+        Pattern p=Pattern.compile("^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$" );
+        Matcher matcher = p.matcher(et_mailaddress.getText().toString());
+        if (!matcher.find()) {
             AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
             mBuilder.setTitle("请输入邮箱地址");
             mBuilder.setMessage("您好，请填写您的邮箱地址以便我们回复您的反馈。");
@@ -161,7 +120,7 @@ public class HelpnfeedbackSetupActivity extends AppCompatActivity implements Vie
             AlertDialog mAlert = mBuilder.create();
             mAlert.show();
             return false;
-        } else if (et_feedback.getText().toString() == "") {
+        } else if (TextUtils.isEmpty(et_feedback.getText().toString())) {
             AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
             mBuilder.setTitle("请输入反馈内容");
             mBuilder.setMessage("您好，请填写反馈内容。");

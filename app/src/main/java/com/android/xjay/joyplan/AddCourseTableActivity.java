@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.android.xjay.joyplan.Utils.JumpTextWatcher;
 
 import java.util.ArrayList;
 
@@ -67,8 +68,8 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
 
         et_sno = findViewById(R.id.et_coursetable_sno);
         et_name = findViewById(R.id.et_coursetable_name);
-        et_sno.addTextChangedListener(new JumpTextWatcher(et_sno, et_name));
-        et_name.addTextChangedListener(new JumpTextWatcher(et_name, tv_confirm));
+        et_sno.addTextChangedListener(new JumpTextWatcher(this, et_sno, et_name));
+        et_name.addTextChangedListener(new JumpTextWatcher(this, et_name, tv_confirm));
         confirmAnimationView = findViewById(R.id.coursetable_anim_okay_blue);
     }
 
@@ -118,62 +119,13 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
     }
 
 
-    private void sentBroadcast(){
-        Intent intent=new Intent();
+    private void sentBroadcast() {
+        Intent intent = new Intent();
         intent.setAction("ADD COURSE TABLE");
-        intent.putExtra("sele","广播测试");
+        intent.putExtra("sele", "广播测试");
         sendBroadcast(intent);
     }
 
-
-    private class JumpTextWatcher implements TextWatcher {
-
-        private EditText mThisView = null;
-        private View mNextView = null;
-
-        public JumpTextWatcher(EditText vThis, View vNext) {
-            super();
-            mThisView = vThis;
-            if (vNext != null) {
-                mNextView = vNext;
-            }
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            String str = s.toString();
-            //发现输入回车符或换行符
-            if (str.indexOf("\r") >= 0 || str.indexOf("\n") >= 0) {
-                //去掉回车符和换行符
-                mThisView.setText(str.replace("\r", "").replace("\n", ""));
-                if (mNextView != null) {
-                    //让下一个视图获得焦点，即将光标移到下个视图
-                    mNextView.requestFocus();
-                    if (mNextView instanceof EditText) {
-                        EditText et = (EditText) mNextView;
-                        //让光标自动移到编辑框内部的文本末尾
-                        //方式一：直接调用EditText的setSelection方法
-                        et.setSelection(et.getText().length());
-                        //方式二：调用Selection类的setSelection方法
-                        //Editable edit = et.getText();
-                        //Selection.setSelection(edit, edit.length());
-                    } else {
-                        InputMethodManager imm = (InputMethodManager)
-                                getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(mThisView.getWindowToken(), 0);
-                    }
-                }
-            }
-        }
-    }
 
     // offer the api to add school name
     public boolean addSchoolInArray(String schoolName) {
