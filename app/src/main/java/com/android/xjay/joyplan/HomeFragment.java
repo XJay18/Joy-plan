@@ -41,9 +41,7 @@ import com.android.xjay.joyplan.Calendar.CustomTimeListAdapter;
 import com.android.xjay.joyplan.Calendar.ScrollDisabledListView;
 import com.android.xjay.joyplan.CustomExpanding.CustomItem;
 import com.android.xjay.joyplan.CustomExpanding.ExpandingList;
-import com.android.xjay.joyplan.Notification.NotificationTool;
 import com.android.xjay.joyplan.Utils.ScreenSizeUtils;
-import com.mysql.cj.util.Util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -119,10 +117,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         switch (info) {
             case "日程": {
                 DynamicReceiverAddCourseTable dynamicReceiverAddCourseTable;
-                IntentFilter intentFilter = new IntentFilter();
-                intentFilter.addAction("ADD COURSE TABLE");
+                IntentFilter intentFilterAddCourse = new IntentFilter();
+                intentFilterAddCourse.addAction("ADD COURSE TABLE");
                 dynamicReceiverAddCourseTable=new DynamicReceiverAddCourseTable();
-                mContext.registerReceiver(dynamicReceiverAddCourseTable, intentFilter);
+                mContext.registerReceiver(dynamicReceiverAddCourseTable, intentFilterAddCourse);
+
+                DynamicReceiverAddGoal dynamicReceiverAddGoal;
+                IntentFilter intentFilterAddGoal=new IntentFilter();
+                intentFilterAddGoal.addAction("ADD GOAL");
+                dynamicReceiverAddGoal=new DynamicReceiverAddGoal();
+                mContext.registerReceiver(dynamicReceiverAddGoal,intentFilterAddGoal);
 
                 View view = inflater.inflate(R.layout.fragment_agenda, null);
 //                ((FragmentActivity)mContext).findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
@@ -456,12 +460,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         switch (v.getId()) {
 
             case R.id.btn_mission: {
-
-                Intent intent = new Intent();
+                int tag=(int)v.getTag();
+                customChooseDialog(tag);
+                return true;
+                /*Intent intent = new Intent();
                 intent.setClass(mContext, AddAgendaActivity.class);
                 Bundle bundle = new Bundle();
-               /* mHelper=UserDBHelper.getInstance(getContext(),1);
-                mHelper.reset();*/
+
 
                 Calendar selectedCalendar = mCalendarView.getSelectedCalendar();
                 Calendar weekStartCalendar = CalendarUtil.getStartInWeek(selectedCalendar, 1);
@@ -485,12 +490,69 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
                 intent.putExtras(bundle);
                 startActivity(intent);
-                return true;
+                return true;*/
             }
         }
         return false;
     }
 
+    private void customChooseDialog(int tag){
+        final Dialog dialog=new Dialog(mContext,R.style.NormalDialogStyle);
+        View view=View.inflate(mContext,R.layout.dialog_choose,null);
+        Button buttonAgenda=view.findViewById(R.id.btn_choose_agenda);
+        Button buttonGoal=view.findViewById(R.id.btn_choose_goal);
+        buttonAgenda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(mContext, AddAgendaActivity.class);
+                Bundle bundle = new Bundle();
+               /* mHelper=UserDBHelper.getInstance(getContext(),1);
+                mHelper.reset();*/
+
+                Calendar selectedCalendar = mCalendarView.getSelectedCalendar();
+                Calendar weekStartCalendar = CalendarUtil.getStartInWeek(selectedCalendar, 1);
+                Calendar clickedListCalendar = weekStartCalendar;
+
+
+                int ListIndex = tag / 100;
+                int ButtonIndex = tag % 100;
+                for (int i = 0; i < ListIndex; i++) {
+                    clickedListCalendar = CalendarUtil.getNextCalendar(clickedListCalendar);
+                }
+                String date = clickedListCalendar.toStringWithoutYear();
+                date = date + (ButtonIndex < 10 ? "0" + ButtonIndex : ButtonIndex) + "00";
+                bundle.putString("date", date);
+
+                // TODO: NOT NEXT DAY BUT NEXT HOUR
+                String nextDate = CalendarUtil.getNextCalendar(clickedListCalendar).toStringWithoutYear();
+                nextDate = nextDate + (ButtonIndex < 10 ? "0" + ButtonIndex : ButtonIndex) + "00";
+                bundle.putString("nextDate", nextDate);
+
+
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        buttonGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent();
+                intent.setClass(mContext,AddGoalActivity.class);
+                startActivity(intent);
+            }
+        });
+        dialog.setContentView(view);
+        dialog.setCanceledOnTouchOutside(true);
+        view.setMinimumHeight((int) (ScreenSizeUtils.getInstance(mContext).getScreenHeight() * 0.15f));
+        Window dialogWindow = dialog.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.width = (int) (ScreenSizeUtils.getInstance(mContext).getScreenWidth() * 0.9f);
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+        dialogWindow.setAttributes(lp);
+        dialog.show();
+    }
     private void customDialog(int listIndex, int buttonIndex) {
         final Dialog dialog = new Dialog(mContext, R.style.NormalDialogStyle);
         View view = View.inflate(mContext, R.layout.dialog_normal, null);
@@ -546,6 +608,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         });
         dialog.show();
     }
+
+
 
     //返回当前选择日期所在周的第一天
     public Calendar getListCilckedCalendar(int index) {
@@ -686,11 +750,75 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
     class DynamicReceiverAddCourseTable extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
-            AddCourseTable();
+            addCourseTable();
         }
     }
 
-    private void AddCourseTable(){
+    class DynamicReceiverAddGoal extends BroadcastReceiver{
+        public void onReceive(Context context,Intent intent){
+             addGoal();
+        }
+    }
+
+    private void addGoal(){
+
+        String title = "跑步";
+        String address = "田径场";
+        String content = "";
+        String start_time="2019-05-22 20:00";
+        String end_time="2019-05-22 20:00";
+        Agenda agenda = new Agenda(title, start_time, end_time, content, address);
+        mHelper.insert_agenda(agenda);
+
+        title = "跑步";
+        address = "田径场";
+        content = "";
+        start_time="2019-05-23 20:00";
+        end_time="2019-05-23 20:00";
+        agenda = new Agenda(title, start_time, end_time, content, address);
+        mHelper.insert_agenda(agenda);
+
+        title = "跑步";
+        address = "田径场";
+        content = "";
+        start_time="2019-05-24 20:00";
+        end_time="2019-05-24 20:00";
+        agenda = new Agenda(title, start_time, end_time, content, address);
+        mHelper.insert_agenda(agenda);
+
+        title = "跑步";
+        address = "田径场";
+        content = "";
+        start_time="2019-05-25 20:00";
+        end_time="2019-05-25 20:00";
+        agenda = new Agenda(title, start_time, end_time, content, address);
+        mHelper.insert_agenda(agenda);
+
+        title = "跑步";
+        address = "田径场";
+        content = "";
+        start_time="2019-05-26 20:00";
+        end_time="2019-05-26 20:00";
+        agenda = new Agenda(title, start_time, end_time, content, address);
+        mHelper.insert_agenda(agenda);
+
+        title = "跑步";
+        address = "田径场";
+        content = "";
+        start_time="2019-05-27 20:00";
+        end_time="2019-05-27 20:00";
+        agenda = new Agenda(title, start_time, end_time, content, address);
+        mHelper.insert_agenda(agenda);
+
+        title = "跑步";
+        address = "田径场";
+        content = "";
+        start_time="2019-05-28 20:00";
+        end_time="2019-05-28 20:00";
+        agenda = new Agenda(title, start_time, end_time, content, address);
+        mHelper.insert_agenda(agenda);
+    }
+    private void addCourseTable(){
 
         mHelper.resetCourseTable();
         mHelper=UserDBHelper.getInstance(getContext(), 1);
@@ -718,6 +846,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         ((TextView) view.findViewById(R.id.sub_title)).setText(info);
 
     }
+
+
 
     private void showInsertDialog(final ReserveActivity.OnItemCreated positive) {
         final EditText text = new EditText(mContext);
