@@ -249,7 +249,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         }
     }
 
-
     private void initScrollDisabledListView() {
         AgendaTitleArrayList = new ArrayList<>();
         CourseArrayList=new ArrayList<>();
@@ -476,6 +475,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                 date = date + (ButtonIndex < 10 ? "0" + ButtonIndex : ButtonIndex) + "00";
                 bundle.putString("date", date);
 
+                // TODO: NOT NEXT DAY BUT NEXT HOUR
                 String nextDate = CalendarUtil.getNextCalendar(clickedListCalendar).toStringWithoutYear();
                 nextDate = nextDate + (ButtonIndex < 10 ? "0" + ButtonIndex : ButtonIndex) + "00";
                 bundle.putString("nextDate", nextDate);
