@@ -211,7 +211,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             app:lottie_autoPlay="true" />
 
         <LinearLayout

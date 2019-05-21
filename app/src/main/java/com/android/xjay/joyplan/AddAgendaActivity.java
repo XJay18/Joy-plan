@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.android.xjay.calendarview.Calendar;
 import com.android.xjay.joyplan.Notification.NotificationTool;
 import com.android.xjay.joyplan.Utils.DateFormat;
+import com.android.xjay.joyplan.Utils.JumpTextWatcher;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,6 +52,10 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
         tv_agenda_cancel = findViewById(R.id.tv_agenda_cancel);
         tv_agenda_confirm = findViewById(R.id.tv_agenda_confirm);
         initTimePicker();
+
+        editText_agenda_title.addTextChangedListener(new JumpTextWatcher(this, editText_agenda_title, editText_agenda_address));
+        editText_agenda_address.addTextChangedListener(new JumpTextWatcher(this, editText_agenda_address, editText_notation));
+        editText_notation.addTextChangedListener(new JumpTextWatcher(this, editText_notation, tv_agenda_confirm));
         tv_agenda_confirm.setOnClickListener(this);
 
         tv_agenda_start_time.setOnClickListener(this);
@@ -58,13 +63,13 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
 
         tv_agenda_cancel.setOnClickListener(this);
         mHelper = UserDBHelper.getInstance(this, 1);
-        if(bundle!=null)
-        {String date = bundle.getString("date", "000000");
-        String nextDate = bundle.getString("nextDate", "000000");
-        date = date.substring(0, 2) + "-" + date.substring(2, 4) + " " + date.substring(4, 6)+":"+date.substring(6,8);
-        nextDate = nextDate.substring(0, 2) + "-" + nextDate.substring(2, 4)+" "+nextDate.substring(4,6)+":"+nextDate.substring(6, 8);
-        tv_agenda_start_time.setText(date);
-        tv_agenda_end_time.setText(nextDate);
+        if (bundle != null) {
+            String date = bundle.getString("date", "000000");
+            String nextDate = bundle.getString("nextDate", "000000");
+            date = date.substring(0, 2) + "-" + date.substring(2, 4) + " " + date.substring(4, 6) + ":" + date.substring(6, 8);
+            nextDate = nextDate.substring(0, 2) + "-" + nextDate.substring(2, 4) + " " + nextDate.substring(4, 6) + ":" + nextDate.substring(6, 8);
+            tv_agenda_start_time.setText(date);
+            tv_agenda_end_time.setText(nextDate);
         }
 
     }
@@ -88,16 +93,14 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onTimeSelected(long timestamp) {
                 String raw = DateFormat.long2Str(timestamp, true);
-//                Log.v("timestamp", timestamp + "");
-////                Log.v("raw", raw);
+
                 // remove the first 4 chars i.e. year.
                 String modified = raw.substring(5);
-                Log.v("modified", modified);
                 tv_agenda_start_time.setText(modified);
                 long temp_beginTime = timestamp + 60 * 60 * 1000;
                 String str_temp = DateFormat.long2Str(temp_beginTime, true);
                 String str_trans_temp = str_temp.substring(5);
-//                Log.v("str_trans_temp",str_trans_temp);
+                Log.v("str_trans_temp", str_trans_temp);
                 tv_agenda_end_time.setText(str_trans_temp);
                 myEndTimePicker.setSelectedTime(temp_beginTime, false);
 //                Log.v("boolean",t+"");
@@ -156,7 +159,7 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
             }
 
             case R.id.tv_agenda_confirm: {
-               // mHelper.reset();
+                // mHelper.reset();
                 String start_time = tv_agenda_start_time.getText().toString();
                 start_time = "2019-" + start_time;
                 String end_time = tv_agenda_end_time.getText().toString();
@@ -181,10 +184,14 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 SQLiteDatabase dbRead = mHelper.getReadableDatabase();
                 Cursor c;
                 c = dbRead.query("agenda_table", null, null, null, null, null, null);
-                int length = c.getCount();
-                String s = new Integer(length).toString();
-                Toast toast = Toast.makeText(this, s, Toast.LENGTH_SHORT);
+
+//                MODIFIED THE TOAST
+//                int length = c.getCount();
+//                String s = new Integer(length).toString();
+//                Toast toast = Toast.makeText(this, s, Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(this, "任务添加成功", Toast.LENGTH_SHORT);
                 toast.show();
+                finish();
                 break;
             }
 
