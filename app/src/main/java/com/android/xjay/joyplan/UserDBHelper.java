@@ -206,15 +206,8 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
         String str_week=new Integer(week).toString();
         String str_dayofweek=new Integer(dayofweek).toString();
-        Cursor testcursor;
-        testcursor=mDB.query(COURSE_TABLE,null,null,null,null,null,null,null);
-        String courseN;
-        if(testcursor!=null)
-        {
-            testcursor.moveToFirst();
-        courseN=testcursor.getString(0);
-        System.out.print(courseN);
-        }
+
+
         cursor=mDB.query(COURSE_TABLE,null,createCourseSelectActionDayOfWeek(),new String[]{str_dayofweek,str_week,str_week},null,null,null);
 
 

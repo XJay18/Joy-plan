@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+   <Button
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="任务"
+       android:textColor="@color/colorWhite"
+       android:id="@+id/btn_choose_agenda"
+       android:background="@drawable/btn_shape_blue"/>
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_choose_goal"
+        android:text="目标"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/btn_shape_blue"/>
+
+</android.widget.LinearLayout>

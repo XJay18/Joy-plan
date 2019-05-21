@@ -55,6 +55,7 @@
         <activity android:name=".AgendaDetailActivity"/>
         <activity android:name=".AddfriendSetupActivity"/>
         <activity android:name=".StatisticsActivity"/>
+        <activity android:name=".AddGoalActivity"/>
 
         <activity
             android:name="com.mob.tools.MobUIShell"
