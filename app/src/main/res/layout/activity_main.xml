@@ -80,7 +80,7 @@
                 android:background="@drawable/et_login"
                 android:inputType="textPassword" />
 
-            <CheckBox
+            <!--<CheckBox
                 android:id="@+id/remenber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                 android:layout_marginBottom="83dp"
                 android:text="记住密码"
                 android:textColor="#CCCCCC"
-                android:textSize="9.3sp" />
+                android:textSize="9.3sp" />-->
         </RelativeLayout>
 
         <ImageView
