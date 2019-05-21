@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,10 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
     String[] TITLES = new String[20];
 
     String[] INFOS = new String[20];
+
+    String[] STARTTIMES=new String[20];
+
+    String[] ADDRESSES=new String[20];
 
     private UserDBHelper mHelper;
     Cursor c;
@@ -50,14 +55,7 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
         c.moveToFirst();
 
         expandingList=findViewById(R.id.schedule_expanding_list);
-        int iconRes=R.drawable.cat;
-        for (int i = 0; i < length; i++) {
-            TITLES[i] = c.getString(1).toString();
-            INFOS[i] = c.getString(2).toString();
-            String[] s=new String[]{INFOS[i]};
-            addItem(TITLES[i],s,R.color.colorWhite,iconRes);
-            c.move(1);
-        }
+        RedrawExpandingList();
 
         //btn to MainActivity
         Button btn_changeTo_addActivity = findViewById(R.id.changeButton_schedule);
@@ -72,8 +70,36 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
+
     }
 
+    private void addItem(String title, String info, String starttime, String address, int colorRes, int iconRes) {
+        //Let's create an custom_item with R.layout.expanding_layout
+        final CustomItem item = expandingList.createNewItem(R.layout.expanding_layout);
+        String Date = starttime.substring(0, 10);
+        //If custom_item creation is successful, let's configure it
+        if (item != null) {
+            item.setIndicatorColorRes(colorRes);
+            item.setIndicatorIconRes(iconRes);
+            item.createSubItems(1);
+            final View view = item.getSubItemView(0);
+            //Let's set some values in
+            configureSubItem(item, view, info);
+            //It is possible to get any view inside the inflated layout. Let's set the text in the custom_item
+            ((TextView) item.findViewById(R.id.title)).setText(title);
+            ((TextView) item.findViewById(R.id.address)).setText(address);
+            ((TextView) item.findViewById(R.id.starttime)).setText(Date);
+            //We can create items in batch.
+
+
+            /*item.findViewById(R.id.remove_item).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    expandingList.removeItem(item);
+                }
+            });*/
+        }
+    }
     private void addItem(String title, String[] subItems, int colorRes, int iconRes) {
         //Let's create an custom_item with R.layout.expanding_layout
         final CustomItem item = expandingList.createNewItem(R.layout.expanding_layout);
@@ -131,6 +157,41 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+
+    public void RedrawExpandingList() {
+        //TODO
+        expandingList.Clear_mContainer();
+        TITLES = new String[100];
+
+        INFOS = new String[100];
+
+        STARTTIMES = new String[100];
+
+//        ENDTIMES=new String[100];
+
+        ADDRESSES = new String[100];
+        Cursor c;
+//        mHelper.reset();
+        mHelper = UserDBHelper.getInstance(this, 1);
+        SQLiteDatabase dbRead = mHelper.getReadableDatabase();
+        c = dbRead.query("user_info", null, null
+                , null, null, null, null);
+
+        int length = c.getCount();
+        c.moveToFirst();
+        int iconRes = R.drawable.duck;
+        for (int i = 0; i < length; i++) {
+            TITLES[i] = c.getString(1).toString();
+            INFOS[i] = c.getString(2).toString();
+            STARTTIMES[i] = c.getString(3).toString();
+//            ENDTIMES[i]=c.getString(4).toString();
+            ADDRESSES[i] = c.getString(5).toString();
+            String[] s = new String[]{INFOS[i]};
+            addItem(TITLES[i], INFOS[i], STARTTIMES[i], ADDRESSES[i], R.color.transparent, iconRes);
+            c.move(1);
+        }
+    }
+
     private void showInsertDialog(final ReserveActivity.OnItemCreated positive) {
         final EditText text = new EditText(this);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -149,7 +210,9 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.btn_schedule_back){
-            finish();
+            Intent intent=new Intent();
+            intent.setClass(this,HomeFragment.class);
+            startActivity(intent);
         } else if(v.getId()==R.id.ll_schedule_help){
             android.app.AlertDialog.Builder mBuilder = new android.app.AlertDialog.Builder(this);
             mBuilder.setTitle("发布活动");

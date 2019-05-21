@@ -3,6 +3,7 @@ package com.android.xjay.joyplan;
 import com.android.xjay.calendarview.Calendar;
 
 public class Agenda {
+    int index=-1;
     String title;
     String start_time;
     String end_time;

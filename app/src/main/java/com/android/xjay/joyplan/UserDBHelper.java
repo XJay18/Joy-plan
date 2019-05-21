@@ -105,6 +105,17 @@ public class UserDBHelper extends SQLiteOpenHelper {
         return mDB.delete(ACTIVITY_TABLE,condition,null);
     }
 
+    public int deleteAgendaWithIndex(int index){
+        String id=new Integer(index).toString();
+        return mDB.delete(AGENDA_TABLE,"id=?",new String[]{id});
+    }
+
+    public int deleteActivityWithIndex(int index){
+        String id=new Integer(index).toString();
+        openWriteLink();
+        return mDB.delete(ACTIVITY_TABLE,"id=?",new String[]{id});
+    }
+
     public void clean(){
         clean_help(mDB);
     }
@@ -179,6 +190,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
             String content=cursor.getString(4);
             String address=cursor.getString(5);
             agenda=new Agenda(title,starttime,endtime,content,address);
+            agenda.index=cursor.getInt(0);
             list.add(agenda);
             cursor.move(1);
             }
@@ -245,6 +257,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
                 String content=cursor.getString(4);
                 String address=cursor.getString(5);
                 agenda=new Agenda(title,starttime,endtime,content,address);
+                agenda.index=cursor.getInt(0);
                 return agenda;
             }
             else return null;

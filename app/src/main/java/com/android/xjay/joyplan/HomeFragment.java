@@ -449,6 +449,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         }
     }
 
+
+
     @Override
     public boolean onLongClick(View v) {
         switch (v.getId()) {
@@ -493,9 +495,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         final Dialog dialog = new Dialog(mContext, R.style.NormalDialogStyle);
         View view = View.inflate(mContext, R.layout.dialog_normal, null);
 
+
         TextView tv_title = view.findViewById(R.id.tv_agenda_dialog_title);
         TextView tv_time = view.findViewById(R.id.tv_agenda_dialog_start_time);
         EditText editText_notation = view.findViewById(R.id.editText_agenda_dialog_notation);
+
 
 
         dialog.setContentView(view);
@@ -525,6 +529,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             tv_time.setText("00-00-00");
         }
 
+        view.findViewById(R.id.btn_delete_agenda).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(agenda.index!=-1)
+                {
+                    int id=agenda.index;
+                    mHelper.deleteAgendaWithIndex(id);
+
+                    Calendar calendar=mCalendarView.getSelectedCalendar();
+                    Calendar weekStartCalenddar=CalendarUtil.getStartInWeek(calendar,1);
+                    updateAgenda(weekStartCalenddar);
+                    dialog.dismiss();
+                }
+            }
+        });
         dialog.show();
     }
 

@@ -74,7 +74,9 @@ public class AddActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_cancel: {
-                    finish();
+                    Intent intent = new Intent();
+                    intent.setClass(mContext, ScheduleActivity.class);
+                    startActivity(intent);
                     break;
                 }
                 case R.id.btn_add: {
