@@ -1,6 +1,10 @@
 package com.android.xjay.joyplan.Utils;
+import android.content.Context;
 import android.content.IntentFilter;
 import android.util.Log;
+
+import com.android.xjay.joyplan.Course;
+import com.android.xjay.joyplan.UserDBHelper;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -29,21 +33,27 @@ public class POIExcelProcesser {
     private static List<String>classrooms=new ArrayList<>();
     private static List<String>teachers=new ArrayList<>();
 
-    public static List<String> setExceltoSchedule(String filepath){
+    public static void setExceltoSchedule(String filepath,Context mContext){
         Workbook workbook=null;
         List<String> courses=null;
         try{
             workbook=getWorkbook(filepath);
-            courses=exec(workbook);
+            exec(workbook);
 
+            UserDBHelper userDBHelper=UserDBHelper.getInstance(mContext,1);
+            userDBHelper.resetCourseTable();
+            Course course=new Course("a",1,1,20,1,2,"5","abc");
+            userDBHelper.insert_course(course);
+//            for(int i=0;i<course_names.size();i++){
+//            course=new Course(course_names.get(i),course_weekdays.get(i),course_begin_weeks.get(i),course_end_weeks.get(i),course_begin_times.get(i),
+//                    course_end_times.get(i)-course_end_times.get(i),classrooms.get(i),teachers.get(i));
+//            userDBHelper.insert_course(course);
+//            }
         }
         catch (IOException ex){
             ex.printStackTrace();
             Log.e("error:","workbook created failed");
         }
-
-
-        return courses;
     }
       //返回workbook
     private static Workbook getWorkbook(String filepath) throws IOException {
@@ -59,7 +69,7 @@ public class POIExcelProcesser {
     }
 
 //默认是XSSF类型的，返回String的list
-	    private static List<String> exec(Workbook workbook){
+	    private static void exec(Workbook workbook){
 	        XSSFSheet xssfSheet=(XSSFSheet)workbook.getSheetAt(0);
 	        List<CellRangeAddress> list_cellrangeaddress=xssfSheet.getMergedRegions();
 	        List<String> list_cellstring=new ArrayList<String>();
@@ -71,17 +81,16 @@ public class POIExcelProcesser {
                     list_cellstring.add(cell.toString());
                 }
 	        }
-	        for(int i=0;i<course_names.size();i++){
-	            Log.e("course_info",course_names.get(i));
-                Log.e("begintime",course_begin_times.get(i).toString());
-                Log.e("endtime",course_end_times.get(i).toString());
-                Log.e("beginweek",course_begin_weeks.get(i).toString());
-                Log.e("endweek",course_end_weeks.get(i).toString());
-                Log.e("teacher",teachers.get(i));
-                Log.e("classroom",classrooms.get(i));
-                Log.e("weekday",course_weekdays.get(i).toString());
-            }
-	        return list_cellstring;
+//	        for(int i=0;i<course_names.size();i++){
+//	            Log.e("course_info",course_names.get(i));
+//                Log.e("begintime",course_begin_times.get(i).toString());
+//                Log.e("endtime",course_end_times.get(i).toString());
+//                Log.e("beginweek",course_begin_weeks.get(i).toString());
+//                Log.e("endweek",course_end_weeks.get(i).toString());
+//                Log.e("teacher",teachers.get(i));
+//                Log.e("classroom",classrooms.get(i));
+//                Log.e("weekday",course_weekdays.get(i).toString());
+//            }
 	    }
 
 	    //处理一节大课，判断是否为一门课且将信息传入各个数组

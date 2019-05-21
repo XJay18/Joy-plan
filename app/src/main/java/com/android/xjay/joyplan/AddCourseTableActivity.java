@@ -77,7 +77,7 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
         confirmAnimationView = findViewById(R.id.coursetable_anim_okay_blue);
 
         //Test ExcelRead
-        List<String> courses=POIExcelProcesser.setExceltoSchedule("/data/data/com.android.xjay.joyplan/files/123.xlsx");
+//        POIExcelProcesser.setExceltoSchedule("/data/data/com.android.xjay.joyplan/files/123.xlsx",this);
 //        if(courses!=null)
 //        for(String course:courses){
 //            Log.e("courses:",course);
@@ -85,9 +85,6 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
 //        else{
 //            Log.e("mes","no return");
 //        }
-        UserDBHelper userDBHelper=UserDBHelper.getInstance(this,1);
-        Course course=new Course("a",1,2,3);
-        userDBHelper.insert_course(course);
     }
 
     @Override

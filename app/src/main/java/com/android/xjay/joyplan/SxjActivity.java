@@ -187,7 +187,6 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
                 if (resultCode == RESULT_OK) {
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyymmdd-hhmmss");
                     saveImage(img_uri, simpleDateFormat.format(new Date()));
-
                     insertImg(SxjActivity.this, img_uri, path);
                 }
                 break;
@@ -196,7 +195,6 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
                 if (resultCode == RESULT_OK) {
 
                     img_uri = data.getData();
-
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
 
                     saveImage(img_uri, simpleDateFormat.format(new Date()));
@@ -209,15 +207,12 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     //向Picture文件中传入图片
-    private String saveImage(Uri image_uri, String time) {
+    private String saveImage(Uri image_uri, String imgId) {
         StringBuffer path = new StringBuffer(getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString());
-
-        path.append("/" + time + ".jpeg");
-
+        path.append("/" + imgId + ".jpeg");
         try {
             photos_path.add(path.toString());
             photos_num++;
-
             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(path.toString()));
             BitmapFactory.decodeStream(getContentResolver().openInputStream(image_uri)).compress(Bitmap.CompressFormat.JPEG, 80, bufferedOutputStream);
             bufferedOutputStream.flush();
@@ -228,13 +223,11 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
         return path.toString();
     }
 
-    private void insertImg(Context context, Bitmap bitmap, String path) {
+    //向ET插入图片
+    private void insertImg(Context context, Bitmap bitmap,String imgname) {
         ImageSpan img_span = new ImageSpan(context, bitmap);
-
-        SpannableString spannableString = new SpannableString("test");
-
-        spannableString.setSpan(img_span, 0, "test".length(), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
-
+        SpannableString spannableString = new SpannableString(imgname);
+        spannableString.setSpan(img_span, 0, imgname.length(), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
         Editable editable = et_content.getEditableText();
 
         //获取光标位置
@@ -245,7 +238,6 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
             editable.insert(index, spannableString);
         }
         et_content.append("\n");
-
     }
 
     /*
