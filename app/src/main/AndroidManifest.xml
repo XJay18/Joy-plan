@@ -47,15 +47,14 @@
         <activity android:name=".FqzActivity" />
         <activity android:name=".AddActivity" />
         <activity android:name=".ScheduleActivity" />
-        <activity android:name=".Register" />
-
+        <activity android:name=".RegisterActivity" />
         <activity android:name=".SxjActivity"/>
-        <activity android:name=".StatisticsActivity"/>
+        <activity android:name=".StatisticsFragment.FqzStatistic"/>
         <activity android:name=".AddAgendaActivity"/>
         <activity android:name=".AddCourseTableActivity"/>
         <activity android:name=".AgendaDetailActivity"/>
         <activity android:name=".AddfriendSetupActivity"/>
-        <activity android:name=".StatisticsFragment.FqzStatistic"/>
+        <activity android:name=".StatisticsActivity"/>
 
         <activity
             android:name="com.mob.tools.MobUIShell"

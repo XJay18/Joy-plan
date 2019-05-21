@@ -125,6 +125,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                 mContext.registerReceiver(dynamicReceiverAddCourseTable, intentFilter);
 
                 View view = inflater.inflate(R.layout.fragment_agenda, null);
+//                ((FragmentActivity)mContext).findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
                 //initView()
                 timeListView = view.findViewById(R.id.time_listview);
                 listView1 = view.findViewById(R.id.listView1);
@@ -197,6 +198,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             // deal with the fragment_discovery
             case "发现": {
                 View view = inflater.inflate(R.layout.fragment_discovery, null);
+//                ((FragmentActivity)mContext).findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.ll_fqz).setOnClickListener(this);
                 view.findViewById(R.id.ll_sjtb).setOnClickListener(this);
                 view.findViewById(R.id.ll_sxj).setOnClickListener(this);
@@ -207,6 +209,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             }
             case "活动": {
                 View view = inflater.inflate(R.layout.fragment_reserve, null);
+//                ((FragmentActivity)mContext).findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
                 IntentFilter intentFilter = new IntentFilter();
                 intentFilter.addAction("ADD ACTIVITY");
                 dynamicReceiver = new DynamicReceiverAddActivity();
@@ -225,6 +228,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             }
             case "设置": {
                 View view = inflater.inflate(R.layout.fragment_setup, null);
+//                ((FragmentActivity)mContext).findViewById(R.id.activity_main_toolbar).setVisibility(View.GONE);
                 view.findViewById(R.id.ll_setup_accountnsafety).setOnClickListener(this);
                 view.findViewById(R.id.ll_setup_notenfeedback).setOnClickListener(this);
                 view.findViewById(R.id.ll_setup_about).setOnClickListener(this);

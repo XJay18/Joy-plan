@@ -53,6 +53,7 @@
 
             <TextView
                 android:id="@+id/tv_setup_about_version"
+
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -86,7 +87,7 @@
                 android:text="其他" />
 
             <ImageView
-                style="@style/function_bar_lefticon"
+                style="@style/function_bar_righticon"
                 android:layout_marginEnd="25dp"
                 android:layout_weight="0"
                 android:background="@drawable/ic_right" />

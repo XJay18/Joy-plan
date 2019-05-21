@@ -25,8 +25,16 @@
             android:layout_marginTop="-7dp"
             android:background="@drawable/bg_register"
             android:orientation="horizontal">
-
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/register_return"
+            android:layout_width="10.5dp"
+            android:layout_height="16.5dp"
+            android:layout_marginTop="42dp"
+            android:layout_marginLeft="21dp"
+            android:background="@drawable/btn_return"
+            />
 
         <RelativeLayout
             android:id="@+id/background2"

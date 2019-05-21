@@ -80,8 +80,8 @@ public class CordActivity extends AppCompatActivity implements View.OnClickListe
                 if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                     Toast.makeText(getApplicationContext(), "验证码输入正确",
                             Toast.LENGTH_LONG).show();
-                    Intent intent=new Intent(CordActivity.this,Register.class);
-                    intent.setClass(CordActivity.this,Register.class);
+                    Intent intent=new Intent(CordActivity.this,RegisterActivity.class);
+                    intent.setClass(CordActivity.this,RegisterActivity.class);
                     intent.putExtra("data",phone_number);
                     startActivity(intent);
                 }

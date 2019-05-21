@@ -7,11 +7,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/colorBG">
+        android:background="#FF6BB6FF">
         <LinearLayout
-            style="@style/top_toor_bar"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
             android:orientation="horizontal"
-            android:background="@drawable/toolbar_blue">
+            android:background="#FF6BB6FF">
             <LinearLayout
                 android:id="@+id/bt_statistics_fqz_back"
                 android:layout_width="wrap_content"
@@ -19,99 +20,76 @@
                 android:layout_gravity="center"
                 android:layout_weight="1">
                 <ImageView
-                    style="@style/top_tb_btnSize"
+                    android:layout_width="12dp"
+                    android:layout_height="19.5dp"
                     android:layout_marginStart="5dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/ic_left_white" />
+                    android:background="@drawable/btn_return" />
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="番茄钟统计表"
-                android:layout_weight="66"
-                style="@style/top_tb_text_discovery"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="20dp">
         </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dp">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="20"/>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5">
+            <Button
+                android:id="@+id/btn_last_week_fqz"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="46.5dp"
+                android:background="@drawable/left_arrow" />
                 <TextView
                     android:id="@+id/show_week_fqz"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true" />
-            </RelativeLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="20"/>
-        </LinearLayout>
-        <LinearLayout
+            <Button
+                android:id="@+id/btn_next_week_fqz"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="46.5dp"
+                android:background="@drawable/right_arrow" />
+        </RelativeLayout>
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="20"/>
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="一周使用番茄钟数统计图"
-                android:textSize="17sp" />
-            <LinearLayout
+                android:textSize="22.5sp"
+                android:text="一周统计图"
+                android:textColor="#ffffff"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/minutes"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="20"/>
-        </LinearLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="260dp"
+                android:layout_marginEnd="70.5dp" />
+            <ImageView
+                android:id="@+id/circle"
+                android:layout_width="187.5dp"
+                android:layout_height="187.5dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="58.5dp"
+                android:background="@drawable/bg_circle" />
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/mBarChart_fqz"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp" />
-
-            <Button
-                android:id="@+id/btn_last_week_fqz"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
-                android:layout_below="@+id/mBarChart_fqz"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="50dp"
-                android:background="@drawable/btn_white"
-                android:text="上一周"
-                android:textColor="#6BB6FF"
-                android:textStyle="bold"/>
-
-            <Button
-                android:id="@+id/btn_next_week_fqz"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
-                android:layout_below="@+id/mBarChart_fqz"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="50dp"
-                android:background="@drawable/btn_white"
-                android:text="下一周"
-                android:textColor="#6BB6FF"
-                android:textStyle="bold"/>
+                android:layout_width="304.2dp"
+                android:layout_height="208.8dp"
+                android:layout_below="@+id/circle"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="58.5dp" />
         </RelativeLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

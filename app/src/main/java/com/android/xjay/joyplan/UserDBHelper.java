@@ -191,6 +191,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
         openReadLink();
         Cursor cursor=null;
         ArrayList<Course> courseArrayList=new ArrayList<>();
+
         String str_week=new Integer(week).toString();
         String str_dayofweek=new Integer(dayofweek).toString();
         Cursor testcursor;
@@ -203,6 +204,10 @@ public class UserDBHelper extends SQLiteOpenHelper {
         System.out.print(courseN);
         }
         cursor=mDB.query(COURSE_TABLE,null,createCourseSelectActionDayOfWeek(),new String[]{str_dayofweek,str_week,str_week},null,null,null);
+
+
+
+
         if(cursor!=null&&cursor.moveToFirst()){
             int length=cursor.getCount();
             for (int i=0;i<length;i++){

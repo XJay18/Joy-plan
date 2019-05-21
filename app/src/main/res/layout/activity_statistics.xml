@@ -11,35 +11,33 @@
         android:orientation="vertical"
         android:background="@color/colorBG">
         <LinearLayout
-            style="@style/top_toor_bar"
-            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
             android:background="@drawable/toolbar_blue">
-            <LinearLayout
-                android:id="@+id/bt_statistics_back"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1">
-                <ImageView
-                    style="@style/top_tb_btnSize"
-                    android:layout_marginStart="5dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/ic_left_white" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="数据图表"
-                style="@style/top_tb_text_discovery"
-                android:layout_weight="66"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <Button
+                    android:id="@+id/bt_statistics_back"
+                    android:layout_width="12dp"
+                    android:layout_height="19.5dp"
+                    android:layout_marginStart="19.5dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/btn_return" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="数据图表"
+                    android:layout_centerInParent="true"
+                    style="@style/top_tb_text_discovery" />
+            </RelativeLayout>
         </LinearLayout>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/mytab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
