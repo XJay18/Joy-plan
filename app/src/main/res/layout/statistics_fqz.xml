@@ -22,7 +22,7 @@
                 <ImageView
                     android:layout_width="12dp"
                     android:layout_height="19.5dp"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="19.5dp"
                     android:layout_gravity="center"
                     android:background="@drawable/btn_return" />
             </LinearLayout>
