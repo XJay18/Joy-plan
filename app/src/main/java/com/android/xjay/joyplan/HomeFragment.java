@@ -83,6 +83,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
     LinearLayout mRecyclerView;
 
     ScrollView scrollView;
+
     ScrollDisabledListView timeListView;
     ScrollDisabledListView listView1;
     ScrollDisabledListView listView2;
@@ -98,7 +99,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
     CalendarLayout mCalendarLayout;
 
     public static HomeFragment newInstance(String info) {
-
         Bundle args = new Bundle();
         HomeFragment fragment = new HomeFragment();
         args.putString("info", info);

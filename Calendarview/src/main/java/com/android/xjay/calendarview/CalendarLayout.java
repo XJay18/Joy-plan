@@ -404,6 +404,50 @@ public class CalendarLayout extends LinearLayout {
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (isAnimating) {
+            return super.dispatchTouchEvent(ev);
+        }
+        if (mGestureMode == GESTURE_MODE_DISABLED) {
+            return super.dispatchTouchEvent(ev);
+        }
+        if (mYearView == null ||
+                mCalendarView == null || mCalendarView.getVisibility() == GONE ||
+                mContentView == null ||
+                mContentView.getVisibility() != VISIBLE) {
+            return super.dispatchTouchEvent(ev);
+        }
+
+        if (mCalendarShowMode == CALENDAR_SHOW_MODE_ONLY_MONTH_VIEW ||
+                mCalendarShowMode == CALENDAR_SHOW_MODE_ONLY_WEEK_VIEW) {
+            return super.dispatchTouchEvent(ev);
+        }
+
+        if (mYearView.getVisibility() == VISIBLE || mDelegate.isShowYearSelectedLayout) {
+            return super.dispatchTouchEvent(ev);
+        }
+        final int action = ev.getAction();
+        float y = ev.getY();
+        switch (action) {
+            case MotionEvent.ACTION_MOVE:
+                float dy = y - mLastY;
+                /*
+                 * 如果向下滚动，有 2 种情况处理 且y在ViewPager下方
+                 * 1、RecyclerView 或者其它滚动的View，当mContentView滚动到顶部时，拦截事件
+                 * 2、非滚动控件，直接拦截事件
+                 */
+                if (dy > 0 && mContentView.getTranslationY() == -mContentViewTranslateY) {
+                    if (isScrollTop()) {
+                        requestDisallowInterceptTouchEvent(false);//父View向子View拦截分发事件
+                        return super.dispatchTouchEvent(ev);
+                    }
+                }
+                break;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         if (isAnimating) {
             return true;
@@ -621,6 +665,7 @@ public class CalendarLayout extends LinearLayout {
      */
     public final boolean isExpand() {
         return mContentView == null || mMonthView.getVisibility() == VISIBLE;
+
     }
 
 
@@ -741,6 +786,7 @@ public class CalendarLayout extends LinearLayout {
             post(new Runnable() {
                 @Override
                 public void run() {
+
                     ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(mContentView,
                             "translationY", mContentView.getTranslationY(), -mContentViewTranslateY);
                     objectAnimator.setDuration(0);
@@ -844,7 +890,8 @@ public class CalendarLayout extends LinearLayout {
             }
             return result;
         }
-        return mContentView.getScrollY() == 0;
+        //TODO
+        return mContentView.getScrollY() != 0;
     }
 
 
