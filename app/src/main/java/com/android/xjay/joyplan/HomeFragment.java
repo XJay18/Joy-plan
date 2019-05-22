@@ -212,6 +212,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
             }
             case "活动": {
+                UserDBHelper mHelper=UserDBHelper.getInstance(mContext,1);
+                //mHelper.reset();
                 View view = inflater.inflate(R.layout.fragment_reserve, null);
 //                ((FragmentActivity)mContext).findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
                 IntentFilter intentFilter = new IntentFilter();
