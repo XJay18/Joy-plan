@@ -104,7 +104,7 @@
             android:id="@+id/btn_delete_agenda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_shape_agenda_blue"
+            android:background="@drawable/btn_shape_blue"
             android:text="删除任务"
             android:textColor="@color/colorWhite"/>
     </RelativeLayout>

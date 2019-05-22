@@ -762,7 +762,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     private void addGoal(){
 
-        String title = "跑步";
+        String title = "Running";
         String address = "田径场";
         String content = "";
         String start_time="2019-05-22 20:00";
@@ -770,7 +770,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         Agenda agenda = new Agenda(title, start_time, end_time, content, address);
         mHelper.insert_agenda(agenda);
 
-        title = "跑步";
+        title = "Running";
         address = "田径场";
         content = "";
         start_time="2019-05-23 20:00";
@@ -778,7 +778,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         agenda = new Agenda(title, start_time, end_time, content, address);
         mHelper.insert_agenda(agenda);
 
-        title = "跑步";
+        title = "Running";
         address = "田径场";
         content = "";
         start_time="2019-05-24 20:00";
@@ -786,7 +786,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         agenda = new Agenda(title, start_time, end_time, content, address);
         mHelper.insert_agenda(agenda);
 
-        title = "跑步";
+        title = "Running";
         address = "田径场";
         content = "";
         start_time="2019-05-25 20:00";
@@ -794,7 +794,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         agenda = new Agenda(title, start_time, end_time, content, address);
         mHelper.insert_agenda(agenda);
 
-        title = "跑步";
+        title = "Running";
         address = "田径场";
         content = "";
         start_time="2019-05-26 20:00";
@@ -802,7 +802,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         agenda = new Agenda(title, start_time, end_time, content, address);
         mHelper.insert_agenda(agenda);
 
-        title = "跑步";
+        title = "Running";
         address = "田径场";
         content = "";
         start_time="2019-05-27 20:00";
@@ -810,7 +810,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         agenda = new Agenda(title, start_time, end_time, content, address);
         mHelper.insert_agenda(agenda);
 
-        title = "跑步";
+        title = "Running";
         address = "田径场";
         content = "";
         start_time="2019-05-28 20:00";
