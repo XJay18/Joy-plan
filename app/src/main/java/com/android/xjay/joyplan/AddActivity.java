@@ -103,6 +103,9 @@ public class AddActivity extends AppCompatActivity {
                     toast.show();
                     sentBroadcast();
                     new Thread(new RegThread()).start();
+                    Intent intent = new Intent();
+                    intent.setClass(mContext, ScheduleActivity.class);
+                    startActivity(intent);
                     break;
                 }
             }

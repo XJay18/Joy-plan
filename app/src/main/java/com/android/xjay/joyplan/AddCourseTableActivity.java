@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -15,11 +16,17 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.xjay.joyplan.Utils.JumpTextWatcher;
+import com.android.xjay.joyplan.Utils.POIExcelProcesser;
+
+
+import org.apache.poi.ss.formula.functions.T;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AddCourseTableActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,6 +55,7 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
         tv_confirm.setFocusableInTouchMode(true);
         findViewById(R.id.ll_course_help).setOnClickListener(this);
         findViewById(R.id.btn_course_back).setOnClickListener(this);
+        findViewById(R.id.ll_addcoursetable_importexcel).setOnClickListener(this);
         String[] schoolsArray = (String[]) schools.toArray(new String[schools.size()]);
         ArrayAdapter<String> mSchoolsAdapter = new ArrayAdapter<>(this,
                 R.layout.item_select, schoolsArray);
@@ -71,6 +79,8 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
         et_sno.addTextChangedListener(new JumpTextWatcher(this, et_sno, et_name));
         et_name.addTextChangedListener(new JumpTextWatcher(this, et_name, tv_confirm));
         confirmAnimationView = findViewById(R.id.coursetable_anim_okay_blue);
+
+
     }
 
     @Override
@@ -116,6 +126,10 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
             AlertDialog mAlert = mBuilder.create();
             mAlert.show();
         }
+        else if(v.getId()==R.id.ll_addcoursetable_importexcel){
+            POIExcelProcesser.setExceltoSchedule("/data/data/com.android.xjay.joyplan/files/123.xlsx",this);
+            Toast.makeText(this,"课程表导入成功",Toast.LENGTH_SHORT).show();
+       }
     }
 
 

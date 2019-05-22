@@ -22,6 +22,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.xmlbeans.impl.xb.xsdschema.Attribute;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +49,8 @@ public class HomeActivity extends AppCompatActivity {
         // Initialize the page, set the toolbar title as agenda.
         tv_tb.setText("日程");
 
+        UserDBHelper userDBHelper=UserDBHelper.getInstance(this,1);
+        userDBHelper.resetCourseTable();
         // To disable the shift mode, we can simply add
         // 'app:itemHorizontalTranslationEnabled="false"'
         // to BottomNavigationView in the activity_home.xml instead using the function below.
@@ -99,18 +103,22 @@ public class HomeActivity extends AppCompatActivity {
                 Log.v("SELECT: ",position+". ");
                 switch (position){
                     case 0:{
+                        findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
                         tv_tb.setText("日程");
                         break;
                     }
                     case 1:{
+                        findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
                         tv_tb.setText("活动");
                         break;
                     }
                     case 2:{
+                        findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
                         tv_tb.setText("发现");
                         break;
                     }
                     case 3:{
+                        findViewById(R.id.activity_main_toolbar).setVisibility(View.GONE);
                         tv_tb.setText("设置");
                         break;
                     }

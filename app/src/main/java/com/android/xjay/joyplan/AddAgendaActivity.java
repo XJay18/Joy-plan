@@ -66,10 +66,20 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
         if (bundle != null) {
             String date = bundle.getString("date", "000000");
             String nextDate = bundle.getString("nextDate", "000000");
-            date = date.substring(0, 2) + "-" + date.substring(2, 4) + " " + date.substring(4, 6) + ":" + date.substring(6, 8);
+            String strNextHour;
+            String starttime;
+            String endtime;
+            int nextHour=Integer.parseInt(date.substring(4,6))+1;
+            strNextHour=new Integer(nextHour).toString();
+            if(strNextHour.length()==1){
+                strNextHour="0"+strNextHour;
+            }
+            starttime = date.substring(0, 2) + "-" + date.substring(2, 4) + " " + date.substring(4, 6) + ":" + date.substring(6, 8);
+
+            endtime=date.substring(0, 2) + "-" + date.substring(2, 4) + " " + strNextHour + ":" + date.substring(6, 8);
             nextDate = nextDate.substring(0, 2) + "-" + nextDate.substring(2, 4) + " " + nextDate.substring(4, 6) + ":" + nextDate.substring(6, 8);
-            tv_agenda_start_time.setText(date);
-            tv_agenda_end_time.setText(nextDate);
+            tv_agenda_start_time.setText(starttime);
+            tv_agenda_end_time.setText(endtime);
         }
 
     }
