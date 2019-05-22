@@ -22,6 +22,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.xmlbeans.impl.xb.xsdschema.Attribute;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +49,8 @@ public class HomeActivity extends AppCompatActivity {
         // Initialize the page, set the toolbar title as agenda.
         tv_tb.setText("日程");
 
+        UserDBHelper userDBHelper=UserDBHelper.getInstance(this,1);
+        userDBHelper.resetCourseTable();
         // To disable the shift mode, we can simply add
         // 'app:itemHorizontalTranslationEnabled="false"'
         // to BottomNavigationView in the activity_home.xml instead using the function below.

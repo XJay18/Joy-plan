@@ -41,14 +41,17 @@ public class POIExcelProcesser {
             exec(workbook);
 
             UserDBHelper userDBHelper=UserDBHelper.getInstance(mContext,1);
-            userDBHelper.resetCourseTable();
-            Course course=new Course("a",1,1,20,1,2,"5","abc");
-            userDBHelper.insert_course(course);
-//            for(int i=0;i<course_names.size();i++){
-//            course=new Course(course_names.get(i),course_weekdays.get(i),course_begin_weeks.get(i),course_end_weeks.get(i),course_begin_times.get(i),
-//                    course_end_times.get(i)-course_end_times.get(i),classrooms.get(i),teachers.get(i));
+            Course course=null;
+            for(int i=0;i<course_names.size();i++){
+                course=new Course(course_names.get(i),course_weekdays.get(i),course_begin_weeks.get(i),course_end_weeks.get(i),course_begin_times.get(i),
+                    course_end_times.get(i)-course_begin_times.get(i),classrooms.get(i),teachers.get(i));
+                userDBHelper.insert_course(course);
+            }
+
+//            course=new Course("编译原理",3,4,15,9,3,"a","changdalao ");
 //            userDBHelper.insert_course(course);
-//            }
+//            course=new Course("编译原理2",5,4,15,9,3,"a","changdalao ");
+//            userDBHelper.insert_course(course);
         }
         catch (IOException ex){
             ex.printStackTrace();
