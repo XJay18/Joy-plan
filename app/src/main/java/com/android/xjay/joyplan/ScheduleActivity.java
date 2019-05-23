@@ -211,7 +211,7 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         if(v.getId()==R.id.btn_schedule_back){
             Intent intent=new Intent();
-            intent.setClass(this,HomeFragment.class);
+            intent.setClass(this,HomeActivity.class);
             startActivity(intent);
         } else if(v.getId()==R.id.ll_schedule_help){
             android.app.AlertDialog.Builder mBuilder = new android.app.AlertDialog.Builder(this);

@@ -72,7 +72,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
         create_sql="CREATE TABLE IF NOT EXISTS "+AGENDA_TABLE+"("+"id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"+"title VARCHAR NOT NULL,"+"starttime DATETIME NOT NULL,"+"endtime DATETIME NOT NULL,"+"content VARCHAR NOT NULL,"+"address VARCHAR NOT NULL"+");";
         db.execSQL(create_sql);
 
-        create_sql="CREATE TABLE IF NOT EXISTS "+COURSE_TABLE+"("+"course VARCHAR NOT NULL,"+"dayofweek INTEGER NOT NULL,"+"startindex INTEGER NOT NULL,"+"numofcourse INTEGER NOT NULL,"+"PRIMARY KEY(dayofweek,startindex)"+");";
+        create_sql="CREATE TABLE IF NOT EXISTS "+COURSE_TABLE+"("+"coursename VARCHAR NOT NULL,"+"dayofweek INTEGER NOT NULL,"+"startweek INTEGER NOT NULL,"+"endweek INTEGER NOT NULL,"+"startindex INTEGER NOT NULL,"+"numofcourse INTEGER NOT NULL,"+"address VARCHAR NOT NULL,"+"teachername VARCHAR NOT NULL,"+"PRIMARY KEY(dayofweek,startweek,startindex)"+");";
         db.execSQL(create_sql);
     }
 
