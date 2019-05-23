@@ -4,7 +4,10 @@ import android.animation.Animator;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,6 +28,7 @@ import com.android.xjay.joyplan.Utils.POIExcelProcesser;
 
 import org.apache.poi.ss.formula.functions.T;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,13 +131,37 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
             mAlert.show();
         }
         else if(v.getId()==R.id.ll_addcoursetable_importexcel){
-            POIExcelProcesser.setExceltoSchedule("/data/data/com.android.xjay.joyplan/files/123.xlsx",this);
-            Toast.makeText(this,"课程表导入成功",Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            startActivityForResult(intent,1);
+
        }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        POIExcelProcesser.setExceltoSchedule("/data/data/com.android.xjay.joyplan/files/123.xlsx",this);
+        Toast.makeText(this,"课程表导入成功",Toast.LENGTH_SHORT).show();
+        if (requestCode == 1) {
+//            if (resultCode == RESULT_OK) {
+//                Uri uri = data.getData();
+//                if (uri != null) {
+//                    String path = getPath(this, uri);
+//                    if (path != null) {
+//                        File file = new File(path);
+//                        if (file.exists()) {
+//                            String upLoadFilePath = file.toString();
+//                            String upLoadFileName = file.getName();
+//                        }
+//                    }
+//                }
+//            }
+        }
+    }
 
-    private void sentBroadcast() {
+        private void sentBroadcast() {
         Intent intent = new Intent();
         intent.setAction("ADD COURSE TABLE");
         intent.putExtra("sele", "广播测试");
