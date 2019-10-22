@@ -20,7 +20,6 @@ public class CustomListAdapter extends BaseAdapter {
     private int tag;
     List<String> agendaList;
     List<String> couresList;
-    List<Integer> heightList;
 
 
 

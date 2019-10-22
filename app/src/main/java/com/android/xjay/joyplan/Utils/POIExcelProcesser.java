@@ -43,7 +43,7 @@ public class POIExcelProcesser {
             UserDBHelper userDBHelper=UserDBHelper.getInstance(mContext,1);
             Course course=null;
             for(int i=0;i<course_names.size();i++){
-                course=new Course(course_names.get(i),course_weekdays.get(i),course_begin_weeks.get(i),course_end_weeks.get(i),course_begin_times.get(i),
+                course=new Course(2019,1,course_names.get(i),course_weekdays.get(i),course_begin_weeks.get(i),course_end_weeks.get(i),course_begin_times.get(i),
                     course_end_times.get(i)-course_begin_times.get(i),classrooms.get(i),teachers.get(i));
                 userDBHelper.insert_course(course);
             }

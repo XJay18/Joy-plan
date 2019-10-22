@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.LinearLayout
+<android.widget.FrameLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linearLayout"
@@ -7,7 +7,7 @@
     android:background="@color/colorWhite"
     android:layout_height="wrap_content">
 
-    <FrameLayout
+    <RelativeLayout
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
         android:paddingTop="2dp"
@@ -37,6 +37,12 @@
         </FrameLayout>
 
 
-    </FrameLayout>
+    </RelativeLayout>
 
-</android.widget.LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </RelativeLayout>
+
+</android.widget.FrameLayout>

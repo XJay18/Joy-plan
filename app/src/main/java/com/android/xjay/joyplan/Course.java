@@ -1,6 +1,8 @@
 package com.android.xjay.joyplan;
 
 public class Course {
+    public int year;
+    public int index0fSemester;
     public int dayofweek;
     public String courseName;
     public int startIndex;
@@ -10,7 +12,9 @@ public class Course {
     public String address;
     public String teacherName;
 
-    public Course(String courseName,int dayofweek,int startWeek,int endWeek,int startIndex,int numOfCourse,String address,String teacherName){
+    public Course(int year,int index0fSemester,String courseName,int dayofweek,int startWeek,int endWeek,int startIndex,int numOfCourse,String address,String teacherName){
+        this.year=year;
+        this.index0fSemester=index0fSemester;
         this.courseName=courseName;
         this.address=address;
         this.teacherName=teacherName;

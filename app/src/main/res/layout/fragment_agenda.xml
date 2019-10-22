@@ -196,15 +196,102 @@
                         android:id="@+id/time_listview"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.3"
+                        android:layout_weight="0.2"
                         android:padding="0dp"
                         android:dividerHeight="1dp"
                         android:divider="#eeeeee"
                         android:background="#eeeeee">
 
                     </com.android.xjay.joyplan.Calendar.ScrollDisabledListView>
+                    
+                    <RelativeLayout
+                        android:id="@+id/course_container0"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1">
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/course_container1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1">
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/course_container2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1">
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/course_container3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1">
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/course_container4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1">
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/course_container5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1">
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/course_container6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1">
+
+
+                    </RelativeLayout>
 
                     <com.android.xjay.joyplan.Calendar.ScrollDisabledListView
+                        android:id="@+id/blank_listview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:padding="0dp"
+                        android:dividerHeight="1dp"
+                        android:divider="#eeeeee"
+                        android:layout_marginLeft="5dp"
+                        android:background="#eeeeee">
+
+                    </com.android.xjay.joyplan.Calendar.ScrollDisabledListView>
+
+
+
+
+
+                    <!--com.android.xjay.joyplan.Calendar.ScrollDisabledListView
 
                         android:id="@+id/listView1"
                         android:layout_width="0dp"
@@ -276,7 +363,7 @@
                         android:padding="0dp"
                         android:dividerHeight="1dp"
                         android:divider="#eeeeee"
-                        android:background="#eeeeee"/>
+                        android:background="#eeeeee"/-->
 
                 </LinearLayout>
 
