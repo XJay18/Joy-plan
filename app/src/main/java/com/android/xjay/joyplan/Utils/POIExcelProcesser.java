@@ -2,6 +2,7 @@ package com.android.xjay.joyplan.Utils;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.util.Log;
+import android.support.v4.app.*;
 
 import com.android.xjay.joyplan.Course;
 import com.android.xjay.joyplan.UserDBHelper;
@@ -36,6 +37,14 @@ public class POIExcelProcesser {
     public static void setExceltoSchedule(String filepath,Context mContext){
         Workbook workbook=null;
         List<String> courses=null;
+
+        //假定xslx文件在/mnt/sdcard/download目录下
+        String[] fileNameFragments = filepath.split(File.separator);
+        filepath = File.separator+"mnt"+File.separator+"sdcard";
+        for(int i=4;i<fileNameFragments.length;i++){
+            filepath += File.separator+fileNameFragments[i];
+        }
+
         try{
             workbook=getWorkbook(filepath);
             exec(workbook);

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,7 +72,7 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
         button1.setOnClickListener(new NoteOnClickListener());
         button2.setOnClickListener(new NoteOnClickListener());
         button3.setOnClickListener(new NoteOnClickListener());
-        showRecord("1");
+
     }
 
     @Override
@@ -83,7 +85,6 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
     class NoteOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-
             //如果是拍照
             if (v.getId() == R.id.btn_sxj_takephoto) {
                 File outputImage = new File(getExternalCacheDir(), "output_image.jpg");
@@ -124,7 +125,6 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
         try {
             if (!TextUtils.isEmpty(time)) {
                 StringBuffer path = new StringBuffer(getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString());
-
                 path.append("/" + time + ".jpeg");
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(path.toString()));
                 Bitmap bitmap = BitmapFactory.decodeStream(bufferedInputStream);
@@ -186,19 +186,32 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
             case TAKE_PHOTO:
                 if (resultCode == RESULT_OK) {
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyymmdd-hhmmss");
-                    saveImage(img_uri, simpleDateFormat.format(new Date()));
-                    insertImg(SxjActivity.this, img_uri, path);
+                    path=getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()+simpleDateFormat.format(new Date())+"./jpeg";
+                    saveImage(img_uri, path);
+                    try {
+                        Bitmap bitmap=BitmapFactory.decodeStream(getContentResolver().openInputStream(img_uri));
+                        insertImg(SxjActivity.this, bitmap, path);
+                    }
+                    catch (IOException ex){
+                        ex.printStackTrace();
+                    }
                 }
                 break;
 
             case ChOOSE_PHOTO:
                 if (resultCode == RESULT_OK) {
-
                     img_uri = data.getData();
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
+                    path=getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()+simpleDateFormat.format(new Date())+"./jpeg";
+                    saveImage(img_uri,path);
+                    try {
+                        Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(img_uri));
 
-                    saveImage(img_uri, simpleDateFormat.format(new Date()));
-                    insertImg(SxjActivity.this, img_uri, path);
+                        insertImg(SxjActivity.this, bitmap, path);
+                    }
+                    catch (IOException ex){
+                        ex.printStackTrace();
+                    }
                 }
                 break;
             default:
@@ -207,13 +220,12 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     //向Picture文件中传入图片
-    private String saveImage(Uri image_uri, String imgId) {
-        StringBuffer path = new StringBuffer(getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString());
-        path.append("/" + imgId + ".jpeg");
+    private String saveImage(Uri image_uri, String path) {
+
         try {
-            photos_path.add(path.toString());
+            photos_path.add(path);
             photos_num++;
-            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(path.toString()));
+            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(path));
             BitmapFactory.decodeStream(getContentResolver().openInputStream(image_uri)).compress(Bitmap.CompressFormat.JPEG, 80, bufferedOutputStream);
             bufferedOutputStream.flush();
             bufferedOutputStream.close();
@@ -225,36 +237,26 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
 
     //向ET插入图片
     private void insertImg(Context context, Bitmap bitmap,String imgname) {
+
+        Log.e("bitmap",bitmap.toString());
         ImageSpan img_span = new ImageSpan(context, bitmap);
         SpannableString spannableString = new SpannableString(imgname);
         spannableString.setSpan(img_span, 0, imgname.length(), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
         Editable editable = et_content.getEditableText();
 
+
         //获取光标位置
         int index = et_content.getSelectionStart();
         if (index < 0 || index > et_content.length()) {
             editable.append(spannableString);
+            Log.e("insert ","ok");
         } else {
             editable.insert(index, spannableString);
+            Log.e("insert ","o2k");
         }
         et_content.append("\n");
     }
 
-    /*
-     * 向Edittext中插入图片
-     * 传入图片的Uri
-     * */
-    private void insertImg(Context context, Uri uri, String path) {
-        Bitmap bitmap = null;
-        try {
-            //将uri转换成Bitmap对象
-            bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        }
-
-        insertImg(context, bitmap, path);
-    }
 
     //Save All content in notebook
     private void saveNoteContnet() {
