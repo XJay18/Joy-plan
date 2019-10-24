@@ -1,28 +1,18 @@
 package com.android.xjay.joyplan;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.apache.xmlbeans.impl.xb.xsdschema.Attribute;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +35,11 @@ public class HomeActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.vp_home);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        tv_tb=findViewById(R.id.tv_toolbar);
+        tv_tb = findViewById(R.id.tv_toolbar);
         // Initialize the page, set the toolbar title as agenda.
         tv_tb.setText("日程");
 
-        UserDBHelper userDBHelper=UserDBHelper.getInstance(this,1);
+        UserDBHelper userDBHelper = UserDBHelper.getInstance(this, 1);
         userDBHelper.resetCourseTable();
         // To disable the shift mode, we can simply add
         // 'app:itemHorizontalTranslationEnabled="false"'
@@ -100,31 +90,31 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 menuItem = bottomNavigationView.getMenu().getItem(position);
                 menuItem.setChecked(true);
-                Log.v("SELECT: ",position+". ");
-                switch (position){
-                    case 0:{
+                Log.v("SELECT: ", position + ". ");
+                switch (position) {
+                    case 0: {
                         findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
                         tv_tb.setText("日程");
                         break;
                     }
-                    case 1:{
+                    case 1: {
                         findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
                         tv_tb.setText("活动");
                         break;
                     }
-                    case 2:{
+                    case 2: {
                         findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
                         tv_tb.setText("发现");
                         break;
                     }
-                    case 3:{
+                    case 3: {
                         findViewById(R.id.activity_main_toolbar).setVisibility(View.GONE);
                         tv_tb.setText("设置");
                         break;
                     }
-                    default:{
+                    default: {
                         Toast.makeText(HomeActivity.this, "错误！", Toast.LENGTH_SHORT).show();
-                        Log.e("NoExistError","Page not exist.");
+                        Log.e("NoExistError", "Page not exist.");
                     }
                 }
             }

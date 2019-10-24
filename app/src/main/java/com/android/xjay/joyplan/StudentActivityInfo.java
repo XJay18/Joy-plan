@@ -7,14 +7,14 @@ public class StudentActivityInfo {
     String starttime;
     String endtime;
     String address;
-    public StudentActivityInfo(String Title,String Info,String starttime,String endtime,String Address){
-        title=Title;
-        info=Info;
-        this.starttime =starttime;
-        this.endtime=endtime;
-        address=Address;
-    }
 
+    public StudentActivityInfo(String Title, String Info, String starttime, String endtime, String Address) {
+        title = Title;
+        info = Info;
+        this.starttime = starttime;
+        this.endtime = endtime;
+        address = Address;
+    }
 
 
 }

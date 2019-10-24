@@ -59,7 +59,6 @@ public class PickerView extends View {
     }
 
 
-
     private static class ScrollTimerTask extends TimerTask {
         private WeakReference<Handler> mWeakHandler;
 

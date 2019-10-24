@@ -4,9 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-
-import android.provider.ContactsContract;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.xjay.calendarview.Calendar;
 import com.android.xjay.joyplan.Notification.NotificationTool;
 import com.android.xjay.joyplan.Utils.DateFormat;
 import com.android.xjay.joyplan.Utils.JumpTextWatcher;
@@ -69,14 +65,14 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
             String strNextHour;
             String starttime;
             String endtime;
-            int nextHour=Integer.parseInt(date.substring(4,6))+1;
-            strNextHour=new Integer(nextHour).toString();
-            if(strNextHour.length()==1){
-                strNextHour="0"+strNextHour;
+            int nextHour = Integer.parseInt(date.substring(4, 6)) + 1;
+            strNextHour = new Integer(nextHour).toString();
+            if (strNextHour.length() == 1) {
+                strNextHour = "0" + strNextHour;
             }
             starttime = date.substring(0, 2) + "-" + date.substring(2, 4) + " " + date.substring(4, 6) + ":" + date.substring(6, 8);
 
-            endtime=date.substring(0, 2) + "-" + date.substring(2, 4) + " " + strNextHour + ":" + date.substring(6, 8);
+            endtime = date.substring(0, 2) + "-" + date.substring(2, 4) + " " + strNextHour + ":" + date.substring(6, 8);
             nextDate = nextDate.substring(0, 2) + "-" + nextDate.substring(2, 4) + " " + nextDate.substring(4, 6) + ":" + nextDate.substring(6, 8);
             tv_agenda_start_time.setText(starttime);
             tv_agenda_end_time.setText(endtime);

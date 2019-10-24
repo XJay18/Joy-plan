@@ -14,12 +14,13 @@ public class AddGoalActivity extends AppCompatActivity implements View.OnClickLi
     private TextView tv_cancel;
     private TextView tv_add;
     private CustomTimePicker myEndTimePicker;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_goal);
-        tv_end_time =findViewById(R.id.tv_select_goal_end_time);
-        tv_cancel=findViewById(R.id.tv_goal_cancel);
-        tv_add=findViewById(R.id.tv_goal_confirm);
+        tv_end_time = findViewById(R.id.tv_select_goal_end_time);
+        tv_cancel = findViewById(R.id.tv_goal_cancel);
+        tv_add = findViewById(R.id.tv_goal_confirm);
         tv_end_time.setOnClickListener(this);
         tv_cancel.setOnClickListener(this);
         tv_add.setOnClickListener(this);
@@ -28,16 +29,16 @@ public class AddGoalActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.tv_select_goal_end_time:{
-                  myEndTimePicker.show(tv_end_time.getText().toString());
-                  break;
+        switch (v.getId()) {
+            case R.id.tv_select_goal_end_time: {
+                myEndTimePicker.show(tv_end_time.getText().toString());
+                break;
             }
-            case R.id.tv_goal_cancel:{
-                  finish();
-                  break;
+            case R.id.tv_goal_cancel: {
+                finish();
+                break;
             }
-            case R.id.tv_goal_confirm:{
+            case R.id.tv_goal_confirm: {
                 sentBroadcast();
                 finish();
                 break;
@@ -46,8 +47,8 @@ public class AddGoalActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void sentBroadcast(){
-        Intent intent=new Intent();
+    private void sentBroadcast() {
+        Intent intent = new Intent();
         intent.setAction("ADD GOAL");
         sendBroadcast(intent);
     }

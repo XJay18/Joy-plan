@@ -9,12 +9,11 @@ import android.graphics.Paint;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.AttributeSet;
-import android.widget.ImageView;
 import android.support.v7.widget.AppCompatImageView;
+import android.util.AttributeSet;
 
 
-public class CircleImageView extends AppCompatImageView{
+public class CircleImageView extends AppCompatImageView {
     private Paint mPaint; //画笔
 
     private int mRadius; //圆形图片的半径

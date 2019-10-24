@@ -2,7 +2,6 @@ package com.android.xjay.joyplan;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -11,7 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.android.xjay.joyplan.Utils.*;
+import com.android.xjay.joyplan.Utils.DateFormat;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -88,7 +87,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
                      String beginDateStr, String endDateStr,
                      String title) {
         this(context, callback, DateFormat.str2Long(beginDateStr, true),
-                DateFormat.str2Long(endDateStr, true), title, 23, new int[]{0,0,0,0,0});
+                DateFormat.str2Long(endDateStr, true), title, 23, new int[]{0, 0, 0, 0, 0});
     }
 
     /**
@@ -147,7 +146,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
         mSelectedTime = Calendar.getInstance();
 
         initView(title);
-        initData(maxOfHour,initValues);
+        initData(maxOfHour, initValues);
         mCanDialogShow = true;
     }
 
@@ -280,14 +279,14 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
         }
     }
 
-    public void getTime(){
-        Log.v("getMethod",DateFormat.long2Str(mBeginTime.getTimeInMillis(),true));
+    public void getTime() {
+        Log.v("getMethod", DateFormat.long2Str(mBeginTime.getTimeInMillis(), true));
     }
 
-    public void setTime(long timestamp){
+    public void setTime(long timestamp) {
         mBeginTime.setTimeInMillis(timestamp);
-        Log.v("showtime",DateFormat.long2Str(timestamp,true));
-        Log.v("showtime",timestamp+"");
+        Log.v("showtime", DateFormat.long2Str(timestamp, true));
+        Log.v("showtime", timestamp + "");
     }
 
     private void initData(int maxOfHour, int[] initValues) {
@@ -721,15 +720,15 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
 
     /**
      * Sets the Time Picker Show Mode
-     * @param
-     * timePickerShowMode 0: show YEAR MONTH DAY HOUR MINUTE
-     *                    1: show HOUR MINUTE
+     *
+     * @param timePickerShowMode 0: show YEAR MONTH DAY HOUR MINUTE
+     *                           1: show HOUR MINUTE
      */
     public void setTimePickerShowMode(int timePickerShowMode) {
         if (!canShow()) return;
 
         // show YEAR MONTH DAY HOUR MINUTE
-        if (timePickerShowMode==0) {
+        if (timePickerShowMode == 0) {
             initScrollUnit();
             mDpvHour.setVisibility(View.VISIBLE);
             mTvHourUnit.setVisibility(View.VISIBLE);
@@ -738,7 +737,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
 
         }
         // show HOUR MINUTE
-        else if(timePickerShowMode==1){
+        else if (timePickerShowMode == 1) {
             //initScrollUnit(SCROLL_UNIT_HOUR, SCROLL_UNIT_MINUTE);
             initScrollUnit();
             mDpvYear.setVisibility(View.GONE);
@@ -754,7 +753,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
             mTvMinuteUnit.setVisibility(View.VISIBLE);
         }
         // show DAY HOUR MINUTE
-        else if(timePickerShowMode==2){
+        else if (timePickerShowMode == 2) {
             initScrollUnit();
             mDpvYear.setVisibility(View.GONE);
             mTvYearUnit.setVisibility(View.GONE);

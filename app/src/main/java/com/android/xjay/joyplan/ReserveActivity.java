@@ -44,12 +44,12 @@ public class ReserveActivity extends AppCompatActivity {
 
         expandingList = findViewById(R.id.reserve_expanding_list);
         expandingList.setItemPadding(0);
-        int iconRes=R.drawable.duck;
+        int iconRes = R.drawable.duck;
         for (int i = 0; i < length; i++) {
-            TITLES[i] = c.getString(1).toString();
-            INFOS[i] = c.getString(2).toString();
-            String[] s=new String[]{INFOS[i]};
-            addItem(TITLES[i],s,R.color.colorWhite,iconRes);
+            TITLES[i] = c.getString(1);
+            INFOS[i] = c.getString(2);
+            String[] s = new String[]{INFOS[i]};
+            addItem(TITLES[i], s, R.color.colorWhite, iconRes);
             c.move(1);
         }
 
@@ -72,7 +72,7 @@ public class ReserveActivity extends AppCompatActivity {
     }
 
     private void createItems() {
-        int iconRes=R.drawable.cc;
+        int iconRes = R.drawable.cc;
         addItem("Title", new String[]{"House will be rented", "Boat", "Candy", "Collection", "Sport", "Ball", "Head"}, R.color.colorAccent, iconRes);
         addItem("Title", new String[]{"Dog", "Horse", "Boat"}, R.color.colorWhite, R.drawable.ic_ghost);
         addItem("Title", new String[]{"Cat"}, R.color.colorWhite, R.drawable.ic_ghost);
@@ -126,7 +126,6 @@ public class ReserveActivity extends AppCompatActivity {
             });*/
         }
     }
-
 
 
     private void configureSubItem(final CustomItem item, final View view, String subTitle) {

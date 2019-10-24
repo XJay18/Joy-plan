@@ -4,11 +4,11 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -17,7 +17,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -34,7 +33,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -46,7 +44,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class SxjActivity extends AppCompatActivity implements View.OnClickListener{
+public class SxjActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final int TAKE_PHOTO = 1;
     public static final int ChOOSE_PHOTO = 2;
@@ -65,10 +63,10 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dis_sxj);
         findViewById(R.id.bt_sxj_back).setOnClickListener(this);
-        Button button1 = (Button) findViewById(R.id.btn_sxj_takephoto);
-        Button button2 = (Button) findViewById(R.id.btn_sxj_choosephoto);
-        Button button3 = (Button) findViewById(R.id.btn_sxj_record);
-        et_content = (EditText) findViewById(R.id.et_content);
+        Button button1 = findViewById(R.id.btn_sxj_takephoto);
+        Button button2 = findViewById(R.id.btn_sxj_choosephoto);
+        Button button3 = findViewById(R.id.btn_sxj_record);
+        et_content = findViewById(R.id.et_content);
         button1.setOnClickListener(new NoteOnClickListener());
         button2.setOnClickListener(new NoteOnClickListener());
         button3.setOnClickListener(new NoteOnClickListener());
@@ -77,7 +75,7 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        if(v.getId()==R.id.bt_sxj_back){
+        if (v.getId() == R.id.bt_sxj_back) {
             finish();
         }
     }
@@ -186,13 +184,12 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
             case TAKE_PHOTO:
                 if (resultCode == RESULT_OK) {
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyymmdd-hhmmss");
-                    path=getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()+simpleDateFormat.format(new Date())+"./jpeg";
+                    path = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + simpleDateFormat.format(new Date()) + "./jpeg";
                     saveImage(img_uri, path);
                     try {
-                        Bitmap bitmap=BitmapFactory.decodeStream(getContentResolver().openInputStream(img_uri));
+                        Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(img_uri));
                         insertImg(SxjActivity.this, bitmap, path);
-                    }
-                    catch (IOException ex){
+                    } catch (IOException ex) {
                         ex.printStackTrace();
                     }
                 }
@@ -202,14 +199,13 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
                 if (resultCode == RESULT_OK) {
                     img_uri = data.getData();
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
-                    path=getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()+simpleDateFormat.format(new Date())+"./jpeg";
-                    saveImage(img_uri,path);
+                    path = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + simpleDateFormat.format(new Date()) + "./jpeg";
+                    saveImage(img_uri, path);
                     try {
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(img_uri));
 
                         insertImg(SxjActivity.this, bitmap, path);
-                    }
-                    catch (IOException ex){
+                    } catch (IOException ex) {
                         ex.printStackTrace();
                     }
                 }
@@ -232,13 +228,13 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return path.toString();
+        return path;
     }
 
     //向ET插入图片
-    private void insertImg(Context context, Bitmap bitmap,String imgname) {
+    private void insertImg(Context context, Bitmap bitmap, String imgname) {
 
-        Log.e("bitmap",bitmap.toString());
+        Log.e("bitmap", bitmap.toString());
         ImageSpan img_span = new ImageSpan(context, bitmap);
         SpannableString spannableString = new SpannableString(imgname);
         spannableString.setSpan(img_span, 0, imgname.length(), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -249,10 +245,10 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
         int index = et_content.getSelectionStart();
         if (index < 0 || index > et_content.length()) {
             editable.append(spannableString);
-            Log.e("insert ","ok");
+            Log.e("insert ", "ok");
         } else {
             editable.insert(index, spannableString);
-            Log.e("insert ","o2k");
+            Log.e("insert ", "o2k");
         }
         et_content.append("\n");
     }
@@ -285,13 +281,13 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     //Complete the jobs which are to load data and to show in et_content
-    private void loadContent(){
+    private void loadContent() {
         String doc_path = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString();
-        File file=new File("doc_path + /NoteContent");
-        if(!file.exists()){
+        File file = new File("doc_path + /NoteContent");
+        if (!file.exists()) {
             return;
         }
-        StringBuffer content=null;
+        StringBuffer content = null;
         FileInputStream fileInputStream = null;
         BufferedReader bufferedReader = null;
         try {
@@ -299,14 +295,14 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
             bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
             String content_line = null;
             while ((content_line = bufferedReader.readLine()) != null) {
-                content.append(content_line+'\n');
+                content.append(content_line + '\n');
             }
-            String str_content=content.substring(0,content.length()-1).toString();
-            String regex="[0-9]{14}.jpeg";
-            Matcher matcher=null;
-            Pattern pattern=Pattern.compile(regex);
-            matcher=pattern.matcher(content);
-            while(matcher.find()) {
+            String str_content = content.substring(0, content.length() - 1);
+            String regex = "[0-9]{14}.jpeg";
+            Matcher matcher = null;
+            Pattern pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(content);
+            while (matcher.find()) {
 //                str_content.substring(0,matcher.start());
 //                System.out.println(matcher.group());
 //                str=str.substring(matcher.end());

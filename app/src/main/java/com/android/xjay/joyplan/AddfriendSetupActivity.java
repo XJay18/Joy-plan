@@ -5,16 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-public class AddfriendSetupActivity extends AppCompatActivity implements View.OnClickListener{
+public class AddfriendSetupActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_addfriend);
         setListener();
     }
 
-    private void setListener(){
+    private void setListener() {
         findViewById(R.id.ll_setup_addfriend_fc1).setOnClickListener(this);
         findViewById(R.id.ll_setup_addfriend_fc2).setOnClickListener(this);
         findViewById(R.id.ll_setup_addfriend_fc3).setOnClickListener(this);
@@ -22,20 +22,21 @@ public class AddfriendSetupActivity extends AppCompatActivity implements View.On
     }
 
     @Override
-    public void onClick(View view){
-        switch (view.getId()){
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.ll_setup_addfriend_fc1:
-                Toast.makeText(this,"账号添加",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "账号添加", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.ll_setup_addfriend_fc2:
-                Toast.makeText(this,"二维码添加",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "二维码添加", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.ll_setup_addfriend_fc3:
-                Toast.makeText(this,"我的二维码",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "我的二维码", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.bt_setup_addfriend_back:
                 this.finish();
-            default:break;
+            default:
+                break;
         }
     }
 }
