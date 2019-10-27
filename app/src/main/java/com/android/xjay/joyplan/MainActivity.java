@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick( View v) {
-        /*switch(v.getId()){
+        switch(v.getId()){
             case R.id.btn_login:
                 legal=setUser();
                 if(legal){
@@ -76,22 +76,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent=new Intent(MainActivity.this,WelcomeActivity.class);
                 startActivity(intent);
                 break;
-        }*/
-            if (v.getId() == R.id.btn_login) {
-                Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                startActivity(intent);
-                }
-                if(v.getId()==R.id.main_return){
-                Intent intent=new Intent(MainActivity.this,WelcomeActivity.class);
-                startActivity(intent);
-                }
+        }
+//            if (v.getId() == R.id.btn_login) {
+//                Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+//                startActivity(intent);
+//                }
+//                if(v.getId()==R.id.main_return){
+//                Intent intent=new Intent(MainActivity.this,WelcomeActivity.class);
+//                startActivity(intent);
+//                }
     }
     private class MyThread implements Runnable{
         @Override
         public void run() {
             //获取服务器返回的数据
-            infoString = WebServicePost.loginPost(et_account.getText().toString(),et_password.getText().toString(),"LogLet");
+            infoString = WebServiceGet.loginGet(et_account.getText().toString(),et_password.getText().toString(),"LogLet");
             //更新UI，使用runOnUiThread()方法
            showResponse(infoString);
         }
