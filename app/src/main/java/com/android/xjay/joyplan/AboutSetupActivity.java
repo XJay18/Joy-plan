@@ -1,17 +1,12 @@
 package com.android.xjay.joyplan;
 
-
-import android.content.Context;
-import android.content.Intent;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import com.android.xjay.joyplan.Notification.NotificationTool;
 
 public class AboutSetupActivity extends AppCompatActivity implements View.OnClickListener {
     Context mContext = AboutSetupActivity.this;
@@ -22,8 +17,8 @@ public class AboutSetupActivity extends AppCompatActivity implements View.OnClic
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_about);
-        linearLayout = (LinearLayout) findViewById(R.id.ll_setup_about_other);
-        button = (Button) findViewById(R.id.bt_setup_about_back);
+        linearLayout = findViewById(R.id.ll_setup_about_other);
+        button = findViewById(R.id.bt_setup_about_back);
         setListener();
     }
 
@@ -31,7 +26,7 @@ public class AboutSetupActivity extends AppCompatActivity implements View.OnClic
 //        linearLayout.setOnClickListener(this);
         button.setOnClickListener(this);
 
-        ((Button)findViewById(R.id.bt_setup_about_back)).setOnClickListener(this);
+        findViewById(R.id.bt_setup_about_back).setOnClickListener(this);
         findViewById(R.id.ll_setup_about_other).setOnClickListener(this);
     }
 
@@ -41,7 +36,7 @@ public class AboutSetupActivity extends AppCompatActivity implements View.OnClic
             case R.id.bt_setup_about_back:
                 finish();
                 break;
-            case R.id.ll_setup_about_other:{
+            case R.id.ll_setup_about_other: {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
                 mBuilder.setTitle("Joyplan Version 1.0.0");
                 mBuilder.setMessage(R.string.info_about);

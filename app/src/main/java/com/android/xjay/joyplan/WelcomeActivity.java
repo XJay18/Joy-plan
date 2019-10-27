@@ -9,28 +9,31 @@ import android.widget.Button;
 public class WelcomeActivity extends AppCompatActivity {
     private Button login;
     private Button register;
+
     @Override
-    protected void onCreate(Bundle saveInstanceState){ ;
+    protected void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_welcome);
         getID();
     }
-    private void getID(){
-        login=findViewById(R.id.btn_wel_login);
-        register=findViewById(R.id.btn_wel_register);
+
+    private void getID() {
+        login = findViewById(R.id.btn_wel_login);
+        register = findViewById(R.id.btn_wel_register);
         login.setOnClickListener(new MyOnClickListener());
         register.setOnClickListener(new MyOnClickListener());
     }
-    class MyOnClickListener implements View.OnClickListener{
+
+    class MyOnClickListener implements View.OnClickListener {
         @Override
-        public void onClick(View v){
-            switch (v.getId()){
+        public void onClick(View v) {
+            switch (v.getId()) {
                 case R.id.btn_wel_login:
-                    Intent intent1=new Intent(WelcomeActivity.this,MainActivity.class);
+                    Intent intent1 = new Intent(WelcomeActivity.this, MainActivity.class);
                     startActivity(intent1);
                     break;
                 case R.id.btn_wel_register:
-                    Intent intent2=new Intent(WelcomeActivity.this,PhoneActivity.class);
+                    Intent intent2 = new Intent(WelcomeActivity.this, PhoneActivity.class);
                     startActivity(intent2);
                     break;
             }

@@ -3,10 +3,7 @@ package com.android.xjay.joyplan.CustomExpanding;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * View Utils class
- * Created by diego on 5/16/16.
- */
+
 public class CustomViewUtils {
     /**
      * Set a View height in pixels.

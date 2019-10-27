@@ -1,20 +1,13 @@
 package com.android.xjay.joyplan.Calendar;
 
 import android.content.Context;
-import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.AttributeSet;
 import android.view.View;
 
 import com.android.xjay.calendarview.Calendar;
 import com.android.xjay.calendarview.WeekView;
 
-
-/**
- * 简单周视图
- * Created by huanghaibin on 2017/11/29.
- */
 
 public class SimpleWeekView extends WeekView {
     private int mRadius;
@@ -22,11 +15,10 @@ public class SimpleWeekView extends WeekView {
 
     public SimpleWeekView(Context context) {
         super(context);
-        setLayerType(View.LAYER_TYPE_SOFTWARE,mSelectedPaint);
+        setLayerType(View.LAYER_TYPE_SOFTWARE, mSelectedPaint);
         //4.0以上硬件加速会导致无效
         //mSelectedPaint.setMaskFilter(new BlurMaskFilter(25, BlurMaskFilter.Blur.SOLID));
     }
-
 
 
     @Override

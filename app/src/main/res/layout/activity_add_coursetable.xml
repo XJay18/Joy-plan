@@ -53,11 +53,11 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/fqz_anim_grow"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_gravity="center"
-            app:lottie_fileName="course.json"
-            app:lottie_autoPlay="true"/>
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="course.json" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -179,7 +179,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    android:text="导入课程表" />
+                    android:text="选择本地文件" />
 
                 <ImageView
                     style="@style/function_bar_righticon"
@@ -195,7 +195,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             app:lottie_autoPlay="true" />
 
         <LinearLayout

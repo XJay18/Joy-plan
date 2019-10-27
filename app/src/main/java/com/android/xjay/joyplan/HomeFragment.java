@@ -15,8 +15,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
-
-
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -37,7 +35,6 @@ import com.android.xjay.calendarview.CalendarLayout;
 import com.android.xjay.calendarview.CalendarUtil;
 import com.android.xjay.calendarview.CalendarView;
 import com.android.xjay.calendarview.YearViewPager;
-import com.android.xjay.joyplan.Calendar.CustomListAdapter;
 import com.android.xjay.joyplan.Calendar.CustomTimeListAdapter;
 import com.android.xjay.joyplan.Calendar.ScrollDisabledListView;
 import com.android.xjay.joyplan.CustomExpanding.CustomItem;
@@ -122,14 +119,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                 DynamicReceiverAddCourseTable dynamicReceiverAddCourseTable;
                 IntentFilter intentFilterAddCourse = new IntentFilter();
                 intentFilterAddCourse.addAction("ADD COURSE TABLE");
-                dynamicReceiverAddCourseTable=new DynamicReceiverAddCourseTable();
-                mContext.registerReceiver(dynamicReceiverAddCourseTable, intentFilterAddCourse);
+                dynamicReceiverAddCourseTable = new DynamicReceiverAddCourseTable();
+                mContext.registerReceiver(
+                        dynamicReceiverAddCourseTable, intentFilterAddCourse);
                 //on add goal event
                 DynamicReceiverAddGoal dynamicReceiverAddGoal;
-                IntentFilter intentFilterAddGoal=new IntentFilter();
+                IntentFilter intentFilterAddGoal = new IntentFilter();
                 intentFilterAddGoal.addAction("ADD GOAL");
-                dynamicReceiverAddGoal=new DynamicReceiverAddGoal();
-                mContext.registerReceiver(dynamicReceiverAddGoal,intentFilterAddGoal);
+                dynamicReceiverAddGoal = new DynamicReceiverAddGoal();
+                mContext.registerReceiver(dynamicReceiverAddGoal, intentFilterAddGoal);
 
 
                 //((FragmentActivity)mContext).findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
@@ -144,20 +142,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                 listView7 = mScheduleView.findViewById(R.id.listView7);*/
 
 
-
                 scrollView.setOnLongClickListener(this);
                 timeListView.setAdapter(new CustomTimeListAdapter());
                 mCalendarView.setOnSelectMonthListener(new CalendarView.onSelectMonthListener() {
                     @Override
                     public void onSelectMonth() {
-                        ((FragmentActivity)mContext).findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
+                        ((FragmentActivity) mContext).findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
                     }
                 });
 
                 mTextMonthDay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ((FragmentActivity)mContext).findViewById(R.id.bottom_navigation).setVisibility(View.GONE);
+                        ((FragmentActivity) mContext).findViewById(R.id.bottom_navigation).setVisibility(View.GONE);
                         if (!mCalendarLayout.isExpand()) {
                             mCalendarLayout.expand();
                             return;
@@ -179,7 +176,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                 mCalendarView.setOnCalendarSelectListener(this);
                 mTextYear.setText(String.valueOf(mCalendarView.getCurYear()));
                 mYear = mCalendarView.getCurYear();
-                mTextMonthDay.setText(mCalendarView.getCurMonth() + "月" + mCalendarView.getCurDay() + "日");
+                mTextMonthDay.setText(
+                        mCalendarView.getCurMonth()
+                                + "月"
+                                + mCalendarView.getCurDay() + "日");
                 mTextLunar.setText("今日");
                 mTextCurrentDay.setText(String.valueOf(mCalendarView.getCurDay()));
 
@@ -199,7 +199,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
             }
             case "活动": {
-                UserDBHelper mHelper=UserDBHelper.getInstance(mContext,1);
+                UserDBHelper mHelper = UserDBHelper.getInstance(mContext, 1);
                 //mHelper.reset();
                 View view = inflater.inflate(R.layout.fragment_reserve, null);
 //                ((FragmentActivity)mContext).findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
@@ -229,7 +229,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             }
             default: {
                 View view = inflater.inflate(R.layout.fragment_base, null);
-                TextView tvInfo = (TextView) view.findViewById(R.id.textView);
+                TextView tvInfo = view.findViewById(R.id.textView);
                 tvInfo.setText(getArguments().getString("info"));
                 tvInfo.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -242,33 +242,33 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         }
     }
 
-    private void findAllScheduleViews(){
+    private void findAllScheduleViews() {
         timeListView = mScheduleView.findViewById(R.id.time_listview);
         scrollView = mScheduleView.findViewById(R.id.scrollView_agenda);
 
         mTextMonthDay = mScheduleView.findViewById(R.id.tv_month_day);
-        mTextYear =  mScheduleView.findViewById(R.id.tv_year);
-        mTextLunar =  mScheduleView.findViewById(R.id.tv_lunar);
-        mRelativeTool =  mScheduleView.findViewById(R.id.rl_tool);
-        mCalendarView =  mScheduleView.findViewById(R.id.calendarView);
-        mTextCurrentDay =  mScheduleView.findViewById(R.id.tv_current_day);
+        mTextYear = mScheduleView.findViewById(R.id.tv_year);
+        mTextLunar = mScheduleView.findViewById(R.id.tv_lunar);
+        mRelativeTool = mScheduleView.findViewById(R.id.rl_tool);
+        mCalendarView = mScheduleView.findViewById(R.id.calendarView);
+        mTextCurrentDay = mScheduleView.findViewById(R.id.tv_current_day);
         mCalendarLayout = mScheduleView.findViewById(R.id.calendarLayout);
 
         mRecyclerView = mScheduleView.findViewById(R.id.recyclerView);
-        courseContainers=new ArrayList<>();
-        RelativeLayout container=mScheduleView.findViewById(R.id.course_container0);
+        courseContainers = new ArrayList<>();
+        RelativeLayout container = mScheduleView.findViewById(R.id.course_container0);
         courseContainers.add(container);
-        container=mScheduleView.findViewById(R.id.course_container1);
+        container = mScheduleView.findViewById(R.id.course_container1);
         courseContainers.add(container);
-        container=mScheduleView.findViewById(R.id.course_container2);
+        container = mScheduleView.findViewById(R.id.course_container2);
         courseContainers.add(container);
-        container=mScheduleView.findViewById(R.id.course_container3);
+        container = mScheduleView.findViewById(R.id.course_container3);
         courseContainers.add(container);
-        container=mScheduleView.findViewById(R.id.course_container4);
+        container = mScheduleView.findViewById(R.id.course_container4);
         courseContainers.add(container);
-        container=mScheduleView.findViewById(R.id.course_container5);
+        container = mScheduleView.findViewById(R.id.course_container5);
         courseContainers.add(container);
-        container=mScheduleView.findViewById(R.id.course_container6);
+        container = mScheduleView.findViewById(R.id.course_container6);
         courseContainers.add(container);
     }
 
@@ -382,11 +382,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         c.moveToFirst();
         int iconRes = R.drawable.duck;
         for (int i = 0; i < length; i++) {
-            TITLES[i] = c.getString(1).toString();
-            INFOS[i] = c.getString(2).toString();
-            STARTTIMES[i] = c.getString(3).toString();
+            TITLES[i] = c.getString(1);
+            INFOS[i] = c.getString(2);
+            STARTTIMES[i] = c.getString(3);
 //            ENDTIMES[i]=c.getString(4).toString();
-            ADDRESSES[i] = c.getString(5).toString();
+            ADDRESSES[i] = c.getString(5);
             String[] s = new String[]{INFOS[i]};
             addItem(TITLES[i], INFOS[i], STARTTIMES[i], ADDRESSES[i], R.color.transparent, iconRes);
             c.move(1);
@@ -424,27 +424,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             int listIndex = tag / 100;
             int buttonIndex = tag % 100;
             final int position = (int) view.getTag();
-            String s=new Integer(position).toString();
+            String s = new Integer(position).toString();
 
-            Log.v("buttonIndex",s);
+            Log.v("buttonIndex", s);
             customDialog(listIndex, buttonIndex);
         } else if (view.getId() == R.id.ll_setup_accountnsafety) {
-            Toast.makeText(mContext, "你点击了账号与安全", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(mContext, AccountnSafetySetupActivity.class);
             startActivity(intent);
         } else if (view.getId() == R.id.ll_setup_notenfeedback) {
-            Toast.makeText(mContext, "你点击了反馈", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(mContext, HelpnfeedbackSetupActivity.class);
             startActivity(intent);
         } else if (view.getId() == R.id.ll_setup_about) {
-            Toast.makeText(mContext, "你点击了关于", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(mContext, AboutSetupActivity.class);
             startActivity(intent);
         }
 
     }
 
-    private void addItem(String title, String info, String starttime, String address, int colorRes, int iconRes) {
+    private void addItem(String title, String info, String starttime,
+                         String address, int colorRes, int iconRes) {
         //Let's create an custom_item with R.layout.expanding_layout
         final CustomItem item = expandingList.createNewItem(R.layout.expanding_layout);
         String Date = starttime.substring(0, 10);
@@ -473,13 +471,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
     }
 
 
-
     @Override
     public boolean onLongClick(View v) {
         switch (v.getId()) {
 
             case R.id.btn_mission: {
-                int tag=(int)v.getTag();
+                int tag = (int) v.getTag();
                 customChooseDialog(tag);
                 return true;
                 /*Intent intent = new Intent();
@@ -515,11 +512,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         return false;
     }
 
-    private void customChooseDialog(int tag){
-        final Dialog dialog=new Dialog(mContext,R.style.NormalDialogStyle);
-        View view=View.inflate(mContext,R.layout.dialog_choose,null);
-        Button buttonAgenda=view.findViewById(R.id.btn_choose_agenda);
-        Button buttonGoal=view.findViewById(R.id.btn_choose_goal);
+    private void customChooseDialog(int tag) {
+        final Dialog dialog = new Dialog(mContext, R.style.NormalDialogStyle);
+        View view = View.inflate(mContext, R.layout.dialog_choose, null);
+        Button buttonAgenda = view.findViewById(R.id.btn_choose_agenda);
+        Button buttonGoal = view.findViewById(R.id.btn_choose_goal);
         buttonAgenda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -556,8 +553,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         buttonGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent();
-                intent.setClass(mContext,AddGoalActivity.class);
+                Intent intent = new Intent();
+                intent.setClass(mContext, AddGoalActivity.class);
                 startActivity(intent);
             }
         });
@@ -572,6 +569,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         dialogWindow.setAttributes(lp);
         dialog.show();
     }
+
     private void customDialog(int listIndex, int buttonIndex) {
         final Dialog dialog = new Dialog(mContext, R.style.NormalDialogStyle);
         View view = View.inflate(mContext, R.layout.dialog_normal, null);
@@ -580,7 +578,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         TextView tv_title = view.findViewById(R.id.tv_agenda_dialog_title);
         TextView tv_time = view.findViewById(R.id.tv_agenda_dialog_start_time);
         EditText editText_notation = view.findViewById(R.id.editText_agenda_dialog_notation);
-
 
 
         dialog.setContentView(view);
@@ -613,13 +610,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         view.findViewById(R.id.btn_delete_agenda).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(agenda.index!=-1)
-                {
-                    int id=agenda.index;
+                if (agenda.index != -1) {
+                    int id = agenda.index;
                     mHelper.deleteAgendaWithIndex(id);
 
-                    Calendar calendar=mCalendarView.getSelectedCalendar();
-                    Calendar weekStartCalenddar=CalendarUtil.getStartInWeek(calendar,1);
+                    Calendar calendar = mCalendarView.getSelectedCalendar();
+                    Calendar weekStartCalenddar = CalendarUtil.getStartInWeek(calendar, 1);
                     updateAgenda(weekStartCalenddar);
                     dialog.dismiss();
                 }
@@ -627,7 +623,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         });
         dialog.show();
     }
-
 
 
     //返回当前选择日期所在周的第一天
@@ -665,7 +660,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         updateCourse();
     }
 
-    public void updateCourse(){
+    public void updateCourse() {
 
         /*for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 24; j++) {
@@ -673,52 +668,50 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             }
         }*/
         mHelper = UserDBHelper.getInstance(getContext(), 1);
-        int year=mCalendarView.getSelectedCalendar().getYear();
-        String str_year=new Integer(year).toString();
-        int month=mCalendarView.getSelectedCalendar().getMonth();
-        int indexOfSemester=1;
-        if((month>=8&&month<=12)||(month>=1&&month<=2)){
-            indexOfSemester=1;
-        }
-        else indexOfSemester=2;
-        int day=mCalendarView.getSelectedCalendar().getDay();
-        if(year>=2019&&((month>2)||month==2&&day>=25)){
-            for(int i=1;i<=7;i++){
+        int year = mCalendarView.getSelectedCalendar().getYear();
+        String str_year = new Integer(year).toString();
+        int month = mCalendarView.getSelectedCalendar().getMonth();
+        int indexOfSemester = 1;
+        if ((month >= 8 && month <= 12) || (month >= 1 && month <= 2)) {
+            indexOfSemester = 1;
+        } else indexOfSemester = 2;
+        int day = mCalendarView.getSelectedCalendar().getDay();
+        if (year >= 2019 && ((month > 2) || month == 2 && day >= 25)) {
+            for (int i = 1; i <= 7; i++) {
 
-                Calendar selectedCalendar=mCalendarView.getSelectedCalendar();
-                String selectedDateString=selectedCalendar.toString();
+                Calendar selectedCalendar = mCalendarView.getSelectedCalendar();
+                String selectedDateString = selectedCalendar.toString();
                 SimpleDateFormat simFormat = new SimpleDateFormat("yyyyMMdd HHmmss");
-                Date selectedDate=new Date();
-                Date startWeekDate=new Date();
-                try{
-                    if(indexOfSemester==1){
-                        startWeekDate=simFormat.parse(str_year+"0902"+" "+"000000");
-                    }
-                    else startWeekDate=simFormat.parse(str_year+"0225"+" "+"000000");
+                Date selectedDate = new Date();
+                Date startWeekDate = new Date();
+                try {
+                    if (indexOfSemester == 1) {
+                        startWeekDate = simFormat.parse(str_year + "0902" + " " + "000000");
+                    } else startWeekDate = simFormat.parse(str_year + "0225" + " " + "000000");
 
-                    selectedDate= simFormat.parse(selectedDateString+" "+"000000");
+                    selectedDate = simFormat.parse(selectedDateString + " " + "000000");
 
-                }catch (ParseException e){
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
 
-                int days= com.android.xjay.joyplan.Utils.CalendarUtil.daysBetween(startWeekDate,selectedDate);
+                int days = com.android.xjay.joyplan.Utils.CalendarUtil.daysBetween(startWeekDate, selectedDate);
 
-                if(days>0) {
-                    int week=0;
-                    week=(days+1)/7+1;
+                if (days > 0) {
+                    int week = 0;
+                    week = (days + 1) / 7 + 1;
 
-                    ArrayList<Course> courseArrayList=mHelper.getCourseWithDayOfWeek(year,indexOfSemester,week,i);
-                    int length=courseArrayList.size();
-                    for(int j=0;j<length;j++){
+                    ArrayList<Course> courseArrayList = mHelper.getCourseWithDayOfWeek(year, indexOfSemester, week, i);
+                    int length = courseArrayList.size();
+                    for (int j = 0; j < length; j++) {
                         //the index of the class in a day
-                        int index=courseArrayList.get(j).startIndex;
+                        int index = courseArrayList.get(j).startIndex;
 
-                        String courseName=courseArrayList.get(j).courseName;
-                        int numOfCourse=courseArrayList.get(j).numOfCourse;
-                        int l=numOfCourse*200;
-                        int bias=index*200;
-                        drawButtonTest(courseContainers.get(i),l,bias,courseName);
+                        String courseName = courseArrayList.get(j).courseName;
+                        int numOfCourse = courseArrayList.get(j).numOfCourse;
+                        int l = numOfCourse * 200;
+                        int bias = index * 200;
+                        drawButtonTest(courseContainers.get(i), l, bias, courseName);
                     }
                     /*for(int j=0;j<length;j++){
                         int index=courseArrayList.get(j).startIndex;
@@ -749,18 +742,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     }
 
-    public void  drawButtonTest(RelativeLayout relativeLayout,int length,int bias,String text){
-        Button button=new Button(mContext);
+    public void drawButtonTest(RelativeLayout relativeLayout, int length, int bias, String text) {
+        Button button = new Button(mContext);
         button.setBackgroundResource(R.drawable.btn_shape_agenda_blue);
         button.setTextColor(Color.WHITE);
         button.setText(text);
         button.setTextSize(18);
-        RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,length);
+        RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, length);
         rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        rlp.setMargins(0,bias,0,0);
+        rlp.setMargins(0, bias, 0, 0);
         button.setLayoutParams(rlp);
         relativeLayout.addView(button);
     }
+
     public void updateAgenda(Calendar calendar) {
       /*  for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 24; j++) {
@@ -807,83 +801,84 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         }
     }
 
-    class DynamicReceiverAddCourseTable extends BroadcastReceiver{
+    class DynamicReceiverAddCourseTable extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             addCourseTable();
         }
     }
 
-    class DynamicReceiverAddGoal extends BroadcastReceiver{
-        public void onReceive(Context context,Intent intent){
+    class DynamicReceiverAddGoal extends BroadcastReceiver {
+        public void onReceive(Context context, Intent intent) {
             addGoal();
         }
     }
 
-    private void addGoal(){
+    private void addGoal() {
 
         String title = "Running";
         String address = "田径场";
         String content = "";
-        String start_time="2019-05-22 20:00";
-        String end_time="2019-05-22 20:00";
+        String start_time = "2019-05-22 20:00";
+        String end_time = "2019-05-22 20:00";
         Agenda agenda = new Agenda(title, start_time, end_time, content, address);
         mHelper.insert_agenda(agenda);
 
         title = "Running";
         address = "田径场";
         content = "";
-        start_time="2019-05-23 20:00";
-        end_time="2019-05-23 20:00";
+        start_time = "2019-05-23 20:00";
+        end_time = "2019-05-23 20:00";
         agenda = new Agenda(title, start_time, end_time, content, address);
         mHelper.insert_agenda(agenda);
 
         title = "Running";
         address = "田径场";
         content = "";
-        start_time="2019-05-24 20:00";
-        end_time="2019-05-24 20:00";
+        start_time = "2019-05-24 20:00";
+        end_time = "2019-05-24 20:00";
         agenda = new Agenda(title, start_time, end_time, content, address);
         mHelper.insert_agenda(agenda);
 
         title = "Running";
         address = "田径场";
         content = "";
-        start_time="2019-05-25 20:00";
-        end_time="2019-05-25 20:00";
+        start_time = "2019-05-25 20:00";
+        end_time = "2019-05-25 20:00";
         agenda = new Agenda(title, start_time, end_time, content, address);
         mHelper.insert_agenda(agenda);
 
         title = "Running";
         address = "田径场";
         content = "";
-        start_time="2019-05-26 20:00";
-        end_time="2019-05-26 20:00";
+        start_time = "2019-05-26 20:00";
+        end_time = "2019-05-26 20:00";
         agenda = new Agenda(title, start_time, end_time, content, address);
         mHelper.insert_agenda(agenda);
 
         title = "Running";
         address = "田径场";
         content = "";
-        start_time="2019-05-27 20:00";
-        end_time="2019-05-27 20:00";
+        start_time = "2019-05-27 20:00";
+        end_time = "2019-05-27 20:00";
         agenda = new Agenda(title, start_time, end_time, content, address);
         mHelper.insert_agenda(agenda);
 
         title = "Running";
         address = "田径场";
         content = "";
-        start_time="2019-05-28 20:00";
-        end_time="2019-05-28 20:00";
+        start_time = "2019-05-28 20:00";
+        end_time = "2019-05-28 20:00";
         agenda = new Agenda(title, start_time, end_time, content, address);
         mHelper.insert_agenda(agenda);
     }
-    private void addCourseTable(){
+
+    private void addCourseTable() {
 
 
-        mHelper=UserDBHelper.getInstance(getContext(), 1);
+        mHelper = UserDBHelper.getInstance(getContext(), 1);
         mHelper.resetCourseTable();
-        mHelper.insert_course(new Course(2019,1,"定向越野",1,1,15,5,2,"田径场","老师"));
+        mHelper.insert_course(new Course(2019, 1, "定向越野", 1, 1, 15, 5, 2, "田径场", "老师"));
        /* mHelper.insert_course(new Course("毛概",1,7,2));
         mHelper.insert_course(new Course("UML",2,3,2));
         mHelper.insert_course(new Course("编译技术",2,5,2));
@@ -905,7 +900,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         ((TextView) view.findViewById(R.id.sub_title)).setText(info);
 
     }
-
 
 
     private void showInsertDialog(final ReserveActivity.OnItemCreated positive) {

@@ -1,17 +1,13 @@
 package com.android.xjay.joyplan.web;
 
-import android.util.Log;
-
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 使用get方法获取Http服务器数据
@@ -28,7 +24,7 @@ public class WebServiceGet {
             String path = Url + "?phone_number=" + username + "&password=" + password;
             try {
                 URL url = new URL(path);
-                connection = (HttpURLConnection)url.openConnection();
+                connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setConnectTimeout(10000);//建立连接超时
                 connection.setReadTimeout(8000);//传递数据超时
@@ -39,17 +35,17 @@ public class WebServiceGet {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-         }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            }finally {
+        } finally {
             //意外退出时，连接关闭保护
-            if(connection != null){
+            if (connection != null) {
                 connection.disconnect();
             }
-            if(in != null){
-                try{
+            if (in != null) {
+                try {
                     in.close();
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -70,7 +66,7 @@ public class WebServiceGet {
                 System.out.println("问题1");
                 URL url = new URL(path);
                 System.out.println("问题2");
-                connection = (HttpURLConnection)url.openConnection();
+                connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setConnectTimeout(10000);//建立连接超时
                 connection.setReadTimeout(8000);//传递数据超时
@@ -82,17 +78,17 @@ public class WebServiceGet {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             //意外退出时，连接关闭保护
-            if(connection != null){
+            if (connection != null) {
                 connection.disconnect();
             }
-            if(in != null){
-                try{
+            if (in != null) {
+                try {
                     in.close();
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -170,7 +166,7 @@ public class WebServiceGet {
         byte[] data = read(inStream);
         // 转化为字符串
         System.out.println("问题5");
-        return new String(data, "UTF-8");
+        return new String(data, StandardCharsets.UTF_8);
     }
 
     // 将输入流转化为byte型
