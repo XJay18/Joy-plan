@@ -1,11 +1,11 @@
 package com.android.xjay.joyplan;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.app.AlertDialog;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -16,11 +16,8 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -32,14 +29,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.android.xjay.joyplan.Utils.JumpTextWatcher;
 import com.android.xjay.joyplan.Utils.POIExcelProcesser;
 
-import android.content.pm.*;
-import android.*;
-
-import org.apache.poi.ss.formula.functions.T;
-
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 public class AddCourseTableActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -60,7 +50,7 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_coursetable);
 
-        schools.add("华南理工大学");
+        addSchool("华南理工大学");
         chooseSchoolSpinner = findViewById(R.id.sp_course_choose_school);
         tv_confirm = findViewById(R.id.tv_coursetable_confirm);
         tv_confirm.setOnClickListener(this);
@@ -69,7 +59,7 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
         findViewById(R.id.ll_course_help).setOnClickListener(this);
         findViewById(R.id.btn_course_back).setOnClickListener(this);
         findViewById(R.id.ll_addcoursetable_importexcel).setOnClickListener(this);
-        String[] schoolsArray = (String[]) schools.toArray(new String[schools.size()]);
+        String[] schoolsArray = schools.toArray(new String[schools.size()]);
         ArrayAdapter<String> mSchoolsAdapter = new ArrayAdapter<>(this,
                 R.layout.item_select, schoolsArray);
         mSchoolsAdapter.setDropDownViewResource(R.layout.item_dropdown);
@@ -94,6 +84,10 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
         confirmAnimationView = findViewById(R.id.coursetable_anim_okay_blue);
 
 
+    }
+
+    void addSchool(String school) {
+        schools.add(school);
     }
 
     @Override
@@ -138,9 +132,8 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
             mBuilder.setMessage(R.string.info_course);
             AlertDialog mAlert = mBuilder.create();
             mAlert.show();
-        }
-        else if(v.getId()==R.id.ll_addcoursetable_importexcel){
-            Intent intent=new Intent(Intent.ACTION_GET_CONTENT);
+        } else if (v.getId() == R.id.ll_addcoursetable_importexcel) {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             //检测是否有读取外储存的权限，动态获取
@@ -157,9 +150,9 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
                 e.printStackTrace();
             }
 
-            startActivityForResult(intent,1);
+            startActivityForResult(intent, 1);
 
-       }
+        }
     }
 
     @Override
@@ -169,11 +162,11 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 Uri uri = data.getData();
-                String path = getPath(this, uri).replaceAll("raw:","");
+                String path = getPath(this, uri).replaceAll("raw:", "");
 //                POIExcelProcesser.setExceltoSchedule(/*"/storage/emulated/0/Download/123.xlsx"*/"/data/data/com.android.xjay.joyplan/files/123.xlsx", this);
                 POIExcelProcesser.setExceltoSchedule(path, this);
                 Toast.makeText(this, "课程表导入成功", Toast.LENGTH_SHORT).show();
-                Log.e("path",path);
+                Log.e("path", path);
 
             }
 
@@ -232,9 +225,7 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
 
                 return getDataColumn(context, contentUri, selection, selectionArgs);
             }
-        }
-
-        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
             return uri.getPath();
         }
         return null;
@@ -272,22 +263,20 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
     }
 
 
+    public boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
 
-        public boolean isDownloadsDocument(Uri uri) {
-                return "com.android.providers.downloads.documents".equals(uri.getAuthority());
-            }
+    public boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
 
-        public boolean isMediaDocument(Uri uri) {
-                return "com.android.providers.media.documents".equals(uri.getAuthority());
-            }
-
-        public boolean isExternalStorageDocument(Uri uri) {
+    public boolean isExternalStorageDocument(Uri uri) {
         return ("com.android.externalstorage.documents".equals(uri.getAuthority()));
     }
 
 
-
-        private void sentBroadcast() {
+    private void sentBroadcast() {
         Intent intent = new Intent();
         intent.setAction("ADD COURSE TABLE");
         intent.putExtra("sele", "广播测试");

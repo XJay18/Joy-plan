@@ -1,40 +1,23 @@
 package com.android.xjay.joyplan.Notification;
 
 import android.app.AlarmManager;
-import android.app.AppOpsManager;
-import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.ApplicationInfo;
-import android.graphics.BitmapFactory;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.SystemClock;
 import android.provider.Settings;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
-import com.android.xjay.joyplan.R;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Date;
 
 public class NotificationTool {
 
     Context mcontext;
     NotificationReceiver notificationReceiver;
-    private static int pending_request_code=0x101;
+    private static int pending_request_code = 0x101;
 
     public NotificationTool(Context context) {
         mcontext = context;
@@ -42,7 +25,8 @@ public class NotificationTool {
 
     private void checkNotificationPermission() {
         if (!isNotificationEnabled()) {
-            Toast.makeText(mcontext, "亲爱的joyplaner，请开启通知权限", Toast.LENGTH_LONG).show();
+            Toast.makeText(mcontext,
+                    "亲爱的joyplaner，请开启通知权限", Toast.LENGTH_LONG).show();
             setupNotification();
         }
     }
@@ -50,7 +34,8 @@ public class NotificationTool {
     private boolean isNotificationEnabled() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            return NotificationManagerCompat.from(mcontext).getImportance() != NotificationManager.IMPORTANCE_NONE;
+            return NotificationManagerCompat.from(
+                    mcontext).getImportance() != NotificationManager.IMPORTANCE_NONE;
         }
         return NotificationManagerCompat.from(mcontext).areNotificationsEnabled();
 
@@ -63,7 +48,9 @@ public class NotificationTool {
             //直接跳转到应用通知设置的代码：
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 localIntent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
-                localIntent.putExtra("android.provider.extra.app.APP_PACKAGE", mcontext.getPackageName());
+                localIntent.putExtra(
+                        "android.provider.extra.app.APP_PACKAGE",
+                        mcontext.getPackageName());
                 mcontext.startActivity(localIntent);
                 return;
             }
@@ -87,12 +74,15 @@ public class NotificationTool {
             }
 
             localIntent.setAction(Intent.ACTION_VIEW);
-            localIntent.setClassName("com.android.settings", "com.android.setting.InstalledAppDetails");
-            localIntent.putExtra("com.android.settings.ApplicationPkgName", mcontext.getPackageName());
+            localIntent.setClassName("com.android.settings",
+                    "com.android.setting.InstalledAppDetails");
+            localIntent.putExtra("com.android.settings.ApplicationPkgName",
+                    mcontext.getPackageName());
 
 
         } catch (Exception e) {
             e.printStackTrace();
+            // FIXME
             System.out.println(" cxx   pushPermission 有问题");
         }
 
@@ -101,9 +91,10 @@ public class NotificationTool {
 
     public void createPendingNotification(Date begin_date) {
         Date now_date = new Date();
-        Long now_time=now_date.getTime();
-        Long begin_time=begin_date.getTime();
-        Long time = begin_time-now_time;
+        Long now_time = now_date.getTime();
+        Long begin_time = begin_date.getTime();
+        Long time = begin_time - now_time;
+        // FIXME
         /*测试代码
         Log.e("time", time.toString());
         Log.e("begin", begin_time.toString());
@@ -113,23 +104,27 @@ public class NotificationTool {
     }
 
     private void createPendingNotification(long time) {
-        AlarmManager alarmManager = (AlarmManager) mcontext.getSystemService(mcontext.ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) mcontext.getSystemService(
+                Context.ALARM_SERVICE);
 
         Intent intent = new Intent();
         intent.setAction("com.example.notification");
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mcontext, pending_request_code++, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                mcontext, pending_request_code++, intent, 0);
 
         long delaytime = time + System.currentTimeMillis();
 
         //对不同版本的进行定时
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, delaytime, pendingIntent);//AndAllowWhileIdle
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP,
+                    delaytime, pendingIntent);//AndAllowWhileIdle
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            AlarmManager.AlarmClockInfo alarmClockInfo = new AlarmManager.AlarmClockInfo(delaytime, pendingIntent);
+            AlarmManager.AlarmClockInfo alarmClockInfo =
+                    new AlarmManager.AlarmClockInfo(delaytime, pendingIntent);
             alarmManager.setAlarmClock(alarmClockInfo, pendingIntent);
         }
-
+        // FIXME
 //        else if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT){
 //            alarmManager.setExact(AlarmManager.RTC_WAKEUP,delaytime,pendingIntent);
 //        }

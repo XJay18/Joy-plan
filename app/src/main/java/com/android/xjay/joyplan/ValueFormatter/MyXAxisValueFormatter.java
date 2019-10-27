@@ -17,7 +17,11 @@ public class MyXAxisValueFormatter implements IAxisValueFormatter {
         return mValues[(int) value];
     }
 
-    /** this is only needed if numbers are returned, else return 0 */
+    /**
+     * this is only needed if numbers are returned, else return 0
+     */
     //@Override
-    public int getDecimalDigits() { return 0; }
+    public int getDecimalDigits() {
+        return 0;
+    }
 }

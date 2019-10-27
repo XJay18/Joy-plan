@@ -3,11 +3,10 @@ package com.android.xjay.joyplan;
 import android.animation.Animator;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
-
 import android.content.Intent;
+import android.os.Bundle;
 import android.provider.AlarmClock;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -61,7 +60,7 @@ public class FqzActivity extends AppCompatActivity
                 R.layout.item_select, sizeArray);
         mSizeAdapter.setDropDownViewResource(R.layout.item_dropdown);
 
-        Spinner sp_size = (Spinner) findViewById(R.id.sp_fqz_size);
+        Spinner sp_size = findViewById(R.id.sp_fqz_size);
         sp_size.setAdapter(mSizeAdapter);
         sp_size.setSelection(0);
         sp_size.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -79,7 +78,7 @@ public class FqzActivity extends AppCompatActivity
                 R.layout.item_select, breakArray);
         mBreakAdapter.setDropDownViewResource(R.layout.item_dropdown);
 
-        Spinner sp_break = (Spinner) findViewById(R.id.sp_fqz_break);
+        Spinner sp_break = findViewById(R.id.sp_fqz_break);
         sp_break.setAdapter(mBreakAdapter);
         sp_break.setSelection(0);
         sp_break.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -111,10 +110,10 @@ public class FqzActivity extends AppCompatActivity
             for (int t = 0; t < 2 * fqz_size - 1; t++) {
                 Log.d(
                         "curr time " + t + " ",
-                        String.valueOf(chour) + "  " + String.valueOf(cmin));
+                        chour + "  " + cmin);
                 Log.d(
                         "time " + t + " ",
-                        String.valueOf(time[0]) + "  " + String.valueOf(time[1]));
+                        time[0] + "  " + time[1]);
                 if (t % 2 == 0)
                     time = computeTime(time[0], time[1], fqz_hour, fqz_min);
                 else
@@ -166,7 +165,7 @@ public class FqzActivity extends AppCompatActivity
             this.finish();
         } else if (v.getId() == R.id.ll_fqz_stat) {
             //Toast.makeText(this, "你点击了番茄钟的统计信息", Toast.LENGTH_SHORT).show();
-            Intent fqz_sts=new Intent(FqzActivity.this,FqzStatistic.class);
+            Intent fqz_sts = new Intent(FqzActivity.this, FqzStatistic.class);
             startActivity(fqz_sts);
         } else if (v.getId() == R.id.ll_fqz_help) {
             AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);

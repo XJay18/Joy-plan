@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,9 +28,9 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
 
     String[] INFOS = new String[20];
 
-    String[] STARTTIMES=new String[20];
+    String[] STARTTIMES = new String[20];
 
-    String[] ADDRESSES=new String[20];
+    String[] ADDRESSES = new String[20];
 
     private UserDBHelper mHelper;
     Cursor c;
@@ -54,7 +53,7 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
 
         c.moveToFirst();
 
-        expandingList=findViewById(R.id.schedule_expanding_list);
+        expandingList = findViewById(R.id.schedule_expanding_list);
         RedrawExpandingList();
 
         //btn to MainActivity
@@ -100,6 +99,7 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
             });*/
         }
     }
+
     private void addItem(String title, String[] subItems, int colorRes, int iconRes) {
         //Let's create an custom_item with R.layout.expanding_layout
         final CustomItem item = expandingList.createNewItem(R.layout.expanding_layout);
@@ -135,11 +135,11 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
                             configureSubItem(item, newSubItem, title);
                         }
                     });*/
-                   Context context=getApplicationContext();
-                   CharSequence text="添加成功";
-                   int duration=Toast.LENGTH_SHORT;
-                   Toast toast=Toast.makeText(context,text,duration);
-                   toast.show();
+                    Context context = getApplicationContext();
+                    CharSequence text = "添加成功";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
                 }
             });
 
@@ -181,11 +181,11 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
         c.moveToFirst();
         int iconRes = R.drawable.duck;
         for (int i = 0; i < length; i++) {
-            TITLES[i] = c.getString(1).toString();
-            INFOS[i] = c.getString(2).toString();
-            STARTTIMES[i] = c.getString(3).toString();
+            TITLES[i] = c.getString(1);
+            INFOS[i] = c.getString(2);
+            STARTTIMES[i] = c.getString(3);
 //            ENDTIMES[i]=c.getString(4).toString();
-            ADDRESSES[i] = c.getString(5).toString();
+            ADDRESSES[i] = c.getString(5);
             String[] s = new String[]{INFOS[i]};
             addItem(TITLES[i], INFOS[i], STARTTIMES[i], ADDRESSES[i], R.color.transparent, iconRes);
             c.move(1);
@@ -209,11 +209,11 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        if(v.getId()==R.id.btn_schedule_back){
-            Intent intent=new Intent();
-            intent.setClass(this,HomeActivity.class);
+        if (v.getId() == R.id.btn_schedule_back) {
+            Intent intent = new Intent();
+            intent.setClass(this, HomeActivity.class);
             startActivity(intent);
-        } else if(v.getId()==R.id.ll_schedule_help){
+        } else if (v.getId() == R.id.ll_schedule_help) {
             android.app.AlertDialog.Builder mBuilder = new android.app.AlertDialog.Builder(this);
             mBuilder.setTitle("发布活动");
             mBuilder.setMessage(R.string.info_fbhd);

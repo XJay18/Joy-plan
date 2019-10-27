@@ -4,29 +4,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.xjay.joyplan.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CustomTimeListAdapter extends BaseAdapter {
     ArrayList<String> list;
 
-    public CustomTimeListAdapter(){
-        list=new ArrayList<String>();
+    public CustomTimeListAdapter() {
+        list = new ArrayList<String>();
+
 
         for(int i=0;i<=23;i++){
             int time=(i+8)%23;
             String s=new Integer(time).toString();
+
             list.add(s);
         }
 
 
-
     }
+
     @Override
     public int getCount() {
         return list.size();
@@ -44,15 +44,14 @@ public class CustomTimeListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-       ViewHolder holder;
-        if(convertView==null){
-            holder=new ViewHolder();
-            convertView= LayoutInflater.from(parent.getContext()).inflate(R.layout.time_list_example,parent,false);
-            holder.tv_index=(TextView)convertView.findViewById(R.id.tv_index) ;
+        ViewHolder holder;
+        if (convertView == null) {
+            holder = new ViewHolder();
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.time_list_example, parent, false);
+            holder.tv_index = convertView.findViewById(R.id.tv_index);
             convertView.setTag(holder);
-        }
-        else {
-            holder=(ViewHolder)convertView.getTag();
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
         holder.tv_index.setText(list.get(position));
 
@@ -60,7 +59,7 @@ public class CustomTimeListAdapter extends BaseAdapter {
     }
 
 
-    class ViewHolder{
+    class ViewHolder {
         TextView tv_index;
     }
 
