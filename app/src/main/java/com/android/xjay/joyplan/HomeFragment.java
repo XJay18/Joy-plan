@@ -86,6 +86,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     ArrayList<RelativeLayout> courseContainers;
 
+
     ScrollView scrollView;
 
     ScrollDisabledListView timeListView;
@@ -259,6 +260,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         RelativeLayout container=mScheduleView.findViewById(R.id.course_container0);
         courseContainers.add(container);
         container=mScheduleView.findViewById(R.id.course_container1);
+        container.setOnLongClickListener(this);
         courseContainers.add(container);
         container=mScheduleView.findViewById(R.id.course_container2);
         courseContainers.add(container);
@@ -272,10 +274,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         courseContainers.add(container);
     }
 
-    /* private void initScrollDisabledListView() {
+     private void initScrollDisabledListView() {
         AgendaTitleArrayList = new ArrayList<>();
-        CourseArrayList=new ArrayList<>();
-        adapterArrayList=new ArrayList<CustomListAdapter>();
+
         for (int i = 0; i < 7; i++) {
             ArrayList<String> arrayList = new ArrayList<String>();
             ArrayList<String> courseList = new ArrayList<String>();
@@ -284,79 +285,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                 courseList.add("");
             }
             AgendaTitleArrayList.add(arrayList);
-            CourseArrayList.add(courseList);
 
 
-
-            CustomListAdapter customListAdapter = new CustomListAdapter(this, this, arrayList, courseList, i);
-            adapterArrayList.add(customListAdapter);
 
         }
-
-
-        listView1.setAdapter(adapterArrayList.get(0));
-        listView1.setTag(0);
-
-        listView2.setAdapter(adapterArrayList.get(1));
-        listView2.setTag(1);
-
-        listView3.setAdapter(adapterArrayList.get(2));
-        listView3.setTag(2);
-
-        listView4.setAdapter(adapterArrayList.get(3));
-        listView4.setTag(3);
-
-        listView5.setAdapter(adapterArrayList.get(4));
-        listView5.setTag(4);
-
-        listView6.setAdapter(adapterArrayList.get(5));
-        listView6.setTag(5);
-
-        listView7.setAdapter(adapterArrayList.get(6));
-        listView7.setTag(6);
 
         Calendar calendar = mCalendarView.getSelectedCalendar();
         Calendar weekStartCalendar = CalendarUtil.getStartInWeek(calendar, 1);
-        updateAgenda(weekStartCalendar);
-    }*/
+    }
 
-    /*private Map<String,List<String>> CustomerAdapter_getDataMap(){
-        Map<String,List<String>> map=new HashMap<>();
-        for(int y=2018;y<2025;y++){
-            for(int m=1;m<=12;m++){
-                for(int d=1;d<=31;d++) {
-                    List<String> list = new ArrayList<String>();
 
-                    String s="哈皮";
-                    list.add(s);
-
-                    s="制作PPT";
-                    list.add(s);
-
-                    s="制作PPT";
-                    list.add(s);
-
-                    s="制作PPT";
-                    list.add(s);
-
-                    s="制作PPT";
-                    list.add(s);
-
-                    s="制作PPT";
-                    list.add(s);
-
-                    s="制作PPT";
-                    list.add(s);
-
-                    //map的键值
-                    String key=y + "" + (m < 10 ? "0" + m : m) + "" + (d < 10 ? "0" + d : d);
-
-                    map.put(key,list);
-                }
-            }
-        }
-        return map;
-    }*/
 
 
     public void RedrawExpandingList() {
@@ -510,7 +448,41 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                 intent.putExtras(bundle);
                 startActivity(intent);
                 return true;*/
+
             }
+
+            case R.id.course_container0:{
+                Intent intent=new Intent(mContext, AddAgendaActivity.class);
+                Bundle bundle = new Bundle();
+
+                Calendar selectedCalendar = mCalendarView.getSelectedCalendar();
+                Calendar weekStartCalendar = CalendarUtil.getStartInWeek(selectedCalendar, 1);
+                Calendar clickedListCalendar = weekStartCalendar;
+
+                int tag = (int) v.getTag();
+                int ListIndex = tag / 100;
+                int ButtonIndex = tag % 100;
+                for (int i = 0; i < ListIndex; i++) {
+                    clickedListCalendar = CalendarUtil.getNextCalendar(clickedListCalendar);
+                }
+                String date = clickedListCalendar.toStringWithoutYear();
+                date = date + (ButtonIndex < 10 ? "0" + ButtonIndex : ButtonIndex) + "00";
+                bundle.putString("date", date);
+
+                // TODO: NOT NEXT DAY BUT NEXT HOUR
+                String nextDate = CalendarUtil.getNextCalendar(clickedListCalendar).toStringWithoutYear();
+                nextDate = nextDate + (ButtonIndex < 10 ? "0" + ButtonIndex : ButtonIndex) + "00";
+                bundle.putString("nextDate", nextDate);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                return true;
+            }
+            case R.id.btn_course:{
+                Intent intent=new Intent(mContext, AddAgendaActivity.class);
+                startActivity(intent);
+                return true;
+            }
+
         }
         return false;
     }
@@ -620,7 +592,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
                     Calendar calendar=mCalendarView.getSelectedCalendar();
                     Calendar weekStartCalenddar=CalendarUtil.getStartInWeek(calendar,1);
-                    updateAgenda(weekStartCalenddar);
+
                     dialog.dismiss();
                 }
             }
@@ -659,12 +631,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         mTextYear.setText(String.valueOf(calendar.getYear()));
         mTextLunar.setText(calendar.getLunar());
         mYear = calendar.getYear();
-        Calendar weekStartCalendar = CalendarUtil.getStartInWeek(calendar, 1);
-        updateAgenda(weekStartCalendar);
-        addCourseTable();
+        //update the display of courseTable
+        updateAgenda();
         updateCourse();
     }
 
+    public void updateAgenda(){
+        mHelper=UserDBHelper.getInstance(getContext(),1);
+
+        String str_date=mCalendarView.getSelectedCalendar().toString();
+
+        ArrayList<Agenda> agendaArrayList=mHelper.getAgendaListWithDate(str_date);
+    }
     public void updateCourse(){
 
         /*for (int i = 0; i < 7; i++) {
@@ -676,7 +654,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         int year=mCalendarView.getSelectedCalendar().getYear();
         String str_year=new Integer(year).toString();
         int month=mCalendarView.getSelectedCalendar().getMonth();
-        int indexOfSemester=1;
+        int indexOfSemester= 1;
         if((month>=8&&month<=12)||(month>=1&&month<=2)){
             indexOfSemester=1;
         }
@@ -717,8 +695,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                         String courseName=courseArrayList.get(j).courseName;
                         int numOfCourse=courseArrayList.get(j).numOfCourse;
                         int l=numOfCourse*200;
-                        int bias=index*200;
-                        drawButtonTest(courseContainers.get(i),l,bias,courseName);
+                        int bias=(index-1)*200;
+                        drawButtonTest(courseContainers.get(i),l,bias,courseName,1);
                     }
                     /*for(int j=0;j<length;j++){
                         int index=courseArrayList.get(j).startIndex;
@@ -749,52 +727,28 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     }
 
-    public void  drawButtonTest(RelativeLayout relativeLayout,int length,int bias,String text){
+    public void  drawButtonTest(RelativeLayout relativeLayout,int length,int bias,String text,int color){
+
         Button button=new Button(mContext);
-        button.setBackgroundResource(R.drawable.btn_shape_agenda_blue);
+
+        if(color==1){
+            button.setBackgroundResource(R.drawable.btn_shape_agenda_blue);
+        }
+        if(color==2){
+            button.setBackgroundResource(R.drawable.btn_shape_agenda_green);
+        }
         button.setTextColor(Color.WHITE);
+        button.setId(R.id.btn_course);
         button.setText(text);
         button.setTextSize(18);
+        button.setOnLongClickListener(this);
         RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,length);
         rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         rlp.setMargins(0,bias,0,0);
         button.setLayoutParams(rlp);
         relativeLayout.addView(button);
     }
-    public void updateAgenda(Calendar calendar) {
-      /*  for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 24; j++) {
-                AgendaTitleArrayList.get(i).set(j, "");
-            }
-        }
-        for (int i = 0; i < 7; i++) {
-            adapterArrayList.get(i).notifyDataSetChanged();
-            String date = calendar.toStringWithoutYear();
-            Log.v("test12", date);
-            calendar = CalendarUtil.getNextCalendar(calendar);
-            mHelper = UserDBHelper.getInstance(getContext(), 1);
-            ArrayList<Agenda> AgendaList = mHelper.getAgendaListWithDate(date);
-            int length = AgendaList.size();
-            if (length == 0) {
-                adapterArrayList.get(i).refreshAgenda();
-                continue;
-            } else {
-                ArrayList<String> titleList = new ArrayList<String>();
-                for (int j = 0; j < length; j++) {
-                    String title = AgendaList.get(j).title;
-                    String startTime = AgendaList.get(j).start_time;
 
-                    int hour = Integer.parseInt(startTime.substring(11, 13));
-
-
-                    AgendaTitleArrayList.get(i).set(hour, title);
-                }
-
-                adapterArrayList.get(i).refreshAgenda();
-
-            }
-        }*/
-    }
 
 
     /**
@@ -884,8 +838,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         mHelper=UserDBHelper.getInstance(getContext(), 1);
         mHelper.resetCourseTable();
         mHelper.insert_course(new Course(2019,1,"定向越野",1,1,15,5,2,"田径场","老师"));
-       /* mHelper.insert_course(new Course("毛概",1,7,2));
-        mHelper.insert_course(new Course("UML",2,3,2));
+        mHelper.insert_course(new Course(2019,1,"毛概",1,7,15,2,2,"田径场","老师"));
+        /*mHelper.insert_course(new Course("UML",2,3,2));
+        /*mHelper.insert_course(new Course("UML",2,3,2));
         mHelper.insert_course(new Course("编译技术",2,5,2));
         mHelper.insert_course(new Course("大学美育",2,9,2));
         mHelper.insert_course(new Course("计网",3,1,2));

@@ -19,7 +19,8 @@ public class CustomTimeListAdapter extends BaseAdapter {
         list=new ArrayList<String>();
 
         for(int i=0;i<=23;i++){
-            String s=new Integer(i).toString();
+            int time=(i+8)%23;
+            String s=new Integer(time).toString();
             list.add(s);
         }
 

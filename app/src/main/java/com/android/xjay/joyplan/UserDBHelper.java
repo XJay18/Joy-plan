@@ -180,6 +180,11 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     *
+     * @param date %m%d
+     * @return
+     */
     public ArrayList<Agenda> getAgendaListWithDate(String date){
         openReadLink();
         Cursor cursor=null;
@@ -263,7 +268,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     public String createAgendaSelectActionDate(){
         StringBuffer stringBuffer=new StringBuffer();
-        stringBuffer.append("strftime('%m%d',");
+        stringBuffer.append("strftime('%Y%m%d',");
         stringBuffer.append("starttime");
         stringBuffer.append(")=?");
         return  stringBuffer.toString();
