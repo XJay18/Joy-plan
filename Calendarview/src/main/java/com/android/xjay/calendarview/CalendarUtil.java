@@ -258,6 +258,25 @@ public final class CalendarUtil {
 
     }
 
+    /**
+     *
+     * @param date YYYY-MM-DD
+     * @return
+     */
+    public static  Calendar getCalendarByDateString(String date){
+        Calendar calendar=new Calendar();
+        String str_year=date.substring(0,4);
+        String str_month=date.substring(5,7);
+        String str_day=date.substring(8,10);
+        int year=Integer.parseInt(str_year);
+        int month=Integer.parseInt(str_month);
+        int day=Integer.parseInt(str_day);
+        calendar.setYear(year);
+        calendar.setMonth(month);
+        calendar.setDay(day);
+        return  calendar;
+    }
+
     public static Calendar getNextCalendar(Calendar calendar) {
         java.util.Calendar date = java.util.Calendar.getInstance();
 
@@ -367,7 +386,7 @@ public final class CalendarUtil {
      * @param calendar 某个日期
      * @return 返回某个日期是星期几
      */
-    static int getWeekFormCalendar(Calendar calendar) {
+    public static int getWeekFormCalendar(Calendar calendar) {
         java.util.Calendar date = java.util.Calendar.getInstance();
         date.set(calendar.getYear(), calendar.getMonth() - 1, calendar.getDay());
         return date.get(java.util.Calendar.DAY_OF_WEEK) - 1;

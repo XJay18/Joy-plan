@@ -84,6 +84,16 @@
                 android:textColor="#000000"
                 android:textSize="12sp" />
         </FrameLayout>
+
+        <ImageView
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/img_add_agenda"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/btn_add"
+            android:layout_toLeftOf="@id/fl_current"
+            />
     </RelativeLayout>
 
     <com.android.xjay.calendarview.CalendarLayout

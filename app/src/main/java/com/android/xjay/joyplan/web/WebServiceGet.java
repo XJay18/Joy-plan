@@ -97,15 +97,16 @@ public class WebServiceGet {
         return null;
     }
     //添加日程活动
-    public static String addagendaGet(String title,String starttime,String endtime,String content,String address){
+    public static String addagendaGet(String title,String starttime,String endtime,String content,String address,String add){
         HttpURLConnection connection = null;
         InputStream in = null;
 
         try{
-            String Url = "http://110.64.91.150:8080/joyweb3.0/"+address;
+            String Url = "http://110.64.91.150:8080/joyweb3.0/"+add;
             String path = Url + "?title=" + URLEncoder.encode(title,"UTF-8") + "&starttime=" + URLEncoder.encode(starttime,"UTF-8")
                     +"&endtime="+URLEncoder.encode(endtime,"UTF-8")
-                    +"&content="+URLEncoder.encode(content,"UTF-8");
+                    +"&content="+URLEncoder.encode(content,"UTF-8")
+                    +"&address="+URLEncoder.encode(address,"UTF-8");
             try {
                 URL url = new URL(path);
                 connection = (HttpURLConnection)url.openConnection();

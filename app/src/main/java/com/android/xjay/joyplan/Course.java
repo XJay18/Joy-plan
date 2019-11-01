@@ -11,6 +11,21 @@ public class Course {
     public int endWeek;
     public String address;
     public String teacherName;
+    public String notation;
+
+    public Course(int year, int index0fSemester, String courseName, int dayofweek, int startWeek, int endWeek, int startIndex, int numOfCourse, String address, String teacherName,String notation) {
+        this.year = year;
+        this.index0fSemester = index0fSemester;
+        this.courseName = courseName;
+        this.address = address;
+        this.teacherName = teacherName;
+        this.startWeek = startWeek;
+        this.endWeek = endWeek;
+        this.dayofweek = dayofweek;
+        this.startIndex = startIndex;
+        this.numOfCourse = numOfCourse;
+        this.notation=notation;
+    }
 
     public Course(int year, int index0fSemester, String courseName, int dayofweek, int startWeek, int endWeek, int startIndex, int numOfCourse, String address, String teacherName) {
         this.year = year;
@@ -23,5 +38,6 @@ public class Course {
         this.dayofweek = dayofweek;
         this.startIndex = startIndex;
         this.numOfCourse = numOfCourse;
+        this.notation="备注";
     }
 }
