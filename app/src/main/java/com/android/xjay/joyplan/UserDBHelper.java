@@ -68,7 +68,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
         String create_sql = "CREATE TABLE IF NOT EXISTS " + ACTIVITY_TABLE + "(" + "id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL," + "title VARCHAR NOT NULL," + "info VARCHAR NOT NULL," + "starttime DATETIME NOT NULL," + "endtime DATETIME not null," + "address VARCHAR NOT NULL" + ");";
         db.execSQL(create_sql);
 
-        create_sql = "CREATE TABLE IF NOT EXISTS " + AGENDA_TABLE + "(" + "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "title VARCHAR NOT NULL," + "starttime DATETIME NOT NULL," + "endtime DATETIME NOT NULL," + "content VARCHAR NOT NULL," + "address VARCHAR NOT NULL" + ");";
+        create_sql = "CREATE TABLE IF NOT EXISTS " + AGENDA_TABLE + "(" + "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "title VARCHAR NOT NULL," + "starttime DATETIME NOT NULL," + "endtime DATETIME NOT NULL," + "notation VARCHAR NOT NULL," + "address VARCHAR NOT NULL" + ");";
         db.execSQL(create_sql);
 
         create_sql = "CREATE TABLE IF NOT EXISTS " + COURSE_TABLE + "(" + "coursename VARCHAR NOT NULL," + "dayofweek INTEGER NOT NULL," + "startweek INTEGER NOT NULL," + "endweek INTEGER NOT NULL," + "startindex INTEGER NOT NULL," + "numofcourse INTEGER NOT NULL," + "address VARCHAR NOT NULL," + "teachername VARCHAR NOT NULL,"+"notation VARCHAR NOT NULL," + "PRIMARY KEY(dayofweek,startweek,startindex)" + ");";

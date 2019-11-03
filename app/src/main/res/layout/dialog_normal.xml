@@ -54,13 +54,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_alignTop="@id/clock_container"
+            android:layout_marginTop="50dp"
+            android:id="@+id/address_container"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_address"
+                android:layout_width="22dp"
+                android:layout_height="22dp" />
+            <TextView
+                android:id="@+id/tv_agenda_dialog_address"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:textSize="20sp"
+                android:textColor="@color/colorWhite"
+                android:text="华南理工大学"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
 
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="wrap_content">
         <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
             android:id="@+id/tv_agenda_dialog_title"
             android:layout_marginLeft="10dp"
             android:textSize="20sp"

@@ -525,6 +525,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
         TextView tv_title = view.findViewById(R.id.tv_agenda_dialog_title);
         TextView tv_time = view.findViewById(R.id.tv_agenda_dialog_start_time);
+        TextView tv_address=view.findViewById(R.id.tv_agenda_dialog_address);
         EditText editText_notation = view.findViewById(R.id.editText_agenda_dialog_notation);
 
 
@@ -582,12 +583,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                     }
                 }
                 tv_time.setText(dayOfWeek+" "+index+"节");
+                tv_address.setText(course.address);
                 editText_notation.setText(course.notation);
 
             }
             else{
                 tv_title.setText("无");
                 tv_time.setText("00-00-00");
+                tv_address.setText("无");
             }
             dialog.show();
 
@@ -597,9 +600,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                     Course course=(Course)content;
                     if(course!=null){
                         mHelper.deleteCourse(course);
-
+                        updateCourse();
                     }
-                    updateCourse();
+
                     dialog.dismiss();
 
                 }
@@ -612,8 +615,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                         String notation=editText_notation.getText().toString();
                         mHelper.updateCourseNotation(course,notation);
                         editText_notation.setText(notation);
+                        updateCourse();
                     }
-                    updateCourse();
+
                     dialog.dismiss();
 
                 }
@@ -624,10 +628,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             if (agenda != null) {
                 tv_title.setText(agenda.title);
                 tv_time.setText(agenda.start_time);
+                tv_address.setText(agenda.address);
                 editText_notation.setText(agenda.notation);
             } else {
                 tv_title.setText("无");
                 tv_time.setText("00-00-00");
+                tv_address.setText("无");
             }
             view.findViewById(R.id.btn_delete).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -636,14 +642,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                     Agenda agenda=(Agenda)content;
                     if(agenda!=null){
                         mHelper.deleteAgendaWithTitleAndStarttime(agenda.title,agenda.start_time);
-
+                        updateAgenda();
                     }
 
 
 
                     //Calendar calendar=mCalendarView.getSelectedCalendar();
                     //Calendar weekStartCalenddar=CalendarUtil.getStartInWeek(calendar,1);
-                    updateAgenda();
+
                     dialog.dismiss();
 
                 }
@@ -716,6 +722,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                 if(view!=null){
                     if(view.getId()==R.id.btn_agenda){
                         container.removeViewAt(j);
+                        j--;
                     }
                 }
 
@@ -750,9 +757,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                         e.printStackTrace();
                     }
                     int hoursBetween = com.android.xjay.joyplan.Utils.CalendarUtil.hoursBetween(start_time, end_time);
-                    int l=hoursBetween*300;
-                    int h=start_time.getHours();
-                    int bias=((h-8)%24)*300;
+                    int l=hoursBetween*100;
+                    int hours=start_time.getHours();
+                    float minutes=start_time.getMinutes();
+                    float time=hours+minutes/60;
+                    float bias=time*100;
                     drawAgenda(courseContainers.get(i),l,bias,agenda);
 
 
@@ -782,6 +791,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                 if(view!=null){
                     if(view.getId()==R.id.btn_course){
                         container.removeViewAt(j);
+                        j--;
                     }
                 }
 
@@ -847,8 +857,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
                     String courseName=course.courseName;
                     int numOfCourse=course.numOfCourse;
-                    int l=numOfCourse*300;
-                    int bias=(index-1)*300;
+                    int l=numOfCourse*83;
+                    int bias=0;
+                    if(index<=4){
+                        bias=(index-1)*83+883;
+                    }
+                    else if(index>4&&index<=8){
+                        bias=(index-5)*83+1400;
+                    }
+                    else if(index>8&&index<=12){
+                        bias=(index-9)*83+1900;
+                    }
                     drawCourse(courseContainers.get(i),l,bias,course);
 
                 }
@@ -876,10 +895,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         button.setTag(course);
         button.setOnLongClickListener(this);
         button.setOnClickListener(this);
-        RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,length);
-
+        int l=ScreenSizeUtils.dip2px(mContext,length);
+        RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,l);
+        int bia=ScreenSizeUtils.dip2px(mContext,bias);
         rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        rlp.setMargins(0, bias, 0, 0);
+        rlp.setMargins(0, bia, 0, 0);
         button.setLayoutParams(rlp);
         relativeLayout.addView(button);
         int a=relativeLayout.getChildCount();
@@ -887,7 +907,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
 
 
-    public void drawAgenda(RelativeLayout relativeLayout, int length, int bias, Agenda agenda){
+    public void drawAgenda(RelativeLayout relativeLayout, int length, float bias, Agenda agenda){
 
         Button button=new Button(mContext);
 
@@ -903,10 +923,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         button.setTag(agenda);
         button.setOnLongClickListener(this);
         button.setOnClickListener(this);
-        RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,length);
+        int l=ScreenSizeUtils.dip2px(mContext,length);
+        int bia=ScreenSizeUtils.dip2px(mContext,bias);
+        RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,l);
 
         rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        rlp.setMargins(0, bias, 0, 0);
+        rlp.setMargins(0, bia, 0, 0);
         button.setLayoutParams(rlp);
         relativeLayout.addView(button);
 
@@ -1009,6 +1031,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
                 mHelper.insert_course(new Course(2019, 1, "定向越野", 1, 1, 15, 5, 2, "田径场", "老师"));
                 mHelper.insert_course(new Course(2019, 1, "毛概", 1, 7, 15, 1, 2, "田径场", "老师"));
+                mHelper.insert_course(new Course(2019, 1, "毛概阿肯德基咖喱块附近的光华路科技刻录机ad", 2, 7, 15, 9, 3, "田径场", "老师"));
                 mHelper.insert_course(new Course(2019, 1, "毛概", 2, 7, 15, 2, 2, "田径场", "老师"));
                 mHelper.insert_course(new Course(2019, 1, "毛概", 3, 7, 15, 2, 2, "田径场", "老师"));
                 /*mHelper.insert_course(new Course("UML",2,3,2));
