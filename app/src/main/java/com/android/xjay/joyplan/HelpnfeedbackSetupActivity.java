@@ -18,11 +18,30 @@ import com.android.xjay.joyplan.Utils.JumpTextWatcher;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class HelpnfeedbackSetupActivity extends AppCompatActivity implements View.OnClickListener {
+/**
+ * 帮助与反馈页面。
+ */
+public class HelpnfeedbackSetupActivity extends AppCompatActivity
+        implements View.OnClickListener {
+    /**
+     * edit text 反馈内容。
+     */
     private EditText et_feedback;
+    /**
+     * edit text 邮箱。
+     */
     private EditText et_mailaddress;
+    /**
+     * button 返回按键。
+     */
     private Button bt_back;
+    /**
+     * button 确认按键。
+     */
     private Button bt_confirm;
+    /**
+     * 动画。
+     */
     private LottieAnimationView animationView;
 
     @Override
@@ -35,11 +54,16 @@ public class HelpnfeedbackSetupActivity extends AppCompatActivity implements Vie
         setListener();
         et_feedback = findViewById(R.id.et_setup_feedback);
         et_mailaddress = findViewById(R.id.et_setup_mailaddress);
-        et_mailaddress.addTextChangedListener(new JumpTextWatcher(this, et_mailaddress, et_feedback));
-        et_feedback.addTextChangedListener(new JumpTextWatcher(this, et_feedback, bt_confirm));
+        et_mailaddress.addTextChangedListener(new JumpTextWatcher(
+                this, et_mailaddress, et_feedback));
+        et_feedback.addTextChangedListener(new JumpTextWatcher(
+                this, et_feedback, bt_confirm));
         animationView = findViewById(R.id.setup_anim_okay_blue);
     }
 
+    /**
+     * 为返回按键及确认按键设定监听器。
+     */
     private void setListener() {
         bt_back.setOnClickListener(this);
         bt_confirm.setOnClickListener(this);
@@ -53,31 +77,32 @@ public class HelpnfeedbackSetupActivity extends AppCompatActivity implements Vie
                 break;
             }
             case R.id.btn_setup_confirm: {
-                /* Check whether input is valid */
+                /* 检查输入是否有效 */
                 if (checkHasInput()) {
                     animationView.setAnimation("okay_blue.json");
                     animationView.loop(false);
-                    Animator.AnimatorListener mAnimationListener = new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-                            animationView.setVisibility(View.VISIBLE);
-                        }
+                    Animator.AnimatorListener mAnimationListener =
+                            new Animator.AnimatorListener() {
+                                @Override
+                                public void onAnimationStart(Animator animation) {
+                                    animationView.setVisibility(View.VISIBLE);
+                                }
 
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            animationView.setVisibility(View.INVISIBLE);
-                        }
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    animationView.setVisibility(View.INVISIBLE);
+                                }
 
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
+                                @Override
+                                public void onAnimationCancel(Animator animation) {
 
-                        }
+                                }
 
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
+                                @Override
+                                public void onAnimationRepeat(Animator animation) {
 
-                        }
-                    };
+                                }
+                            };
                     animationView.addAnimatorListener(mAnimationListener);
                     animationView.playAnimation();
                     Toast.makeText(this, "您的反馈已经提交，谢谢您！",
@@ -89,6 +114,9 @@ public class HelpnfeedbackSetupActivity extends AppCompatActivity implements Vie
         }
     }
 
+    /**
+     * 检查用户是否有输入信息。
+     */
     private boolean checkHasInput() {
         Log.v("email", et_mailaddress.getText().toString());
         Log.v("feedback", et_feedback.getText().toString());
@@ -99,12 +127,13 @@ public class HelpnfeedbackSetupActivity extends AppCompatActivity implements Vie
             AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
             mBuilder.setTitle("请输入邮箱地址");
             mBuilder.setMessage("您好，请填写您的邮箱地址以便我们回复您的反馈。");
-            mBuilder.setPositiveButton("好的", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+            mBuilder.setPositiveButton("好的",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                }
-            });
+                        }
+                    });
             AlertDialog mAlert = mBuilder.create();
             mAlert.show();
             return false;
@@ -112,12 +141,13 @@ public class HelpnfeedbackSetupActivity extends AppCompatActivity implements Vie
             AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
             mBuilder.setTitle("请输入反馈内容");
             mBuilder.setMessage("您好，请填写反馈内容。");
-            mBuilder.setPositiveButton("好的", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+            mBuilder.setPositiveButton(
+                    "好的", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                }
-            });
+                        }
+                    });
             AlertDialog mAlert = mBuilder.create();
             mAlert.show();
             return false;

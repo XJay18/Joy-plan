@@ -16,8 +16,10 @@ public class CustomTimeListAdapter extends BaseAdapter {
     public CustomTimeListAdapter() {
         list = new ArrayList<String>();
 
-        for (int i = 0; i <= 23; i++) {
-            String s = new Integer(i).toString();
+
+        for(int i=0;i<=23;i++){
+
+            String s=new Integer(i).toString();
             list.add(s);
         }
 

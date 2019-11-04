@@ -187,6 +187,7 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 String address = editText_agenda_address.getText().toString();
                 String content = editText_notation.getText().toString();
                 Agenda agenda = new Agenda(title, start_time, end_time, content, address);
+
                 mHelper.insert_agenda(agenda);
                 SQLiteDatabase dbRead = mHelper.getReadableDatabase();
                 Cursor c;
@@ -197,6 +198,9 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
 //                String s = new Integer(length).toString();
 //                Toast toast = Toast.makeText(this, s, Toast.LENGTH_SHORT);
                 Toast toast = Toast.makeText(this, "任务添加成功", Toast.LENGTH_SHORT);
+                Intent intent = new Intent();
+                intent.setAction("ADD AGENDA");
+                sendBroadcast(intent);
                 toast.show();
 
                 finish();

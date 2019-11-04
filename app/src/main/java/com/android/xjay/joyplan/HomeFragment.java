@@ -28,7 +28,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.xjay.calendarview.Calendar;
 import com.android.xjay.calendarview.CalendarLayout;
@@ -67,6 +66,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     View mScheduleView;
 
+    View imgAddAgenda;
+
     YearViewPager mYearViewPager;
 
     TextView mTextYear;
@@ -82,6 +83,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
     LinearLayout mRecyclerView;
 
     ArrayList<RelativeLayout> courseContainers;
+
 
     ScrollView scrollView;
 
@@ -129,6 +131,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                 dynamicReceiverAddGoal = new DynamicReceiverAddGoal();
                 mContext.registerReceiver(dynamicReceiverAddGoal, intentFilterAddGoal);
 
+                DynamicReceiverAddAgenda dynamicReceiverAddAgenda;
+                IntentFilter intentFilterAddAgenda=new IntentFilter();
+                intentFilterAddAgenda.addAction("ADD AGENDA");
+                dynamicReceiverAddAgenda=new DynamicReceiverAddAgenda();
+                mContext.registerReceiver(dynamicReceiverAddAgenda,intentFilterAddAgenda);
+
 
                 //((FragmentActivity)mContext).findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
                 //initView()
@@ -172,6 +180,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                     }
                 });
 
+                imgAddAgenda.setOnClickListener(this);
+
+
                 mCalendarView.setOnYearChangeListener(this);
                 mCalendarView.setOnCalendarSelectListener(this);
                 mTextYear.setText(String.valueOf(mCalendarView.getCurYear()));
@@ -183,7 +194,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                 mTextLunar.setText("今日");
                 mTextCurrentDay.setText(String.valueOf(mCalendarView.getCurDay()));
 
-
+                updateAgenda();
+                updateCourse();
                 return mScheduleView;
             }
             // deal with the fragment_discovery
@@ -253,12 +265,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         mCalendarView = mScheduleView.findViewById(R.id.calendarView);
         mTextCurrentDay = mScheduleView.findViewById(R.id.tv_current_day);
         mCalendarLayout = mScheduleView.findViewById(R.id.calendarLayout);
+        imgAddAgenda=mScheduleView.findViewById(R.id.img_add_agenda);
 
         mRecyclerView = mScheduleView.findViewById(R.id.recyclerView);
         courseContainers = new ArrayList<>();
         RelativeLayout container = mScheduleView.findViewById(R.id.course_container0);
         courseContainers.add(container);
-        container = mScheduleView.findViewById(R.id.course_container1);
+
+        container=mScheduleView.findViewById(R.id.course_container1);
+        container.setOnLongClickListener(this);
+
+
         courseContainers.add(container);
         container = mScheduleView.findViewById(R.id.course_container2);
         courseContainers.add(container);
@@ -272,10 +289,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         courseContainers.add(container);
     }
 
-    /* private void initScrollDisabledListView() {
+     private void initScrollDisabledListView() {
         AgendaTitleArrayList = new ArrayList<>();
-        CourseArrayList=new ArrayList<>();
-        adapterArrayList=new ArrayList<CustomListAdapter>();
+
         for (int i = 0; i < 7; i++) {
             ArrayList<String> arrayList = new ArrayList<String>();
             ArrayList<String> courseList = new ArrayList<String>();
@@ -284,79 +300,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                 courseList.add("");
             }
             AgendaTitleArrayList.add(arrayList);
-            CourseArrayList.add(courseList);
 
 
-
-            CustomListAdapter customListAdapter = new CustomListAdapter(this, this, arrayList, courseList, i);
-            adapterArrayList.add(customListAdapter);
 
         }
-
-
-        listView1.setAdapter(adapterArrayList.get(0));
-        listView1.setTag(0);
-
-        listView2.setAdapter(adapterArrayList.get(1));
-        listView2.setTag(1);
-
-        listView3.setAdapter(adapterArrayList.get(2));
-        listView3.setTag(2);
-
-        listView4.setAdapter(adapterArrayList.get(3));
-        listView4.setTag(3);
-
-        listView5.setAdapter(adapterArrayList.get(4));
-        listView5.setTag(4);
-
-        listView6.setAdapter(adapterArrayList.get(5));
-        listView6.setTag(5);
-
-        listView7.setAdapter(adapterArrayList.get(6));
-        listView7.setTag(6);
 
         Calendar calendar = mCalendarView.getSelectedCalendar();
         Calendar weekStartCalendar = CalendarUtil.getStartInWeek(calendar, 1);
-        updateAgenda(weekStartCalendar);
-    }*/
+    }
 
-    /*private Map<String,List<String>> CustomerAdapter_getDataMap(){
-        Map<String,List<String>> map=new HashMap<>();
-        for(int y=2018;y<2025;y++){
-            for(int m=1;m<=12;m++){
-                for(int d=1;d<=31;d++) {
-                    List<String> list = new ArrayList<String>();
 
-                    String s="哈皮";
-                    list.add(s);
-
-                    s="制作PPT";
-                    list.add(s);
-
-                    s="制作PPT";
-                    list.add(s);
-
-                    s="制作PPT";
-                    list.add(s);
-
-                    s="制作PPT";
-                    list.add(s);
-
-                    s="制作PPT";
-                    list.add(s);
-
-                    s="制作PPT";
-                    list.add(s);
-
-                    //map的键值
-                    String key=y + "" + (m < 10 ? "0" + m : m) + "" + (d < 10 ? "0" + d : d);
-
-                    map.put(key,list);
-                }
-            }
-        }
-        return map;
-    }*/
 
 
     public void RedrawExpandingList() {
@@ -368,11 +321,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
         STARTTIMES = new String[100];
 
-//       ENDTIMES=new String[100];
+        //ENDTIMES=new String[100];
 
         ADDRESSES = new String[100];
         Cursor c;
-//        mHelper.reset();
+        // mHelper.reset();
         mHelper = UserDBHelper.getInstance(getContext(), 1);
         SQLiteDatabase dbRead = mHelper.getReadableDatabase();
         c = dbRead.query("user_info", null, null
@@ -427,7 +380,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             String s = new Integer(position).toString();
 
             Log.v("buttonIndex", s);
-            customDialog(listIndex, buttonIndex);
+
         } else if (view.getId() == R.id.ll_setup_accountnsafety) {
             Intent intent = new Intent(mContext, AccountnSafetySetupActivity.class);
             startActivity(intent);
@@ -436,6 +389,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             startActivity(intent);
         } else if (view.getId() == R.id.ll_setup_about) {
             Intent intent = new Intent(mContext, AboutSetupActivity.class);
+            startActivity(intent);
+        } else if(view.getId()==R.id.btn_course){
+            if(view.getTag() instanceof Course) {
+
+                customDialog(view.getTag());
+            }
+        }else if(view.getId()==R.id.btn_agenda){
+
+            if(view.getTag() instanceof Agenda){
+                customDialog(view.getTag());
+            }
+        }else if(view.getId()==R.id.img_add_agenda){
+            Intent intent=new Intent(mContext, AddAgendaActivity.class);
             startActivity(intent);
         }
 
@@ -475,44 +441,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
     public boolean onLongClick(View v) {
         switch (v.getId()) {
 
-            case R.id.btn_mission: {
-                int tag = (int) v.getTag();
-                customChooseDialog(tag);
-                return true;
-                /*Intent intent = new Intent();
-                intent.setClass(mContext, AddAgendaActivity.class);
-                Bundle bundle = new Bundle();
-
-
-                Calendar selectedCalendar = mCalendarView.getSelectedCalendar();
-                Calendar weekStartCalendar = CalendarUtil.getStartInWeek(selectedCalendar, 1);
-                Calendar clickedListCalendar = weekStartCalendar;
-
-                int tag = (int) v.getTag();
-                int ListIndex = tag / 100;
-                int ButtonIndex = tag % 100;
-                for (int i = 0; i < ListIndex; i++) {
-                    clickedListCalendar = CalendarUtil.getNextCalendar(clickedListCalendar);
-                }
-                String date = clickedListCalendar.toStringWithoutYear();
-                date = date + (ButtonIndex < 10 ? "0" + ButtonIndex : ButtonIndex) + "00";
-                bundle.putString("date", date);
-
-                // TODO: NOT NEXT DAY BUT NEXT HOUR
-                String nextDate = CalendarUtil.getNextCalendar(clickedListCalendar).toStringWithoutYear();
-                nextDate = nextDate + (ButtonIndex < 10 ? "0" + ButtonIndex : ButtonIndex) + "00";
-                bundle.putString("nextDate", nextDate);
-
-
-                intent.putExtras(bundle);
-                startActivity(intent);
-                return true;*/
+            case R.id.btn_agenda:{
+                customChooseDialog(v.getTag());
             }
+            case R.id.btn_course:{
+                Intent intent=new Intent(mContext, AddAgendaActivity.class);
+                startActivity(intent);
+                return true;
+            }
+
         }
         return false;
     }
 
-    private void customChooseDialog(int tag) {
+    private void customChooseDialog(Object content) {
         final Dialog dialog = new Dialog(mContext, R.style.NormalDialogStyle);
         View view = View.inflate(mContext, R.layout.dialog_choose, null);
         Button buttonAgenda = view.findViewById(R.id.btn_choose_agenda);
@@ -520,36 +462,42 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         buttonAgenda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(mContext, AddAgendaActivity.class);
-                Bundle bundle = new Bundle();
-               /* mHelper=UserDBHelper.getInstance(getContext(),1);
-                mHelper.reset();*/
+                if(content instanceof Agenda){
 
-                Calendar selectedCalendar = mCalendarView.getSelectedCalendar();
-                Calendar weekStartCalendar = CalendarUtil.getStartInWeek(selectedCalendar, 1);
-                Calendar clickedListCalendar = weekStartCalendar;
+                    //get day of week by starttime
+                    Agenda agenda=(Agenda)content;
+                    String starttime=agenda.start_time;
+                    String date=starttime.substring(0,10);
+                    Calendar calendar=CalendarUtil.getCalendarByDateString(date);
+                    int dayOfWeek=CalendarUtil.getWeekFormCalendar(calendar);
+
+                    //get time in a day by starttime
+                    String str_hour=starttime.substring(11,13);
+                    String str_mintue=starttime.substring(14,16);
+                    int hour=Integer.parseInt(str_hour);
+                    int mintue=Integer.parseInt(str_mintue);
+                    int time=hour+(mintue/60);
+
+                    //get String without year MMDD
+                    String dateWithoutYear=calendar.toStringWithoutYear();
+                    dateWithoutYear=dateWithoutYear+str_hour+str_mintue;
+
+                    String nextDateWithoutYear=CalendarUtil.getNextCalendar(calendar).toStringWithoutYear();
+                    nextDateWithoutYear=nextDateWithoutYear+str_hour+str_mintue;
+
+                    Intent intent=new Intent();
+                    intent.setClass(mContext, AddAgendaActivity.class);
+                    Bundle bundle=new Bundle();
+                    bundle.putString("date", dateWithoutYear);
+                    bundle.putString("nextDate",nextDateWithoutYear);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
 
 
-                int ListIndex = tag / 100;
-                int ButtonIndex = tag % 100;
-                for (int i = 0; i < ListIndex; i++) {
-                    clickedListCalendar = CalendarUtil.getNextCalendar(clickedListCalendar);
                 }
-                String date = clickedListCalendar.toStringWithoutYear();
-                date = date + (ButtonIndex < 10 ? "0" + ButtonIndex : ButtonIndex) + "00";
-                bundle.putString("date", date);
-
-                // TODO: NOT NEXT DAY BUT NEXT HOUR
-                String nextDate = CalendarUtil.getNextCalendar(clickedListCalendar).toStringWithoutYear();
-                nextDate = nextDate + (ButtonIndex < 10 ? "0" + ButtonIndex : ButtonIndex) + "00";
-                bundle.putString("nextDate", nextDate);
-
-
-                intent.putExtras(bundle);
-                startActivity(intent);
             }
         });
+
         buttonGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -570,13 +518,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         dialog.show();
     }
 
-    private void customDialog(int listIndex, int buttonIndex) {
+    private void customDialog(Object content) {
         final Dialog dialog = new Dialog(mContext, R.style.NormalDialogStyle);
         View view = View.inflate(mContext, R.layout.dialog_normal, null);
 
 
         TextView tv_title = view.findViewById(R.id.tv_agenda_dialog_title);
         TextView tv_time = view.findViewById(R.id.tv_agenda_dialog_start_time);
+        TextView tv_address=view.findViewById(R.id.tv_agenda_dialog_address);
         EditText editText_notation = view.findViewById(R.id.editText_agenda_dialog_notation);
 
 
@@ -592,36 +541,139 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         lp.gravity = Gravity.CENTER;
         dialogWindow.setAttributes(lp);
 
-        mHelper = UserDBHelper.getInstance(getContext(), 1);
-        String time = getListCilckedCalendar(listIndex).toStringWithoutYear();
-        time = time + (buttonIndex < 10 ? "0" + buttonIndex : buttonIndex);
-        Agenda agenda = mHelper.getAgendaWithTime(time);
+
+        if(content instanceof Course){
+            Course course=(Course)content;
+
+            if(course!=null){
+                tv_title.setText("课程："+course.courseName);
+                String startIndex=String.valueOf(course.startIndex);
+                int k=course.startIndex+course.numOfCourse-1;
+                String endIndex=String.valueOf(k);
+                String index=startIndex+"-"+endIndex;
+                String dayOfWeek="";
+                switch (course.dayofweek){
+                    case 1:{
+                        dayOfWeek="星期一";
+                        break;
+                    }
+                    case 2: {
+                        dayOfWeek="星期二";
+                        break;
+                    }
+                    case 3:{
+                        dayOfWeek="星期三";
+                        break;
+                    }
+                    case 4:{
+                        dayOfWeek="星期四";
+                        break;
+                    }
+                    case 5:{
+                        dayOfWeek="星期五";
+                        break;
+                    }
+                    case 6:{
+                        dayOfWeek="星期六";
+                        break;
+                    }
+                    case 7:{
+                        dayOfWeek="星期日";
+                        break;
+                    }
+                }
+                tv_time.setText(dayOfWeek+" "+index+"节");
+                tv_address.setText(course.address);
+                editText_notation.setText(course.notation);
+
+            }
+            else{
+                tv_title.setText("无");
+                tv_time.setText("00-00-00");
+                tv_address.setText("无");
+            }
+            dialog.show();
+
+            view.findViewById(R.id.btn_delete).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Course course=(Course)content;
+                    if(course!=null){
+                        mHelper.deleteCourse(course);
+                        updateCourse();
+                    }
+
+                    dialog.dismiss();
+
+                }
+            });
+            view.findViewById(R.id.btn_confirm_notation).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Course course=(Course)content;
+                    if(course!=null){
+                        String notation=editText_notation.getText().toString();
+                        mHelper.updateCourseNotation(course,notation);
+                        editText_notation.setText(notation);
+                        updateCourse();
+                    }
+
+                    dialog.dismiss();
+
+                }
+            });
+        }
+        else if(content instanceof Agenda){
+            Agenda agenda=(Agenda)content;
+            if (agenda != null) {
+                tv_title.setText(agenda.title);
+                tv_time.setText(agenda.start_time);
+                tv_address.setText(agenda.address);
+                editText_notation.setText(agenda.notation);
+            } else {
+                tv_title.setText("无");
+                tv_time.setText("00-00-00");
+                tv_address.setText("无");
+            }
+            view.findViewById(R.id.btn_delete).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Agenda agenda=(Agenda)content;
+                    if(agenda!=null){
+                        mHelper.deleteAgendaWithTitleAndStarttime(agenda.title,agenda.start_time);
+                        updateAgenda();
+                    }
 
 
-        if (agenda != null) {
-            tv_title.setText(agenda.title);
-            tv_time.setText(agenda.start_time);
-            editText_notation.setText(agenda.content);
-        } else {
-            tv_title.setText("无");
-            tv_time.setText("00-00-00");
+
+                    //Calendar calendar=mCalendarView.getSelectedCalendar();
+                    //Calendar weekStartCalenddar=CalendarUtil.getStartInWeek(calendar,1);
+
+                    dialog.dismiss();
+
+                }
+            });
+            view.findViewById(R.id.btn_confirm_notation).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Agenda agenda=(Agenda)content;
+                    String notation=editText_notation.getText().toString();
+                    mHelper.updateAgendaNotation(agenda,notation);
+                    editText_notation.setText(notation);
+                    updateAgenda();
+                    dialog.dismiss();;
+
+                }
+            });
+
+            dialog.show();
         }
 
-        view.findViewById(R.id.btn_delete_agenda).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (agenda.index != -1) {
-                    int id = agenda.index;
-                    mHelper.deleteAgendaWithIndex(id);
 
-                    Calendar calendar = mCalendarView.getSelectedCalendar();
-                    Calendar weekStartCalenddar = CalendarUtil.getStartInWeek(calendar, 1);
-                    updateAgenda(weekStartCalenddar);
-                    dialog.dismiss();
-                }
-            }
-        });
-        dialog.show();
+
+
+
     }
 
 
@@ -654,272 +706,372 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         mTextYear.setText(String.valueOf(calendar.getYear()));
         mTextLunar.setText(calendar.getLunar());
         mYear = calendar.getYear();
-        Calendar weekStartCalendar = CalendarUtil.getStartInWeek(calendar, 1);
-        updateAgenda(weekStartCalendar);
-        addCourseTable();
+        //update the display of courseTable
+        updateAgenda();
+
         updateCourse();
     }
 
-    public void updateCourse() {
 
-        /*for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 24; j++) {
-                CourseArrayList.get(i).set(j, "");
-            }
-        }*/
-        mHelper = UserDBHelper.getInstance(getContext(), 1);
-        int year = mCalendarView.getSelectedCalendar().getYear();
-        String str_year = new Integer(year).toString();
-        int month = mCalendarView.getSelectedCalendar().getMonth();
-        int indexOfSemester = 1;
-        if ((month >= 8 && month <= 12) || (month >= 1 && month <= 2)) {
-            indexOfSemester = 1;
-        } else indexOfSemester = 2;
-        int day = mCalendarView.getSelectedCalendar().getDay();
-        if (year >= 2019 && ((month > 2) || month == 2 && day >= 25)) {
-            for (int i = 1; i <= 7; i++) {
-
-                Calendar selectedCalendar = mCalendarView.getSelectedCalendar();
-                String selectedDateString = selectedCalendar.toString();
-                SimpleDateFormat simFormat = new SimpleDateFormat("yyyyMMdd HHmmss");
-                Date selectedDate = new Date();
-                Date startWeekDate = new Date();
-                try {
-                    if (indexOfSemester == 1) {
-                        startWeekDate = simFormat.parse(str_year + "0902" + " " + "000000");
-                    } else startWeekDate = simFormat.parse(str_year + "0225" + " " + "000000");
-
-                    selectedDate = simFormat.parse(selectedDateString + " " + "000000");
-
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                int days = com.android.xjay.joyplan.Utils.CalendarUtil.daysBetween(startWeekDate, selectedDate);
-
-                if (days > 0) {
-                    int week = 0;
-                    week = (days + 1) / 7 + 1;
-
-                    ArrayList<Course> courseArrayList = mHelper.getCourseWithDayOfWeek(year, indexOfSemester, week, i);
-                    int length = courseArrayList.size();
-                    for (int j = 0; j < length; j++) {
-                        //the index of the class in a day
-                        int index = courseArrayList.get(j).startIndex;
-
-                        String courseName = courseArrayList.get(j).courseName;
-                        int numOfCourse = courseArrayList.get(j).numOfCourse;
-                        int l = numOfCourse * 200;
-                        int bias = index * 200;
-                        drawButtonTest(courseContainers.get(i), l, bias, courseName);
+    public void updateAgenda(){
+        for(int i=0;i<7;i++){
+            RelativeLayout container=courseContainers.get(i);
+            int count=container.getChildCount();
+            for(int j=0;j<count;j++){
+                View view=container.getChildAt(j);
+                if(view!=null){
+                    if(view.getId()==R.id.btn_agenda){
+                        container.removeViewAt(j);
+                        j--;
                     }
-                    /*for(int j=0;j<length;j++){
-                        int index=courseArrayList.get(j).startIndex;
-                        String courseName=courseArrayList.get(j).courseName;
-                        int numOfCourse=courseArrayList.get(j).numOfCourse;
-                        if(index<=4){
-                            for(int k=0;k<numOfCourse;k++){
-                            CourseArrayList.get(i).set(7+index+k,courseName);
-                            }
+                }
 
-                        }
-                        else if(index>4&&index<=8){
-                            for(int k=0;k<numOfCourse;k++){
-                                CourseArrayList.get(i).set(9+index+k,courseName);
-                            }
+            }
 
-                        }
-                        else if(index>8){
-                            for(int k=0;k<numOfCourse;k++){
-                                CourseArrayList.get(i).set(10+index+k,courseName);
-                            }
-                        }
+        }
+        Calendar selectedCalendar = mCalendarView.getSelectedCalendar();
+        Calendar firstDay=CalendarUtil.getStartInWeek(selectedCalendar,1);
+        for(int i=0;i<7;i++) {
 
-                    }*/
+            String dateString = firstDay.toString();
+            firstDay=CalendarUtil.getNextCalendar(firstDay);
+            mHelper=UserDBHelper.getInstance(getContext(),1);
+            ArrayList<Agenda> agendaArrayList=mHelper.getAgendaListWithDate(dateString);
+
+
+            if(agendaArrayList!=null){
+                int length=agendaArrayList.size();
+                for(int j=0;j<length;j++){
+                    Agenda agenda=agendaArrayList.get(j);
+
+                    String str_start_time=agenda.start_time;
+                    String str_end_time=agenda.end_time;
+                    SimpleDateFormat simFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    Date start_time=new Date();
+                    Date end_time=new Date();
+                    try {
+                        start_time=simFormat.parse(str_start_time);
+                        end_time=simFormat.parse(str_end_time);
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    int hoursBetween = com.android.xjay.joyplan.Utils.CalendarUtil.hoursBetween(start_time, end_time);
+                    int l=hoursBetween*100;
+                    int hours=start_time.getHours();
+                    float minutes=start_time.getMinutes();
+                    float time=hours+minutes/60;
+                    float bias=time*100;
+                    drawAgenda(courseContainers.get(i),l,bias,agenda);
+
+
+                    //int l=numOfCourse*200;
+                    //drawAgenda(courseContainers.get(i),);
+
+
+
+                }
+
+            }
+        }
+
+
+
+
+
+
+
+    }
+    public void updateCourse(){
+        for(int i=0;i<7;i++){
+            RelativeLayout container=courseContainers.get(i);
+            int count=container.getChildCount();
+            for(int j=0;j<count;j++){
+                View view=container.getChildAt(j);
+                if(view!=null){
+                    if(view.getId()==R.id.btn_course){
+                        container.removeViewAt(j);
+                        j--;
+                    }
+                }
+
+            }
+
+        }
+
+
+        //find the day selected
+        Calendar selectedCalendar=mCalendarView.getSelectedCalendar();
+
+
+        //see which semester the day selected is
+
+
+        int year=selectedCalendar.getYear();
+        int month=selectedCalendar.getMonth();
+        int day=selectedCalendar.getDay();
+        String str_year=new Integer(year).toString();
+
+        int indexOfSemester= 1;
+        if((month>=8&&month<=12)||(month>=1&&month<=2)){
+            indexOfSemester=1;
+        }
+        else indexOfSemester=2;
+
+        String selectedDateString = selectedCalendar.toString();
+        SimpleDateFormat simFormat = new SimpleDateFormat("yyyyMMdd HHmmss");
+        Date selectedDate = new Date();
+        Date startWeekDate = new Date();
+
+
+        try {
+            if (indexOfSemester == 1) {
+                startWeekDate = simFormat.parse(str_year + "0902" + " " + "000000");
+            } else startWeekDate = simFormat.parse(str_year + "0225" + " " + "000000");
+
+            selectedDate = simFormat.parse(selectedDateString + " " + "000000");
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        //see which week the day selected is
+        int days = com.android.xjay.joyplan.Utils.CalendarUtil.daysBetween(startWeekDate, selectedDate);
+
+        //if weeks>0
+        if (days > 0) {
+            int week = 0;
+            week = (days + 1) / 7 + 1;
+
+            //get the database helper
+            mHelper = UserDBHelper.getInstance(getContext(), 1);
+
+            for(int i=0;i<7;i++){
+                //get the course of the week
+                ArrayList<Course> courseArrayList = mHelper.getCourseWithDayOfWeek(year, indexOfSemester, week, i);
+                int length = courseArrayList.size();
+                for (int j = 0; j < length; j++) {
+                    Course course=courseArrayList.get(j);
+                    //the index of the class in a day
+                    int index = course.startIndex;
+
+                    String courseName=course.courseName;
+                    int numOfCourse=course.numOfCourse;
+                    int l=numOfCourse*83;
+                    int bias=0;
+                    if(index<=4){
+                        bias=(index-1)*83+883;
+                    }
+                    else if(index>4&&index<=8){
+                        bias=(index-5)*83+1400;
+                    }
+                    else if(index>8&&index<=12){
+                        bias=(index-9)*83+1900;
+                    }
+                    drawCourse(courseContainers.get(i),l,bias,course);
+
                 }
             }
+
         }
 
     }
 
-    public void drawButtonTest(RelativeLayout relativeLayout, int length, int bias, String text) {
-        Button button = new Button(mContext);
-        button.setBackgroundResource(R.drawable.btn_shape_agenda_blue);
+
+
+    public void drawCourse(RelativeLayout relativeLayout, int length, int bias, Course course){
+
+        Button button=new Button(mContext);
+
+
+            button.setBackgroundResource(R.drawable.btn_shape_agenda_blue);
+
+
         button.setTextColor(Color.WHITE);
-        button.setText(text);
+        button.setId(R.id.btn_course);
+        button.setText(course.courseName);
         button.setTextSize(18);
-        RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, length);
+        button.setAllCaps(false);
+        button.setTag(course);
+        button.setOnLongClickListener(this);
+        button.setOnClickListener(this);
+        int l=ScreenSizeUtils.dip2px(mContext,length);
+        RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,l);
+        int bia=ScreenSizeUtils.dip2px(mContext,bias);
         rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        rlp.setMargins(0, bias, 0, 0);
+        rlp.setMargins(0, bia, 0, 0);
         button.setLayoutParams(rlp);
         relativeLayout.addView(button);
+        int a=relativeLayout.getChildCount();
     }
 
-    public void updateAgenda(Calendar calendar) {
-      /*  for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 24; j++) {
-                AgendaTitleArrayList.get(i).set(j, "");
-            }
-        }
-        for (int i = 0; i < 7; i++) {
-            adapterArrayList.get(i).notifyDataSetChanged();
-            String date = calendar.toStringWithoutYear();
-            Log.v("test12", date);
-            calendar = CalendarUtil.getNextCalendar(calendar);
-            mHelper = UserDBHelper.getInstance(getContext(), 1);
-            ArrayList<Agenda> AgendaList = mHelper.getAgendaListWithDate(date);
-            int length = AgendaList.size();
-            if (length == 0) {
-                adapterArrayList.get(i).refreshAgenda();
-                continue;
-            } else {
-                ArrayList<String> titleList = new ArrayList<String>();
-                for (int j = 0; j < length; j++) {
-                    String title = AgendaList.get(j).title;
-                    String startTime = AgendaList.get(j).start_time;
-
-                    int hour = Integer.parseInt(startTime.substring(11, 13));
 
 
-                    AgendaTitleArrayList.get(i).set(hour, title);
+    public void drawAgenda(RelativeLayout relativeLayout, int length, float bias, Agenda agenda){
+
+        Button button=new Button(mContext);
+
+        button.setBackgroundResource(R.drawable.btn_shape_agenda_green);
+
+        button.setTextColor(Color.WHITE);
+        button.setId(R.id.btn_agenda);
+        button.setText(agenda.title);
+        button.setAllCaps(false);
+        button.setTextSize(18);
+        String startTime=agenda.start_time;
+
+        button.setTag(agenda);
+        button.setOnLongClickListener(this);
+        button.setOnClickListener(this);
+        int l=ScreenSizeUtils.dip2px(mContext,length);
+        int bia=ScreenSizeUtils.dip2px(mContext,bias);
+        RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,l);
+
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        rlp.setMargins(0, bia, 0, 0);
+        button.setLayoutParams(rlp);
+        relativeLayout.addView(button);
+
+    }
+
+
+
+
+            /**
+             * method to accept Broadcast and refresh the ExpandingList
+             */
+            class DynamicReceiverAddActivity extends BroadcastReceiver {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    RedrawExpandingList();
                 }
+            }
 
-                adapterArrayList.get(i).refreshAgenda();
+            class DynamicReceiverAddCourseTable extends BroadcastReceiver {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    addCourseTable();
+                }
+            }
+
+            class DynamicReceiverAddGoal extends BroadcastReceiver {
+                public void onReceive(Context context, Intent intent) {
+                    addGoal();
+                }
+            }
+
+            class DynamicReceiverAddAgenda extends BroadcastReceiver{
+                public void onReceive(Context context, Intent intent){updateAgenda();}
+            }
+
+            private void addGoal () {
+
+                String title = "Running";
+                String address = "田径场";
+                String content = "";
+                String start_time = "2019-05-22 20:00";
+                String end_time = "2019-05-22 20:00";
+                Agenda agenda = new Agenda(title, start_time, end_time, content, address);
+                mHelper.insert_agenda(agenda);
+
+                title = "Running";
+                address = "田径场";
+                content = "";
+                start_time = "2019-05-23 20:00";
+                end_time = "2019-05-23 20:00";
+                agenda = new Agenda(title, start_time, end_time, content, address);
+                mHelper.insert_agenda(agenda);
+
+                title = "Running";
+                address = "田径场";
+                content = "";
+                start_time = "2019-05-24 20:00";
+                end_time = "2019-05-24 20:00";
+                agenda = new Agenda(title, start_time, end_time, content, address);
+                mHelper.insert_agenda(agenda);
+
+                title = "Running";
+                address = "田径场";
+                content = "";
+                start_time = "2019-05-25 20:00";
+                end_time = "2019-05-25 20:00";
+                agenda = new Agenda(title, start_time, end_time, content, address);
+                mHelper.insert_agenda(agenda);
+
+                title = "Running";
+                address = "田径场";
+                content = "";
+                start_time = "2019-05-26 20:00";
+                end_time = "2019-05-26 20:00";
+                agenda = new Agenda(title, start_time, end_time, content, address);
+                mHelper.insert_agenda(agenda);
+
+                title = "Running";
+                address = "田径场";
+                content = "";
+                start_time = "2019-05-27 20:00";
+                end_time = "2019-05-27 20:00";
+                agenda = new Agenda(title, start_time, end_time, content, address);
+                mHelper.insert_agenda(agenda);
+
+                title = "Running";
+                address = "田径场";
+                content = "";
+                start_time = "2019-05-28 20:00";
+                end_time = "2019-05-28 20:00";
+                agenda = new Agenda(title, start_time, end_time, content, address);
+                mHelper.insert_agenda(agenda);
+            }
+
+            private void addCourseTable () {
+
+
+                mHelper = UserDBHelper.getInstance(getContext(), 1);
+                mHelper.resetCourseTable();
+
+                mHelper.insert_course(new Course(2019, 1, "定向越野", 1, 1, 15, 5, 2, "田径场", "老师"));
+                mHelper.insert_course(new Course(2019, 1, "毛概", 1, 7, 15, 1, 2, "田径场", "老师"));
+                mHelper.insert_course(new Course(2019, 1, "毛概阿肯德基咖喱块附近的光华路科技刻录机ad", 2, 7, 15, 9, 3, "田径场", "老师"));
+                mHelper.insert_course(new Course(2019, 1, "毛概", 2, 7, 15, 2, 2, "田径场", "老师"));
+                mHelper.insert_course(new Course(2019, 1, "毛概", 3, 7, 15, 2, 2, "田径场", "老师"));
+                /*mHelper.insert_course(new Course("UML",2,3,2));
+                mHelper.insert_course(new Course("UML",2,3,2));
+                mHelper.insert_course(new Course("编译技术",2,5,2));
+                mHelper.insert_course(new Course("大学美育",2,9,2));
+                mHelper.insert_course(new Course("计网",3,1,2));
+                mHelper.insert_course(new Course("数据库",3,5,2));
+                mHelper.insert_course(new Course("毛概",3,7,2));
+                mHelper.insert_course(new Course("大学语文",3,9,2));
+                mHelper.insert_course(new Course("UML",4,3,2));
+                mHelper.insert_course(new Course("计网",5,1,2));
+                mHelper.insert_course(new Course("数据库",5,5,2));*/
 
             }
-        }*/
-    }
 
+            private void configureSubItem ( final CustomItem item, final View view, String info){
+                ((TextView) view.findViewById(R.id.sub_title)).setText(info);
 
-    /**
-     * method to accept Broadcast and refresh the ExpandingList
-     */
-    class DynamicReceiverAddActivity extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            RedrawExpandingList();
-        }
-    }
-
-    class DynamicReceiverAddCourseTable extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            addCourseTable();
-        }
-    }
-
-    class DynamicReceiverAddGoal extends BroadcastReceiver {
-        public void onReceive(Context context, Intent intent) {
-            addGoal();
-        }
-    }
-
-    private void addGoal() {
-
-        String title = "Running";
-        String address = "田径场";
-        String content = "";
-        String start_time = "2019-05-22 20:00";
-        String end_time = "2019-05-22 20:00";
-        Agenda agenda = new Agenda(title, start_time, end_time, content, address);
-        mHelper.insert_agenda(agenda);
-
-        title = "Running";
-        address = "田径场";
-        content = "";
-        start_time = "2019-05-23 20:00";
-        end_time = "2019-05-23 20:00";
-        agenda = new Agenda(title, start_time, end_time, content, address);
-        mHelper.insert_agenda(agenda);
-
-        title = "Running";
-        address = "田径场";
-        content = "";
-        start_time = "2019-05-24 20:00";
-        end_time = "2019-05-24 20:00";
-        agenda = new Agenda(title, start_time, end_time, content, address);
-        mHelper.insert_agenda(agenda);
-
-        title = "Running";
-        address = "田径场";
-        content = "";
-        start_time = "2019-05-25 20:00";
-        end_time = "2019-05-25 20:00";
-        agenda = new Agenda(title, start_time, end_time, content, address);
-        mHelper.insert_agenda(agenda);
-
-        title = "Running";
-        address = "田径场";
-        content = "";
-        start_time = "2019-05-26 20:00";
-        end_time = "2019-05-26 20:00";
-        agenda = new Agenda(title, start_time, end_time, content, address);
-        mHelper.insert_agenda(agenda);
-
-        title = "Running";
-        address = "田径场";
-        content = "";
-        start_time = "2019-05-27 20:00";
-        end_time = "2019-05-27 20:00";
-        agenda = new Agenda(title, start_time, end_time, content, address);
-        mHelper.insert_agenda(agenda);
-
-        title = "Running";
-        address = "田径场";
-        content = "";
-        start_time = "2019-05-28 20:00";
-        end_time = "2019-05-28 20:00";
-        agenda = new Agenda(title, start_time, end_time, content, address);
-        mHelper.insert_agenda(agenda);
-    }
-
-    private void addCourseTable() {
-
-
-        mHelper = UserDBHelper.getInstance(getContext(), 1);
-        mHelper.resetCourseTable();
-        mHelper.insert_course(new Course(2019, 1, "定向越野", 1, 1, 15, 5, 2, "田径场", "老师"));
-       /* mHelper.insert_course(new Course("毛概",1,7,2));
-        mHelper.insert_course(new Course("UML",2,3,2));
-        mHelper.insert_course(new Course("编译技术",2,5,2));
-        mHelper.insert_course(new Course("大学美育",2,9,2));
-        mHelper.insert_course(new Course("计网",3,1,2));
-        mHelper.insert_course(new Course("数据库",3,5,2));
-        mHelper.insert_course(new Course("毛概",3,7,2));
-        mHelper.insert_course(new Course("大学语文",3,9,2));
-        mHelper.insert_course(new Course("UML",4,3,2));
-        mHelper.insert_course(new Course("计网",5,1,2));
-        mHelper.insert_course(new Course("数据库",5,5,2));*/
-
-        updateCourse();
-
-
-    }
-
-    private void configureSubItem(final CustomItem item, final View view, String info) {
-        ((TextView) view.findViewById(R.id.sub_title)).setText(info);
-
-    }
-
-
-    private void showInsertDialog(final ReserveActivity.OnItemCreated positive) {
-        final EditText text = new EditText(mContext);
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setView(text);
-        builder.setTitle("enter_title");
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                positive.itemCreated(text.getText().toString());
             }
-        });
-        builder.setNegativeButton(android.R.string.cancel, null);
-        builder.show();
-    }
 
-    interface OnItemCreated {
-        void itemCreated(String title);
-    }
-}
+
+            private void showInsertDialog ( final ReserveActivity.OnItemCreated positive){
+                final EditText text = new EditText(mContext);
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setView(text);
+                builder.setTitle("enter_title");
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        positive.itemCreated(text.getText().toString());
+                    }
+                });
+                builder.setNegativeButton(android.R.string.cancel, null);
+                builder.show();
+            }
+
+            interface OnItemCreated {
+                void itemCreated(String title);
+            }
+        }
 
 

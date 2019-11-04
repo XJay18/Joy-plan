@@ -55,9 +55,7 @@ public class CordActivity extends AppCompatActivity implements View.OnClickListe
         SMSSDK.unregisterEventHandler(eventHandler);
     }
 
-    /**
-     * 使用Handler来分发Message对象到主线程中，处理事件
-     */
+    // 使用Handler来分发Message对象到主线程中，处理事件
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -97,9 +95,8 @@ public class CordActivity extends AppCompatActivity implements View.OnClickListe
 
     };
 
-    /**
-     * 获取id
-     */
+
+    // 获取id
     private void getId() {
         et_cord = findViewById(R.id.et_cord);
         btn_next = findViewById(R.id.btn_cord_next);
@@ -108,9 +105,6 @@ public class CordActivity extends AppCompatActivity implements View.OnClickListe
         btn_return.setOnClickListener(this);
     }
 
-    /**
-     * 按钮点击事件
-     */
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_cord_next:
@@ -168,6 +162,4 @@ public class CordActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
-
-
 }

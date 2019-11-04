@@ -28,19 +28,39 @@ public class FqzActivity extends AppCompatActivity
         TimePickerDialog.OnTimeSetListener {
 
     private Calendar calendar = Calendar.getInstance();
+    /**
+     * text view 小时。
+     */
     private TextView tv_hour;
+    /**
+     * text view 分钟。
+     */
     private TextView tv_minute;
+    /**
+     * 时间选择器。
+     */
     private CustomTimePicker mTimePicker;
+    /**
+     * 番茄钟重复次数。
+     */
     private String[] sizeArray = {"1", "2", "3", "4"};
+    /**
+     * 两次番茄钟间隔时间。
+     */
     private String[] breakArray = {"5", "10", "15", "20", "30"};
+    /**
+     * 确认设定番茄钟的动画。
+     */
     private LottieAnimationView confirmAnimationView;
 
-    // default fqz size 00:25
-    private int fqz_hour = 0;
-    private int fqz_min = 25;
-    // default fqz cycle 1
-    private int fqz_size = 1;
-    private int fqz_break = 5;
+    /**
+     * 番茄钟默认时、分。
+     */
+    private int fqz_hour = 0, fqz_min = 25;
+    /**
+     * 番茄钟默认重复次数与间隔时间。
+     */
+    private int fqz_size = 1, fqz_break = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,27 +201,30 @@ public class FqzActivity extends AppCompatActivity
 
     }
 
+    /**
+     * 初始化时间选择器
+     */
     private void initTimePicker() {
         // default values
         tv_hour.setText("0");
         tv_minute.setText("25");
-        long beginTimestamp = DateFormat.str2Long("2010-00-00 00:25", true);
+        long beginTimestamp = DateFormat.str2Long(
+                "2010-00-00 00:25", true);
         long endTimestamp = System.currentTimeMillis();
 
-        mTimePicker = new CustomTimePicker(this, new CustomTimePicker.Callback() {
+        mTimePicker = new CustomTimePicker(
+                this, new CustomTimePicker.Callback() {
             @Override
             public void onTimeSelected(long timestamp) {
-                // mTvSelectedDate.setText(DateFormatUtils.long2Str(timestamp, false));
                 String hh_mm = DateFormat.long2Str(timestamp, 2);
                 String[] hm = hh_mm.split(":");
                 tv_hour.setText(hm[0].substring(1));
                 tv_minute.setText(hm[1]);
                 fqz_hour = Integer.parseInt(hm[0].substring(1));
                 fqz_min = Integer.parseInt(hm[1]);
-//                Log.d("set hour ",String.valueOf(fqz_hour));
-//                Log.d("set minute ",String.valueOf(fqz_min));
             }
-        }, beginTimestamp, endTimestamp, "请选择番茄周期", 2, new int[]{0, 0, 0, 0, 25});
+        }, beginTimestamp, endTimestamp, "请选择番茄周期",
+                2, new int[]{0, 0, 0, 0, 25});
 
         mTimePicker.setCancelable(true);
         mTimePicker.setTimePickerShowMode(1);
@@ -210,11 +233,7 @@ public class FqzActivity extends AppCompatActivity
     }
 
     /**
-     * @param hour   current hour
-     * @param minute current minute
-     * @param ahour  value of the increase in hour
-     * @param amin   value of the increase in minute
-     * @return new time after increasing
+     * 通过当前时间以及设定的番茄钟计算结束时间。
      */
     public int[] computeTime(int hour, int minute, int ahour, int amin) {
         if (minute + amin >= 60) {

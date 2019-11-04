@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.widget.LinearLayout
-    android:paddingTop="2dp"
     android:paddingRight="2dp"
     android:paddingLeft="2dp"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
@@ -9,6 +8,6 @@
     <TextView
         android:id="@+id/tv_index"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_height="98.8dp"
         android:layout_gravity="center_horizontal"/>
 </android.widget.LinearLayout>

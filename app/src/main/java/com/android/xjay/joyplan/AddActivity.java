@@ -85,14 +85,9 @@ public class AddActivity extends AppCompatActivity {
                     string_start_time = tv_select_start_time.getText().toString();
                     string_end_time = tv_select_end_time.getText().toString();
                     string_address = editText_address.getText().toString();
-
-                    //put the information into a stuInfo
-
                     StudentActivityInfo info = new StudentActivityInfo(string_title, string_description, string_start_time, string_end_time, string_address);
-
-                    //insert_studentActivity the stuInfo
+                    // 将info加入学生活动中
                     mHelper.insert_studentActivity(info);
-
 
                     SQLiteDatabase dbRead = mHelper.getReadableDatabase();
                     Cursor c = dbRead.query("user_info", null, null, null, null, null, null);
