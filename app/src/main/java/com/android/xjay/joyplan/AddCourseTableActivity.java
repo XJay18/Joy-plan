@@ -31,18 +31,28 @@ import com.android.xjay.joyplan.Utils.POIExcelProcesser;
 
 import java.util.ArrayList;
 
+/**
+ * the activity of add course in form of excel
+ */
 public class AddCourseTableActivity extends AppCompatActivity implements View.OnClickListener {
 
+    /** UI element, spinner */
     private Spinner chooseSchoolSpinner;
+    /** store the schools'name */
     private ArrayList<String> schools = new ArrayList<>();
+    /** store the school user chooses */
     private String chosenSchool;
+    /** UI element */
     private TextView tv_confirm;
-
+    /** UI element */
     private EditText et_sno;
+    /** UI element */
     private EditText et_name;
+    /** student id */
     private String sno;
+    /** student name */
     private String name;
-
+    /** UI element */
     private LottieAnimationView confirmAnimationView;
 
     @Override
@@ -86,6 +96,7 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
 
     }
 
+    /** add school the schools */
     void addSchool(String school) {
         schools.add(school);
     }
@@ -149,9 +160,7 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             startActivityForResult(intent, 1);
-
         }
     }
 
@@ -173,6 +182,7 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
         }
     }
 
+    /** get the path of file which user chooses */
     public String getPath(final Context context, final Uri uri) {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
@@ -182,11 +192,6 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
             // ExternalStorageProvider
             if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
-//                Log.i(TAG,"isExternalStorageDocument***"+uri.toString());
-//                Log.i(TAG,"docId***"+docId);
-//                以下是打印示例：
-//                isExternalStorageDocument***content://com.android.externalstorage.documents/document/primary%3ATset%2FROC2018421103253.wav
-//                docId***primary:Test/ROC2018421103253.wav
                 final String[] split = docId.split(":");
                 final String type = split[0];
 
@@ -196,17 +201,11 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
             }
             // DownloadsProvider
             else if (isDownloadsDocument(uri)) {
-//                Log.i(TAG,"isDownloadsDocument***"+uri.toString());
                 final String id = DocumentsContract.getDocumentId(uri);
                 return id;
-//                final Uri contentUri = ContentUris.withAppendedId(
-//                Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-//
-//                return getDataColumn(context, contentUri, null, null);
             }
             // MediaProvider
             else if (isMediaDocument(uri)) {
-//                Log.i(TAG,"isMediaDocument***"+uri.toString());
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
                 final String type = split[0];
@@ -219,7 +218,6 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
                 } else if ("audio".equals(type)) {
                     contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
                 }
-
                 final String selection = "_id=?";
                 final String[] selectionArgs = new String[]{split[1]};
 
@@ -262,7 +260,11 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
         return null;
     }
 
-
+    /**
+     * judge the file type
+     * @param uri
+     * @return
+     */
     public boolean isDownloadsDocument(Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
     }
@@ -275,7 +277,7 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
         return ("com.android.externalstorage.documents".equals(uri.getAuthority()));
     }
 
-
+    /** broadcast test */
     private void sentBroadcast() {
         Intent intent = new Intent();
         intent.setAction("ADD COURSE TABLE");
@@ -284,13 +286,13 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
     }
 
 
-    // offer the api to add school name
-    public boolean addSchoolInArray(String schoolName) {
-        if (schools.contains(schoolName)) {
-            // not allowed to add the school name which is already in the list.
-            return false;
-        }
-        schools.add(schoolName);
-        return true;
-    }
+//    // offer the api to add school name
+//    public boolean addSchoolInArray(String schoolName) {
+//        if (schools.contains(schoolName)) {
+//            // not allowed to add the school name which is already in the list.
+//            return false;
+//        }
+//        schools.add(schoolName);
+//        return true;
+//    }
 }
