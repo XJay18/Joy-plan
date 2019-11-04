@@ -18,7 +18,6 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public static final String AGENDA_TABLE = "agenda_table";
     public static final String COURSE_TABLE = "course_table";
 
-
     private UserDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
 
@@ -72,6 +71,8 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
         create_sql = "CREATE TABLE IF NOT EXISTS " + COURSE_TABLE + "(" + "coursename VARCHAR NOT NULL," + "dayofweek INTEGER NOT NULL," + "startweek INTEGER NOT NULL," + "endweek INTEGER NOT NULL," + "startindex INTEGER NOT NULL," + "numofcourse INTEGER NOT NULL," + "address VARCHAR NOT NULL," + "teachername VARCHAR NOT NULL," + "PRIMARY KEY(dayofweek,startweek,startindex)" + ");";
         db.execSQL(create_sql);
+
+
     }
 
     public void reset() {

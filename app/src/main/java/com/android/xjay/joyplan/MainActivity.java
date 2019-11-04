@@ -59,24 +59,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        /*switch(v.getId()){
-            case R.id.btn_login:
-                legal=setUser();
-                if(legal){
-                    dialog = new ProgressDialog(MainActivity.this);
-                    dialog.setTitle("正在登陆");
-                    dialog.setMessage("请稍后");
-                    dialog.setCancelable(true);//设置可以通过back键取消
-                    dialog.show();
-                    new Thread(new MyThread()).start();
-                }
-                break;
-            case R.id.main_return:
-                Intent intent=new Intent(MainActivity.this,WelcomeActivity.class);
-                startActivity(intent);
-                break;
-
-        }*/
+//        switch(v.getId()){
+//            case R.id.btn_login:
+//                legal=setUser();
+//                if(legal){
+//                    dialog = new ProgressDialog(MainActivity.this);
+//                    dialog.setTitle("正在登陆");
+//                    dialog.setMessage("请稍后");
+//                    dialog.setCancelable(true);//设置可以通过back键取消
+//                    dialog.show();
+//                    new Thread(new MyThread()).start();
+//                }
+//                break;
+//            case R.id.main_return:
+//                Intent intent=new Intent(MainActivity.this,WelcomeActivity.class);
+//                startActivity(intent);
+//                break;
+//        }
         if (v.getId() == R.id.btn_login) {
             Toast.makeText(
                     MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
@@ -95,7 +94,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void run() {
             //获取服务器返回的数据
-            infoString = WebServiceGet.loginGet(et_account.getText().toString(),et_password.getText().toString(),"LogLet");
+            infoString = WebServiceGet.loginGet(et_account.getText().toString(),et_password.getText().toString());
+            //infoString=WebServiceGet.selectagendaGet(et_account.getText().toString(),"SelAgen");
             //更新UI，使用runOnUiThread()方法
             showResponse(infoString);
         }

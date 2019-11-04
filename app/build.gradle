@@ -48,6 +48,12 @@ dependencies {
     implementation files('libs/SMSSDK-3.3.0.jar')
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation files('libs/poi-ooxml-3.17.jar')
+    implementation files('libs/commons-beanutils-1.9.3.jar')
+    implementation files('libs/commons-collections4-4.1.jar')
+    implementation files('libs/commons-io-2.4.jar')
+    implementation files('libs/commons-lang3-3.8.1.jar')
+    implementation files('libs/ezmorph-1.0.6.jar')
+    implementation files('libs/json-20180813.jar')
 }
 
 

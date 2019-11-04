@@ -218,8 +218,10 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
         String imptimeBegin = dateFormat.format(cal.getTime());
         cal.add(Calendar.DATE, 6);
         String imptimeEnd = dateFormat.format(cal.getTime());
+        //去掉首字符
         imptimeBegin = cutFirstChart(imptimeBegin, '0');
         imptimeEnd = cutFirstChart(imptimeEnd, '0');
+
         return cal.get(Calendar.YEAR) + "年" + imptimeBegin + "至" + imptimeEnd;
     }
 

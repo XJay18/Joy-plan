@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.android.xjay.joyplan.Notification.NotificationTool;
 import com.android.xjay.joyplan.Utils.DateFormat;
 import com.android.xjay.joyplan.Utils.JumpTextWatcher;
+import com.android.xjay.joyplan.web.WebServiceGet;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -197,10 +198,12 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
 //                Toast toast = Toast.makeText(this, s, Toast.LENGTH_SHORT);
                 Toast toast = Toast.makeText(this, "任务添加成功", Toast.LENGTH_SHORT);
                 toast.show();
+
                 finish();
                 break;
             }
 
         }
     }
+
 }

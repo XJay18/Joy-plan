@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.xjay.joyplan.web.WebServiceGet;
 import com.android.xjay.joyplan.web.WebServicePost;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
@@ -92,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         @Override
         public void run() {
             //获取服务器返回数据
-            String RegRet = WebServicePost.registerPost(phone_number, userpassword.getText().toString(), username.getText().toString(), university, "RegLet");
+            String RegRet = WebServiceGet.registerGet(phone_number, userpassword.getText().toString(), username.getText().toString(), university);
             //更新UI，界面处理
             showReq(RegRet);
         }
