@@ -33,11 +33,16 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
      */
     private ArrayList<Fragment> ViewList = new ArrayList<>();
     /**
-     *
+     * 柱状图页框
      */
     private Fragment BarFragment;
+    /**
+     * 饼状图页框
+     */
     private Fragment PieFragment;
-
+    /**
+     * 返回按钮
+     */
     private Button btn_back;
 
     @Override
@@ -48,6 +53,9 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         initView();
     }
 
+    /**
+     * 初始化页面
+     */
     private void initView() {
         mViewPager = findViewById(R.id.viewpager);
         mTabLayout = findViewById(R.id.mytab);

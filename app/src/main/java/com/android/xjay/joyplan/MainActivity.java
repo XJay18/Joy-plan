@@ -100,18 +100,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
         }
-//        if (v.getId() == R.id.btn_login) {
-//            Toast.makeText(
-//                    MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
-//            Intent intent = new Intent(
-//                    MainActivity.this, HomeActivity.class);
-//            startActivity(intent);
-//        }
-//        if (v.getId() == R.id.main_return) {
-//            Intent intent = new Intent(
-//                    MainActivity.this, WelcomeActivity.class);
-//            startActivity(intent);
-//        }
     }
     private class MyThread implements Runnable {
         @Override
