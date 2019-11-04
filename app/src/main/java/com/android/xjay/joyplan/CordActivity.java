@@ -147,34 +147,6 @@ public class CordActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    /*private boolean judPhone()
-    {
-        if(TextUtils.isEmpty(edit_phone.getText().toString().trim()))
-        {
-            Toast.makeText(MainActivity.this,"请输入您的电话号码",Toast.LENGTH_LONG).show();
-            edit_phone.requestFocus();
-            return false;
-        }
-        else if(edit_phone.getText().toString().trim().length()!=11)
-        {
-            Toast.makeText(MainActivity.this,"您的电话号码位数不正确",Toast.LENGTH_LONG).show();
-            edit_phone.requestFocus();
-            return false;
-        }
-        else
-        {
-            phone_number=edit_phone.getText().toString().trim();
-            String num="[1][358]\\d{9}";
-            if(phone_number.matches(num))
-                return true;
-            else
-            {
-                Toast.makeText(MainActivity.this,"请输入正确的手机号码",Toast.LENGTH_LONG).show();
-                return false;
-            }
-        }
-    }*/
-
     /**
      * 输出提示信息
      */

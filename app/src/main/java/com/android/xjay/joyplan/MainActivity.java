@@ -101,6 +101,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
+    /**
+     * 开线程调用http方法访问服务器并获得返回数据
+     */
     private class MyThread implements Runnable {
         @Override
         public void run() {
@@ -111,8 +115,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    /*
-     * 跳转页面
+    /**
+     * 用服务器返回的数据进行页面更新
      */
     private void showResponse(final String response) {
         runOnUiThread(new Runnable() {
