@@ -193,14 +193,33 @@ public class UserDBHelper extends SQLiteOpenHelper {
         return result;
 
     }
-
+    public long insert_fqz(Fqz fqz){
+        long result = -1;
+        openWriteLink();
+        ContentValues cv = new ContentValues();
+        cv.put("startoftime",fqz.startoftime);
+        cv.put("monday",fqz.monday);
+        cv.put("tuesday",fqz.tuesday);
+        cv.put("wednesday",fqz.wednesday);
+        cv.put("thursday",fqz.thursday);
+        cv.put("friday",fqz.friday);
+        cv.put("saturday",fqz.saturday);
+        cv.put("sunday",fqz.sunday);
+        result = mDB.insert(FQZ_STATICTIS, "", cv);
+        return result;
+    }
 
     /**
      *
      * @param date %Y%m%d
      * @return
      */
-
+//    public Fqz getFqzStatictisData(String date){
+//        openReadLink();
+//        Cursor cursor=null;
+//        Fqz fqz;
+//        cursor=mDB.query(FQZ_STATICTIS,null,);
+//    }
 
     public ArrayList<StudentActivityInfo> getStudentActivityInfoWithDate(String date){
         openReadLink();
@@ -225,8 +244,6 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
         }else return new ArrayList<>();
     }
-
-
 
 
     public ArrayList<StudentActivityInfo> getAllStudentActivityInfo(){

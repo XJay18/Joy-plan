@@ -19,16 +19,46 @@ import com.android.xjay.joyplan.web.WebServiceGet;
 import com.android.xjay.joyplan.web.WebServicePost;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+    /**
+     * 用户名输入框
+     */
     private EditText username;
+    /**
+     * 密码输入框
+     */
     private EditText userpassword;
+    /**
+     * 第二次密码输入框
+     */
     private EditText userpassword2;
+    /**
+     * 学校下拉框
+     */
     private Spinner spin_university;
+    /**
+     * 返回按钮
+     */
     private Button btn_return;
+    /**
+     * 确认按钮
+     */
     private Button btn_submit;
-    String phone_number;
-    String university;
-    ProgressDialog dialog;
-    boolean legal;
+    /**
+     * 电话号码
+     */
+    private String phone_number;
+    /**
+     * 获取所选择的学校
+     */
+    private String university;
+    /**
+     * 提示框
+     */
+    private ProgressDialog dialog;
+    /**
+     * 判断内容合法性
+     */
+    private boolean legal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +67,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         getID();
     }
 
+    /**
+     * 绑定组件id
+     */
     private void getID() {
         legal = false;
         btn_submit = findViewById(R.id.btn_submit);
@@ -73,6 +106,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     * 载入学校下拉框
+     */
     class MyOnItemSelected implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -89,6 +125,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     * 开线程与服务器进行http通信
+     */
     private class RegThread implements Runnable {
         @Override
         public void run() {
@@ -99,6 +138,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     * 获取服务器返回数据后更新页面
+     */
     private void showReq(final String RegRet) {
         runOnUiThread(new Runnable() {
             @Override
@@ -142,8 +184,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
-    /*
-     *对输入注册信息进行判断
+    /**
+     * 对输入注册信息进行判断
      */
     private boolean setUser() {
         if (username.getText().toString().length() <= 0) {
@@ -162,7 +204,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         return true;
     }
 
-    /*
+    /**
      * 实现换行功能
      */
     private class JumpTextWatcher implements TextWatcher {

@@ -16,11 +16,25 @@ import com.android.xjay.joyplan.StatisticsFragment.PieFragment;
 import java.util.ArrayList;
 
 public class StatisticsActivity extends AppCompatActivity implements View.OnClickListener {
+    /**
+     * 切换栏
+     */
     private TabLayout mTabLayout;
+    /**
+     * 屏幕间的切换
+     */
     private ViewPager mViewPager;
+    /**
+     * 字符串数组列表，储存标题名称
+     */
     private ArrayList<String> TitleList = new ArrayList<>();
+    /**
+     * 页框数组列表，储存页面
+     */
     private ArrayList<Fragment> ViewList = new ArrayList<>();
-
+    /**
+     *
+     */
     private Fragment BarFragment;
     private Fragment PieFragment;
 
