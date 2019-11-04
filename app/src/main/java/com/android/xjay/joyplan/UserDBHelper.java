@@ -18,6 +18,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public static final String ACTIVITY_TABLE = "user_info";
     public static final String AGENDA_TABLE = "agenda_table";
     public static final String COURSE_TABLE = "course_table";
+    public static final String FQZ_STATICTIS="fqz_statictis";
 
     private UserDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -73,7 +74,8 @@ public class UserDBHelper extends SQLiteOpenHelper {
         create_sql = "CREATE TABLE IF NOT EXISTS " + COURSE_TABLE + "(" + "coursename VARCHAR NOT NULL," + "dayofweek INTEGER NOT NULL," + "startweek INTEGER NOT NULL," + "endweek INTEGER NOT NULL," + "startindex INTEGER NOT NULL," + "numofcourse INTEGER NOT NULL," + "address VARCHAR NOT NULL," + "teachername VARCHAR NOT NULL,"+"notation VARCHAR NOT NULL," + "PRIMARY KEY(dayofweek,startweek,startindex)" + ");";
         db.execSQL(create_sql);
 
-
+        create_sql = "CREATE TABLE IF NOT EXISTS " + FQZ_STATICTIS + "(" + "startoftime DATETIME NOT NULL," + "monday INTEGER NOT NULL," + "tuesday INTEGER NOT NULL,"+ "wednesday INTEGER NOT NULL,"+ "thursday INTEGER NOT NULL,"+ "friday INTEGER NOT NULL,"+ "saturday INTEGER NOT NULL,"+ "sunday INTEGER NOT NULL,"+"PRIMARY KEY(startoftime)" + ");";
+        db.execSQL(create_sql);
     }
 
     public void reset() {
@@ -191,6 +193,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
         return result;
 
     }
+
 
     /**
      *
