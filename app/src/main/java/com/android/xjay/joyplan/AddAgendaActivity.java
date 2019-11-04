@@ -186,8 +186,9 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 String title = editText_agenda_title.getText().toString();
                 String address = editText_agenda_address.getText().toString();
                 String content = editText_notation.getText().toString();
+                if(content==null)
+                content="";
                 Agenda agenda = new Agenda(title, start_time, end_time, content, address);
-
                 mHelper.insert_agenda(agenda);
                 SQLiteDatabase dbRead = mHelper.getReadableDatabase();
                 Cursor c;
