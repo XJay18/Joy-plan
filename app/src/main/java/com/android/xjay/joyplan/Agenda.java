@@ -8,7 +8,7 @@ public class Agenda {
     public String notation;
     public String address;
     public Agenda() {};
-    public Agenda(String title, String start_time, String end_time, String content, String address) {
+    public Agenda(String title, String start_time, String end_time, String notation, String address) {
         this.start_time = start_time;
         this.end_time = end_time;
         this.notation = notation;
