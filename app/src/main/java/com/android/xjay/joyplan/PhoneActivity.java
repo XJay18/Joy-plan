@@ -12,11 +12,25 @@ import android.widget.Toast;
 import com.android.xjay.joyplan.web.WebServicePost;
 
 public class PhoneActivity extends AppCompatActivity {
+    /**
+     * 电话号码输入框
+     */
     private EditText et_phone;
+    /**
+     * 获取验证码按钮
+     */
     private Button btn_phone_next;
+    /**
+     * 返回按钮
+     */
     private Button btn_phone_return;
+    /**
+     * 储存电话号码
+     */
     private String phone_number;
-    ProgressDialog dialog;
+    /**
+     * 判断内容是否合法
+     */
     private Boolean legal;
 
     @Override
@@ -26,8 +40,8 @@ public class PhoneActivity extends AppCompatActivity {
         getId();
     }
 
-    /*
-     *  获取ID
+    /**
+     *  绑定组件id
      */
     private void getId() {
         legal = false;
@@ -58,6 +72,9 @@ public class PhoneActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 开线程调用http方法访问服务器并获得返回数据
+     */
     private class RegThread implements Runnable {
         @Override
         public void run() {
@@ -68,6 +85,9 @@ public class PhoneActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 用服务器返回的数据进行页面更新
+     */
     private void showReq(final String RegRet) {
         runOnUiThread(new Runnable() {
             @Override
@@ -85,6 +105,9 @@ public class PhoneActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 判断输入的电话号码是否合法
+     */
     private Boolean setphone() {
         phone_number = et_phone.getText().toString().trim();
         if (phone_number.length() <= 0) {

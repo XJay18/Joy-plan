@@ -16,14 +16,33 @@ import com.android.xjay.joyplan.StatisticsFragment.PieFragment;
 import java.util.ArrayList;
 
 public class StatisticsActivity extends AppCompatActivity implements View.OnClickListener {
+    /**
+     * 切换栏
+     */
     private TabLayout mTabLayout;
+    /**
+     * 屏幕间的切换
+     */
     private ViewPager mViewPager;
+    /**
+     * 字符串数组列表，储存标题名称
+     */
     private ArrayList<String> TitleList = new ArrayList<>();
+    /**
+     * 页框数组列表，储存页面
+     */
     private ArrayList<Fragment> ViewList = new ArrayList<>();
-
+    /**
+     * 柱状图页框
+     */
     private Fragment BarFragment;
+    /**
+     * 饼状图页框
+     */
     private Fragment PieFragment;
-
+    /**
+     * 返回按钮
+     */
     private Button btn_back;
 
     @Override
@@ -34,6 +53,9 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         initView();
     }
 
+    /**
+     * 初始化页面
+     */
     private void initView() {
         mViewPager = findViewById(R.id.viewpager);
         mTabLayout = findViewById(R.id.mytab);

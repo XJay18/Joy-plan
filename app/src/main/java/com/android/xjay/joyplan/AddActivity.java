@@ -97,7 +97,7 @@ public class AddActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(getApplicationContext(), i.toString(), Toast.LENGTH_SHORT);
                     toast.show();
                     sentBroadcast();
-                    new Thread(new RegThread()).start();
+                    //new Thread(new RegThread()).start();
                     Intent intent = new Intent();
                     intent.setClass(mContext, ScheduleActivity.class);
                     startActivity(intent);
@@ -107,20 +107,20 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
-    private class RegThread implements Runnable {
-        public void run() {
-            //获取服务器返回数据
-            System.out.println("wenti" + string_title);
-            System.out.println("wenti" + string_description);
-            System.out.println("wenti" + string_start_time);
-            System.out.println("wenti" + string_address);
-            String RegRet = WebServicePost.activityPost(string_title,
-                    string_start_time, string_description,
-                    string_address, "ActiLet");
-            //更新UI，界面处理
-            //showReq(RegRet);
-        }
-    }
+//    private class RegThread implements Runnable {
+//        public void run() {
+//            //获取服务器返回数据
+//            System.out.println("wenti" + string_title);
+//            System.out.println("wenti" + string_description);
+//            System.out.println("wenti" + string_start_time);
+//            System.out.println("wenti" + string_address);
+//            String RegRet = WebServicePost.activityPost(string_title,
+//                    string_start_time, string_description,
+//                    string_address, "ActiLet");
+//            //更新UI，界面处理
+//            //showReq(RegRet);
+//        }
+//    }
 
 
     private void sentBroadcast() {
