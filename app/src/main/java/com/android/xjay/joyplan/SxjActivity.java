@@ -202,7 +202,7 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
                 if (resultCode == RESULT_OK) {
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyymmdd-hhmmss");
                     path = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + simpleDateFormat.format(new Date()) + "./jpeg";
-                    saveImage(img_uri, path);
+                    //saveImage(img_uri, path);
                     try {
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(img_uri));
                         insertImg(SxjActivity.this, bitmap, path);
@@ -217,7 +217,7 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
                     img_uri = data.getData();
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
                     path = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + simpleDateFormat.format(new Date()) + "./jpeg";
-                    saveImage(img_uri, path);
+                    //saveImage(img_uri, path);
                     try {
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(img_uri));
                         insertImg(SxjActivity.this, bitmap, path);
