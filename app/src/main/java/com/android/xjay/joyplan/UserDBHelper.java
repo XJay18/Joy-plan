@@ -1,6 +1,5 @@
 package com.android.xjay.joyplan;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

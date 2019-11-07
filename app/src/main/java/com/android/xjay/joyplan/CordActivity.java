@@ -68,7 +68,6 @@ public class CordActivity extends AppCompatActivity implements View.OnClickListe
         SMSSDK.registerEventHandler(eventHandler);
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -131,9 +130,11 @@ public class CordActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * 处理点击事件
      */
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_cord_next:
+
                 if (judCord())
                     SMSSDK.submitVerificationCode("86", phone_number, cord_number);
                 flag = false;
