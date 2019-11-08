@@ -32,7 +32,7 @@
                 android:id="@+id/btn_mission"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:background="@drawable/btn_shape_agenda_blue" />
+                android:background="@drawable/btn_shape_course_blue" />
 
         </FrameLayout>
 

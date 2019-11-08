@@ -64,7 +64,7 @@
             android:cursorVisible="false"
             android:textColor="#999999"
             android:textAlignment="gravity"
-            android:hint="活动标题"/>
+            android:hint="日程名称"/>
         <EditText
             android:textSize="15sp"
             android:padding="10dp"
@@ -76,7 +76,7 @@
             android:cursorVisible="false"
             android:textColor="#999999"
             android:textAlignment="gravity"
-            android:hint="活动地点"/>
+            android:hint="地点"/>
     </LinearLayout>
     </RelativeLayout>
 
@@ -149,28 +149,64 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
-                android:padding="10dp"
-                android:layout_width="match_parent"
-                android:gravity="left"
-                android:textSize="15sp"
+            <RelativeLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:cursorVisible="false"
-                android:textColor="#333333"
-                android:textAlignment="gravity"
-                android:text="提醒"/>
-            <TextView
-                android:textSize="15sp"
-                android:padding="10dp"
-                android:layout_width="match_parent"
-                android:gravity="left"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:cursorVisible="false"
-                android:textColor="#333333"
-                android:textAlignment="gravity"
-                android:text="标记为"/>
+                >
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:gravity="left"
+                    android:textSize="15sp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:cursorVisible="false"
+                    android:textColor="#333333"
+                    android:textAlignment="gravity"
+                    android:text="提醒"/>
+                <Switch
+                    android:paddingTop="15dp"
+                    android:paddingBottom="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/switch3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_alignParentStart="true"
+                    android:textSize="15sp"
+                    android:paddingTop="15dp"
+                    android:paddingLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:gravity="left"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:cursorVisible="false"
+                    android:textColor="#333333"
+                    android:textAlignment="gravity"
+                    android:text="标记为"/>
+                <Spinner
+
+                    android:paddingTop="13dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/spin_tag"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/tag">
+
+                </Spinner>
+            </RelativeLayout>
+
+
+
         </LinearLayout>
     </RelativeLayout>
 

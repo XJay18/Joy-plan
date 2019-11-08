@@ -111,6 +111,7 @@ public class CordActivity extends AppCompatActivity implements View.OnClickListe
                 if (judCord())
                     SMSSDK.submitVerificationCode("86", phone_number, cord_number);
                 flag = false;
+
                 break;
             case R.id.cord_return:
                 Intent intent = new Intent(CordActivity.this, PhoneActivity.class);

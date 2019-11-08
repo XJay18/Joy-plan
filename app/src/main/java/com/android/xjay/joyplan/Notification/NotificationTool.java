@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.NotificationManagerCompat;
 import android.widget.Toast;
@@ -89,7 +90,7 @@ public class NotificationTool {
     }
 
 
-    public void createPendingNotification(Date begin_date) {
+    public void createPendingNotification(Date begin_date,String title,String content) {
         Date now_date = new Date();
         Long now_time = now_date.getTime();
         Long begin_time = begin_date.getTime();
@@ -100,15 +101,21 @@ public class NotificationTool {
         Log.e("begin", begin_time.toString());
         Log.e("begin",begin_date.toString());
         Log.e("nowmill", now_time.toString());*/
-        createPendingNotification(time);
+        createPendingNotification(time,title,content);
     }
 
-    private void createPendingNotification(long time) {
+    private void createPendingNotification(long time,String title,String content) {
         AlarmManager alarmManager = (AlarmManager) mcontext.getSystemService(
                 Context.ALARM_SERVICE);
 
         Intent intent = new Intent();
         intent.setAction("com.example.notification");
+        Bundle bundle=new Bundle();
+        bundle.putString("title", title);
+        bundle.putString("content", content);
+        intent.putExtras(bundle);
+
+
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 mcontext, pending_request_code++, intent, 0);

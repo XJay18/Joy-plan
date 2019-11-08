@@ -21,18 +21,59 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
+/**
+ * 添加日程activity
+ */
 public class AddAgendaActivity extends AppCompatActivity implements View.OnClickListener {
 
+    /**
+     * 数据库helper的引用(单例)
+     */
     private UserDBHelper mHelper;
+
+    /**
+     * 时间选择器（开始时间）
+     */
     private CustomTimePicker myStartTimePicker;
+
+    /**
+     * 时间选择器（结束时间）
+     */
     private CustomTimePicker myEndTimePicker;
 
+    /**
+     * 活动标题输入框
+     */
     private EditText editText_agenda_title;
+
+    /**
+     * 活动地点输入框
+     */
     private EditText editText_agenda_address;
+
+    /**
+     * 活动开始时间文字
+     */
     private TextView tv_agenda_start_time;
+
+    /**
+     * 活动结束时间文字
+     */
     private TextView tv_agenda_end_time;
+
+    /**
+     * 取消按钮
+     */
     private TextView tv_agenda_cancel;
+
+    /**
+     * 确认按钮
+     */
     private TextView tv_agenda_confirm;
+
+    /**
+     * 备注输入框
+     */
     private EditText editText_notation;
 
     @Override
@@ -81,6 +122,9 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
 
     }
 
+    /**
+     * 初始化时间选择器
+     */
     private void initTimePicker() {
 
         long start_beginTime = System.currentTimeMillis();
@@ -107,7 +151,7 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 long temp_beginTime = timestamp + 60 * 60 * 1000;
                 String str_temp = DateFormat.long2Str(temp_beginTime, true);
                 String str_trans_temp = str_temp.substring(5);
-                Log.v("str_trans_temp", str_trans_temp);
+
                 tv_agenda_end_time.setText(str_trans_temp);
                 myEndTimePicker.setSelectedTime(temp_beginTime, false);
 //                Log.v("boolean",t+"");
@@ -171,6 +215,9 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 start_time = "2019-" + start_time;
                 String end_time = tv_agenda_end_time.getText().toString();
                 end_time = "2019-" + end_time;
+                //日程标题和备注
+                String agenda_title=editText_agenda_title.getText().toString();
+                String agenda_content=editText_notation.getText().toString();
 
                 //创建延时通知
                 Date begin_date = null;
@@ -181,7 +228,7 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 }
                 /*Log.e("begin_time",start_time);
                 Log.e("begin_date:before para", begin_date.toString());*/
-                new NotificationTool(this).createPendingNotification(begin_date);
+                new NotificationTool(this).createPendingNotification(begin_date,agenda_title,agenda_content);
 
                 String title = editText_agenda_title.getText().toString();
                 String address = editText_agenda_address.getText().toString();
@@ -189,6 +236,7 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 if(content==null)
                 content="";
                 Agenda agenda = new Agenda(title, start_time, end_time, content, address);
+                //mHelper.reset();
                 mHelper.insert_agenda(agenda);
                 SQLiteDatabase dbRead = mHelper.getReadableDatabase();
                 Cursor c;

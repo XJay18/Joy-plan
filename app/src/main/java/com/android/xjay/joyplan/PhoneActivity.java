@@ -48,7 +48,12 @@ public class PhoneActivity extends AppCompatActivity {
                 case R.id.btn_phone_next:
                     legal = setphone();
                     if (legal) {
-                        new Thread(new RegThread()).start();
+
+                        //new Thread(new RegThread()).start();
+                        Intent intent = new Intent(PhoneActivity.this, CordActivity.class);
+                        intent.setClass(PhoneActivity.this, CordActivity.class);
+                        intent.putExtra("data0", phone_number);
+                        startActivity(intent);
                     }
                     break;
                 case R.id.phone_return:

@@ -60,14 +60,13 @@ public class ExpandingList extends ScrollView {
     public CustomItem createNewItem(int layoutId) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         ViewGroup item = (ViewGroup) inflater.inflate(layoutId, this, false);
-        ImageView imageView = item.findViewById(R.id.img_delete_acitivty);
+
 
         if (item instanceof CustomItem) {
             CustomItem customItem = (CustomItem) item;
             customItem.setParent(this);
             addItem(customItem);
             itemNum++;
-            imageView.setTag(itemNum);
             customItem.setIndex(itemNum);
             return customItem;
         }

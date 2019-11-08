@@ -28,7 +28,7 @@
                 android:background="@color/transparent"
                 android:text="取消"
                 android:textColor="#F8463e"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
         </LinearLayout>
 
@@ -47,7 +47,7 @@
                 android:background="@color/transparent"
                 android:textColor="#999999"
                 android:layout_gravity="center_vertical"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:text="添加"
                 />
         </LinearLayout>
@@ -74,6 +74,7 @@
                     android:id="@+id/editText_title"
                     android:layout_width="match_parent"
                     android:gravity="left"
+                    android:textSize="15sp"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
                     android:cursorVisible="false"
@@ -81,6 +82,7 @@
                     android:textAlignment="gravity"
                     android:hint="活动标题"/>
                 <EditText
+                    android:textSize="15sp"
                     android:padding="10dp"
                     android:id="@+id/editText_address"
                     android:layout_width="match_parent"
@@ -101,6 +103,7 @@
             android:layout_height="143dp"
             android:background="@drawable/btn_shape">
             <EditText
+                android:textSize="15sp"
                 android:padding="10dp"
                 android:id="@+id/editText_detail"
                 android:layout_width="match_parent"
@@ -173,13 +176,20 @@
             android:background="@drawable/btn_shape"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/img_photo"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
             <LinearLayout
+                android:id="@+id/img_add_container"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <ImageView
+                    android:id="@+id/img_add_img"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_camera"

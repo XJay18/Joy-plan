@@ -89,7 +89,7 @@ public class CustomListAdapter extends BaseAdapter {
         String s = agendaList.get(position);
         if (agendaList.get(position) != "") {
             holder.btn_agenda.setText(agendaList.get(position));
-            holder.btn_agenda.setBackgroundResource(R.drawable.btn_shape_agenda_blue);
+            holder.btn_agenda.setBackgroundResource(R.drawable.btn_shape_course_blue);
             if (couresList.get(position) != "") {
                 ViewGroup.LayoutParams layoutParams = holder.btn_agenda.getLayoutParams();
                 ViewGroup.LayoutParams layoutParams1 = holder.btn_course.getLayoutParams();

@@ -638,7 +638,10 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
      * @param dateStr String of the starttime, yyyy-MM-dd or yyyy-MM-dd HH:mm
      */
     public void show(String dateStr) {
-        if (!canShow() || TextUtils.isEmpty(dateStr)) return;
+        boolean canShow=canShow();
+        boolean isEmpty=TextUtils.isEmpty(dateStr);
+        if (!canShow|| isEmpty)
+            return;
 
         // Don't show the animation
         if (setSelectedTime(dateStr, false)) {
