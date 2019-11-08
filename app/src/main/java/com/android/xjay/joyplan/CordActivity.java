@@ -17,13 +17,33 @@ import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
 public class CordActivity extends AppCompatActivity implements View.OnClickListener {
-
+    /**
+     * 验证码输入框
+     */
     private EditText et_cord;
+    /**
+     * 下一步按钮
+     */
     private Button btn_next;
+    /**
+     * 返回按钮
+     */
     private Button btn_return;
+    /**
+     * 电话号码
+     */
     private String phone_number;
+    /**
+     * 验证码
+     */
     private String cord_number;
-    EventHandler eventHandler;
+    /**
+     * 事件处理
+     */
+    private EventHandler eventHandler;
+    /**
+     * 验证内容是否合法
+     */
     private boolean flag = true;
 
     @Override
@@ -48,14 +68,15 @@ public class CordActivity extends AppCompatActivity implements View.OnClickListe
         SMSSDK.registerEventHandler(eventHandler);
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         SMSSDK.unregisterEventHandler(eventHandler);
     }
 
-    // 使用Handler来分发Message对象到主线程中，处理事件
+    /**
+     * 使用Handler来分发Message对象到主线程中，处理事件
+     */
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -95,8 +116,9 @@ public class CordActivity extends AppCompatActivity implements View.OnClickListe
 
     };
 
-
-    // 获取id
+    /**
+     *  获取id
+     */
     private void getId() {
         et_cord = findViewById(R.id.et_cord);
         btn_next = findViewById(R.id.btn_cord_next);
@@ -105,9 +127,14 @@ public class CordActivity extends AppCompatActivity implements View.OnClickListe
         btn_return.setOnClickListener(this);
     }
 
+    /**
+     * 处理点击事件
+     */
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_cord_next:
+
                 if (judCord())
                     SMSSDK.submitVerificationCode("86", phone_number, cord_number);
                 flag = false;
@@ -122,34 +149,9 @@ public class CordActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    /*private boolean judPhone()
-    {
-        if(TextUtils.isEmpty(edit_phone.getText().toString().trim()))
-        {
-            Toast.makeText(MainActivity.this,"请输入您的电话号码",Toast.LENGTH_LONG).show();
-            edit_phone.requestFocus();
-            return false;
-        }
-        else if(edit_phone.getText().toString().trim().length()!=11)
-        {
-            Toast.makeText(MainActivity.this,"您的电话号码位数不正确",Toast.LENGTH_LONG).show();
-            edit_phone.requestFocus();
-            return false;
-        }
-        else
-        {
-            phone_number=edit_phone.getText().toString().trim();
-            String num="[1][358]\\d{9}";
-            if(phone_number.matches(num))
-                return true;
-            else
-            {
-                Toast.makeText(MainActivity.this,"请输入正确的手机号码",Toast.LENGTH_LONG).show();
-                return false;
-            }
-        }
-    }*/
-
+    /**
+     * 输出提示信息
+     */
     private boolean judCord() {
         if (TextUtils.isEmpty(et_cord.getText().toString().trim())) {
             Toast.makeText(CordActivity.this, "请输入您的验证码", Toast.LENGTH_LONG).show();

@@ -1,10 +1,8 @@
 package com.android.xjay.joyplan.web;
 
 import com.android.xjay.joyplan.Agenda;
-import com.android.xjay.joyplan.AgendaObject;
-import com.mysql.cj.xdevapi.JsonArray;
-import com.mysql.cj.xdevapi.JsonString;
 
+import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,9 +11,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeoutException;
 
 /**
  * 使用get方法获取Http服务器数据
@@ -38,6 +38,57 @@ public class WebServiceGet {
                 connection.setReadTimeout(8000);//传递数据超时
                 in = connection.getInputStream();
                 return parseInfo(in);
+            }
+            catch(SocketTimeoutException e){
+                e.printStackTrace();
+                connection.disconnect();
+                return "no_connection";
+            }
+            catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            //意外退出时，连接关闭保护
+            if (connection != null) {
+                connection.disconnect();
+            }
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+    //注册接口
+    public static String registerGet(String phone_number,String password,String nick_name,String university){
+        HttpURLConnection connection = null;
+        InputStream in = null;
+        try{
+            String Url = "http://110.64.91.150:8080/joyweb3.0/RegLet";
+            String path = Url + "?phone_number=" + URLEncoder.encode(phone_number,"UTF-8") + "&password=" + URLEncoder.encode(password,"UTF-8")
+                    +"&nick_name="+URLEncoder.encode(nick_name,"UTF-8")
+                    +"&university="+URLEncoder.encode(university,"UTF-8");
+            try {
+                URL url = new URL(path);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setConnectTimeout(10000);//建立连接超时
+                connection.setReadTimeout(8000);//传递数据超时
+                in = connection.getInputStream();
+                return parseInfo(in);
+            } catch (SocketTimeoutException e){
+                e.printStackTrace();
+                connection.disconnect();
+                return "no_connection";
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -60,27 +111,26 @@ public class WebServiceGet {
         }
         return null;
     }
-    //注册接口
-    public static String registerGet(String phone_number,String password,String nick_name,String university){
+    //检查手机号码接口
+    public static String phoneGet(String phone_number){
         HttpURLConnection connection = null;
         InputStream in = null;
 
         try{
-            String Url = "http://110.64.91.150:8080/joyweb3.0/RegLet";
-            String path = Url + "?username=" + URLEncoder.encode(phone_number,"UTF-8") + "&password=" + URLEncoder.encode(password,"UTF-8")
-                    +"&nick_name="+URLEncoder.encode(nick_name,"UTF-8")
-                    +"&university="+URLEncoder.encode(university,"UTF-8");
+            String Url = "http://110.64.91.150:8080/joyweb3.0/PhoLet";
+            String path = Url + "?phone_number=" + phone_number;
             try {
-                System.out.println("问题1");
                 URL url = new URL(path);
-                System.out.println("问题2");
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setConnectTimeout(10000);//建立连接超时
                 connection.setReadTimeout(8000);//传递数据超时
                 in = connection.getInputStream();
-                System.out.println("问题3");
                 return parseInfo(in);
+            } catch(SocketTimeoutException e){
+                e.printStackTrace();
+                connection.disconnect();
+                return "no_connection";
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -88,6 +138,7 @@ public class WebServiceGet {
             }
         } catch (Exception e) {
             e.printStackTrace();
+
         } finally {
             //意外退出时，连接关闭保护
             if (connection != null) {
@@ -101,7 +152,6 @@ public class WebServiceGet {
                 }
             }
         }
-        System.out.println("问题4");
         return null;
     }
     //添加日程活动

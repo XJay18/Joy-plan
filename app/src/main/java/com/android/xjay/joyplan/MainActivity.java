@@ -16,21 +16,48 @@ import android.widget.Toast;
 
 import com.android.xjay.joyplan.Notification.NotificationReceiver;
 import com.android.xjay.joyplan.web.WebServiceGet;
-import com.android.xjay.joyplan.web.WebServicePost;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    /**
+     * 帐号输入框
+     */
     private EditText et_account;
+    /**
+     * 密码输入框
+     */
     private EditText et_password;
+    /**
+     * 登录按钮
+     */
     private Button btn_login;
+    /**
+     * 返回按钮
+     */
     private Button btn_return;
+    /**
+     *通知栏
+     */
     private NotificationReceiver notificationReceiver;
-    //提示框
+    /**
+     * 提示框
+     */
     private ProgressDialog dialog;
-    //服务器返回的数据
+    /**
+     * 服务器返回的数据
+     */
     private String infoString;
-    //判断输入内容的合法性
+    /**
+     * 判断内容的合法性
+     */
     private boolean legal;
-
+    /**
+     * 储存电话号码
+     */
+    private String phone_number;
+    /**
+     * 储存密码
+     */
+    private String password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +74,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         unregisterReceiver(notificationReceiver);
     }
 
+    /**
+     * 绑定组件id
+     */
     private void getID() {
         btn_login = findViewById(R.id.btn_login);
         btn_return = findViewById(R.id.main_return);
@@ -59,64 +89,74 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-//        switch(v.getId()){
-//            case R.id.btn_login:
-//                legal=setUser();
-//                if(legal){
-//                    dialog = new ProgressDialog(MainActivity.this);
-//                    dialog.setTitle("正在登陆");
-//                    dialog.setMessage("请稍后");
-//                    dialog.setCancelable(true);//设置可以通过back键取消
-//                    dialog.show();
-//                    new Thread(new MyThread()).start();
-//                }
-//                break;
-//            case R.id.main_return:
-//                Intent intent=new Intent(MainActivity.this,WelcomeActivity.class);
-//                startActivity(intent);
-//                break;
-//        }
-        if (v.getId() == R.id.btn_login) {
-            Toast.makeText(
-                    MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(
-                    MainActivity.this, HomeActivity.class);
-            startActivity(intent);
-        }
-        if (v.getId() == R.id.main_return) {
-            Intent intent = new Intent(
-                    MainActivity.this, WelcomeActivity.class);
-            startActivity(intent);
+        switch(v.getId()){
+            case R.id.btn_login:
+                legal=setUser();
+                if(legal){
+                    phone_number=et_account.getText().toString();
+                    password=et_password.getText().toString();
+                    dialog = new ProgressDialog(MainActivity.this);
+                    dialog.setTitle("正在登陆");
+                    dialog.setMessage("请稍后");
+                    dialog.setCancelable(true);//设置可以通过back键取消
+                    dialog.show();
+                    new Thread(new MyThread()).start();
+                }
+                break;
+            case R.id.main_return:
+                Intent intent=new Intent(MainActivity.this,WelcomeActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 
+    /**
+     * 开线程调用http方法访问服务器并获得返回数据
+     */
     private class MyThread implements Runnable {
         @Override
         public void run() {
             //获取服务器返回的数据
-            infoString = WebServiceGet.loginGet(et_account.getText().toString(),et_password.getText().toString());
-            //infoString=WebServiceGet.selectagendaGet(et_account.getText().toString(),"SelAgen");
+            infoString = WebServiceGet.loginGet(phone_number,password);
             //更新UI，使用runOnUiThread()方法
             showResponse(infoString);
         }
     }
 
-    /*
-     * 跳转页面
+    /**
+     * 用服务器返回的数据进行页面更新
      */
     private void showResponse(final String response) {
         runOnUiThread(new Runnable() {
             //更新UI
             @Override
             public void run() {
-                if (response.equals("false")) {
+                if(response.equals("no_connection")){
+                    dialog.dismiss();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(
+                            MainActivity.this);
+                    builder.setTitle("登陆信息");
+                    builder.setMessage("未连接至服务器，免登录");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    //TODO 登录失败后的页面跳转
+                                    Intent intent = new Intent(MainActivity.this,
+                                            HomeActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+                    builder.show();
+                }
+                else if (response.equals("false")) {
                     //TODO 登陆失败后的操作
                     dialog.dismiss();
                     AlertDialog.Builder builder = new AlertDialog.Builder(
                             MainActivity.this);
                     builder.setTitle("登陆信息");
                     builder.setMessage("登陆失败");
-                    //builder.setMessage("登录帐号或密码错误");
                     builder.setCancelable(false);
                     builder.setPositiveButton("OK",
                             new DialogInterface.OnClickListener() {
@@ -136,8 +176,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    /*
-     * 实现换行功能
+    /**
+     * 限制输入内容
      */
     private boolean setUser() {
         if (et_account.getText().toString().length() <= 0) {
@@ -151,6 +191,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
+    /**
+     * 跳转光标
+     */
     private class JumpTextWatcher implements TextWatcher {
         private EditText mThisView;
         private View mNextView;
@@ -188,6 +231,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * 注册notification
+     */
     private void regReceiver() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.example.notification");

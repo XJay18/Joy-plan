@@ -203,6 +203,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 }
                 else{
                     info=new StudentActivityInfo(string_title, string_description, string_start_time, string_end_time, string_address);
+
                 }
                 // 将info加入学生活动中
                 mHelper.insert_studentActivity(info);
@@ -244,6 +245,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
 
 
 
+
     /*
     private class RegThread implements Runnable {
         public void run() {
@@ -260,6 +262,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         }
     }
     */
+
 
     /**
      * 添加活动后发送广播

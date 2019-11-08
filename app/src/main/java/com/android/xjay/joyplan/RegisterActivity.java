@@ -16,19 +16,56 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.xjay.joyplan.web.WebServiceGet;
-import com.android.xjay.joyplan.web.WebServicePost;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
-    private EditText username;
-    private EditText userpassword;
-    private EditText userpassword2;
+    /**
+     * 用户名输入框
+     */
+    private EditText et_nickname;
+    /**
+     * 密码输入框
+     */
+    private EditText et_password;
+    /**
+     * 第二次密码输入框
+     */
+    private EditText et_password2;
+    /**
+     * 学校下拉框
+     */
     private Spinner spin_university;
+    /**
+     * 返回按钮
+     */
     private Button btn_return;
+    /**
+     * 确认按钮
+     */
     private Button btn_submit;
-    String phone_number;
-    String university;
-    ProgressDialog dialog;
-    boolean legal;
+    /**
+     * 储存电话号码
+     */
+    private String phone_number;
+    /**
+     * 储存密码
+     */
+    private String password;
+    /**
+     * 储存昵称
+     */
+    private String nick_name;
+    /**
+     * 储存所选择的学校
+     */
+    private String university;
+    /**
+     * 提示框
+     */
+    private ProgressDialog dialog;
+    /**
+     * 判断内容合法性
+     */
+    private boolean legal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,19 +74,23 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         getID();
     }
 
+    /**
+     * 绑定组件id
+     */
     private void getID() {
         legal = false;
         btn_submit = findViewById(R.id.btn_submit);
         btn_return = findViewById(R.id.register_return);
-        username = findViewById(R.id.regi_nick_name);
-        userpassword = findViewById(R.id.regi_password);
-        userpassword2 = findViewById(R.id.regi_password_confirm);
+        et_nickname = findViewById(R.id.regi_nick_name);
+        et_password = findViewById(R.id.regi_password);
+        et_password2 = findViewById(R.id.regi_password_confirm);
         spin_university = findViewById(R.id.sp_university);
         phone_number = getIntent().getStringExtra("data");
         btn_submit.setOnClickListener(this);
+        btn_return.setOnClickListener(this);
         spin_university.setOnItemSelectedListener(new MyOnItemSelected());
-        username.addTextChangedListener(new JumpTextWatcher(username, userpassword));
-        userpassword.addTextChangedListener(new JumpTextWatcher(userpassword, userpassword2));
+        et_nickname.addTextChangedListener(new JumpTextWatcher(et_nickname, et_password));
+        et_password.addTextChangedListener(new JumpTextWatcher(et_password, et_password2));
     }
 
     @Override
@@ -59,6 +100,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             case R.id.btn_submit:
                 legal = setUser();
                 if (legal) {
+                    password= et_password.getText().toString();
+                    nick_name= et_nickname.getText().toString();
                     dialog = new ProgressDialog(RegisterActivity.this);
                     dialog.setTitle("正在注册");
                     dialog.setMessage("请稍后");
@@ -73,6 +116,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     * 载入学校下拉框
+     */
     class MyOnItemSelected implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -89,21 +135,41 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     * 开线程与服务器进行http通信
+     */
     private class RegThread implements Runnable {
         @Override
         public void run() {
             //获取服务器返回数据
-            String RegRet = WebServiceGet.registerGet(phone_number, userpassword.getText().toString(), username.getText().toString(), university);
+            String RegRet = WebServiceGet.registerGet(phone_number, password, nick_name, university);
             //更新UI，界面处理
             showReq(RegRet);
         }
     }
 
-    private void showReq(final String RegRet) {
+    /**
+     * 获取服务器返回数据后更新页面
+     */
+    private void showReq(final String response) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (RegRet.equals("true")) {
+                if(response.equals("no_connection")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(
+                            RegisterActivity.this);
+                    builder.setTitle("登陆信息");
+                    builder.setMessage("未连接至服务器，无法注册");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    //TODO 登录失败后的页面跳转
+                                }
+                            });
+                    builder.show();
+                } else if (response.equals("true")) {
                     dialog.dismiss();
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     builder.setTitle("注册信息");
@@ -142,19 +208,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
-    /*
-     *对输入注册信息进行判断
+    /**
+     * 对输入注册信息进行判断
      */
     private boolean setUser() {
-        if (username.getText().toString().length() <= 0) {
+        if (et_nickname.getText().toString().length() <= 0) {
             Toast.makeText(this, "昵称不能为空", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (userpassword.getText().toString().length() <= 0 || userpassword2.getText().toString().length() <= 0) {
+        if (et_password.getText().toString().length() <= 0 || et_password2.getText().toString().length() <= 0) {
             Toast.makeText(this, "密码不能为空", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (!userpassword.getText().toString().equals(userpassword2.getText().toString())) {
+        if (!et_password.getText().toString().equals(et_password2.getText().toString())) {
             Toast.makeText(this, "两次输入的密码不同", Toast.LENGTH_LONG).show();
             return false;
         }
@@ -162,7 +228,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         return true;
     }
 
-    /*
+    /**
      * 实现换行功能
      */
     private class JumpTextWatcher implements TextWatcher {

@@ -20,21 +20,30 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * help to read excel's courses and add to schedule
+ */
 public class POIExcelProcesser {
+    /** the name of courses */
     private static List<String> course_names = new ArrayList<>();
+    /** the day of courses */
     private static List<Integer> course_weekdays = new ArrayList<>();
-    //课程开始的时间，单位是第几节
+    /** the begin time of courses */
     private static List<Integer> course_begin_times = new ArrayList<>();
+    /** the end time of courses */
     private static List<Integer> course_end_times = new ArrayList<>();
+    /** the begin week of courses */
     private static List<Integer> course_begin_weeks = new ArrayList<>();
+    /** the end week of courses */
     private static List<Integer> course_end_weeks = new ArrayList<>();
+    /** the classroom of courses */
     private static List<String> classrooms = new ArrayList<>();
+    /** the teacher of courses */
     private static List<String> teachers = new ArrayList<>();
 
+    /** add the courses from excel to database */
     public static void setExceltoSchedule(String filepath, Context mContext) {
         Workbook workbook = null;
-        List<String> courses = null;
-
         //假定xslx文件在/mnt/sdcard/download目录下
         String[] fileNameFragments = filepath.split(File.separator);
         filepath = File.separator + "mnt" + File.separator + "sdcard";
@@ -64,20 +73,20 @@ public class POIExcelProcesser {
         }
     }
 
-    //返回workbook
+    /** get the workbook of excel */
     private static Workbook getWorkbook(String filepath) throws IOException {
         Workbook workbook = null;
         if (!filepath.endsWith(".xlsx")) {
             return null;
         }
-        Log.e("msg", "ends with xlsx");
+        Log.e("excel path", filepath);
         InputStream InputStream = new FileInputStream(filepath);
 
         workbook = new XSSFWorkbook(InputStream);
         return workbook;
     }
 
-    //默认是XSSF类型的，返回String的list
+    /** extract all courses */
     private static void exec(Workbook workbook) {
         XSSFSheet xssfSheet = (XSSFSheet) workbook.getSheetAt(0);
         List<CellRangeAddress> list_cellrangeaddress = xssfSheet.getMergedRegions();
@@ -90,19 +99,9 @@ public class POIExcelProcesser {
                 list_cellstring.add(cell.toString());
             }
         }
-//	        for(int i=0;i<course_names.size();i++){
-//	            Log.e("course_info",course_names.get(i));
-//                Log.e("begintime",course_begin_times.get(i).toString());
-//                Log.e("endtime",course_end_times.get(i).toString());
-//                Log.e("beginweek",course_begin_weeks.get(i).toString());
-//                Log.e("endweek",course_end_weeks.get(i).toString());
-//                Log.e("teacher",teachers.get(i));
-//                Log.e("classroom",classrooms.get(i));
-//                Log.e("weekday",course_weekdays.get(i).toString());
-//            }
     }
 
-    //处理一节大课，判断是否为一门课且将信息传入各个数组
+    /** extract one course's information */
     private static void getAllInfo(String course_info, int weekday) {
         if (course_info != null) {
             String course_name = null;
