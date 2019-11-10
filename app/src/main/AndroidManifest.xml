@@ -44,7 +44,6 @@
         <activity android:name=".PhoneActivity" />
         <activity android:name=".CordActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".ReserveActivity" />
         <activity android:name=".FqzActivity" />
         <activity android:name=".AddActivity" />
         <activity android:name=".ScheduleActivity" />

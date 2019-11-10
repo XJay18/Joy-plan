@@ -77,29 +77,36 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // 获取intent
         Intent intent = getIntent();
+        // 获取bundle
         Bundle bundle = intent.getExtras();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_agenda);
-        editText_agenda_title = findViewById(R.id.editText_agenda_title);
-        editText_agenda_address = findViewById(R.id.editText_agenda_address);
-        tv_agenda_start_time = findViewById(R.id.tv_select_agenda_start_time);
-        tv_agenda_end_time = findViewById(R.id.tv_select_agenda_end_time);
-        editText_notation = findViewById(R.id.editText_notation);
-        tv_agenda_cancel = findViewById(R.id.tv_agenda_cancel);
-        tv_agenda_confirm = findViewById(R.id.tv_agenda_confirm);
+
+        // 找到所有部件
+        findAllViews();
+
+        // 初始化时间选择器
         initTimePicker();
 
+        // 注册按下回车监听，实现按下回车后光标跳转
         editText_agenda_title.addTextChangedListener(new JumpTextWatcher(this, editText_agenda_title, editText_agenda_address));
         editText_agenda_address.addTextChangedListener(new JumpTextWatcher(this, editText_agenda_address, editText_notation));
         editText_notation.addTextChangedListener(new JumpTextWatcher(this, editText_notation, tv_agenda_confirm));
-        tv_agenda_confirm.setOnClickListener(this);
 
+        // 注册点击监听
+        tv_agenda_confirm.setOnClickListener(this);
         tv_agenda_start_time.setOnClickListener(this);
         tv_agenda_end_time.setOnClickListener(this);
-
         tv_agenda_cancel.setOnClickListener(this);
+
+        // 获取数据库操作类实例（单例）
         mHelper = UserDBHelper.getInstance(this, 1);
+
+        // 如果bundle内容非空，从bundle中获取开始时间和结束时间，并显示出来
         if (bundle != null) {
             String date = bundle.getString("date", "000000");
             String nextDate = bundle.getString("nextDate", "000000");
@@ -121,22 +128,44 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
 
     }
 
+    // 找到所有部件
+    private void findAllViews(){
+        // 找到所有部件
+        editText_agenda_title = findViewById(R.id.editText_agenda_title);
+        editText_agenda_address = findViewById(R.id.editText_agenda_address);
+        tv_agenda_start_time = findViewById(R.id.tv_select_agenda_start_time);
+        tv_agenda_end_time = findViewById(R.id.tv_select_agenda_end_time);
+        editText_notation = findViewById(R.id.editText_notation);
+        tv_agenda_cancel = findViewById(R.id.tv_agenda_cancel);
+        tv_agenda_confirm = findViewById(R.id.tv_agenda_confirm);
+    }
+
     /**
      * 初始化时间选择器
      */
     private void initTimePicker() {
 
-        long start_beginTime = System.currentTimeMillis();
-        String endTime = "2020-04-07 18:00";
+        // 获取当前时间
+        long current_time = System.currentTimeMillis();
+        //最大可选结束时间()
+        long temp = 157680000000L;
+        long max_time = current_time + temp;
 
-        String str_BT = DateFormat.long2Str(start_beginTime, true);
-        String str_trans_BT = str_BT.substring(5);
-        tv_agenda_start_time.setText(str_trans_BT);
+        // 开始时间字符串
+        String str_start_time = DateFormat.long2Str(current_time, true);
+        // 将年份截取掉（不需要显示年份）
+        String str_trans_start_time = str_start_time.substring(5);
+        // 显示开始时间
+        tv_agenda_start_time.setText(str_trans_start_time);
 
-        long end_beginTime = System.currentTimeMillis() + 60 * 60 * 1000;
-        str_BT = DateFormat.long2Str(end_beginTime, true);
-        str_trans_BT = str_BT.substring(5);
-        tv_agenda_end_time.setText(str_trans_BT);
+        // 结束时间时间戳
+        long end_beginTime = current_time + 60 * 60 * 1000;
+        // 结束时间字符串
+        String str_end_time = DateFormat.long2Str(end_beginTime, true);
+        // 将年份截取掉（不需要显示年份）
+        String str_trans_end_time = str_end_time.substring(5);
+        // 显示结束时间
+        tv_agenda_end_time.setText(str_trans_end_time);
 
         // 通过日期字符串初始化日期，格式请用：yyyy-MM-dd HH:mm
         myStartTimePicker = new CustomTimePicker(AddAgendaActivity.this, new CustomTimePicker.Callback() {
@@ -155,7 +184,7 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 myEndTimePicker.setSelectedTime(temp_beginTime, false);
 //                Log.v("boolean",t+"");
             }
-        }, start_beginTime, DateFormat.str2Long(endTime, true), "请选择时间");
+        }, current_time, max_time, "请选择时间");
         //允许点击屏幕或物理返回键关闭
         myStartTimePicker.setCancelable(true);
         // 显示日期和时、分
@@ -175,7 +204,7 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 Log.v("modified", modified);
                 tv_agenda_end_time.setText(modified);
             }
-        }, end_beginTime, DateFormat.str2Long(endTime, true), "请选择时间");
+        }, end_beginTime, max_time, "请选择时间");
         //允许点击屏幕或物理返回键关闭
         myEndTimePicker.setCancelable(true);
         // 显示日期和时、分
@@ -189,10 +218,12 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            // 开始时间
             case R.id.tv_select_agenda_start_time: {
                 myStartTimePicker.show(tv_agenda_start_time.getText().toString());
                 break;
             }
+            // 结束时间
             case R.id.tv_select_agenda_end_time: {
 //                myEndTimePicker.setSelectedTime(tv_agenda_end_time.getText().toString(),false);
 //                Log.v("传入",tv_agenda_end_time.getText().toString());
@@ -203,11 +234,12 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 myEndTimePicker.show(tv_agenda_end_time.getText().toString());
                 break;
             }
+            // 取消按钮
             case R.id.tv_agenda_cancel: {
                 finish();
                 break;
             }
-
+            // 确认按钮
             case R.id.tv_agenda_confirm: {
                 // mHelper.reset();
                 String start_time = tv_agenda_start_time.getText().toString();

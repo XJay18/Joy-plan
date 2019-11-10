@@ -8,6 +8,9 @@ import android.view.View;
 import com.android.xjay.calendarview.Calendar;
 import com.android.xjay.calendarview.MonthView;
 
+/*
+月视图
+ */
 public class SimpleMonthView extends MonthView {
 
     private int mRadius;

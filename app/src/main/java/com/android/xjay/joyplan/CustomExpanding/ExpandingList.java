@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+/*
+活动可滚动列表，用于存放一个个活动
+ */
 public class ExpandingList extends ScrollView {
     /**
      * Member variable to hold the items.

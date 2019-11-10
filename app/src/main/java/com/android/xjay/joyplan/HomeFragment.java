@@ -57,18 +57,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
      */
     UserDBHelper mHelper;
 
-    ArrayList<ArrayList<String>> AgendaTitleArrayList;
-    ArrayList<ArrayList<String>> CourseArrayList;
+    // 当前context
     protected Context mContext;
-    private ExpandingList expandingList;
-    DynamicReceiverAddActivity dynamicReceiver;
-    String[] TITLES;
-    String[] INFOS;
-    String[] STARTTIMES;
-    //String[] ENDTIMES;
-    String[] ADDRESSES;
-    Drawable[] IMAGES;
 
+    // 活动列表
+    private ExpandingList expandingList;
+
+    // 添加活动事件广播接收
+    DynamicReceiverAddActivity dynamicReceiver;
 
     //used by fragment_agenda
     TextView mTextMonthDay;
@@ -99,9 +95,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
     ScrollDisabledListView timeListView;
     LinearLayout linearLayout;
 
-
     int mYear;
+
+    // 日历视图
     CalendarLayout mCalendarLayout;
+
 
     public static HomeFragment newInstance(String info) {
         Bundle args = new Bundle();
@@ -278,6 +276,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         }
     }
 
+    /**
+     * 找到所有scheduleView的部件
+     */
     private void findAllScheduleViews() {
         timeListView = mScheduleView.findViewById(R.id.time_listview);
         scrollView = mScheduleView.findViewById(R.id.scrollView_agenda);
@@ -313,25 +314,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         blockContainers.add(container);
     }
 
-    private void initScrollDisabledListView() {
-        AgendaTitleArrayList = new ArrayList<>();
 
-        for (int i = 0; i < 7; i++) {
-            ArrayList<String> arrayList = new ArrayList<String>();
-            ArrayList<String> courseList = new ArrayList<String>();
-            for (int j = 0; j < 24; j++) {
-                arrayList.add("");
-                courseList.add("");
-            }
-            AgendaTitleArrayList.add(arrayList);
-
-
-        }
-
-        Calendar calendar = mCalendarView.getSelectedCalendar();
-        Calendar weekStartCalendar = CalendarUtil.getStartInWeek(calendar, 1);
-    }
-
+    /**
+     * 刷新活动列表
+     */
     public void RedrawExpandingList() {
 
         expandingList.Clear_mContainer();
@@ -347,6 +333,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         }
     }
 
+    /**
+     * bitmap转drawable的函数
+     * @param bp 要转换的bitmap
+     * @return
+     */
     public Drawable bitmap2Drawable(Bitmap bp) {
         //因为BtimapDrawable是Drawable的子类，最终直接使用bd对象即可。
         Bitmap bm = bp;
@@ -406,6 +397,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         }
     }
 
+    /**
+     * 添加活动块
+     * @param activityInfo 填充活动块的活动信息
+     */
     private void addItem(StudentActivityInfo activityInfo) {
         //Let's create an custom_item with R.layout.expanding_layout
         final CustomItem item = expandingList.createNewItem(R.layout.expanding_layout);
@@ -466,6 +461,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         return false;
     }
 
+    /**
+     * 自定义弹出框，长按日程或课程块时弹出，用于选择添加日程还是目标
+     * @param content 内容对象，可以是日程或课程，目前只实现了日程
+     */
     private void customChooseDialog(Object content) {
         final Dialog dialog = new Dialog(mContext, R.style.NormalDialogStyle);
         View view = View.inflate(mContext, R.layout.dialog_choose, null);
@@ -530,6 +529,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         dialog.show();
     }
 
+    /**
+     * 自定义弹出框，点击日程、课程或活动块时弹出
+     * @param content Agenda，Course或Activity
+     */
     private void customDialog(Object content) {
         final Dialog dialog = new Dialog(mContext, R.style.NormalDialogStyle);
         View view = View.inflate(mContext, R.layout.dialog_normal, null);
@@ -725,17 +728,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
     }
 
 
-    // 返回当前选择日期所在周的第一天
-    public Calendar getListCilckedCalendar(int index) {
-        Calendar selectedCalendar = mCalendarView.getSelectedCalendar();
-        Calendar weekStartCalendar = CalendarUtil.getStartInWeek(selectedCalendar, 1);
-        for (int i = 0; i < index; i++) {
-            weekStartCalendar = CalendarUtil.getNextCalendar(weekStartCalendar);
-        }
-        return weekStartCalendar;
-    }
-
-
     @Override
     public void onYearChange(int year) {
         mTextMonthDay.setText(String.valueOf(year));
@@ -760,7 +752,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         updateCourse();
     }
 
-
+    /**
+     * 刷新日程块
+     */
     public void updateAgenda() {
         for (int i = 0; i < 7; i++) {
             RelativeLayout container = blockContainers.get(i);
@@ -821,6 +815,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     }
 
+    /**
+     * 刷新活动块
+     */
     public void updateActivity() {
         for (int i = 0; i < 7; i++) {
             RelativeLayout container = blockContainers.get(i);
@@ -886,6 +883,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     }
 
+    /**
+     * 刷新课程块
+     */
     public void updateCourse() {
         for (int i = 0; i < 7; i++) {
             RelativeLayout container = blockContainers.get(i);
@@ -976,7 +976,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     }
 
-
+    /**
+     * 绘制一个课程块
+     * @param relativeLayout 绘制的课程块的父组件
+     * @param length 课程块的长度
+     * @param bias 课程块的垂直偏移量
+     * @param course 填充块的课程信息
+     */
     public void drawCourse(RelativeLayout relativeLayout, int length, int bias, Course course) {
 
         Button button = new Button(mContext);
@@ -1002,7 +1008,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         int a = relativeLayout.getChildCount();
     }
 
-
+    /**
+     * 绘制一个日程块
+     * @param relativeLayout 绘制的日程块的父组件
+     * @param length 日程块的长度
+     * @param bias 日程块的垂直偏移量
+     * @param agenda 填充块的日程信息
+     */
     public void drawAgenda(RelativeLayout relativeLayout, int length, float bias, Agenda agenda) {
 
         Button button = new Button(mContext);
@@ -1030,6 +1042,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     }
 
+
+    /**
+     * 绘制一个活动块
+     * @param relativeLayout 绘制的活动块的父组件
+     * @param length 活动块的长度
+     * @param bias 活动块的垂直偏移量
+     * @param studentActivityInfo 填充块的活动信息
+     */
     public void drawActivity(RelativeLayout relativeLayout, int length, float bias, StudentActivityInfo studentActivityInfo) {
 
         Button button = new Button(mContext);
@@ -1059,7 +1079,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
 
     /**
-     * method to accept Broadcast and refresh the ExpandingList
+     * 接收添加活动广播并刷新活动列表
      */
     class DynamicReceiverAddActivity extends BroadcastReceiver {
         @Override
@@ -1068,12 +1088,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         }
     }
 
+    /**
+     * 接收预定活动广播并刷新活动块
+     */
     class DynamicReceiverReserveActivity extends BroadcastReceiver {
         public void onReceive(Context context, Intent intent) {
             updateActivity();
         }
     }
 
+    /**
+     * 接收添加课程广播并添加课程表
+     */
     class DynamicReceiverAddCourseTable extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -1081,18 +1107,27 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         }
     }
 
+    /**
+     * 接收添加目标广播并添加目标
+     */
     class DynamicReceiverAddGoal extends BroadcastReceiver {
         public void onReceive(Context context, Intent intent) {
             addGoal();
         }
     }
 
+    /**
+     * 接收添加日程广播并添加日程
+     */
     class DynamicReceiverAddAgenda extends BroadcastReceiver {
         public void onReceive(Context context, Intent intent) {
             updateAgenda();
         }
     }
 
+    /**
+     * 添加目标
+     */
     private void addGoal() {
 
         String title = "Running";
@@ -1152,6 +1187,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         mHelper.insert_agenda(agenda);
     }
 
+    /**
+     * 添加课程表
+     */
     private void addCourseTable() {
 
 
@@ -1177,30 +1215,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     }
 
+
     private void configureSubItem(final CustomItem item, final View view, String info) {
         ((TextView) view.findViewById(R.id.sub_title)).setText(info);
 
     }
 
 
-    private void showInsertDialog(final ReserveActivity.OnItemCreated positive) {
-        final EditText text = new EditText(mContext);
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setView(text);
-        builder.setTitle("enter_title");
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                positive.itemCreated(text.getText().toString());
-            }
-        });
-        builder.setNegativeButton(android.R.string.cancel, null);
-        builder.show();
-    }
 
-    interface OnItemCreated {
-        void itemCreated(String title);
-    }
 }
 
 

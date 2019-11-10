@@ -21,24 +21,19 @@ import com.android.xjay.joyplan.CustomExpanding.ExpandingList;
 
 import java.util.ArrayList;
 
+/**
+ * 预定活动
+ */
 public class ScheduleActivity extends AppCompatActivity implements View.OnClickListener {
 
+    // 活动列表
     private ExpandingList expandingList;
 
-
-    String[] TITLES = new String[20];
-
-    String[] INFOS = new String[20];
-
-    String[] STARTTIMES = new String[20];
-
-    String[] ADDRESSES = new String[20];
-
-    Drawable[] IMAGES = new Drawable[20];
-
+    // 数据库操作类实例（单例）
     private UserDBHelper mHelper;
 
     Cursor c;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +72,7 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    // 向活动列表添加活动
     private void addItem(String title, String info, String starttime, String address, int colorRes, Drawable drawable) {
         //Let's create an custom_item with R.layout.expanding_layout
         final CustomItem item = expandingList.createNewItem(R.layout.expanding_layout);
@@ -105,6 +101,11 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     * bitmap转drawable
+     * @param bp
+     * @return
+     */
     public Drawable bitmap2Drawable(Bitmap bp) {
         //因为BtimapDrawable是Drawable的子类，最终直接使用bd对象即可。
         Bitmap bm = bp;
@@ -152,7 +153,9 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-
+    /**
+     * 刷新活动列表
+     */
     public void RedrawExpandingList() {
 
         expandingList.Clear_mContainer();
@@ -187,27 +190,12 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-    private void showInsertDialog(final ReserveActivity.OnItemCreated positive) {
-        final EditText text = new EditText(this);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(text);
-        builder.setTitle("enter_title");
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                positive.itemCreated(text.getText().toString());
-            }
-        });
-        builder.setNegativeButton(android.R.string.cancel, null);
-        builder.show();
-    }
+
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_schedule_back) {
-            Intent intent = new Intent();
-            intent.setClass(this, HomeActivity.class);
-            startActivity(intent);
+            finish();
         } else if (v.getId() == R.id.ll_schedule_help) {
             android.app.AlertDialog.Builder mBuilder = new android.app.AlertDialog.Builder(this);
             mBuilder.setTitle("发布活动");
@@ -217,8 +205,6 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    interface OnItemCreated {
-        void itemCreated(String title);
-    }
+
 
 }

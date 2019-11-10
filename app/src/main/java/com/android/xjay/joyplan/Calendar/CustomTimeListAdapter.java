@@ -10,9 +10,15 @@ import com.android.xjay.joyplan.R;
 
 import java.util.ArrayList;
 
+/*
+日程视图左边的时间条
+ */
 public class CustomTimeListAdapter extends BaseAdapter {
     ArrayList<String> list;
 
+    /*
+    构造函数，初始化列表
+     */
     public CustomTimeListAdapter() {
         list = new ArrayList<String>();
 
@@ -58,6 +64,9 @@ public class CustomTimeListAdapter extends BaseAdapter {
     }
 
 
+    /*
+    时间的tv，0-23
+     */
     class ViewHolder {
         TextView tv_index;
     }

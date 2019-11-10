@@ -34,6 +34,9 @@ import com.android.xjay.joyplan.StudentActivityInfo;
 import com.android.xjay.joyplan.UserDBHelper;
 import com.android.xjay.joyplan.Utils.ScreenSizeUtils;
 
+/*
+自定义活动块
+ */
 public class CustomItem extends RelativeLayout {
 
     private int index;

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
+/*
+封装屏幕参数的一些函数
+ */
 public class ScreenSizeUtils {
 
     private static ScreenSizeUtils instance = null;

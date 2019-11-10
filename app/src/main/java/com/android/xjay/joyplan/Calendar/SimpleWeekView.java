@@ -8,7 +8,9 @@ import android.view.View;
 import com.android.xjay.calendarview.Calendar;
 import com.android.xjay.calendarview.WeekView;
 
-
+/*
+周视图
+ */
 public class SimpleWeekView extends WeekView {
     private int mRadius;
 

@@ -117,40 +117,71 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
      */
     private Button btn_cancel;
 
-    private ImageView mImage;
-
-    private ImageView img_add_image;
-
-    private byte[] img_added;
-
+    /*
+    选择照片的状态码
+     */
     public static final int CHOOSE_PHOTO = 2;
 
-    LinearLayout img_add_container;
-    ImageView img_photo;
+
+
+    /*
+    添加图片的按钮
+     */
+    private ImageView img_photo;
+
+    /*
+    添加图片后显示图片的容器
+     */
+    private LinearLayout img_add_container;
+
+    /*
+    添加图片后显示的图片
+     */
+    private ImageView img_add_image;
+
+    /*
+    存储添加的图片
+     */
+    private byte[] img_added;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-        mContext = getApplicationContext();
-        //textView to select starttime&time
 
+        // 获取当前的context
+        mContext = getApplicationContext();
+
+        // 开始时间选择
         tv_select_start_time = findViewById(R.id.tv_select_start_time);
+
+        // 结束时间选择
         tv_select_end_time = findViewById(R.id.tv_select_end_time);
 
-        initTimePicker();
 
-        //On textView click open timePicker
+
+        // 设置时间选择点击函数
         tv_select_start_time.setOnClickListener(this);
-
         tv_select_end_time.setOnClickListener(this);
 
-
+        // 初始化时间选择器
         initTimePicker();
-        //get single instance of DB
+
+        // 数据库操作类的引用（单例）
         mHelper = UserDBHelper.getInstance(this, 1);
 
+        // 找到各个部件
+        findAllViews();
+
+        // 注册点击监听
+        img_add_image.setOnClickListener(this);
+        btn_add.setOnClickListener(this);
+        btn_cancel = findViewById(R.id.btn_cancel);
+        btn_cancel.setOnClickListener(this);
+    }
+
+    private void findAllViews(){
         editText_title = findViewById(R.id.editText_title);
         editText_description = findViewById(R.id.editText_detail);
         editText_address = findViewById(R.id.editText_address);
@@ -159,12 +190,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         img_add_container = findViewById(R.id.img_add_container);
         btn_add = findViewById(R.id.btn_add);
         img_add_image = findViewById(R.id.img_add_img);
-        img_add_image.setOnClickListener(this);
-        btn_add.setOnClickListener(this);
-        btn_cancel = findViewById(R.id.btn_cancel);
-        btn_cancel.setOnClickListener(this);
     }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -179,11 +205,12 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     /**
-     * 点击相应函数
+     * 点击响应函数
      */
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            //取消按钮
             case R.id.btn_cancel: {
                 /*Intent intent = new Intent();
                 intent.setClass(mContext, ScheduleActivity.class);
@@ -191,49 +218,71 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 finish();
                 break;
             }
+
+            //添加按钮
             case R.id.btn_add: {
+
+                // 获取用户的输入
                 string_title = editText_title.getText().toString();
                 string_description = editText_description.getText().toString();
                 string_start_time = tv_select_start_time.getText().toString();
                 string_end_time = tv_select_end_time.getText().toString();
                 string_address = editText_address.getText().toString();
+
+                // 新建一个学生活动信息的实例
                 StudentActivityInfo info;
+
+                // 如果添加的图片非空
                 if (img_added != null) {
                     info = new StudentActivityInfo(string_title, string_description, string_start_time, string_end_time, string_address, img_added);
-                } else {
+                }
+                // 添加的图片为空
+                else {
                     info = new StudentActivityInfo(string_title, string_description, string_start_time, string_end_time, string_address);
 
                 }
-                // 将info加入学生活动中
+                // 像学生活动表中插入一条新的记录
                 mHelper.insert_studentActivity(info);
 
+                // 获取数据库读取权限
                 SQLiteDatabase dbRead = mHelper.getReadableDatabase();
+
+                // 查询学生活动表所有记录
                 Cursor c = dbRead.query("user_info", null, null, null, null, null, null);
+                // 获取结果的长度（即有几条记录）
                 Integer i = c.getCount();
 
-                //show the number of record in DB
+                // 添加完后显示目前有多少条记录（测试用）
                 Toast toast = Toast.makeText(getApplicationContext(), i.toString(), Toast.LENGTH_SHORT);
                 toast.show();
                 sentBroadcast();
+
                 //new Thread(new RegThread()).start();
-                Intent intent = new Intent();
-                intent.setClass(mContext, ScheduleActivity.class);
-                startActivity(intent);
+
+
+                // 结束当前activity
+                finish();
                 break;
             }
+            // 添加图片按钮
             case R.id.img_add_img: {
+                // 检查权限
                 checkPermission();
                 break;
             }
+            // 添加图片后显示的图片
             case R.id.img_photo: {
+                // 检查权限
                 checkPermission();
                 break;
             }
+            // 开始时间文字
             case R.id.tv_select_start_time: {
                 String temp = tv_select_start_time.getText().toString();
                 myStartTimePicker.show(temp);
                 break;
             }
+            // 结束时间文字
             case R.id.tv_select_end_time: {
                 String temp = tv_select_end_time.getText().toString();
                 myEndTimePicker.show(temp);

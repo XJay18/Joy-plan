@@ -1,6 +1,9 @@
 package com.android.xjay.joyplan;
 
 
+/**
+ * 学生活动信息
+ */
 public class StudentActivityInfo {
     private String title;
     private String info;
@@ -9,6 +12,15 @@ public class StudentActivityInfo {
     private String address;
     byte[] img;
 
+    /**
+     * 构造函数
+     * @param Title 标题
+     * @param Info 内容
+     * @param starttime 开始时间
+     * @param endtime 结束时间
+     * @param Address 地址
+     * @param img 图片
+     */
     public StudentActivityInfo(String Title, String Info, String starttime, String endtime, String Address, byte[] img) {
         title = Title;
         info = Info;
@@ -18,6 +30,14 @@ public class StudentActivityInfo {
         this.img = img;
     }
 
+    /**
+     * 构造函数
+     * @param Title 标题
+     * @param Info 内容
+     * @param starttime 开始时间
+     * @param endtime 结束时间
+     * @param Address 地址
+     */
     public StudentActivityInfo(String Title, String Info, String starttime, String endtime, String Address) {
         title = Title;
         info = Info;

@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+/**
+ * 数据库操作类
+ */
 public class UserDBHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "user.db";
@@ -29,6 +32,12 @@ public class UserDBHelper extends SQLiteOpenHelper {
         super(context, DB_NAME, null, version);
     }
 
+    /**
+     * 获取实例
+     * @param context
+     * @param version
+     * @return
+     */
     public static UserDBHelper getInstance(Context context, int version) {
         if (version > 0 && mHelper == null) {
             mHelper = new UserDBHelper(context, version);
@@ -38,6 +47,10 @@ public class UserDBHelper extends SQLiteOpenHelper {
         return mHelper;
     }
 
+    /**
+     * 打开读取连接
+     * @return
+     */
     public SQLiteDatabase openReadLink() {
         if (mDB == null || !mDB.isOpen()) {
             mDB = mHelper.getReadableDatabase();
@@ -45,6 +58,10 @@ public class UserDBHelper extends SQLiteOpenHelper {
         return mDB;
     }
 
+    /**
+     * 打开写入连接
+     * @return
+     */
     public SQLiteDatabase openWriteLink() {
         if (mDB == null || !mDB.isOpen()) {
             mDB = mHelper.getWritableDatabase();
@@ -52,6 +69,9 @@ public class UserDBHelper extends SQLiteOpenHelper {
         return mDB;
     }
 
+    /**
+     * 关闭连接
+     */
     public void closeLink() {
         if (mDB != null && mDB.isOpen()) {
             mDB.close();
@@ -79,6 +99,9 @@ public class UserDBHelper extends SQLiteOpenHelper {
         db.execSQL(create_sql);
     }
 
+    /**
+     * 重置数据库
+     */
     public void reset() {
         openWriteLink();
         String drop_sql = "DROP TABLE IF EXISTS " + ACTIVITY_TABLE + ";";
@@ -101,6 +124,9 @@ public class UserDBHelper extends SQLiteOpenHelper {
         mDB.execSQL(create_sql);
     }
 
+    /**
+     * 重置课程表
+     */
     public void resetCourseTable() {
         openWriteLink();
         String drop_sql = "DROP TABLE IF EXISTS " + COURSE_TABLE + ";";
@@ -109,17 +135,27 @@ public class UserDBHelper extends SQLiteOpenHelper {
         mDB.execSQL(create_sql);
     }
 
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 
-
+    /**
+     * 根据标题和开始时间删除日程
+     * @param agenda
+     * @return
+     */
     public int deleteAgendaWithTitleAndStarttime(Agenda agenda) {
         String title = agenda.getTitle();
         String starttime = agenda.getStarttime();
         return mDB.delete(AGENDA_TABLE, "title=? and starttime=?", new String[]{title, starttime});
     }
 
+    /**
+     * 删除课程
+     * @param course
+     * @return
+     */
     public int deleteCourse(Course course) {
         String str_year = String.valueOf(course.getYear());
         String str_semester = String.valueOf(course.getNumOfCourse());
@@ -130,35 +166,23 @@ public class UserDBHelper extends SQLiteOpenHelper {
         return mDB.delete(COURSE_TABLE, "year=? and indexofsemester=? and dayofweek=? and startweek=? and startindex=? and coursename=?", new String[]{str_year, str_semester, str_dayOfWeek, str_startweek, str_startindex, str_coursename});
     }
 
+    /**
+     * 删除预定活动
+     * @param studentActivityInfo
+     * @return
+     */
     public int deleteReserveActivity(StudentActivityInfo studentActivityInfo) {
         String title = studentActivityInfo.getTitle();
         String starttime = studentActivityInfo.getStarttime();
         return mDB.delete(RESERVE_ACTIVITY_TABLE, "title=? and starttime=?", new String[]{title, starttime});
     }
 
-    public int deleteActivityWithIndex(int index) {
-        String id = new Integer(index).toString();
-        openWriteLink();
-        return mDB.delete(ACTIVITY_TABLE, "id=?", new String[]{id});
-    }
 
-    public void clean() {
-        clean_activity_help(mDB);
-    }
-
-    public void drop() {
-        drop_help(mDB);
-    }
-
-    private void clean_activity_help(SQLiteDatabase db) {
-        db.execSQL("delete from" + " " + ACTIVITY_TABLE);
-    }
-
-    private void drop_help(SQLiteDatabase db) {
-        db.execSQL("DROP TABLE" + " " + ACTIVITY_TABLE);
-    }
-
-
+    /**
+     * 插入学生活动
+     * @param info
+     * @return
+     */
     public long insert_studentActivity(StudentActivityInfo info) {
         long result = -1;
         ContentValues cv = new ContentValues();
@@ -172,6 +196,11 @@ public class UserDBHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    /**
+     * 插入日程
+     * @param agenda
+     * @return
+     */
     public long insert_agenda(Agenda agenda) {
 
         long result = -1;
@@ -189,6 +218,11 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * 插入预定活动
+     * @param studentActivityInfo
+     * @return
+     */
     public long insert_reserve_activity(StudentActivityInfo studentActivityInfo) {
 
         long result = -1;
@@ -206,6 +240,11 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * 插入课程
+     * @param course
+     * @return
+     */
     public long insert_course(Course course) {
         long result = -1;
         openWriteLink();
@@ -226,6 +265,9 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * 插入番茄钟
+     */
     public long insert_fqz(Fqz fqz) {
         long result = -1;
         openWriteLink();
@@ -252,6 +294,11 @@ public class UserDBHelper extends SQLiteOpenHelper {
 //        Fqz fqz;
 //        cursor=mDB.query(FQZ_STATICTIS,null,);
 //    }
+
+    /**
+     * 获取所有学生活动
+     * @return
+     */
     public ArrayList<StudentActivityInfo> getAllStudentActivityInfo() {
         openReadLink();
         Cursor cursor = null;
@@ -338,6 +385,11 @@ public class UserDBHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * 更新日程备注
+     * @param agenda 要更新的日程
+     * @param notation 更新后的备注
+     */
     public void updateAgendaNotation(Agenda agenda, String notation) {
         ContentValues cv = new ContentValues();
         cv.put("title", agenda.getTitle());
@@ -352,6 +404,11 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * 更新课程备注
+     * @param course 要更新的课程
+     * @param notation 更新后的备注
+     */
     public void updateCourseNotation(Course course, String notation) {
         ContentValues cv = new ContentValues();
         cv.put("year", course.getYear());
@@ -373,7 +430,14 @@ public class UserDBHelper extends SQLiteOpenHelper {
         mDB.update(COURSE_TABLE, cv, createCourseSelectionActionWithCourseName(), new String[]{str_year, str_indexofsemester, course.getCourseName(), str_dayofweek, str_startweek, str_startindex});
     }
 
-
+    /**
+     * 获取某课程
+     * @param year 学年
+     * @param indexOfSemester 学期
+     * @param week 某一周
+     * @param dayofweek 星期几
+     * @return 课程列表
+     */
     public ArrayList<Course> getCourseWithDayOfWeek(int year, int indexOfSemester, int week, int dayofweek) {
         openReadLink();
         Cursor cursor = null;
@@ -412,6 +476,11 @@ public class UserDBHelper extends SQLiteOpenHelper {
         return courseArrayList;
     }
 
+    /**
+     * 根据开始时间获取日程
+     * @param date 开始日期
+     * @return
+     */
     public Agenda getAgendaWithTime(String date) {
         openReadLink();
         Cursor cursor = null;
@@ -430,6 +499,10 @@ public class UserDBHelper extends SQLiteOpenHelper {
         } else return null;
     }
 
+    /**
+     * 获取查询活动字符串
+     * @return
+     */
     public String createActivitySelectActionDate() {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("starttime");
@@ -437,6 +510,10 @@ public class UserDBHelper extends SQLiteOpenHelper {
         return stringBuffer.toString();
     }
 
+    /**
+     * 获取查询日程字符串
+     * @return
+     */
     public String createAgendaSelectActionDate() {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("strftime('%Y%m%d',");
@@ -446,6 +523,10 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * 获取查询预订活动字符串
+     * @return
+     */
     public String createReserveActicitySelectActionDate() {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("strftime('%Y%m%d',");
@@ -455,6 +536,10 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * 获取查询日程字符串
+     * @return
+     */
     public String createAgendaSelectActionTime() {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("strftime('%m%d%H',");
@@ -464,21 +549,27 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * 获取查询课程字符串
+     * @return
+     */
     public String createCourseSelectActionDayOfWeek() {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("year=? and indexofsemester=? and dayofweek=? and startweek<=? and endweek>=?");
         return stringBuffer.toString();
     }
 
+    /**
+     * 获取查询课程字符串
+     * @return
+     */
     public String createCourseSelectionActionWithCourseName() {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("year=? and indexofsemester=? and coursename=? and dayofweek=? and startweek=? and startindex=?");
         return stringBuffer.toString();
     }
 
-    public int update(StudentActivityInfo info, String condition) {
-        return 0;
-    }
+
 
 }
 

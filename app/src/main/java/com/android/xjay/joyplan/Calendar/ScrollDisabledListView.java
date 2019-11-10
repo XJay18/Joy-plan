@@ -4,6 +4,9 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ListView;
 
+/*
+禁用滚动的listview，因为scrollview里套listview会有bug
+ */
 public class ScrollDisabledListView extends ListView {
     public ScrollDisabledListView(Context context) {
         super(context);

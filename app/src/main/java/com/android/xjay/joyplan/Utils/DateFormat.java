@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/*
+日期格式转换
+ */
 public class DateFormat {
 
     private static final String DATE_FORMAT_PATTERN_YMD = "yyyy-MM-dd";
