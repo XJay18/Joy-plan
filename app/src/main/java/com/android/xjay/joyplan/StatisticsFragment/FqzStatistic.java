@@ -31,18 +31,50 @@ import java.util.Date;
 
 public class FqzStatistic extends AppCompatActivity
         implements OnChartValueSelectedListener, View.OnClickListener {
+    /**
+     * 柱状图
+     */
     private BarChart mBarChart;
-    private Button btn_last_month;
-    private Button btn_next_month;
+    /**
+     * 显示上一周数据的按钮
+     */
+    private Button btn_last_week;
+    /**
+     * 显示下一周数据的按钮
+     */
+    private Button btn_next_week;
+    /**
+     * 返回按钮
+     */
     private LinearLayout btn_back;
+    /**
+     * 数据格式
+     */
     private SimpleDateFormat dateFormat;
+    /**
+     * 当前日期
+     */
     private String currentDate;
+    /**
+     * 显示周
+     */
     private TextView show_week;
+    /**
+     * 显示分钟
+     */
     private TextView show_minutes;
+    /**
+     * 设置日期格式
+     */
     private Date date;
+    /**
+     * 设置日期格式
+     */
     private Calendar cal;
-    private String[] value = new String[]{
-            "周一", "周二", "周三", "周四", "周五", "周六", "周日"};
+    /**
+     * 柱状图的横坐标数组
+     */
+    private String[] value = new String[]{"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +83,9 @@ public class FqzStatistic extends AppCompatActivity
         initUi();
     }
 
+    /**
+     * 初始化页面属性
+     */
     private void initUi() {
         dateFormat = new SimpleDateFormat("MM月dd日");
         date = new Date();
@@ -65,10 +100,10 @@ public class FqzStatistic extends AppCompatActivity
         show_minutes.setTextSize(28.5f);
         show_minutes.setTextColor(Color.WHITE);
 
-        btn_last_month = findViewById(R.id.btn_last_week_fqz);
-        btn_last_month.setOnClickListener(this);
-        btn_next_month = findViewById(R.id.btn_next_week_fqz);
-        btn_next_month.setOnClickListener(this);
+        btn_last_week = findViewById(R.id.btn_last_week_fqz);
+        btn_last_week.setOnClickListener(this);
+        btn_next_week = findViewById(R.id.btn_next_week_fqz);
+        btn_next_week.setOnClickListener(this);
         btn_back = findViewById(R.id.bt_statistics_fqz_back);
         btn_back.setOnClickListener(this);
         //堆叠条形图
@@ -125,6 +160,9 @@ public class FqzStatistic extends AppCompatActivity
         setData();
     }
 
+    /**
+     * 初始化柱状图数据
+     */
     private void setData() {
         show_week.setText(currentDate);
         int total = 0;
@@ -169,8 +207,8 @@ public class FqzStatistic extends AppCompatActivity
         mBarChart.invalidate();
     }
 
-    /*
-     *设置颜色
+    /**
+     * 设置颜色
      */
     private int[] getColors() {
         //有尽可能多的颜色每项堆栈值
@@ -208,6 +246,10 @@ public class FqzStatistic extends AppCompatActivity
     }
 
     //TODO 获取当前一周日期，后期可以调用Calendar View的函数减少代码量
+
+    /**
+     * 获取当前日周的日期
+     */
     private String getTimeInterval(String judge) {
         switch (judge) {
             case "last":

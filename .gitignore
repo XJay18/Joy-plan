@@ -14,3 +14,4 @@
 .externalNativeBuild
 local.properties
 *.log
+Test-version.jks

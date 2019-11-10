@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.android.xjay.joyplan.Notification.NotificationTool;
 import com.android.xjay.joyplan.Utils.DateFormat;
 import com.android.xjay.joyplan.Utils.JumpTextWatcher;
-import com.android.xjay.joyplan.web.WebServiceGet;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -216,8 +215,8 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 String end_time = tv_agenda_end_time.getText().toString();
                 end_time = "2019-" + end_time;
                 //日程标题和备注
-                String agenda_title=editText_agenda_title.getText().toString();
-                String agenda_content=editText_notation.getText().toString();
+                String agenda_title = editText_agenda_title.getText().toString();
+                String agenda_content = editText_notation.getText().toString();
 
                 //创建延时通知
                 Date begin_date = null;
@@ -228,13 +227,13 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 }
                 /*Log.e("begin_time",start_time);
                 Log.e("begin_date:before para", begin_date.toString());*/
-                new NotificationTool(this).createPendingNotification(begin_date,agenda_title,agenda_content);
+                new NotificationTool(this).createPendingNotification(begin_date, agenda_title, agenda_content);
 
                 String title = editText_agenda_title.getText().toString();
                 String address = editText_agenda_address.getText().toString();
                 String content = editText_notation.getText().toString();
-                if(content==null)
-                content="";
+                if (content == null)
+                    content = "";
                 Agenda agenda = new Agenda(title, start_time, end_time, content, address);
                 //mHelper.reset();
                 mHelper.insert_agenda(agenda);

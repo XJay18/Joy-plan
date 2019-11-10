@@ -21,27 +21,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * help to read excel's courses and add to schedule
+ * 将excel内容保存至日程
  */
 public class POIExcelProcesser {
-    /** the name of courses */
+    /**
+     * 课程名称
+     */
     private static List<String> course_names = new ArrayList<>();
-    /** the day of courses */
+    /**
+     * 课程日期
+     */
     private static List<Integer> course_weekdays = new ArrayList<>();
-    /** the begin time of courses */
+    /**
+     * 课程的开始时间
+     */
     private static List<Integer> course_begin_times = new ArrayList<>();
-    /** the end time of courses */
+    /**
+     * 课程的结束时间
+     */
     private static List<Integer> course_end_times = new ArrayList<>();
-    /** the begin week of courses */
+    /**
+     * 课程开始的周数
+     */
     private static List<Integer> course_begin_weeks = new ArrayList<>();
-    /** the end week of courses */
+    /**
+     * 课程结束的周数
+     */
     private static List<Integer> course_end_weeks = new ArrayList<>();
-    /** the classroom of courses */
+    /**
+     * 课程的教室
+     */
     private static List<String> classrooms = new ArrayList<>();
-    /** the teacher of courses */
+    /**
+     * 课程的教师
+     */
     private static List<String> teachers = new ArrayList<>();
 
-    /** add the courses from excel to database */
+    /**
+     * 添加课程到数据库
+     */
     public static void setExceltoSchedule(String filepath, Context mContext) {
         Workbook workbook = null;
         //假定xslx文件在/mnt/sdcard/download目录下
@@ -73,7 +91,9 @@ public class POIExcelProcesser {
         }
     }
 
-    /** get the workbook of excel */
+    /**
+     * 获取excel的工作本
+     */
     private static Workbook getWorkbook(String filepath) throws IOException {
         Workbook workbook = null;
         if (!filepath.endsWith(".xlsx")) {
@@ -86,7 +106,9 @@ public class POIExcelProcesser {
         return workbook;
     }
 
-    /** extract all courses */
+    /**
+     * 提取课程
+     */
     private static void exec(Workbook workbook) {
         XSSFSheet xssfSheet = (XSSFSheet) workbook.getSheetAt(0);
         List<CellRangeAddress> list_cellrangeaddress = xssfSheet.getMergedRegions();
@@ -101,7 +123,9 @@ public class POIExcelProcesser {
         }
     }
 
-    /** extract one course's information */
+    /**
+     * 提取一门课程的信息
+     */
     private static void getAllInfo(String course_info, int weekday) {
         if (course_info != null) {
             String course_name = null;

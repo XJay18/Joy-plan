@@ -23,15 +23,12 @@ import android.view.ViewStub;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.xjay.joyplan.Agenda;
-import com.android.xjay.joyplan.Course;
 import com.android.xjay.joyplan.R;
 import com.android.xjay.joyplan.StudentActivityInfo;
 import com.android.xjay.joyplan.UserDBHelper;
@@ -279,52 +276,50 @@ public class CustomItem extends RelativeLayout {
 
     /**
      * 弹出框
+     *
      * @param content
      */
     private void customDialog() {
-        Object tag=this.getTag();
+        Object tag = this.getTag();
         StudentActivityInfo studentActivityInfo;
 
-        if(tag!=null){
-            studentActivityInfo=(StudentActivityInfo)tag;
+        if (tag != null) {
+            studentActivityInfo = (StudentActivityInfo) tag;
+        } else {
+            studentActivityInfo = new StudentActivityInfo("", "", "", "", "");
         }
-        else{
-            studentActivityInfo=new StudentActivityInfo("","","","","");
-        }
-        String title=studentActivityInfo.getTitle();
-        String starttime=studentActivityInfo.getStarttime();
-        String address=studentActivityInfo.getAddress();
-        String info=studentActivityInfo.getInfo();
-        String endtime=studentActivityInfo.getEndtime();
+        String title = studentActivityInfo.getTitle();
+        String starttime = studentActivityInfo.getStarttime();
+        String address = studentActivityInfo.getAddress();
+        String info = studentActivityInfo.getInfo();
+        String endtime = studentActivityInfo.getEndtime();
 
-        byte[] temp=studentActivityInfo.getImg();
+        byte[] temp = studentActivityInfo.getImg();
         Drawable drawable;
-        if(temp!=null){
+        if (temp != null) {
             Bitmap bitmap = BitmapFactory.decodeByteArray(temp, 0, temp.length);
             drawable = bitmap2Drawable(bitmap);
-        }
-        else{
-            int res=R.drawable.cc;
-            drawable=this.getResources().getDrawable(res);
+        } else {
+            int res = R.drawable.cc;
+            drawable = this.getResources().getDrawable(res);
         }
 
         final Dialog dialog = new Dialog(this.getContext(), R.style.NormalDialogStyle);
         View view = View.inflate(this.getContext(), R.layout.dialog_activity, null);
 
-        ImageView img_photo=view.findViewById(R.id.img_activity_photo);
+        ImageView img_photo = view.findViewById(R.id.img_activity_photo);
 
         ViewGroup.LayoutParams imglp = img_photo.getLayoutParams();
-        imglp.width= ViewGroup.LayoutParams.MATCH_PARENT;
+        imglp.width = ViewGroup.LayoutParams.MATCH_PARENT;
 
         img_photo.setLayoutParams(imglp);
-
 
 
         TextView tv_title = view.findViewById(R.id.tv_activity_title);
         TextView tv_time = view.findViewById(R.id.tv_activity_time);
         TextView tv_address = view.findViewById(R.id.tv_activity_address);
         TextView tv_info = view.findViewById(R.id.tv_activity_info);
-        ImageView img_reserve_activity=view.findViewById(R.id.img_reserve_activity);
+        ImageView img_reserve_activity = view.findViewById(R.id.img_reserve_activity);
 
         tv_title.setText(title);
         tv_address.setText(address);
@@ -334,14 +329,14 @@ public class CustomItem extends RelativeLayout {
         img_reserve_activity.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserDBHelper mHelper=UserDBHelper.getInstance(getContext(),1);
+                UserDBHelper mHelper = UserDBHelper.getInstance(getContext(), 1);
                 mHelper.insert_reserve_activity(studentActivityInfo);
 
                 Intent intent = new Intent();
                 intent.setAction("RESERVE ACTIVITY");
-                ContextWrapper contextWrapper=new ContextWrapper(getContext());
+                ContextWrapper contextWrapper = new ContextWrapper(getContext());
                 contextWrapper.sendBroadcast(intent);
-                Toast.makeText(getContext(),"预定活动成功",Toast.LENGTH_SHORT);
+                Toast.makeText(getContext(), "预定活动成功", Toast.LENGTH_SHORT);
                 dialog.dismiss();
             }
         });
@@ -351,12 +346,12 @@ public class CustomItem extends RelativeLayout {
         //使得点击对话框外部 消失对话框
         dialog.setCanceledOnTouchOutside(true);
         //设置对话框的大小
-        view.setMinimumHeight((int) (ScreenSizeUtils.getInstance(this.getContext()).getScreenHeight()*0.8f ));
+        view.setMinimumHeight((int) (ScreenSizeUtils.getInstance(this.getContext()).getScreenHeight() * 0.8f));
         Window dialogWindow = dialog.getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        int widthToCut=ScreenSizeUtils.dip2px(this.getContext(),20);
-        lp.width = (int) (ScreenSizeUtils.getInstance(this.getContext()).getScreenWidth()-widthToCut);
-        int screenHeight=(int)(ScreenSizeUtils.getInstance(this.getContext()).getScreenHeight()*0.8f );
+        int widthToCut = ScreenSizeUtils.dip2px(this.getContext(), 20);
+        lp.width = ScreenSizeUtils.getInstance(this.getContext()).getScreenWidth() - widthToCut;
+        int screenHeight = (int) (ScreenSizeUtils.getInstance(this.getContext()).getScreenHeight() * 0.8f);
         lp.height = screenHeight;
         lp.gravity = Gravity.CENTER;
         dialogWindow.setAttributes(lp);
@@ -365,7 +360,8 @@ public class CustomItem extends RelativeLayout {
 
 
     }
-        public void toggleExpanded() {
+
+    public void toggleExpanded() {
         if (mSubItemCount == 0) {
             return;
         }
@@ -405,11 +401,10 @@ public class CustomItem extends RelativeLayout {
         return mSubItemsShown;
     }
 
-    public Drawable bitmap2Drawable(Bitmap bp)
-    {
+    public Drawable bitmap2Drawable(Bitmap bp) {
         //因为BtimapDrawable是Drawable的子类，最终直接使用bd对象即可。
-        Bitmap bm=bp;
-        BitmapDrawable bd= new BitmapDrawable(getResources(), bm);
+        Bitmap bm = bp;
+        BitmapDrawable bd = new BitmapDrawable(getResources(), bm);
         return bd;
     }
 
@@ -539,9 +534,6 @@ public class CustomItem extends RelativeLayout {
         setIndicatorIcon(
                 ContextCompat.getDrawable(getContext(), iconRes));
     }
-
-
-
 
 
     /**
@@ -924,7 +916,7 @@ public class CustomItem extends RelativeLayout {
         mIndicatorImage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Object a=new Object();
+                Object a = new Object();
 
                 customDialog();
             }

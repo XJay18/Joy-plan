@@ -30,19 +30,54 @@ import java.util.Date;
 
 public class PieFragment extends Fragment
         implements OnChartValueSelectedListener, View.OnClickListener {
+    /**
+     * 页面根视图
+     */
     private View rootView;
+    /**
+     * 饼状图1
+     */
     private PieChart mPieChart1;
+    /**
+     * 饼状图2
+     */
     private PieChart mPieChart2;
+    /**
+     * 饼状图3
+     */
     private PieChart mPieChart3;
+    /**
+     * 饼状图4
+     */
     private PieChart mPieChart4;
-    private SimpleDateFormat dateFormat;
-    private String currentDate;
-    private TextView show_week;
-    private Date date;
-    private Calendar cal;
+    /**
+     * 显示上一周数据的按钮
+     */
     private Button btn_last_week;
+    /**
+     * 显示下一周数据的按钮
+     */
     private Button btn_next_week;
-
+    /**
+     * 数据格式
+     */
+    private SimpleDateFormat dateFormat;
+    /**
+     * 当前日期
+     */
+    private String currentDate;
+    /**
+     * 显示周
+     */
+    private TextView show_week;
+    /**
+     * 设置日期格式
+     */
+    private Date date;
+    /**
+     * 设置日期格式
+     */
+    private Calendar cal;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -72,6 +107,9 @@ public class PieFragment extends Fragment
         return rootView;
     }
 
+    /**
+     * 初始化时间
+     */
     private void initTime() {
         dateFormat = new SimpleDateFormat("MM月dd日");
         date = new Date();
@@ -83,6 +121,9 @@ public class PieFragment extends Fragment
         show_week.setTextSize(17f);
     }
 
+    /**
+     * 初始化页面属性
+     */
     private void initUi(PieChart mPieChart) {
         //这里写加载布局的代码
         //饼状图
@@ -127,6 +168,9 @@ public class PieFragment extends Fragment
         setData(mPieChart);
     }
 
+    /**
+     * 初始化图表数据
+     */
     private void setData(PieChart mPieChart) {
         ArrayList<PieEntry> entries = new ArrayList<>();
         int x = (int) (Math.random() * 50) + 10;
@@ -198,6 +242,10 @@ public class PieFragment extends Fragment
     }
 
     //TODO 获取当前一周日期，后期可以调用Calendar View的函数减少代码量
+
+    /**
+     * 获取当前日周的日期
+     */
     private String getTimeInterval(String judge) {
         switch (judge) {
             case "last":

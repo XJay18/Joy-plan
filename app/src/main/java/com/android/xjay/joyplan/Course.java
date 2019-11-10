@@ -19,20 +19,19 @@ public class Course {
 
 
     /**
-     *
-     * @param year 学年
+     * @param year            学年
      * @param index0fSemester 学期
-     * @param courseName 课程名
-     * @param dayofweek 星期几
-     * @param startWeek 开始周
-     * @param endWeek 结束周
-     * @param startIndex 开始节
-     * @param numOfCourse 节数
-     * @param address 地点
-     * @param teacherName 教师名
-     * @param notation 备注
+     * @param courseName      课程名
+     * @param dayofweek       星期几
+     * @param startWeek       开始周
+     * @param endWeek         结束周
+     * @param startIndex      开始节
+     * @param numOfCourse     节数
+     * @param address         地点
+     * @param teacherName     教师名
+     * @param notation        备注
      */
-    public Course(int year, int index0fSemester, String courseName, int dayofweek, int startWeek, int endWeek, int startIndex, int numOfCourse, String address, String teacherName,String notation) {
+    public Course(int year, int index0fSemester, String courseName, int dayofweek, int startWeek, int endWeek, int startIndex, int numOfCourse, String address, String teacherName, String notation) {
         this.year = year;
         this.index0fSemester = index0fSemester;
         this.courseName = courseName;
@@ -43,21 +42,22 @@ public class Course {
         this.dayofweek = dayofweek;
         this.startIndex = startIndex;
         this.numOfCourse = numOfCourse;
-        this.notation=notation;
+        this.notation = notation;
     }
 
     /**
      * 不含备注的构造函数，默认备注为 “备注”
-     * @param year 学年
+     *
+     * @param year            学年
      * @param index0fSemester 学期
-     * @param courseName 课程名
-     * @param dayofweek 星期几
-     * @param startWeek 开始周
-     * @param endWeek 结束周
-     * @param startIndex 开始节
-     * @param numOfCourse 节数
-     * @param address 地点
-     * @param teacherName 教师名
+     * @param courseName      课程名
+     * @param dayofweek       星期几
+     * @param startWeek       开始周
+     * @param endWeek         结束周
+     * @param startIndex      开始节
+     * @param numOfCourse     节数
+     * @param address         地点
+     * @param teacherName     教师名
      */
     public Course(int year, int index0fSemester, String courseName, int dayofweek, int startWeek, int endWeek, int startIndex, int numOfCourse, String address, String teacherName) {
         this.year = year;
@@ -70,11 +70,12 @@ public class Course {
         this.dayofweek = dayofweek;
         this.startIndex = startIndex;
         this.numOfCourse = numOfCourse;
-        this.notation="备注";
+        this.notation = "备注";
     }
 
     /**
      * 获取学年
+     *
      * @return 学年
      */
     public int getYear() {
@@ -83,6 +84,7 @@ public class Course {
 
     /**
      * 获取学期
+     *
      * @return 学期
      */
     public int getIndex0fSemester() {
@@ -91,6 +93,7 @@ public class Course {
 
     /**
      * 获取星期几
+     *
      * @return 星期几
      */
     public int getDayofweek() {
@@ -100,6 +103,7 @@ public class Course {
 
     /**
      * 获取结束周
+     *
      * @return 结束周
      */
     public int getEndWeek() {
@@ -108,6 +112,7 @@ public class Course {
 
     /**
      * 获取节数
+     *
      * @return 节数
      */
     public int getNumOfCourse() {
@@ -116,6 +121,7 @@ public class Course {
 
     /**
      * 获取开始节
+     *
      * @return 开始节
      */
     public int getStartIndex() {
@@ -124,6 +130,7 @@ public class Course {
 
     /**
      * 获取开始周
+     *
      * @return 开始周
      */
     public int getStartWeek() {
@@ -132,6 +139,7 @@ public class Course {
 
     /**
      * 获取地点
+     *
      * @return 地点
      */
     public String getAddress() {
@@ -141,6 +149,7 @@ public class Course {
 
     /**
      * 获取课程名
+     *
      * @return 课程名
      */
     public String getCourseName() {
@@ -149,6 +158,7 @@ public class Course {
 
     /**
      * 获取备注
+     *
      * @return 备注
      */
     public String getNotation() {
@@ -157,6 +167,7 @@ public class Course {
 
     /**
      * 获取教师名
+     *
      * @return 教师名
      */
     public String getTeacherName() {

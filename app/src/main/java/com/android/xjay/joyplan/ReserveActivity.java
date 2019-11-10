@@ -1,7 +1,6 @@
 package com.android.xjay.joyplan;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -12,14 +11,11 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.xjay.joyplan.CustomExpanding.CustomItem;
 import com.android.xjay.joyplan.CustomExpanding.ExpandingList;
-
-import java.util.Date;
 
 public class ReserveActivity extends AppCompatActivity {
 
@@ -27,7 +23,7 @@ public class ReserveActivity extends AppCompatActivity {
     private ExpandingList expandingList;
 
 
-    Drawable[] IMAGES=new Drawable[20];
+    Drawable[] IMAGES = new Drawable[20];
 
     String[] TITLES = new String[20];
 
@@ -54,17 +50,16 @@ public class ReserveActivity extends AppCompatActivity {
         for (int i = 0; i < length; i++) {
             TITLES[i] = c.getString(1);
             INFOS[i] = c.getString(2);
-            byte[] temp=c.getBlob(c.getColumnIndex("img"));
+            byte[] temp = c.getBlob(c.getColumnIndex("img"));
 
             Drawable drawable;
-            if(temp!=null) {
+            if (temp != null) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(temp, 0, temp.length);
                 drawable = bitmap2Drawable(bitmap);
                 IMAGES[i] = drawable;
-            }
-            else{
-                int res=R.drawable.cc;
-                drawable=this.getResources().getDrawable(res);
+            } else {
+                int res = R.drawable.cc;
+                drawable = this.getResources().getDrawable(res);
                 IMAGES[i] = drawable;
             }
             String[] s = new String[]{INFOS[i]};
@@ -91,11 +86,10 @@ public class ReserveActivity extends AppCompatActivity {
     }
 
 
-    public Drawable bitmap2Drawable(Bitmap bp)
-    {
+    public Drawable bitmap2Drawable(Bitmap bp) {
         //因为BtimapDrawable是Drawable的子类，最终直接使用bd对象即可。
-        Bitmap bm=bp;
-        BitmapDrawable bd= new BitmapDrawable(getResources(), bm);
+        Bitmap bm = bp;
+        BitmapDrawable bd = new BitmapDrawable(getResources(), bm);
         return bd;
     }
 
