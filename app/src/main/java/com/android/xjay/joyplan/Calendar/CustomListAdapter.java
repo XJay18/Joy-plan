@@ -10,7 +10,6 @@ import com.android.xjay.joyplan.R;
 
 import java.util.List;
 
-
 public class CustomListAdapter extends BaseAdapter {
 
     private final View.OnLongClickListener longClickListener;
