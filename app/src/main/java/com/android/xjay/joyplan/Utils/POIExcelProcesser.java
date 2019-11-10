@@ -24,24 +24,42 @@ import java.util.List;
  * help to read excel's courses and add to schedule
  */
 public class POIExcelProcesser {
-    /** the name of courses */
+    /**
+     * the name of courses
+     */
     private static List<String> course_names = new ArrayList<>();
-    /** the day of courses */
+    /**
+     * the day of courses
+     */
     private static List<Integer> course_weekdays = new ArrayList<>();
-    /** the begin time of courses */
+    /**
+     * the begin time of courses
+     */
     private static List<Integer> course_begin_times = new ArrayList<>();
-    /** the end time of courses */
+    /**
+     * the end time of courses
+     */
     private static List<Integer> course_end_times = new ArrayList<>();
-    /** the begin week of courses */
+    /**
+     * the begin week of courses
+     */
     private static List<Integer> course_begin_weeks = new ArrayList<>();
-    /** the end week of courses */
+    /**
+     * the end week of courses
+     */
     private static List<Integer> course_end_weeks = new ArrayList<>();
-    /** the classroom of courses */
+    /**
+     * the classroom of courses
+     */
     private static List<String> classrooms = new ArrayList<>();
-    /** the teacher of courses */
+    /**
+     * the teacher of courses
+     */
     private static List<String> teachers = new ArrayList<>();
 
-    /** add the courses from excel to database */
+    /**
+     * add the courses from excel to database
+     */
     public static void setExceltoSchedule(String filepath, Context mContext) {
         Workbook workbook = null;
         //假定xslx文件在/mnt/sdcard/download目录下
@@ -73,7 +91,9 @@ public class POIExcelProcesser {
         }
     }
 
-    /** get the workbook of excel */
+    /**
+     * get the workbook of excel
+     */
     private static Workbook getWorkbook(String filepath) throws IOException {
         Workbook workbook = null;
         if (!filepath.endsWith(".xlsx")) {
@@ -86,7 +106,9 @@ public class POIExcelProcesser {
         return workbook;
     }
 
-    /** extract all courses */
+    /**
+     * extract all courses
+     */
     private static void exec(Workbook workbook) {
         XSSFSheet xssfSheet = (XSSFSheet) workbook.getSheetAt(0);
         List<CellRangeAddress> list_cellrangeaddress = xssfSheet.getMergedRegions();
@@ -101,7 +123,9 @@ public class POIExcelProcesser {
         }
     }
 
-    /** extract one course's information */
+    /**
+     * extract one course's information
+     */
     private static void getAllInfo(String course_info, int weekday) {
         if (course_info != null) {
             String course_name = null;

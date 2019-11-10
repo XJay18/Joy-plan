@@ -9,12 +9,32 @@ import android.widget.TextView;
 
 import com.android.xjay.joyplan.Utils.DateFormat;
 
+/**
+ * 添加目标activity
+ */
 public class AddGoalActivity extends AppCompatActivity implements View.OnClickListener {
+
+    /**
+     * 目标结束时间文字
+     */
     private TextView tv_end_time;
+
+    /**
+     * 取消按钮
+     */
     private TextView tv_cancel;
+
+    /**
+     * 确认按钮
+     */
     private TextView tv_add;
+
+    /**
+     * 时间选择器
+     */
     private CustomTimePicker myEndTimePicker;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_goal);
@@ -47,12 +67,18 @@ public class AddGoalActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    /**
+     * 发送添加目标广播
+     */
     private void sentBroadcast() {
         Intent intent = new Intent();
         intent.setAction("ADD GOAL");
         sendBroadcast(intent);
     }
 
+    /**
+     * 初始化时间选择器
+     */
     private void initTimePicker() {
 
         long start_beginTime = System.currentTimeMillis();

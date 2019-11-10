@@ -3,22 +3,36 @@ package com.android.xjay.joyplan.CustomExpanding;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.xjay.joyplan.R;
+import com.android.xjay.joyplan.StudentActivityInfo;
+import com.android.xjay.joyplan.UserDBHelper;
+import com.android.xjay.joyplan.Utils.ScreenSizeUtils;
 
 public class CustomItem extends RelativeLayout {
 
@@ -238,7 +252,7 @@ public class CustomItem extends RelativeLayout {
             item.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    toggleExpanded();
+                    customDialog();
                 }
             });
             item.post(new Runnable() {
@@ -257,6 +271,94 @@ public class CustomItem extends RelativeLayout {
 
         mIndicatorContainer.setVisibility(mShowIndicator &&
                 mIndicatorHeight != 0 ? VISIBLE : GONE);
+    }
+
+
+    /**
+     * 弹出框
+     *
+     * @param content
+     */
+    private void customDialog() {
+        Object tag = this.getTag();
+        StudentActivityInfo studentActivityInfo;
+
+        if (tag != null) {
+            studentActivityInfo = (StudentActivityInfo) tag;
+        } else {
+            studentActivityInfo = new StudentActivityInfo("", "", "", "", "");
+        }
+        String title = studentActivityInfo.getTitle();
+        String starttime = studentActivityInfo.getStarttime();
+        String address = studentActivityInfo.getAddress();
+        String info = studentActivityInfo.getInfo();
+        String endtime = studentActivityInfo.getEndtime();
+
+        byte[] temp = studentActivityInfo.getImg();
+        Drawable drawable;
+        if (temp != null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(temp, 0, temp.length);
+            drawable = bitmap2Drawable(bitmap);
+        } else {
+            int res = R.drawable.cc;
+            drawable = this.getResources().getDrawable(res);
+        }
+
+        final Dialog dialog = new Dialog(this.getContext(), R.style.NormalDialogStyle);
+        View view = View.inflate(this.getContext(), R.layout.dialog_activity, null);
+
+        ImageView img_photo = view.findViewById(R.id.img_activity_photo);
+
+        ViewGroup.LayoutParams imglp = img_photo.getLayoutParams();
+        imglp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+
+        img_photo.setLayoutParams(imglp);
+
+
+        TextView tv_title = view.findViewById(R.id.tv_activity_title);
+        TextView tv_time = view.findViewById(R.id.tv_activity_time);
+        TextView tv_address = view.findViewById(R.id.tv_activity_address);
+        TextView tv_info = view.findViewById(R.id.tv_activity_info);
+        ImageView img_reserve_activity = view.findViewById(R.id.img_reserve_activity);
+
+        tv_title.setText(title);
+        tv_address.setText(address);
+        tv_time.setText(starttime);
+        tv_info.setText(info);
+        img_photo.setImageDrawable(drawable);
+        img_reserve_activity.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserDBHelper mHelper = UserDBHelper.getInstance(getContext(), 1);
+                mHelper.insert_reserve_activity(studentActivityInfo);
+
+                Intent intent = new Intent();
+                intent.setAction("RESERVE ACTIVITY");
+                ContextWrapper contextWrapper = new ContextWrapper(getContext());
+                contextWrapper.sendBroadcast(intent);
+                Toast.makeText(getContext(), "预定活动成功", Toast.LENGTH_SHORT);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.setContentView(view);
+
+        //使得点击对话框外部 消失对话框
+        dialog.setCanceledOnTouchOutside(true);
+        //设置对话框的大小
+        view.setMinimumHeight((int) (ScreenSizeUtils.getInstance(this.getContext()).getScreenHeight() * 0.8f));
+        Window dialogWindow = dialog.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        int widthToCut = ScreenSizeUtils.dip2px(this.getContext(), 20);
+        lp.width = ScreenSizeUtils.getInstance(this.getContext()).getScreenWidth() - widthToCut;
+        int screenHeight = (int) (ScreenSizeUtils.getInstance(this.getContext()).getScreenHeight() * 0.8f);
+        lp.height = screenHeight;
+        lp.gravity = Gravity.CENTER;
+        dialogWindow.setAttributes(lp);
+
+        dialog.show();
+
+
     }
 
     public void toggleExpanded() {
@@ -299,6 +401,12 @@ public class CustomItem extends RelativeLayout {
         return mSubItemsShown;
     }
 
+    public Drawable bitmap2Drawable(Bitmap bp) {
+        //因为BtimapDrawable是Drawable的子类，最终直接使用bd对象即可。
+        Bitmap bm = bp;
+        BitmapDrawable bd = new BitmapDrawable(getResources(), bm);
+        return bd;
+    }
 
     /**
      * Returns the count of custom_sub_item items.
@@ -426,6 +534,7 @@ public class CustomItem extends RelativeLayout {
         setIndicatorIcon(
                 ContextCompat.getDrawable(getContext(), iconRes));
     }
+
 
     /**
      * Set the indicator icon.
@@ -792,7 +901,7 @@ public class CustomItem extends RelativeLayout {
         mIndicatorContainer.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                toggleExpanded();
+                customDialog();
             }
         });
 
@@ -807,7 +916,9 @@ public class CustomItem extends RelativeLayout {
         mIndicatorImage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                toggleExpanded();
+                Object a = new Object();
+
+                customDialog();
             }
         });
     }

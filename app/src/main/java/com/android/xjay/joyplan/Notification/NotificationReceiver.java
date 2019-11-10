@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
@@ -26,13 +27,17 @@ public class NotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         mcontext = context;
+
         if (intent.getAction().equals("com.example.notification")) {
-            createNotification();
+            Bundle bundle = intent.getExtras();
+            String title = bundle.getString("title");
+            String content = bundle.getString("content");
+            createNotification(title, content);
             Toast.makeText(mcontext, "received", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void createNotification() {
+    private void createNotification(String title, String content) {
 
         String id = "channel_ID";
         String name = "channel_Name";
@@ -58,8 +63,8 @@ public class NotificationReceiver extends BroadcastReceiver {
                     .setLights(0x00FF00, 1000, 1000);
         }
 
-        builder.setContentTitle("Title")
-                .setContentText("Text")
+        builder.setContentTitle(title)
+                .setContentText(content)
                 //Icon资源不可以在mipmap目录下
                 .setLargeIcon(BitmapFactory.decodeResource(mcontext.getResources(), R.drawable.logo))
                 .setSmallIcon(R.drawable.ic_launcher_background)

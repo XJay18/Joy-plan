@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorTransparentBlue">#8066A4FA</color>
+    <color name="colorTransparentBlue">#B366A4FA</color>
     <color name="colorRed">#F44336</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorWhite">#FFFFFF</color>
@@ -24,9 +24,9 @@
     <color name="transparent">#00FFFFFF</color>
     <color name="tab_checked">#3F51B5</color>
     <color name="tab_unchecked">#757575</color>
-    <color name="colorGreen">#3300FF7F</color>
+    <color name="colorGreen">#B300FF7F</color>
     <color name="colorBlueDeeper">#4769e0</color>
     <color name="halfTransparent">#80FFFFFF</color>
-
+    <color name="colorOrange">#B3FE9B33</color>
 
 </resources>

@@ -7,4 +7,11 @@
         <item>北京大学</item>
         <item>无</item>
     </string-array>
+
+    <string-array name="tag">
+        <item>高优先级</item>
+        <item>中优先级</item>
+        <item>低优先级</item>
+        <item>无</item>
+    </string-array>
 </resources>

@@ -11,11 +11,11 @@
 
     <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
         app:shape_mode="round_rect"
-        app:round_radius="10dp"
+        app:round_radius="15dp"
         android:id="@+id/indicator_image"
         android:layout_width="match_parent"
         android:background="@drawable/btn_shape"
-        android:layout_height="111dp"
+        android:layout_height="200dp"
         android:scaleType="centerCrop"
         />
 
@@ -73,7 +73,6 @@
         android:layout_below="@id/base_list_layout"
         android:layout_alignLeft="@id/base_list_layout"
         android:layout_alignRight="@id/base_list_layout"
-        android:layout_marginBottom="5dp"
         android:orientation="vertical">
 
     </LinearLayout>
@@ -87,14 +86,7 @@
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentRight="true"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:id="@+id/img_delete_acitivty"
-            android:src="@drawable/ic_delete_black"/>
+
 
     </RelativeLayout>
 

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/btn_shape"
+    android:layout_height="800dp"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
+        app:shape_mode="round_rect"
+        app:round_radius="15dp"
+
+        android:id="@+id/img_activity_photo"
+        android:layout_width="match_parent"
+        android:background="@drawable/btn_shape"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        />
+
+    <LinearLayout
+
+        android:id="@+id/title_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/colorBlack"
+            android:id="@+id/tv_activity_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/time_container"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/ic_clock_black"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp" />
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:textSize="15sp"
+            android:textColor="@color/colorBlack"
+            android:id="@+id/tv_activity_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:id="@+id/address_container"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_address_black"
+            android:layout_width="15dp"
+            android:layout_height="15dp" />
+
+        <TextView
+            android:layout_marginLeft="5dp"
+
+            android:textColor="@color/colorBlack"
+            android:id="@+id/tv_activity_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/colorBlack"
+        android:id="@+id/tv_activity_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
+
+    <ImageView
+        android:id="@+id/img_reserve_activity"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:src="@drawable/ic_add_blue"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+
+</android.widget.RelativeLayout>

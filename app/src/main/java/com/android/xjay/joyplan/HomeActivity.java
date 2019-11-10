@@ -20,12 +20,23 @@ import java.util.List;
 /**
  * HomeActivity
  */
-
 public class HomeActivity extends AppCompatActivity {
 
+    /**
+     * 视图页面，加载四个fragment。
+     */
     private ViewPager viewPager;
+    /**
+     * 底部导航栏的菜单项。
+     */
     private MenuItem menuItem;
+    /**
+     * 底部导航栏。
+     */
     private BottomNavigationView bottomNavigationView;
+    /**
+     * 顶部文字标识，指明当前页面是四个fragment中的某一个。
+     */
     private TextView tv_tb;
 
     @Override
@@ -36,15 +47,11 @@ public class HomeActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.vp_home);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         tv_tb = findViewById(R.id.tv_toolbar);
-        // Initialize the page, set the toolbar title as agenda.
+        /* 初始化页面，默认页面为日程页面 */
         tv_tb.setText("日程");
 
         UserDBHelper userDBHelper = UserDBHelper.getInstance(this, 1);
         userDBHelper.resetCourseTable();
-        // To disable the shift mode, we can simply add
-        // 'app:itemHorizontalTranslationEnabled="false"'
-        // to BottomNavigationView in the activity_home.xml instead using the function below.
-        // BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -69,19 +76,21 @@ public class HomeActivity extends AppCompatActivity {
                 });
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
+
             // Triggered when scrolling the pages
             // position: current page index
             // position offset: value from 0~1,
             //                  getting larger when the page is scrolled to the right
             //                  and vice versa.
+            @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                findViewById(R.)
+
             }
 
-            @Override
+
             // Triggered when finishing the scrolling action
             // position: current page index (after scrolling)
+            @Override
             public void onPageSelected(int position) {
                 if (menuItem != null) {
                     menuItem.setChecked(false);
@@ -119,12 +128,13 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
 
-            @Override
+
             // Triggered when changing the state of the scrolling action
             // state: 0 stop
             //        1 scrolling
             //        2 scrolling done
             // usually 1->2->0
+            @Override
             public void onPageScrollStateChanged(int state) {
             }
         });
@@ -132,6 +142,9 @@ public class HomeActivity extends AppCompatActivity {
         setupViewPager(viewPager);
     }
 
+    /**
+     * 为适配器设置视图页面。
+     */
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 

@@ -2,7 +2,6 @@ package com.android.xjay.joyplan.web;
 
 import com.android.xjay.joyplan.Agenda;
 
-import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,7 +14,6 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.TimeoutException;
 
 /**
  * 使用get方法获取Http服务器数据
@@ -29,7 +27,7 @@ public class WebServiceGet {
         HttpURLConnection connection = null;
         InputStream in = null;
 
-        try{
+        try {
             String Url = "http://110.64.91.150:8080/joyweb3.0/LogLet";
             String path = Url + "?phone_number=" + username + "&password=" + password;
             try {
@@ -40,16 +38,13 @@ public class WebServiceGet {
                 connection.setReadTimeout(8000);//传递数据超时
                 in = connection.getInputStream();
                 return parseInfo(in);
-            }
-            catch(SocketTimeoutException e){
+            } catch (SocketTimeoutException e) {
                 e.printStackTrace();
                 connection.disconnect();
                 return "no_connection";
-            }
-            catch (MalformedURLException e) {
+            } catch (MalformedURLException e) {
                 e.printStackTrace();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         } catch (Exception e) {
@@ -77,11 +72,11 @@ public class WebServiceGet {
     public static String registerGet(String phone_number,String password,String nick_name,String university){
         HttpURLConnection connection = null;
         InputStream in = null;
-        try{
+        try {
             String Url = "http://110.64.91.150:8080/joyweb3.0/RegLet";
-            String path = Url + "?phone_number=" + URLEncoder.encode(phone_number,"UTF-8") + "&password=" + URLEncoder.encode(password,"UTF-8")
-                    +"&nick_name="+URLEncoder.encode(nick_name,"UTF-8")
-                    +"&university="+URLEncoder.encode(university,"UTF-8");
+            String path = Url + "?phone_number=" + URLEncoder.encode(phone_number, "UTF-8") + "&password=" + URLEncoder.encode(password, "UTF-8")
+                    + "&nick_name=" + URLEncoder.encode(nick_name, "UTF-8")
+                    + "&university=" + URLEncoder.encode(university, "UTF-8");
             try {
                 URL url = new URL(path);
                 connection = (HttpURLConnection) url.openConnection();
@@ -90,7 +85,7 @@ public class WebServiceGet {
                 connection.setReadTimeout(8000);//传递数据超时
                 in = connection.getInputStream();
                 return parseInfo(in);
-            } catch (SocketTimeoutException e){
+            } catch (SocketTimeoutException e) {
                 e.printStackTrace();
                 connection.disconnect();
                 return "no_connection";
@@ -124,7 +119,7 @@ public class WebServiceGet {
         HttpURLConnection connection = null;
         InputStream in = null;
 
-        try{
+        try {
             String Url = "http://110.64.91.150:8080/joyweb3.0/PhoLet";
             String path = Url + "?phone_number=" + phone_number;
             try {
@@ -135,7 +130,7 @@ public class WebServiceGet {
                 connection.setReadTimeout(8000);//传递数据超时
                 in = connection.getInputStream();
                 return parseInfo(in);
-            } catch(SocketTimeoutException e){
+            } catch (SocketTimeoutException e) {
                 e.printStackTrace();
                 connection.disconnect();
                 return "no_connection";
@@ -170,17 +165,17 @@ public class WebServiceGet {
         HttpURLConnection connection = null;
         InputStream in = null;
 
-        try{
+        try {
             String Url = "http://110.64.91.150:8080/joyweb3.0/Agenda";
-            String path = Url + "?userid=" + URLEncoder.encode(userid,"UTF-8")
-                    + "&title=" + URLEncoder.encode(title,"UTF-8")
-                    + "&starttime=" + URLEncoder.encode(starttime,"UTF-8")
-                    +"&endtime="+URLEncoder.encode(endtime,"UTF-8")
-                    +"&content="+URLEncoder.encode(content,"UTF-8")
-                    +"&address="+URLEncoder.encode(address,"UTF-8");
+            String path = Url + "?userid=" + URLEncoder.encode(userid, "UTF-8")
+                    + "&title=" + URLEncoder.encode(title, "UTF-8")
+                    + "&starttime=" + URLEncoder.encode(starttime, "UTF-8")
+                    + "&endtime=" + URLEncoder.encode(endtime, "UTF-8")
+                    + "&content=" + URLEncoder.encode(content, "UTF-8")
+                    + "&address=" + URLEncoder.encode(address, "UTF-8");
             try {
                 URL url = new URL(path);
-                connection = (HttpURLConnection)url.openConnection();
+                connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setConnectTimeout(10000);//建立连接超时
                 connection.setReadTimeout(8000);//传递数据超时
@@ -191,17 +186,17 @@ public class WebServiceGet {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             //意外退出时，连接关闭保护
-            if(connection != null){
+            if (connection != null) {
                 connection.disconnect();
             }
-            if(in != null){
-                try{
+            if (in != null) {
+                try {
                     in.close();
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -216,32 +211,32 @@ public class WebServiceGet {
         HttpURLConnection connection = null;
         InputStream in = null;
 
-        try{
+        try {
             String Url = "http://110.64.91.150:8080/joyweb3.0/SelAgen";
-            String path = Url + "?userid=" + URLEncoder.encode(userid,"UTF-8");
+            String path = Url + "?userid=" + URLEncoder.encode(userid, "UTF-8");
             try {
 
                 URL url = new URL(path);
-                connection = (HttpURLConnection)url.openConnection();
+                connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setConnectTimeout(10000);//建立连接超时
                 connection.setReadTimeout(8000);//传递数据超时
                 in = connection.getInputStream();
                 //解析json数据
-                byte[] data=read(in);
-                String json=new String(data);
-                JSONObject obj=new JSONObject(json);
-                JSONArray jsonAgenda=obj.getJSONArray("agenda");
-                Agenda ao[]=new Agenda[jsonAgenda.length()];
+                byte[] data = read(in);
+                String json = new String(data);
+                JSONObject obj = new JSONObject(json);
+                JSONArray jsonAgenda = obj.getJSONArray("agenda");
+                Agenda[] ao = new Agenda[jsonAgenda.length()];
                 //将json对象转化为java对象
-                for(int i=0;i<jsonAgenda.length();i++){
-                    JSONObject agenda=jsonAgenda.getJSONObject(i);
-                    String title=agenda.getString("title");
-                    String starttime=agenda.getString("starttime");
-                    String endtime=agenda.getString("endtime");
-                    String content=agenda.getString("content");
-                    String add=agenda.getString("address");
-                    ao[i]=new Agenda(title,starttime,endtime,content,add);
+                for (int i = 0; i < jsonAgenda.length(); i++) {
+                    JSONObject agenda = jsonAgenda.getJSONObject(i);
+                    String title = agenda.getString("title");
+                    String starttime = agenda.getString("starttime");
+                    String endtime = agenda.getString("endtime");
+                    String content = agenda.getString("content");
+                    String add = agenda.getString("address");
+                    ao[i] = new Agenda(title, starttime, endtime, content, add);
                     //System.out.println("json解析="+title+starttime+endtime+content+add);
                 }
 
@@ -251,17 +246,17 @@ public class WebServiceGet {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             //意外退出时，连接关闭保护
-            if(connection != null){
+            if (connection != null) {
                 connection.disconnect();
             }
-            if(in != null){
-                try{
+            if (in != null) {
+                try {
                     in.close();
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

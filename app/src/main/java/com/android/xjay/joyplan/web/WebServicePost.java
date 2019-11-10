@@ -22,7 +22,7 @@ public class WebServicePost {
         HttpURLConnection connection = null;
         InputStream in = null;
 
-        try{
+        try {
             String Url = "http://110.64.91.150:8080/joyweb3.0/" + address;
             try {
                 URL url = new URL(Url);
@@ -81,7 +81,7 @@ public class WebServicePost {
         HttpURLConnection connection = null;
         InputStream in = null;
 
-        try{
+        try {
             String Url = "http://110.64.91.150:8080/joyweb3.0/" + address;
             try {
                 URL url = new URL(Url);

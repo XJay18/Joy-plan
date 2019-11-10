@@ -1,14 +1,16 @@
 package com.android.xjay.joyplan;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -20,8 +22,8 @@ public class ReserveActivity extends AppCompatActivity {
 
     private ExpandingList expandingList;
 
-    //TODO
-    int[] IMAGES = {R.drawable.cc, R.drawable.cc};
+
+    Drawable[] IMAGES = new Drawable[20];
 
     String[] TITLES = new String[20];
 
@@ -44,12 +46,24 @@ public class ReserveActivity extends AppCompatActivity {
 
         expandingList = findViewById(R.id.reserve_expanding_list);
         expandingList.setItemPadding(0);
-        int iconRes = R.drawable.duck;
+
         for (int i = 0; i < length; i++) {
             TITLES[i] = c.getString(1);
             INFOS[i] = c.getString(2);
+            byte[] temp = c.getBlob(c.getColumnIndex("img"));
+
+            Drawable drawable;
+            if (temp != null) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(temp, 0, temp.length);
+                drawable = bitmap2Drawable(bitmap);
+                IMAGES[i] = drawable;
+            } else {
+                int res = R.drawable.cc;
+                drawable = this.getResources().getDrawable(res);
+                IMAGES[i] = drawable;
+            }
             String[] s = new String[]{INFOS[i]};
-            addItem(TITLES[i], s, R.color.colorWhite, iconRes);
+            addItem(TITLES[i], s, R.color.colorWhite, IMAGES[i]);
             c.move(1);
         }
 
@@ -57,8 +71,8 @@ public class ReserveActivity extends AppCompatActivity {
         //createItems();
 
 
-        Button btn_changeTo_addActivity = findViewById(R.id.changeButton_reserve);
-        btn_changeTo_addActivity.setOnClickListener(new View.OnClickListener() {
+        //Button btn_changeTo_addActivity = findViewById(R.id.changeButton_reserve);
+        /*btn_changeTo_addActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -66,33 +80,27 @@ public class ReserveActivity extends AppCompatActivity {
                 startActivity(intent);
                 ReserveActivity.this.finish();
             }
-        });
+        });*/
 
 
     }
 
-    private void createItems() {
-        int iconRes = R.drawable.cc;
-        addItem("Title", new String[]{"House will be rented", "Boat", "Candy", "Collection", "Sport", "Ball", "Head"}, R.color.colorAccent, iconRes);
-        addItem("Title", new String[]{"Dog", "Horse", "Boat"}, R.color.colorWhite, R.drawable.ic_ghost);
-        addItem("Title", new String[]{"Cat"}, R.color.colorWhite, R.drawable.ic_ghost);
-        addItem("Title", new String[]{"Parrot", "Elephant", "Coffee"}, R.color.colorWhite, R.drawable.ic_ghost);
-        addItem("Title", new String[]{}, R.color.colorAccent, R.drawable.ic_ghost);
-        addItem("Title", new String[]{"Golf", "Football"}, R.color.colorAccent, R.drawable.ic_ghost);
-        addItem("Title", new String[]{"Ferrari", "Mazda", "Honda", "Toyota", "Fiat"}, R.color.colorAccent, R.drawable.ic_ghost);
-        addItem("Title", new String[]{"Beans", "Rice", "Meat"}, R.color.colorAccent, R.drawable.ic_ghost);
-        addItem("Title", new String[]{"Hamburger", "Ice cream", "Candy"}, R.color.colorAccent, R.drawable.ic_ghost);
+
+    public Drawable bitmap2Drawable(Bitmap bp) {
+        //因为BtimapDrawable是Drawable的子类，最终直接使用bd对象即可。
+        Bitmap bm = bp;
+        BitmapDrawable bd = new BitmapDrawable(getResources(), bm);
+        return bd;
     }
 
-
-    private void addItem(String title, String[] subItems, int colorRes, int iconRes) {
+    private void addItem(String title, String[] subItems, int colorRes, Drawable drawable) {
         //Let's create an custom_item with R.layout.expanding_layout
         final CustomItem item = expandingList.createNewItem(R.layout.expanding_layout);
 
         //If custom_item creation is successful, let's configure it
         if (item != null) {
             item.setIndicatorColorRes(colorRes);
-            item.setIndicatorIconRes(iconRes);
+            item.setIndicatorIcon(drawable);
             //It is possible to get any view inside the inflated layout. Let's set the text in the custom_item
             ((TextView) item.findViewById(R.id.title)).setText(title);
 
@@ -105,18 +113,7 @@ public class ReserveActivity extends AppCompatActivity {
                 //Let's set some values in
                 configureSubItem(item, view, subItems[i]);
             }
-            item.findViewById(R.id.add_more_sub_items).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showInsertDialog(new OnItemCreated() {
-                        @Override
-                        public void itemCreated(String title) {
-                            View newSubItem = item.createSubItem();
-                            configureSubItem(item, newSubItem, title);
-                        }
-                    });
-                }
-            });
+
 
             /*item.findViewById(R.id.remove_item).setOnClickListener(new View.OnClickListener() {
                 @Override

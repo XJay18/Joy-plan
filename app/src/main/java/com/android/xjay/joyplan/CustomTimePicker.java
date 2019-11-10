@@ -3,7 +3,6 @@ package com.android.xjay.joyplan;
 import android.app.Dialog;
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -17,19 +16,50 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class CustomTimePicker implements View.OnClickListener, PickerView.OnSelectedListener {
+/**
+ * 自制时间选择器。
+ */
+public class CustomTimePicker implements View.OnClickListener,
+        PickerView.OnSelectedListener {
 
+    /**
+     * 当前活动的内容。
+     */
     private Context mContext;
+    /**
+     * 回调属性。
+     */
     private Callback mCallback;
+    /**
+     * 时间选择器的可选时间范围，选择的时间。
+     */
     private Calendar mBeginTime, mEndTime, mSelectedTime;
+    /**
+     * 是否显示对话框。
+     */
     private boolean mCanDialogShow;
 
+    /**
+     * 时间选择器对话框。
+     */
     private Dialog mPickerDialog;
+    /**
+     * 时间选择器的年选项、月选项、日选项、时选项以及分选项。
+     */
     private PickerView mDpvYear, mDpvMonth, mDpvDay, mDpvHour, mDpvMinute;
+    /**
+     * 时间选择器的各个时间单位。
+     */
     private TextView mTvYearUnit, mTvMonthUnit, mTvDayUnit, mTvHourUnit, mTvMinuteUnit;
 
+    /**
+     * 时间选择器的起始时间。
+     */
     private int mBeginYear, mBeginMonth, mBeginDay, mBeginHour, mBeginMinute,
             mEndYear, mEndMonth, mEndDay, mEndHour, mEndMinute;
+    /**
+     * 记录时间选择器的单位。
+     */
     private List<String> mYearUnits = new ArrayList<>(),
             mMonthUnits = new ArrayList<>(),
             mDayUnits = new ArrayList<>(),
@@ -38,17 +68,20 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
 
     private DecimalFormat mDecimalFormat = new DecimalFormat("00");
 
+    /**
+     * 时间选择器的展示模式。
+     */
     private int mTimePickerShowMode;
     private int mScrollUnits = SCROLL_UNIT_HOUR + SCROLL_UNIT_MINUTE;
 
     /**
-     * time unit
+     * 时间选择器的单位
      */
     private static final int SCROLL_UNIT_HOUR = 0b1;
     private static final int SCROLL_UNIT_MINUTE = 0b10;
 
     /**
-     * the maximum of the time unit
+     * 时间单位的最大值
      */
     private static final int MAX_MINUTE_UNIT = 59;
     private int MAX_HOUR_UNIT = 23;
@@ -64,12 +97,12 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     }
 
     /**
-     * linkage rolling delay time
+     * 联动时延.
      */
     private static final long LINKAGE_DELAY_DEFAULT = 100L;
 
     /**
-     * interface of time selection for results callback
+     * 时间选择接口，用于结果回调.
      */
     public interface Callback {
         void onTimeSelected(long timestamp);
@@ -127,7 +160,8 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
      * @param beginTimestamp in millisecond
      * @param endTimestamp   in millisecond
      * @param title          the title of the picker
-     * @param maxOfHour      maximum of hour, may not be exactly 23 in different scenes.
+     * @param maxOfHour      maximum of hour, may not be exactly 23 in
+     *                       different scenes.
      */
     CustomTimePicker(Context context, Callback callback,
                      long beginTimestamp, long endTimestamp,
@@ -150,6 +184,9 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
         mCanDialogShow = true;
     }
 
+    /**
+     * 初始化视图，需要在最初调用。
+     */
     private void initView(String title) {
         mPickerDialog = new Dialog(mContext, R.style.time_picker_dialog);
         mPickerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -244,12 +281,14 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
         }
     }
 
-
+    /**
+     * 初始化时间选择器中的数据。
+     */
     private void initData() {
         mSelectedTime.setTimeInMillis(mBeginTime.getTimeInMillis());
 
         mBeginYear = mBeginTime.get(Calendar.YEAR);
-        // Calendar.MONTH ranges from 0 to 11
+        /* 日历月份范围：0~11 */
         mBeginMonth = mBeginTime.get(Calendar.MONTH) + 1;
         mBeginDay = mBeginTime.get(Calendar.DAY_OF_MONTH);
         mBeginHour = mBeginTime.get(Calendar.HOUR_OF_DAY);
@@ -279,22 +318,16 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
         }
     }
 
-    public void getTime() {
-        Log.v("getMethod", DateFormat.long2Str(mBeginTime.getTimeInMillis(), true));
-    }
-
-    public void setTime(long timestamp) {
-        mBeginTime.setTimeInMillis(timestamp);
-        Log.v("showtime", DateFormat.long2Str(timestamp, true));
-        Log.v("showtime", timestamp + "");
-    }
-
+    /**
+     * 初始化时间选择器中的数据，其中maxOfHour标识最大可选小时数。
+     */
     private void initData(int maxOfHour, int[] initValues) {
         setMaxHourUnit(maxOfHour);
         mSelectedTime.setTimeInMillis(mBeginTime.getTimeInMillis());
 
         mBeginYear = mBeginTime.get(Calendar.YEAR);
-        // Calendar.MONTH ranges from 0 to 11
+
+        /* 日历月份由0开始计算 */
         mBeginMonth = mBeginTime.get(Calendar.MONTH) + 1;
         mBeginDay = mBeginTime.get(Calendar.DAY_OF_MONTH);
         mBeginHour = mBeginTime.get(Calendar.HOUR_OF_DAY);
@@ -324,9 +357,10 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
         }
     }
 
+    /**
+     * 初始化每个时间单位的范围。
+     */
     private void initDateUnits(int endMonth, int endDay, int endHour, int endMinute) {
-//        Log.v("mBeginMonth: ",mBeginMonth+"");
-//        Log.v("mBeginDay: ",mBeginDay+"");
         for (int i = mBeginYear; i <= mEndYear; i++) {
             mYearUnits.add(String.valueOf(i));
         }
@@ -344,7 +378,6 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
         } else {
             for (int i = 0; i <= endHour; i++) {
                 mHourUnits.add(mDecimalFormat.format(i));
-//                Log.v("addHourUnits: ",mDecimalFormat.format(i)+"");
             }
         }
 
@@ -370,12 +403,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     }
 
     /***
-     * Initialize the time list by a list of values.
-     * @param endMonth
-     * @param endDay
-     * @param endHour
-     * @param endMinute
-     * @param initValues len()=5
+     * 通过initValues列表初始化时间列表。
      */
     private void initDateUnits(int endMonth, int endDay, int endHour, int endMinute, int[] initValues) {
         for (int i = mBeginYear; i <= mEndYear; i++) {
@@ -437,31 +465,17 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     private void linkageMonthUnit(final boolean showAnim, final long delay) {
         int minMonth;
         int maxMonth;
-//        int selectedYear = mSelectedTime.get(Calendar.YEAR);
-//        if (mBeginYear == mEndYear) {
-//            minMonth = mBeginMonth;
-//            maxMonth = mEndMonth;
-//        } else if (selectedYear == mBeginYear) {
-//            minMonth = mBeginMonth;
-//            maxMonth = MAX_MONTH_UNIT;
-//        } else if (selectedYear == mEndYear) {
-//            minMonth = 1;
-//            maxMonth = mEndMonth;
-//        } else {
-//            minMonth = 1;
-//            maxMonth = MAX_MONTH_UNIT;
-//        }
         minMonth = 1;
         maxMonth = MAX_MONTH_UNIT;
-        // Initialize the time unit container
+
+        /* 初始化时间选择器容器 */
         mMonthUnits.clear();
         for (int i = minMonth; i <= maxMonth; i++) {
             mMonthUnits.add(mDecimalFormat.format(i));
         }
         mDpvMonth.setDataList(mMonthUnits);
 
-        // Secure that the association check value is not overflowed
-        // or changed during linkage
+        /* 确保联动检查值没有溢出或在联动时更改 */
         int selectedMonth = getValueInRange(mSelectedTime.get(Calendar.MONTH) + 1, minMonth, maxMonth);
         mSelectedTime.set(Calendar.MONTH, selectedMonth - 1);
         mDpvMonth.setSelected(selectedMonth - minMonth);
@@ -487,21 +501,6 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     private void linkageDayUnit(final boolean showAnim, final long delay) {
         int minDay;
         int maxDay;
-//        int selectedYear = mSelectedTime.get(Calendar.YEAR);
-//        int selectedMonth = mSelectedTime.get(Calendar.MONTH) + 1;
-//        if (mBeginYear == mEndYear && mBeginMonth == mEndMonth) {
-//            minDay = mBeginDay;
-//            maxDay = mEndDay;
-//        } else if (selectedYear == mBeginYear && selectedMonth == mBeginMonth) {
-//            minDay = mBeginDay;
-//            maxDay = mSelectedTime.getActualMaximum(Calendar.DAY_OF_MONTH);
-//        } else if (selectedYear == mEndYear && selectedMonth == mEndMonth) {
-//            minDay = 1;
-//            maxDay = mEndDay;
-//        } else {
-//            minDay = 1;
-//            maxDay = mSelectedTime.getActualMaximum(Calendar.DAY_OF_MONTH);
-//        }
         minDay = 1;
         maxDay = mSelectedTime.getActualMaximum(Calendar.DAY_OF_MONTH);
         mDayUnits.clear();
@@ -535,33 +534,16 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
         if ((mScrollUnits & SCROLL_UNIT_HOUR) == SCROLL_UNIT_HOUR) {
             int minHour;
             int maxHour;
-//            int selectedYear = mSelectedTime.get(Calendar.YEAR);
-//            int selectedMonth = mSelectedTime.get(Calendar.MONTH) + 1;
-//            int selectedDay = mSelectedTime.get(Calendar.DAY_OF_MONTH);
-//            if (mBeginYear == mEndYear && mBeginMonth == mEndMonth && mBeginDay == mEndDay) {
-//                minHour = mBeginHour;
-//                maxHour = mEndHour;
-//            } else if (selectedYear == mBeginYear && selectedMonth == mBeginMonth && selectedDay == mBeginDay) {
-//                minHour = mBeginHour;
-//                maxHour = MAX_HOUR_UNIT;
-//            } else if (selectedYear == mEndYear && selectedMonth == mEndMonth && selectedDay == mEndDay) {
-//                minHour = 0;
-//                maxHour = mEndHour;
-//            } else {
-//                minHour = 0;
-//                maxHour = MAX_HOUR_UNIT;
-//            }
             minHour = 0;
             maxHour = MAX_HOUR_UNIT;
-//            Log.v("minHour",minHour+"");
-//            Log.v("maxHour",maxHour+"");
             mHourUnits.clear();
             for (int i = minHour; i <= maxHour; i++) {
                 mHourUnits.add(mDecimalFormat.format(i));
             }
             mDpvHour.setDataList(mHourUnits);
 
-            int selectedHour = getValueInRange(mSelectedTime.get(Calendar.HOUR_OF_DAY), minHour, maxHour);
+            int selectedHour = getValueInRange(mSelectedTime.get(
+                    Calendar.HOUR_OF_DAY), minHour, maxHour);
             mSelectedTime.set(Calendar.HOUR_OF_DAY, selectedHour);
             mDpvHour.setSelected(selectedHour - minHour);
             if (showAnim) {
@@ -586,23 +568,6 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
         if ((mScrollUnits & SCROLL_UNIT_MINUTE) == SCROLL_UNIT_MINUTE) {
             int minMinute;
             int maxMinute;
-//            int selectedYear = mSelectedTime.get(Calendar.YEAR);
-//            int selectedMonth = mSelectedTime.get(Calendar.MONTH) + 1;
-//            int selectedDay = mSelectedTime.get(Calendar.DAY_OF_MONTH);
-//            int selectedHour = mSelectedTime.get(Calendar.HOUR_OF_DAY);
-//            if (mBeginYear == mEndYear && mBeginMonth == mEndMonth && mBeginDay == mEndDay && mBeginHour == mEndHour) {
-//                minMinute = mBeginMinute;
-//                maxMinute = mEndMinute;
-//            } else if (selectedYear == mBeginYear && selectedMonth == mBeginMonth && selectedDay == mBeginDay && selectedHour == mBeginHour) {
-//                minMinute = mBeginMinute;
-//                maxMinute = MAX_MINUTE_UNIT;
-//            } else if (selectedYear == mEndYear && selectedMonth == mEndMonth && selectedDay == mEndDay && selectedHour == mEndHour) {
-//                minMinute = 0;
-//                maxMinute = mEndMinute;
-//            } else {
-//                minMinute = 0;
-//                maxMinute = MAX_MINUTE_UNIT;
-//            }
             minMinute = 0;
             maxMinute = MAX_MINUTE_UNIT;
             mMinuteUnits.clear();
@@ -622,6 +587,9 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
         setCanScroll();
     }
 
+    /**
+     * 如果value在给定范围中，则返回value，否则返回给定value的最大值或最小值。
+     */
     private int getValueInRange(int value, int minValue, int maxValue) {
         if (value < minValue) {
             return minValue;
@@ -638,9 +606,12 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
      * @param dateStr String of the starttime, yyyy-MM-dd or yyyy-MM-dd HH:mm
      */
     public void show(String dateStr) {
-        if (!canShow() || TextUtils.isEmpty(dateStr)) return;
+        boolean canShow = canShow();
+        boolean isEmpty = TextUtils.isEmpty(dateStr);
+        if (!canShow || isEmpty)
+            return;
 
-        // Don't show the animation
+        /* 不展示动画效果 */
         if (setSelectedTime(dateStr, false)) {
             mPickerDialog.show();
         }
@@ -672,7 +643,8 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
      */
     public boolean setSelectedTime(String dateStr, boolean showAnim) {
         return canShow() && !TextUtils.isEmpty(dateStr)
-                && setSelectedTime(DateFormat.str2Long(dateStr, mTimePickerShowMode), showAnim);
+                && setSelectedTime(DateFormat.str2Long(
+                dateStr, mTimePickerShowMode), showAnim);
     }
 
     /**
@@ -698,21 +670,14 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
         }
         mDpvYear.setDataList(mYearUnits);
         mDpvYear.setSelected(mSelectedTime.get(Calendar.YEAR) - mBeginYear);
-
-//        mHourUnits.clear();
-//        for (int i = mBeginYear; i <= mEndYear; i++) {
-//            mHourUnits.add(String.valueOf(i));
-//        }
-//        mDpvHour.setDataList(mHourUnits);
-//        mDpvHour.setSelected(mSelectedTime.get(Calendar.HOUR) - mBeginHour);
         linkageMonthUnit(showAnim, showAnim ? LINKAGE_DELAY_DEFAULT : 0);
         return true;
     }
 
     /**
-     * Sets whether to allow the click of the screen or the physical return key to close
+     * 设置是否允许单击屏幕或返回键以关闭
      */
-    public void setCancelable(boolean cancelable) {
+    void setCancelable(boolean cancelable) {
         if (!canShow()) return;
 
         mPickerDialog.setCancelable(cancelable);
@@ -727,7 +692,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     public void setTimePickerShowMode(int timePickerShowMode) {
         if (!canShow()) return;
 
-        // show YEAR MONTH DAY HOUR MINUTE
+        /* 展示 YEAR MONTH DAY HOUR MINUTE */
         if (timePickerShowMode == 0) {
             initScrollUnit();
             mDpvHour.setVisibility(View.VISIBLE);
@@ -736,9 +701,8 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
             mTvMinuteUnit.setVisibility(View.VISIBLE);
 
         }
-        // show HOUR MINUTE
+        /* 展示 HOUR MINUTE */
         else if (timePickerShowMode == 1) {
-            //initScrollUnit(SCROLL_UNIT_HOUR, SCROLL_UNIT_MINUTE);
             initScrollUnit();
             mDpvYear.setVisibility(View.GONE);
             mTvYearUnit.setVisibility(View.GONE);
@@ -752,7 +716,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
             mDpvMinute.setVisibility(View.VISIBLE);
             mTvMinuteUnit.setVisibility(View.VISIBLE);
         }
-        // show DAY HOUR MINUTE
+        /* 展示 DAY HOUR MINUTE */
         else if (timePickerShowMode == 2) {
             initScrollUnit();
             mDpvYear.setVisibility(View.GONE);
@@ -781,7 +745,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     }
 
     /**
-     * Sets whether the starttime control can be rotated in circulation
+     * Set whether the starttime control can be rotated in circulation
      */
     public void setScrollLoop(boolean canLoop) {
         if (!canShow()) return;
@@ -794,7 +758,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     }
 
     /**
-     * Sets whether the starttime control displays a scrolling animation
+     * Set whether the starttime control displays a scrolling animation
      */
     public void setCanShowAnim(boolean canShowAnim) {
         if (!canShow()) return;
@@ -807,7 +771,7 @@ public class CustomTimePicker implements View.OnClickListener, PickerView.OnSele
     }
 
     /**
-     * Destroy the dialog
+     * 销毁对话框。
      */
     public void onDestroy() {
         if (mPickerDialog != null) {

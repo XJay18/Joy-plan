@@ -1,10 +1,13 @@
 package com.android.xjay.joyplan;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,17 +15,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.xjay.joyplan.CustomExpanding.CustomItem;
 import com.android.xjay.joyplan.CustomExpanding.ExpandingList;
+
+import java.util.ArrayList;
 
 public class ScheduleActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ExpandingList expandingList;
 
-    //TODO
-    int[] IMAGES = {R.drawable.cc, R.drawable.cc};
 
     String[] TITLES = new String[20];
 
@@ -32,7 +34,10 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
 
     String[] ADDRESSES = new String[20];
 
+    Drawable[] IMAGES = new Drawable[20];
+
     private UserDBHelper mHelper;
+
     Cursor c;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,14 +77,14 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-    private void addItem(String title, String info, String starttime, String address, int colorRes, int iconRes) {
+    private void addItem(String title, String info, String starttime, String address, int colorRes, Drawable drawable) {
         //Let's create an custom_item with R.layout.expanding_layout
         final CustomItem item = expandingList.createNewItem(R.layout.expanding_layout);
         String Date = starttime.substring(0, 10);
         //If custom_item creation is successful, let's configure it
         if (item != null) {
             item.setIndicatorColorRes(colorRes);
-            item.setIndicatorIconRes(iconRes);
+            item.setIndicatorIcon(drawable);
             item.createSubItems(1);
             final View view = item.getSubItemView(0);
             //Let's set some values in
@@ -98,6 +103,13 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
                 }
             });*/
         }
+    }
+
+    public Drawable bitmap2Drawable(Bitmap bp) {
+        //因为BtimapDrawable是Drawable的子类，最终直接使用bd对象即可。
+        Bitmap bm = bp;
+        BitmapDrawable bd = new BitmapDrawable(getResources(), bm);
+        return bd;
     }
 
     private void addItem(String title, String[] subItems, int colorRes, int iconRes) {
@@ -124,24 +136,7 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
                 //Let's set some values in
                 configureSubItem(item, view, subItems[i]);
             }
-            item.findViewById(R.id.add_more_sub_items).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                   /* showInsertDialog(new ReserveActivity.OnItemCreated() {
-                        @Override
-                        public void itemCreated(String title) {
-                            View newSubItem = item.createSubItem();
-                            configureSubItem(item, newSubItem, title);
-                        }
-                    });*/
-                    Context context = getApplicationContext();
-                    CharSequence text = "添加成功";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                }
-            });
 
            /* item.findViewById(R.id.remove_item).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -159,37 +154,37 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
 
 
     public void RedrawExpandingList() {
-        //TODO
+
         expandingList.Clear_mContainer();
-        TITLES = new String[100];
 
-        INFOS = new String[100];
-
-        STARTTIMES = new String[100];
-
-//        ENDTIMES=new String[100];
-
-        ADDRESSES = new String[100];
-        Cursor c;
-//        mHelper.reset();
         mHelper = UserDBHelper.getInstance(this, 1);
-        SQLiteDatabase dbRead = mHelper.getReadableDatabase();
-        c = dbRead.query("user_info", null, null
-                , null, null, null, null);
 
-        int length = c.getCount();
-        c.moveToFirst();
-        int iconRes = R.drawable.duck;
-        for (int i = 0; i < length; i++) {
-            TITLES[i] = c.getString(1);
-            INFOS[i] = c.getString(2);
-            STARTTIMES[i] = c.getString(3);
-//            ENDTIMES[i]=c.getString(4).toString();
-            ADDRESSES[i] = c.getString(5);
-            String[] s = new String[]{INFOS[i]};
-            addItem(TITLES[i], INFOS[i], STARTTIMES[i], ADDRESSES[i], R.color.transparent, iconRes);
-            c.move(1);
+        ArrayList<StudentActivityInfo> studentActivityInfos;
+        studentActivityInfos = mHelper.getAllStudentActivityInfo();
+        if (studentActivityInfos != null && studentActivityInfos.size() > 0) {
+            int length = studentActivityInfos.size();
+            for (int i = 0; i < length; i++) {
+                String title = studentActivityInfos.get(i).getTitle();
+                String info = studentActivityInfos.get(i).getInfo();
+                String starttime = studentActivityInfos.get(i).getStarttime();
+                String address = studentActivityInfos.get(i).getAddress();
+
+                byte[] temp = studentActivityInfos.get(i).getImg();
+
+                Drawable drawable;
+                if (temp != null) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(temp, 0, temp.length);
+                    drawable = bitmap2Drawable(bitmap);
+
+                } else {
+                    int res = R.drawable.cc;
+                    drawable = this.getResources().getDrawable(res);
+                }
+                addItem(title, info, starttime, address, R.color.transparent, drawable);
+            }
         }
+
+
     }
 
     private void showInsertDialog(final ReserveActivity.OnItemCreated positive) {
