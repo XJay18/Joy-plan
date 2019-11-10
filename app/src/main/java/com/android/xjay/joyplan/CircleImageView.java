@@ -14,20 +14,43 @@ import android.util.AttributeSet;
 
 
 public class CircleImageView extends AppCompatImageView {
-    private Paint mPaint; //画笔
+    /**
+     * 画笔
+     */
+    private Paint mPaint;
 
-    private int mRadius; //圆形图片的半径
+    /**
+     * 圆形图片的半径
+     */
+    private int mRadius;
+    /**
+     * 图片的缩放比例
+     */
+    private float mScale;
 
-    private float mScale; //图片的缩放比例
-
+    /**
+     * 构造圆形图片的类
+     * @param context
+     */
     public CircleImageView(Context context) {
         super(context);
     }
 
+    /**
+     * 构造圆形图片的类
+     * @param context
+     * @param attrs
+     */
     public CircleImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
+    /**
+     * 构造圆形图片的类
+     * @param context
+     * @param attrs
+     * @param defStyleAttr
+     */
     public CircleImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
@@ -64,7 +87,13 @@ public class CircleImageView extends AppCompatImageView {
         canvas.drawCircle(mRadius, mRadius, mRadius, mPaint);
     }
 
-    //写一个drawble转BitMap的方法
+
+
+    /**
+     * drawble转BitMap的
+     * @param drawable
+     * @return
+     */
     private Bitmap drawableToBitmap(Drawable drawable) {
         if (drawable instanceof BitmapDrawable) {
             BitmapDrawable bd = (BitmapDrawable) drawable;

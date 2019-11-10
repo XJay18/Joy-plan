@@ -46,27 +46,27 @@ import java.util.regex.Pattern;
 public class SxjActivity extends AppCompatActivity implements View.OnClickListener {
 
     /**
-     * Constant, identify take photo
+     * 常量，标识拍照功能
      */
     public static final int TAKE_PHOTO = 1;
 
     /**
-     * Constant, identify choose_photo
+     * 常量，标识选择照片功能
      */
     public static final int ChOOSE_PHOTO = 2;
 
     /**
-     * edittext
+     * 文本框
      */
     private EditText et_content;
 
     /**
-     * to get the img
+     * 获取照片资源链接
      */
     private Uri img_uri = null;
 
     /**
-     * button
+     * 按钮
      */
     private Button btn_takephoto;
 
@@ -100,7 +100,7 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     /**
-     * Listener class of button
+     * 按钮的监听类
      */
     class NoteOnClickListener implements View.OnClickListener {
         @Override
@@ -141,7 +141,7 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     /**
-     * show the img
+     * 展示照片
      */
     private void showRecord(String time) {
         try {
@@ -159,14 +159,14 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     /**
-     * choose photo
+     * 选择照片
      */
     private void choosePhoto() {
         checkPermission();
     }
 
     /**
-     * get the permission to album
+     * 获取相册权限
      */
     private void checkPermission() {
         if (ContextCompat.checkSelfPermission(this,
@@ -198,7 +198,7 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     /**
-     * open album
+     * 打开相册
      */
     private void openAlbum() {
         Intent intent = new Intent("android.intent.action.GET_CONTENT");
@@ -245,13 +245,13 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     /**
-     * save the img
+     * 保存图片
      */
     private String saveImage(Uri image_uri, String path) {
 
         try {
-//            photos_path.add(path);
-//            photos_num++;
+        //            photos_path.add(path);
+        //            photos_num++;
             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(path));
             BitmapFactory.decodeStream(getContentResolver().openInputStream(image_uri)).compress(Bitmap.CompressFormat.JPEG, 80, bufferedOutputStream);
             bufferedOutputStream.flush();
@@ -264,7 +264,7 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
 
 
     /**
-     * insert picture into edittext
+     * 将图片插入文本框
      *
      * @param context
      * @param bitmap
@@ -290,7 +290,7 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
 
 
     /**
-     * Save All content in notebook
+     * 保存文本框中的内容
      */
     private void saveNoteContnet() {
         String content = et_content.getText().toString();
@@ -327,7 +327,7 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     /**
-     * Complete the jobs which are to load data and to show in et_content
+     * 加载已保存的笔记本的内容
      */
     private void loadContent() {
         try {
@@ -371,10 +371,10 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
             Pattern pattern = Pattern.compile(regex);
             matcher = pattern.matcher(str_content);
             while (matcher.find()) {
-//                str_content.substring(0,matcher.start());
-//                System.out.println(matcher.group());
-//                str=str.substring(matcher.end());
-//                matcher=Pattern.compile(regex).matcher(str);
+//          str_content.substring(0,matcher.start());
+//          System.out.println(matcher.group());
+//          str=str.substring(matcher.end());
+//          matcher=Pattern.compile(regex).matcher(str);
             }
             et_content.setText(str_content);
             et_content.setSelection(str_content.length());

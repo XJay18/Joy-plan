@@ -32,44 +32,44 @@ import com.android.xjay.joyplan.Utils.POIExcelProcesser;
 import java.util.ArrayList;
 
 /**
- * the activity of add course in form of excel
+ * 添加课程的activity
  */
 public class AddCourseTableActivity extends AppCompatActivity implements View.OnClickListener {
 
     /**
-     * UI element, spinner
+     * 下拉栏
      */
     private Spinner chooseSchoolSpinner;
     /**
-     * store the schools'name
+     * 储存学校名称
      */
     private ArrayList<String> schools = new ArrayList<>();
     /**
-     * store the school user chooses
+     * 储存用户选择的课程
      */
     private String chosenSchool;
     /**
-     * UI element
+     * 确认键
      */
     private TextView tv_confirm;
     /**
-     * UI element
+     * 学生学号
      */
     private EditText et_sno;
     /**
-     * UI element
+     * UI元素，名字
      */
     private EditText et_name;
     /**
-     * student id
+     * 学生学号
      */
     private String sno;
     /**
-     * student name
+     * 学生名字
      */
     private String name;
     /**
-     * UI element
+     * 确认动画
      */
     private LottieAnimationView confirmAnimationView;
 
@@ -115,7 +115,7 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
     }
 
     /**
-     * add school the schools
+     * 添加学校
      */
     void addSchool(String school) {
         schools.add(school);
@@ -203,7 +203,7 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
     }
 
     /**
-     * get the path of file which user chooses
+     * 获取文件路径
      */
     public String getPath(final Context context, final Uri uri) {
 
@@ -252,8 +252,7 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
     }
 
     /**
-     * Get the value of the data column for this Uri. This is useful for
-     * MediaStore Uris, and other file-based ContentProviders.
+     * 获取数据列
      *
      * @param context       The context.
      * @param uri           The Uri to query.
@@ -283,7 +282,7 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
     }
 
     /**
-     * judge the file type
+     * 判断文件类型
      *
      * @param uri
      * @return
@@ -301,7 +300,7 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
     }
 
     /**
-     * broadcast test
+     * 广播测试
      */
     private void sentBroadcast() {
         Intent intent = new Intent();
@@ -310,14 +309,4 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
         sendBroadcast(intent);
     }
 
-
-//    // offer the api to add school name
-//    public boolean addSchoolInArray(String schoolName) {
-//        if (schools.contains(schoolName)) {
-//            // not allowed to add the school name which is already in the list.
-//            return false;
-//        }
-//        schools.add(schoolName);
-//        return true;
-//    }
 }
