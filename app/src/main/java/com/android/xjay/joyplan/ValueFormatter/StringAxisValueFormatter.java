@@ -10,7 +10,7 @@ public class StringAxisValueFormatter implements IAxisValueFormatter {
     private String[] mStrs;
 
     /**
-     *  对字符串类型的坐标轴标记进行格式化   
+     * 对字符串类型的坐标轴标记进行格式化   
      */
     public StringAxisValueFormatter(String[] strs) {
         this.mStrs = strs;

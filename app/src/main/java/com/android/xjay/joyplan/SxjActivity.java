@@ -250,8 +250,8 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
     private String saveImage(Uri image_uri, String path) {
 
         try {
-        //            photos_path.add(path);
-        //            photos_num++;
+            //            photos_path.add(path);
+            //            photos_num++;
             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(path));
             BitmapFactory.decodeStream(getContentResolver().openInputStream(image_uri)).compress(Bitmap.CompressFormat.JPEG, 80, bufferedOutputStream);
             bufferedOutputStream.flush();

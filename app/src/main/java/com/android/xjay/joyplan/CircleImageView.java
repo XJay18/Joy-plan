@@ -30,6 +30,7 @@ public class CircleImageView extends AppCompatImageView {
 
     /**
      * 构造圆形图片的类
+     *
      * @param context
      */
     public CircleImageView(Context context) {
@@ -38,6 +39,7 @@ public class CircleImageView extends AppCompatImageView {
 
     /**
      * 构造圆形图片的类
+     *
      * @param context
      * @param attrs
      */
@@ -47,6 +49,7 @@ public class CircleImageView extends AppCompatImageView {
 
     /**
      * 构造圆形图片的类
+     *
      * @param context
      * @param attrs
      * @param defStyleAttr
@@ -88,9 +91,9 @@ public class CircleImageView extends AppCompatImageView {
     }
 
 
-
     /**
      * drawble转BitMap的
+     *
      * @param drawable
      * @return
      */

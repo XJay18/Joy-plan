@@ -3,6 +3,7 @@ package com.android.xjay.joyplan;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class AccountnSafetySetupActivity extends AppCompatActivity
@@ -12,6 +13,8 @@ public class AccountnSafetySetupActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_accountnsafety);
+        ((TextView) findViewById(R.id.tv_safety_user_name)).
+                setText(getIntent().getStringExtra("user_name"));
         setListener();
     }
 

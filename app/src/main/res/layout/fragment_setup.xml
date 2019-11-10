@@ -26,12 +26,12 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/tv_setup_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/rl_setup_portrait"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="40dp"
-            android:text="用户名"
             android:textColor="@color/colorWhite"
             android:textSize="18sp"
             style="@style/function_bar_text" />

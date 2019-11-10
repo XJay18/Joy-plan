@@ -102,8 +102,10 @@ public class PickerView extends View {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Style.FILL);
         mPaint.setTextAlign(Align.CENTER);
-        mLightColor = ContextCompat.getColor(mContext, R.color.date_picker_text_light);
-        mDarkColor = ContextCompat.getColor(mContext, R.color.date_picker_text_dark);
+        mLightColor = ContextCompat.getColor(
+                mContext, R.color.date_picker_text_light);
+        mDarkColor = ContextCompat.getColor(
+                mContext, R.color.date_picker_text_dark);
     }
 
     @Override
@@ -210,7 +212,8 @@ public class PickerView extends View {
                 break;
 
             case MotionEvent.ACTION_UP:
-                // After lifting the hand, mSelectedIndex will scroll from the current
+                // After lifting the hand,
+                // mSelectedIndex will scroll from the current
                 // position to the selected position in the middle
                 if (Math.abs(mScrollDistance) < 0.01) {
                     mScrollDistance = 0;

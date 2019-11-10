@@ -14,12 +14,13 @@ public class StudentActivityInfo {
 
     /**
      * 构造函数
-     * @param Title 标题
-     * @param Info 内容
+     *
+     * @param Title     标题
+     * @param Info      内容
      * @param starttime 开始时间
-     * @param endtime 结束时间
-     * @param Address 地址
-     * @param img 图片
+     * @param endtime   结束时间
+     * @param Address   地址
+     * @param img       图片
      */
     public StudentActivityInfo(String Title, String Info, String starttime, String endtime, String Address, byte[] img) {
         title = Title;
@@ -32,11 +33,12 @@ public class StudentActivityInfo {
 
     /**
      * 构造函数
-     * @param Title 标题
-     * @param Info 内容
+     *
+     * @param Title     标题
+     * @param Info      内容
      * @param starttime 开始时间
-     * @param endtime 结束时间
-     * @param Address 地址
+     * @param endtime   结束时间
+     * @param Address   地址
      */
     public StudentActivityInfo(String Title, String Info, String starttime, String endtime, String Address) {
         title = Title;
