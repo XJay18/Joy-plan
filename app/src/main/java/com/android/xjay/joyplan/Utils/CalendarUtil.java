@@ -4,6 +4,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class CalendarUtil {
+    /**
+     * 计算在 DATE1 与 DATE2之间的天数。
+     */
     public static int daysBetween(Date date1, Date date2) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date1);
@@ -14,6 +17,10 @@ public class CalendarUtil {
 
         return Integer.parseInt(String.valueOf(between_days));
     }
+
+    /**
+     * 计算在 DATE1 与 DATE2之间的小时数。
+     */
     public static  int hoursBetween(Date date1, Date date2){
         Calendar cal = Calendar.getInstance();
         cal.setTime(date1);

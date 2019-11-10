@@ -1,6 +1,5 @@
 package com.android.xjay.joyplan;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.xjay.joyplan.web.WebServiceGet;
-import com.android.xjay.joyplan.web.WebServicePost;
 
-public class PhoneActivity extends AppCompatActivity implements View.OnClickListener{
+public class PhoneActivity extends AppCompatActivity implements View.OnClickListener {
     /**
      * 电话号码输入框
      */
@@ -44,7 +42,7 @@ public class PhoneActivity extends AppCompatActivity implements View.OnClickList
     }
 
     /**
-     *  绑定组件id
+     * 绑定组件id
      */
     private void getId() {
         legal = false;
@@ -58,28 +56,27 @@ public class PhoneActivity extends AppCompatActivity implements View.OnClickList
     /**
      * 按钮点击事件
      */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_phone_next:
+                legal = setphone();
+                if (legal) {
 
-    class MyOnClickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.btn_phone_next:
-                    legal = setphone();
-                    if (legal) {
+                    //new Thread(new RegThread()).start();
+                    Intent intent = new Intent(PhoneActivity.this, CordActivity.class);
+                    intent.setClass(PhoneActivity.this, CordActivity.class);
+                    intent.putExtra("data0", phone_number);
+                    startActivity(intent);
+                }
 
-                        //new Thread(new RegThread()).start();
-                        Intent intent = new Intent(PhoneActivity.this, CordActivity.class);
-                        intent.setClass(PhoneActivity.this, CordActivity.class);
-                        intent.putExtra("data0", phone_number);
-                        startActivity(intent);
-                    }
-
-                    break;
+                break;
             case R.id.phone_return:
                 Intent intent1 = new Intent(PhoneActivity.this, WelcomeActivity.class);
                 startActivity(intent1);
-            }
         }
+    }
+
 
     /**
      * 开线程调用http方法访问服务器并获得返回数据
@@ -101,7 +98,7 @@ public class PhoneActivity extends AppCompatActivity implements View.OnClickList
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(response.equals("no_connection")){
+                if (response.equals("no_connection")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(
                             PhoneActivity.this);
                     builder.setTitle("登陆信息");
@@ -122,19 +119,19 @@ public class PhoneActivity extends AppCompatActivity implements View.OnClickList
                     startActivity(intent);
                 } else {
                     //TODO 此处为数据库中含有该电话号码时的时候
-                        AlertDialog.Builder builder = new AlertDialog.Builder(
-                                PhoneActivity.this);
-                        builder.setTitle("注册信息");
-                        builder.setMessage("手机号已存在");
-                        builder.setCancelable(false);
-                        builder.setPositiveButton("OK",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        //TODO 登录失败后的页面跳转
-                                    }
-                                });
-                        builder.show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(
+                            PhoneActivity.this);
+                    builder.setTitle("注册信息");
+                    builder.setMessage("手机号已存在");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    //TODO 登录失败后的页面跳转
+                                }
+                            });
+                    builder.show();
                 }
             }
         });
