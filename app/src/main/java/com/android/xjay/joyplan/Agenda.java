@@ -41,6 +41,7 @@ public class Agenda {
 
     /**
      * 获取标题
+     *
      * @return 标题字符串
      */
     public String getTitle() {
@@ -49,6 +50,7 @@ public class Agenda {
 
     /**
      * 获取开始时间
+     *
      * @return 开始时间字符串
      */
     public String getStarttime() {
@@ -57,6 +59,7 @@ public class Agenda {
 
     /**
      * 获取结束时间
+     *
      * @return 结束时间字符串
      */
     public String getEndtime() {
@@ -65,6 +68,7 @@ public class Agenda {
 
     /**
      * 获取备注
+     *
      * @return 结束时间字符串
      */
     public String getNotation() {
@@ -73,6 +77,7 @@ public class Agenda {
 
     /**
      * 获取地点
+     *
      * @return 地点字符串
      */
     public String getAddress() {

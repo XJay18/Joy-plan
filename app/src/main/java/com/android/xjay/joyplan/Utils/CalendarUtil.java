@@ -21,7 +21,7 @@ public class CalendarUtil {
     /**
      * 计算在 DATE1 与 DATE2之间的小时数。
      */
-    public static  int hoursBetween(Date date1, Date date2){
+    public static int hoursBetween(Date date1, Date date2) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date1);
         long time1 = cal.getTimeInMillis();

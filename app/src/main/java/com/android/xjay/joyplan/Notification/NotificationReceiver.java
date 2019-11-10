@@ -29,15 +29,15 @@ public class NotificationReceiver extends BroadcastReceiver {
         mcontext = context;
 
         if (intent.getAction().equals("com.example.notification")) {
-            Bundle bundle=intent.getExtras();
-            String title=bundle.getString("title");
-            String content=bundle.getString("content");
-            createNotification(title,content);
+            Bundle bundle = intent.getExtras();
+            String title = bundle.getString("title");
+            String content = bundle.getString("content");
+            createNotification(title, content);
             Toast.makeText(mcontext, "received", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void createNotification(String title,String content) {
+    private void createNotification(String title, String content) {
 
         String id = "channel_ID";
         String name = "channel_Name";

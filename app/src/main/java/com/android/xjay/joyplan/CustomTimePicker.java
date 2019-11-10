@@ -606,9 +606,9 @@ public class CustomTimePicker implements View.OnClickListener,
      * @param dateStr String of the starttime, yyyy-MM-dd or yyyy-MM-dd HH:mm
      */
     public void show(String dateStr) {
-        boolean canShow=canShow();
-        boolean isEmpty=TextUtils.isEmpty(dateStr);
-        if (!canShow|| isEmpty)
+        boolean canShow = canShow();
+        boolean isEmpty = TextUtils.isEmpty(dateStr);
+        if (!canShow || isEmpty)
             return;
 
         /* 不展示动画效果 */

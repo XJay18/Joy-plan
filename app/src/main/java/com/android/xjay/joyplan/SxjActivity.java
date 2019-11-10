@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,9 +26,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.util.Log;
-
-import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -42,7 +38,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,19 +45,29 @@ import java.util.regex.Pattern;
 
 public class SxjActivity extends AppCompatActivity implements View.OnClickListener {
 
-    /** Constant, identify take photo */
+    /**
+     * Constant, identify take photo
+     */
     public static final int TAKE_PHOTO = 1;
 
-    /** Constant, identify choose_photo */
+    /**
+     * Constant, identify choose_photo
+     */
     public static final int ChOOSE_PHOTO = 2;
 
-    /** edittext */
+    /**
+     * edittext
+     */
     private EditText et_content;
 
-    /** to get the img */
+    /**
+     * to get the img
+     */
     private Uri img_uri = null;
 
-    /** button */
+    /**
+     * button
+     */
     private Button btn_takephoto;
 
     @Override
@@ -81,7 +86,7 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         super.onDestroy();
         saveNoteContnet();
     }
@@ -135,7 +140,9 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
 
     }
 
-    /** show the img */
+    /**
+     * show the img
+     */
     private void showRecord(String time) {
         try {
             if (!TextUtils.isEmpty(time)) {
@@ -151,12 +158,16 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    /**choose photo*/
+    /**
+     * choose photo
+     */
     private void choosePhoto() {
         checkPermission();
     }
 
-    /**get the permission to album*/
+    /**
+     * get the permission to album
+     */
     private void checkPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -186,7 +197,9 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    /**open album */
+    /**
+     * open album
+     */
     private void openAlbum() {
         Intent intent = new Intent("android.intent.action.GET_CONTENT");
         intent.setType("image/*");
@@ -231,8 +244,8 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    /**save the img
-     *
+    /**
+     * save the img
      */
     private String saveImage(Uri image_uri, String path) {
 
@@ -250,7 +263,8 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    /**insert picture into edittext
+    /**
+     * insert picture into edittext
      *
      * @param context
      * @param bitmap
@@ -275,42 +289,42 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    /**Save All content in notebook
-     *
+    /**
+     * Save All content in notebook
      */
-     private void saveNoteContnet() {
-         String content = et_content.getText().toString();
-         try {
-             //check the permission the write external storage
-             int permission = ActivityCompat.checkSelfPermission(this,
-                     "android.permission.WRITE_EXTERNAL_STORAGE");
-             if (permission != PackageManager.PERMISSION_GRANTED) {
-                 //if without permisson, request the permission
-                 ActivityCompat.requestPermissions(this,
-                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
-             }
-         } catch (Exception e) {
-             e.printStackTrace();
-         }
-         String doc_path = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString();
-         FileOutputStream fileOutputStream = null;
-         BufferedWriter bufferedWriter = null;
-         try {
-             fileOutputStream = new FileOutputStream(doc_path + "/NoteContent");
-             bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
-             bufferedWriter.write(content);
-         } catch (IOException ex) {
-             ex.printStackTrace();
-         } finally {
-             try {
-                 if (bufferedWriter != null)
-                     bufferedWriter.close();
-             } catch (IOException ex) {
-                 ex.printStackTrace();
-             }
-         }
+    private void saveNoteContnet() {
+        String content = et_content.getText().toString();
+        try {
+            //check the permission the write external storage
+            int permission = ActivityCompat.checkSelfPermission(this,
+                    "android.permission.WRITE_EXTERNAL_STORAGE");
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                //if without permisson, request the permission
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String doc_path = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString();
+        FileOutputStream fileOutputStream = null;
+        BufferedWriter bufferedWriter = null;
+        try {
+            fileOutputStream = new FileOutputStream(doc_path + "/NoteContent");
+            bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+            bufferedWriter.write(content);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (bufferedWriter != null)
+                    bufferedWriter.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
 
-     }
+    }
 
     /**
      * Complete the jobs which are to load data and to show in et_content
@@ -332,11 +346,11 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
         String doc_path = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString();
         File file = new File(doc_path + "/NoteContent");
         if (!file.exists()) {
-            Log.e("write","No file");
+            Log.e("write", "No file");
             return;
         }
-        Log.e("write","Get file");
-        StringBuffer content = new StringBuffer("");
+        Log.e("write", "Get file");
+        StringBuffer content = new StringBuffer();
         FileInputStream fileInputStream = null;
         BufferedReader bufferedReader = null;
 
@@ -347,11 +361,11 @@ public class SxjActivity extends AppCompatActivity implements View.OnClickListen
             while ((content_line = bufferedReader.readLine()) != null) {
                 content.append(content_line + '\n');
             }
-            if(content.length()==0){
+            if (content.length() == 0) {
                 return;
             }
             String str_content = content.substring(0, content.length() - 1);
-            Log.e("write","get str");
+            Log.e("write", "get str");
             String regex = "[0-9]{14}.jpeg";
             Matcher matcher = null;
             Pattern pattern = Pattern.compile(regex);

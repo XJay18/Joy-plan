@@ -9,22 +9,22 @@ public class StudentActivityInfo {
     private String address;
     byte[] img;
 
-    public StudentActivityInfo(String Title, String Info, String starttime, String endtime, String Address,byte []img) {
+    public StudentActivityInfo(String Title, String Info, String starttime, String endtime, String Address, byte[] img) {
         title = Title;
         info = Info;
         this.starttime = starttime;
         this.endtime = endtime;
         address = Address;
-        this.img=img;
+        this.img = img;
     }
 
-    public StudentActivityInfo(String Title, String Info, String starttime, String endtime, String Address){
+    public StudentActivityInfo(String Title, String Info, String starttime, String endtime, String Address) {
         title = Title;
         info = Info;
         this.starttime = starttime;
         this.endtime = endtime;
         address = Address;
-        img=null;
+        img = null;
     }
 
     public String getAddress() {

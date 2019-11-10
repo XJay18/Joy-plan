@@ -36,23 +36,41 @@ import java.util.ArrayList;
  */
 public class AddCourseTableActivity extends AppCompatActivity implements View.OnClickListener {
 
-    /** UI element, spinner */
+    /**
+     * UI element, spinner
+     */
     private Spinner chooseSchoolSpinner;
-    /** store the schools'name */
+    /**
+     * store the schools'name
+     */
     private ArrayList<String> schools = new ArrayList<>();
-    /** store the school user chooses */
+    /**
+     * store the school user chooses
+     */
     private String chosenSchool;
-    /** UI element */
+    /**
+     * UI element
+     */
     private TextView tv_confirm;
-    /** UI element */
+    /**
+     * UI element
+     */
     private EditText et_sno;
-    /** UI element */
+    /**
+     * UI element
+     */
     private EditText et_name;
-    /** student id */
+    /**
+     * student id
+     */
     private String sno;
-    /** student name */
+    /**
+     * student name
+     */
     private String name;
-    /** UI element */
+    /**
+     * UI element
+     */
     private LottieAnimationView confirmAnimationView;
 
     @Override
@@ -96,7 +114,9 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
 
     }
 
-    /** add school the schools */
+    /**
+     * add school the schools
+     */
     void addSchool(String school) {
         schools.add(school);
     }
@@ -182,7 +202,9 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
         }
     }
 
-    /** get the path of file which user chooses */
+    /**
+     * get the path of file which user chooses
+     */
     public String getPath(final Context context, final Uri uri) {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
@@ -262,6 +284,7 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
 
     /**
      * judge the file type
+     *
      * @param uri
      * @return
      */
@@ -277,7 +300,9 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
         return ("com.android.externalstorage.documents".equals(uri.getAuthority()));
     }
 
-    /** broadcast test */
+    /**
+     * broadcast test
+     */
     private void sentBroadcast() {
         Intent intent = new Intent();
         intent.setAction("ADD COURSE TABLE");

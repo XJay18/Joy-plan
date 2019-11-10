@@ -1,14 +1,12 @@
 package com.android.xjay.joyplan;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener{
+public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
     /**
      * 登录按钮
      */
@@ -53,6 +51,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 Intent intent2 = new Intent(WelcomeActivity.this, PhoneActivity.class);
                 startActivity(intent2);
                 break;
-            }
         }
+    }
 }

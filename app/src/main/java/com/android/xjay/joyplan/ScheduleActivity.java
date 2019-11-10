@@ -1,6 +1,5 @@
 package com.android.xjay.joyplan;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.xjay.joyplan.CustomExpanding.CustomItem;
 import com.android.xjay.joyplan.CustomExpanding.ExpandingList;
@@ -28,7 +26,6 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
     private ExpandingList expandingList;
 
 
-
     String[] TITLES = new String[20];
 
     String[] INFOS = new String[20];
@@ -37,7 +34,7 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
 
     String[] ADDRESSES = new String[20];
 
-    Drawable[] IMAGES=new Drawable[20];
+    Drawable[] IMAGES = new Drawable[20];
 
     private UserDBHelper mHelper;
 
@@ -108,11 +105,10 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    public Drawable bitmap2Drawable(Bitmap bp)
-    {
+    public Drawable bitmap2Drawable(Bitmap bp) {
         //因为BtimapDrawable是Drawable的子类，最终直接使用bd对象即可。
-        Bitmap bm=bp;
-        BitmapDrawable bd= new BitmapDrawable(getResources(), bm);
+        Bitmap bm = bp;
+        BitmapDrawable bd = new BitmapDrawable(getResources(), bm);
         return bd;
     }
 
@@ -164,34 +160,29 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
         mHelper = UserDBHelper.getInstance(this, 1);
 
         ArrayList<StudentActivityInfo> studentActivityInfos;
-        studentActivityInfos=mHelper.getAllStudentActivityInfo();
-        if(studentActivityInfos!=null&&studentActivityInfos.size()>0){
-            int length=studentActivityInfos.size();
+        studentActivityInfos = mHelper.getAllStudentActivityInfo();
+        if (studentActivityInfos != null && studentActivityInfos.size() > 0) {
+            int length = studentActivityInfos.size();
             for (int i = 0; i < length; i++) {
                 String title = studentActivityInfos.get(i).getTitle();
                 String info = studentActivityInfos.get(i).getInfo();
                 String starttime = studentActivityInfos.get(i).getStarttime();
                 String address = studentActivityInfos.get(i).getAddress();
 
-                byte[] temp=studentActivityInfos.get(i).getImg();
+                byte[] temp = studentActivityInfos.get(i).getImg();
 
                 Drawable drawable;
-                if(temp!=null) {
+                if (temp != null) {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(temp, 0, temp.length);
                     drawable = bitmap2Drawable(bitmap);
 
+                } else {
+                    int res = R.drawable.cc;
+                    drawable = this.getResources().getDrawable(res);
                 }
-                else{
-                    int res=R.drawable.cc;
-                    drawable=this.getResources().getDrawable(res);
-                }
-                addItem(title, info, starttime, address, R.color.transparent,drawable);
+                addItem(title, info, starttime, address, R.color.transparent, drawable);
             }
         }
-
-
-
-
 
 
     }

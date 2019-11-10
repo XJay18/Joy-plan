@@ -685,7 +685,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
                             editText_notation.setText(notation);
                             updateAgenda();
                             dialog.dismiss();
-                            ;
 
                         }
                     });

@@ -119,11 +119,11 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
 
     private ImageView mImage;
 
-    private  ImageView img_add_image;
+    private ImageView img_add_image;
 
-    private  byte[] img_added;
+    private byte[] img_added;
 
-    public static final int CHOOSE_PHOTO=2;
+    public static final int CHOOSE_PHOTO = 2;
 
     LinearLayout img_add_container;
     ImageView img_photo;
@@ -154,11 +154,11 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         editText_title = findViewById(R.id.editText_title);
         editText_description = findViewById(R.id.editText_detail);
         editText_address = findViewById(R.id.editText_address);
-        img_photo=findViewById(R.id.img_photo);
+        img_photo = findViewById(R.id.img_photo);
         img_photo.setOnClickListener(this);
-        img_add_container=findViewById(R.id.img_add_container);
+        img_add_container = findViewById(R.id.img_add_container);
         btn_add = findViewById(R.id.btn_add);
-        img_add_image=findViewById(R.id.img_add_img);
+        img_add_image = findViewById(R.id.img_add_img);
         img_add_image.setOnClickListener(this);
         btn_add.setOnClickListener(this);
         btn_cancel = findViewById(R.id.btn_cancel);
@@ -182,7 +182,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
      * 点击相应函数
      */
     @Override
-    public void onClick(View view){
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_cancel: {
                 /*Intent intent = new Intent();
@@ -198,11 +198,10 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 string_end_time = tv_select_end_time.getText().toString();
                 string_address = editText_address.getText().toString();
                 StudentActivityInfo info;
-                if(img_added!=null){
-                    info = new StudentActivityInfo(string_title, string_description, string_start_time, string_end_time, string_address,img_added);
-                }
-                else{
-                    info=new StudentActivityInfo(string_title, string_description, string_start_time, string_end_time, string_address);
+                if (img_added != null) {
+                    info = new StudentActivityInfo(string_title, string_description, string_start_time, string_end_time, string_address, img_added);
+                } else {
+                    info = new StudentActivityInfo(string_title, string_description, string_start_time, string_end_time, string_address);
 
                 }
                 // 将info加入学生活动中
@@ -222,21 +221,21 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 startActivity(intent);
                 break;
             }
-            case R.id.img_add_img:{
+            case R.id.img_add_img: {
                 checkPermission();
                 break;
             }
-            case R.id .img_photo:{
+            case R.id.img_photo: {
                 checkPermission();
                 break;
             }
-            case R.id.tv_select_start_time:{
-                String temp=tv_select_start_time.getText().toString();
+            case R.id.tv_select_start_time: {
+                String temp = tv_select_start_time.getText().toString();
                 myStartTimePicker.show(temp);
                 break;
             }
-            case R.id.tv_select_end_time:{
-                String temp=tv_select_end_time.getText().toString();
+            case R.id.tv_select_end_time: {
+                String temp = tv_select_end_time.getText().toString();
                 myEndTimePicker.show(temp);
                 break;
             }
@@ -275,7 +274,6 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     }
 
 
-
     /**
      * 初始化时间选择器
      */
@@ -283,15 +281,15 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         //当前时间
         long current_time = System.currentTimeMillis();
         //最大可选结束时间
-        long temp=157680000000L;
-        long max_time=current_time+temp;
+        long temp = 157680000000L;
+        long max_time = current_time + temp;
 
         //开始时间
         String str_start_time = DateFormat.long2Str(current_time, true);
         tv_select_start_time.setText(str_start_time);
 
         //结束时间默认比开始时间多4个小时
-        long end_beginTime = current_time + 4*60 * 60 * 1000;
+        long end_beginTime = current_time + 4 * 60 * 60 * 1000;
         String str_end_time = DateFormat.long2Str(end_beginTime, true);
 
         tv_select_end_time.setText(str_end_time);
@@ -299,19 +297,19 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         // 通过日期字符串初始化日期，格式请用：yyyy-MM-dd HH:mm
         myStartTimePicker = new CustomTimePicker(AddActivity.this,
                 new CustomTimePicker.Callback() {
-            @Override
-            public void onTimeSelected(long timestamp) {
-                // remove the first 4 chars i.e. year.
-                String start_time = DateFormat.long2Str(timestamp, true);
-                tv_select_start_time.setText(start_time);
+                    @Override
+                    public void onTimeSelected(long timestamp) {
+                        // remove the first 4 chars i.e. year.
+                        String start_time = DateFormat.long2Str(timestamp, true);
+                        tv_select_start_time.setText(start_time);
 
-                long temp_beginTime = timestamp + 60 * 60 * 1000*4;
-                String end_time = DateFormat.long2Str(temp_beginTime, true);
-                tv_select_end_time.setText(end_time);
+                        long temp_beginTime = timestamp + 60 * 60 * 1000 * 4;
+                        String end_time = DateFormat.long2Str(temp_beginTime, true);
+                        tv_select_end_time.setText(end_time);
 
-                myEndTimePicker.setSelectedTime(temp_beginTime, false);
-            }
-        }, current_time, max_time, "请选择时间");
+                        myEndTimePicker.setSelectedTime(temp_beginTime, false);
+                    }
+                }, current_time, max_time, "请选择时间");
         //允许点击屏幕或物理返回键关闭
         myStartTimePicker.setCancelable(true);
         // 显示时和分
@@ -443,8 +441,8 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     private void displayImage(String imagePath) {
         if (imagePath != null) {
             Bitmap bitImage = BitmapFactory.decodeFile(imagePath);//格式化图片
-            byte[] img=img(bitImage);
-            img_added=img;
+            byte[] img = img(bitImage);
+            img_added = img;
             img_photo.setImageBitmap(bitImage);
             img_add_container.setVisibility(View.GONE);
             img_photo.setVisibility(View.VISIBLE);
@@ -454,8 +452,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    private byte[] img(Bitmap bitmap)
-    {
+    private byte[] img(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);

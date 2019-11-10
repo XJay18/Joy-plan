@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private Button btn_return;
     /**
-     *通知栏
+     * 通知栏
      */
     private NotificationReceiver notificationReceiver;
     /**
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 储存密码
      */
     private String password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,12 +90,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.btn_login:
-                legal=setUser();
-                if(legal){
-                    phone_number=et_account.getText().toString();
-                    password=et_password.getText().toString();
+                legal = setUser();
+                if (legal) {
+                    phone_number = et_account.getText().toString();
+                    password = et_password.getText().toString();
                     dialog = new ProgressDialog(MainActivity.this);
                     dialog.setTitle("正在登陆");
                     dialog.setMessage("请稍后");
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.main_return:
-                Intent intent=new Intent(MainActivity.this,WelcomeActivity.class);
+                Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
                 startActivity(intent);
                 break;
         }
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void run() {
             //获取服务器返回的数据
-            infoString = WebServiceGet.loginGet(phone_number,password);
+            infoString = WebServiceGet.loginGet(phone_number, password);
             //更新UI，使用runOnUiThread()方法
             showResponse(infoString);
         }
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //更新UI
             @Override
             public void run() {
-                if(response.equals("no_connection")){
+                if (response.equals("no_connection")) {
                     dialog.dismiss();
                     AlertDialog.Builder builder = new AlertDialog.Builder(
                             MainActivity.this);
@@ -149,8 +150,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 }
                             });
                     builder.show();
-                }
-                else if (response.equals("false")) {
+                } else if (response.equals("false")) {
                     //TODO 登陆失败后的操作
                     dialog.dismiss();
                     AlertDialog.Builder builder = new AlertDialog.Builder(
@@ -160,11 +160,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     builder.setCancelable(false);
                     builder.setPositiveButton("OK",
                             new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            //TODO 登录失败后的页面跳转
-                        }
-                    });
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    //TODO 登录失败后的页面跳转
+                                }
+                            });
                     builder.show();
                 } else {
                     Intent intent = new Intent(MainActivity.this,

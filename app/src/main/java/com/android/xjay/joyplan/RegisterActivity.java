@@ -100,8 +100,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             case R.id.btn_submit:
                 legal = setUser();
                 if (legal) {
-                    password= et_password.getText().toString();
-                    nick_name= et_nickname.getText().toString();
+                    password = et_password.getText().toString();
+                    nick_name = et_nickname.getText().toString();
                     dialog = new ProgressDialog(RegisterActivity.this);
                     dialog.setTitle("正在注册");
                     dialog.setMessage("请稍后");
@@ -155,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(response.equals("no_connection")){
+                if (response.equals("no_connection")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(
                             RegisterActivity.this);
                     builder.setTitle("登陆信息");
