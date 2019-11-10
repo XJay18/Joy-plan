@@ -97,12 +97,12 @@ public class CustomTimePicker implements View.OnClickListener,
     }
 
     /**
-     * 联动时延
+     * 联动时延.
      */
     private static final long LINKAGE_DELAY_DEFAULT = 100L;
 
     /**
-     * interface of time selection for results callback
+     * 时间选择接口，用于结果回调.
      */
     public interface Callback {
         void onTimeSelected(long timestamp);
@@ -184,6 +184,9 @@ public class CustomTimePicker implements View.OnClickListener,
         mCanDialogShow = true;
     }
 
+    /**
+     * 初始化视图，需要在最初调用。
+     */
     private void initView(String title) {
         mPickerDialog = new Dialog(mContext, R.style.time_picker_dialog);
         mPickerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -278,7 +281,9 @@ public class CustomTimePicker implements View.OnClickListener,
         }
     }
 
-
+    /**
+     * 初始化时间选择器中的数据。
+     */
     private void initData() {
         mSelectedTime.setTimeInMillis(mBeginTime.getTimeInMillis());
 
@@ -313,6 +318,9 @@ public class CustomTimePicker implements View.OnClickListener,
         }
     }
 
+    /**
+     * 初始化时间选择器中的数据，其中maxOfHour标识最大可选小时数。
+     */
     private void initData(int maxOfHour, int[] initValues) {
         setMaxHourUnit(maxOfHour);
         mSelectedTime.setTimeInMillis(mBeginTime.getTimeInMillis());
@@ -349,6 +357,9 @@ public class CustomTimePicker implements View.OnClickListener,
         }
     }
 
+    /**
+     * 初始化每个时间单位的范围。
+     */
     private void initDateUnits(int endMonth, int endDay, int endHour, int endMinute) {
         for (int i = mBeginYear; i <= mEndYear; i++) {
             mYearUnits.add(String.valueOf(i));
@@ -392,7 +403,7 @@ public class CustomTimePicker implements View.OnClickListener,
     }
 
     /***
-     * Initialize the time list by a list of values.
+     * 通过initValues列表初始化时间列表。
      */
     private void initDateUnits(int endMonth, int endDay, int endHour, int endMinute, int[] initValues) {
         for (int i = mBeginYear; i <= mEndYear; i++) {
@@ -576,6 +587,9 @@ public class CustomTimePicker implements View.OnClickListener,
         setCanScroll();
     }
 
+    /**
+     * 如果value在给定范围中，则返回value，否则返回给定value的最大值或最小值。
+     */
     private int getValueInRange(int value, int minValue, int maxValue) {
         if (value < minValue) {
             return minValue;
@@ -661,10 +675,9 @@ public class CustomTimePicker implements View.OnClickListener,
     }
 
     /**
-     * Sets whether to allow the click of the screen or the physical
-     * return key to close
+     * 设置是否允许单击屏幕或返回键以关闭
      */
-    public void setCancelable(boolean cancelable) {
+    void setCancelable(boolean cancelable) {
         if (!canShow()) return;
 
         mPickerDialog.setCancelable(cancelable);
@@ -679,7 +692,7 @@ public class CustomTimePicker implements View.OnClickListener,
     public void setTimePickerShowMode(int timePickerShowMode) {
         if (!canShow()) return;
 
-        // show YEAR MONTH DAY HOUR MINUTE
+        /* 展示 YEAR MONTH DAY HOUR MINUTE */
         if (timePickerShowMode == 0) {
             initScrollUnit();
             mDpvHour.setVisibility(View.VISIBLE);
@@ -688,9 +701,8 @@ public class CustomTimePicker implements View.OnClickListener,
             mTvMinuteUnit.setVisibility(View.VISIBLE);
 
         }
-        // show HOUR MINUTE
+        /* 展示 HOUR MINUTE */
         else if (timePickerShowMode == 1) {
-            //initScrollUnit(SCROLL_UNIT_HOUR, SCROLL_UNIT_MINUTE);
             initScrollUnit();
             mDpvYear.setVisibility(View.GONE);
             mTvYearUnit.setVisibility(View.GONE);
@@ -704,7 +716,7 @@ public class CustomTimePicker implements View.OnClickListener,
             mDpvMinute.setVisibility(View.VISIBLE);
             mTvMinuteUnit.setVisibility(View.VISIBLE);
         }
-        // show DAY HOUR MINUTE
+        /* 展示 DAY HOUR MINUTE */
         else if (timePickerShowMode == 2) {
             initScrollUnit();
             mDpvYear.setVisibility(View.GONE);
@@ -733,7 +745,7 @@ public class CustomTimePicker implements View.OnClickListener,
     }
 
     /**
-     * Sets whether the starttime control can be rotated in circulation
+     * Set whether the starttime control can be rotated in circulation
      */
     public void setScrollLoop(boolean canLoop) {
         if (!canShow()) return;
@@ -746,7 +758,7 @@ public class CustomTimePicker implements View.OnClickListener,
     }
 
     /**
-     * Sets whether the starttime control displays a scrolling animation
+     * Set whether the starttime control displays a scrolling animation
      */
     public void setCanShowAnim(boolean canShowAnim) {
         if (!canShow()) return;
@@ -759,7 +771,7 @@ public class CustomTimePicker implements View.OnClickListener,
     }
 
     /**
-     * Destroy the dialog
+     * 销毁对话框。
      */
     public void onDestroy() {
         if (mPickerDialog != null) {
