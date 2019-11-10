@@ -4,7 +4,9 @@ import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 public class MyXAxisValueFormatter implements IAxisValueFormatter {
-
+    /**
+     * 数据格式
+     */
     private String[] mValues;
 
     public MyXAxisValueFormatter(String[] values) {

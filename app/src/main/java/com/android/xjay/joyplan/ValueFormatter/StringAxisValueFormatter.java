@@ -4,13 +4,13 @@ import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 public class StringAxisValueFormatter implements IAxisValueFormatter {
-    //区域值
+    /**
+     * 区域值
+     */
     private String[] mStrs;
 
     /**
-     *     * 对字符串类型的坐标轴标记进行格式化
-     *     * @param strs
-     *    
+     *  对字符串类型的坐标轴标记进行格式化   
      */
     public StringAxisValueFormatter(String[] strs) {
         this.mStrs = strs;

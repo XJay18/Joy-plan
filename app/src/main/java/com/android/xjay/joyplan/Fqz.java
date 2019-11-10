@@ -1,6 +1,9 @@
 package com.android.xjay.joyplan;
 
 public class Fqz {
+    /**
+     *
+     */
     public String startoftime;
     public int monday;
     public int tuesday;

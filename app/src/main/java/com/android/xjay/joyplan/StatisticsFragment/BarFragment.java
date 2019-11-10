@@ -32,22 +32,51 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class BarFragment extends Fragment implements OnChartValueSelectedListener, View.OnClickListener {
+    /**
+     * 页面根视图
+     */
     private View rootView;
+    /**
+     * 柱状图
+     */
     private BarChart mBarChart;
-    private Button btn_last_month;
-    private Button btn_next_month;
+    /**
+     * 显示上一周数据的按钮
+     */
+    private Button btn_last_week;
+    /**
+     * 显示下一周数据的按钮
+     */
+    private Button btn_next_week;
+    /**
+     * 数据格式
+     */
     private SimpleDateFormat dateFormat;
+    /**
+     * 当前日期
+     */
     private String currentDate;
+    /**
+     * 显示周
+     */
     private TextView show_week;
+    /**
+     * 设置日期格式
+     */
     private Date date;
+    /**
+     * 设置日期格式
+     */
     private Calendar cal;
+    /**
+     * 柱状图的横坐标数组
+     */
     private String[] value = new String[]{"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,6 +85,9 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
         return rootView;
     }
 
+    /**
+     * 初始化页面属性
+     */
     private void initUi() {
         dateFormat = new SimpleDateFormat("MM月dd日");
         date = new Date();
@@ -65,10 +97,10 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
 
         show_week = rootView.findViewById(R.id.show_week_bar);
         show_week.setTextSize(17f);
-        btn_last_month = rootView.findViewById(R.id.btn_last_week_b);
-        btn_last_month.setOnClickListener(this);
-        btn_next_month = rootView.findViewById(R.id.btn_next_week_b);
-        btn_next_month.setOnClickListener(this);
+        btn_last_week = rootView.findViewById(R.id.btn_last_week_b);
+        btn_last_week.setOnClickListener(this);
+        btn_next_week = rootView.findViewById(R.id.btn_next_week_b);
+        btn_next_week.setOnClickListener(this);
         //堆叠条形图
         mBarChart = rootView.findViewById(R.id.mBarChart);
         //这里写加载布局的代码
@@ -117,6 +149,9 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
         setData();
     }
 
+    /**
+     * 初始化柱状图数据
+     */
     private void setData() {
         show_week.setText(currentDate);
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
@@ -161,8 +196,8 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
         mBarChart.invalidate();
     }
 
-    /*
-     *设置颜色
+    /**
+     * 设置颜色
      */
     private int[] getColors() {
         //有尽可能多的颜色每项堆栈值
@@ -196,6 +231,10 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
     }
 
     //TODO 获取当前一周日期，后期可以调用Calendar View的函数减少代码量
+
+    /**
+     * 获取当前日周的日期
+     */
     private String getTimeInterval(String judge) {
         switch (judge) {
             case "last":
@@ -225,7 +264,9 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
         return cal.get(Calendar.YEAR) + "年" + imptimeBegin + "至" + imptimeEnd;
     }
 
-    //去掉字符串首字符
+    /**
+     * 去掉字符串首字符
+     */
     private String cutFirstChart(String str, char element) {
         int beginIndex = str.indexOf(element) == 0 ? 1 : 0;
         str = str.substring(beginIndex);

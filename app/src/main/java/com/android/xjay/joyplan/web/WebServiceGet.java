@@ -22,7 +22,9 @@ import java.util.concurrent.TimeoutException;
  */
 
 public class WebServiceGet {
-    //登录接口
+    /**
+     * 登录接口
+     */
     public static String loginGet(String username, String password){
         HttpURLConnection connection = null;
         InputStream in = null;
@@ -68,7 +70,10 @@ public class WebServiceGet {
         }
         return null;
     }
-    //注册接口
+
+    /**
+     * 注册接口
+     */
     public static String registerGet(String phone_number,String password,String nick_name,String university){
         HttpURLConnection connection = null;
         InputStream in = null;
@@ -111,7 +116,10 @@ public class WebServiceGet {
         }
         return null;
     }
-    //检查手机号码接口
+
+    /**
+     * 检查手机号码接口
+     */
     public static String phoneGet(String phone_number){
         HttpURLConnection connection = null;
         InputStream in = null;
@@ -154,7 +162,10 @@ public class WebServiceGet {
         }
         return null;
     }
-    //添加日程活动
+
+    /**
+     * 添加日程活动
+     */
     public static String addagendaGet(String userid,String title,String starttime,String endtime,String content,String address){
         HttpURLConnection connection = null;
         InputStream in = null;
@@ -197,7 +208,10 @@ public class WebServiceGet {
         }
         return null;
     }
-    //查找用户的课程详情
+
+    /**
+     * 查找用户的课程详情
+     */
     public static Agenda[] selectagendaGet(String userid){
         HttpURLConnection connection = null;
         InputStream in = null;
@@ -256,38 +270,43 @@ public class WebServiceGet {
     }
 
     //得到字节输入流，将字节输入流转化为String类型
-    /*public static String parseInfo(InputStream inputStream){
-        BufferedReader reader = null;
-        String line = "";
-        StringBuilder response = new StringBuilder();
+//    public static String parseInfo(InputStream inputStream){
+//        BufferedReader reader = null;
+//        String line = "";
+//        StringBuilder response = new StringBuilder();
+//
+//        try {
+//            reader = new BufferedReader(new InputStreamReader(inputStream));
+//            while((line = reader.readLine()) != null){
+//                response.append(line);
+//            }
+//            return response.toString();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }finally {
+//            if(reader != null){
+//                try{
+//                    reader.close();
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//        return null;
+//    }
 
-        try {
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-            while((line = reader.readLine()) != null){
-                response.append(line);
-            }
-            return response.toString();
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            if(reader != null){
-                try{
-                    reader.close();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
-    }*/
-    // 将输入流转化为 String 型
+    /**
+     * 将输入流转化为 String 型
+     */
     private static String parseInfo(InputStream inStream) throws Exception {
         byte[] data = read(inStream);
         // 转化为字符串
         return new String(data, StandardCharsets.UTF_8);
     }
 
-    // 将输入流转化为byte型
+    /**
+     * 将输入流转化为byte型
+     */
     public static byte[] read(InputStream inStream) throws Exception {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];

@@ -7,7 +7,9 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import java.text.DecimalFormat;
 
 public class MyValueFormatter implements IValueFormatter {
-
+    /**
+     * 数据格式
+     */
     private DecimalFormat mFormat;
 
     public MyValueFormatter() {

@@ -6,7 +6,9 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import java.text.DecimalFormat;
 
 public class MyYAxisValueFormatter implements IAxisValueFormatter {
-
+    /**
+     * 数据格式
+     */
     private DecimalFormat mFormat;
 
     public MyYAxisValueFormatter() {
