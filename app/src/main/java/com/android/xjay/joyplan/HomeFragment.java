@@ -372,7 +372,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             Intent intent = new Intent();
             intent.setClass(mContext, AddCourseTableActivity.class);
             startActivity(intent);
-        } else if (view.getId() == R.id.btn_mission) {
+        } /*else if (view.getId() == R.id.btn_mission) {
             int tag = (int) view.getTag();
             int listIndex = tag / 100;
             int buttonIndex = tag % 100;
@@ -381,7 +381,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
             Log.v("buttonIndex", s);
 
-        } else if (view.getId() == R.id.ll_setup_accountnsafety) {
+        }*/ else if (view.getId() == R.id.ll_setup_accountnsafety) {
             Intent intent = new Intent(mContext, AccountnSafetySetupActivity.class);
             startActivity(intent);
         } else if (view.getId() == R.id.ll_setup_notenfeedback) {
