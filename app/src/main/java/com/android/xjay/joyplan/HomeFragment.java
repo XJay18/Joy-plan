@@ -3,7 +3,6 @@ package com.android.xjay.joyplan;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
@@ -16,7 +15,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -50,23 +48,30 @@ import java.util.Date;
 
 import static com.android.xjay.joyplan.Utils.CalendarUtil.hoursBetween;
 
-public class HomeFragment extends Fragment implements View.OnClickListener, CalendarView.OnCalendarSelectListener, CalendarView.OnYearChangeListener, View.OnLongClickListener {
+public class HomeFragment extends Fragment
+        implements View.OnClickListener, CalendarView.OnCalendarSelectListener, CalendarView.OnYearChangeListener, View.OnLongClickListener {
 
     /**
      * 用于数据库操作。
      */
     UserDBHelper mHelper;
 
-    // 当前context
+    /**
+     * 当前context。
+     */
+
     protected Context mContext;
 
-    // 活动列表
+    /**
+     * 活动列表
+     */
     private ExpandingList expandingList;
 
-    // 添加活动事件广播接收
+    /**
+     * 添加活动事件广播接收
+     */
     DynamicReceiverAddActivity dynamicReceiver;
 
-    //used by fragment_agenda
     TextView mTextMonthDay;
 
     View mScheduleView;
@@ -97,15 +102,28 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     int mYear;
 
-    // 日历视图
-    CalendarLayout mCalendarLayout;
+    private static String user_name;
 
+    /**
+     * 日历视图。
+     */
+    CalendarLayout mCalendarLayout;
 
     public static HomeFragment newInstance(String info) {
         Bundle args = new Bundle();
         HomeFragment fragment = new HomeFragment();
         args.putString("info", info);
         fragment.setArguments(args);
+        user_name = "用户名";
+        return fragment;
+    }
+
+    public static HomeFragment newInstance(String info, String extraInfo) {
+        Bundle args = new Bundle();
+        HomeFragment fragment = new HomeFragment();
+        args.putString("info", info);
+        fragment.setArguments(args);
+        user_name = extraInfo;
         return fragment;
     }
 
@@ -255,7 +273,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             /* 设置页面 */
             case "设置": {
                 View view = inflater.inflate(R.layout.fragment_setup, null);
-//                ((FragmentActivity)mContext).findViewById(R.id.activity_main_toolbar).setVisibility(View.GONE);
+                ((TextView) view.findViewById(R.id.tv_setup_user_name)).setText(user_name);
                 view.findViewById(R.id.ll_setup_accountnsafety).setOnClickListener(this);
                 view.findViewById(R.id.ll_setup_notenfeedback).setOnClickListener(this);
                 view.findViewById(R.id.ll_setup_about).setOnClickListener(this);
@@ -335,8 +353,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     /**
      * bitmap转drawable的函数
+     *
      * @param bp 要转换的bitmap
-     * @return
      */
     public Drawable bitmap2Drawable(Bitmap bp) {
         //因为BtimapDrawable是Drawable的子类，最终直接使用bd对象即可。
@@ -370,6 +388,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             startActivity(intent);
         } else if (view.getId() == R.id.ll_setup_accountnsafety) {
             Intent intent = new Intent(mContext, AccountnSafetySetupActivity.class);
+            intent.putExtra("user_name", user_name);
             startActivity(intent);
         } else if (view.getId() == R.id.ll_setup_notenfeedback) {
             Intent intent = new Intent(mContext, HelpnfeedbackSetupActivity.class);
@@ -399,6 +418,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     /**
      * 添加活动块
+     *
      * @param activityInfo 填充活动块的活动信息
      */
     private void addItem(StudentActivityInfo activityInfo) {
@@ -464,6 +484,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     /**
      * 自定义弹出框，长按日程或课程块时弹出，用于选择添加日程还是目标
+     *
      * @param content 内容对象，可以是日程或课程，目前只实现了日程
      */
     private void customChooseDialog(Object content) {
@@ -476,21 +497,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
             public void onClick(View v) {
                 if (content instanceof Agenda) {
 
-                    //get day of week by starttime
+                    // get day of week by starttime
                     Agenda agenda = (Agenda) content;
                     String starttime = agenda.getStarttime();
                     String date = starttime.substring(0, 10);
                     Calendar calendar = CalendarUtil.getCalendarByDateString(date);
                     int dayOfWeek = CalendarUtil.getWeekFormCalendar(calendar);
 
-                    //get time in a day by starttime
+                    // get time in a day by starttime
                     String str_hour = starttime.substring(11, 13);
                     String str_mintue = starttime.substring(14, 16);
                     int hour = Integer.parseInt(str_hour);
                     int mintue = Integer.parseInt(str_mintue);
                     int time = hour + (mintue / 60);
 
-                    //get String without year MMDD
+                    // get String without year MMDD
                     String dateWithoutYear = calendar.toStringWithoutYear();
                     dateWithoutYear = dateWithoutYear + str_hour + str_mintue;
 
@@ -532,6 +553,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     /**
      * 自定义弹出框，点击日程、课程或活动块时弹出
+     *
      * @param content Agenda，Course或Activity
      */
     private void customDialog(Object content) {
@@ -546,9 +568,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
 
         dialog.setContentView(view);
-        //使得点击对话框外部不消失对话框
+        // 使得点击对话框外部不消失对话框
         dialog.setCanceledOnTouchOutside(true);
-        //设置对话框的大小
+        // 设置对话框的大小
         view.setMinimumHeight((int) (ScreenSizeUtils.getInstance(mContext).getScreenHeight() * 0.4f));
         Window dialogWindow = dialog.getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
@@ -979,10 +1001,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     /**
      * 绘制一个课程块
+     *
      * @param relativeLayout 绘制的课程块的父组件
-     * @param length 课程块的长度
-     * @param bias 课程块的垂直偏移量
-     * @param course 填充块的课程信息
+     * @param length         课程块的长度
+     * @param bias           课程块的垂直偏移量
+     * @param course         填充块的课程信息
      */
     public void drawCourse(RelativeLayout relativeLayout, int length, int bias, Course course) {
 
@@ -1011,10 +1034,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     /**
      * 绘制一个日程块
+     *
      * @param relativeLayout 绘制的日程块的父组件
-     * @param length 日程块的长度
-     * @param bias 日程块的垂直偏移量
-     * @param agenda 填充块的日程信息
+     * @param length         日程块的长度
+     * @param bias           日程块的垂直偏移量
+     * @param agenda         填充块的日程信息
      */
     public void drawAgenda(RelativeLayout relativeLayout, int length, float bias, Agenda agenda) {
 
@@ -1046,9 +1070,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
     /**
      * 绘制一个活动块
-     * @param relativeLayout 绘制的活动块的父组件
-     * @param length 活动块的长度
-     * @param bias 活动块的垂直偏移量
+     *
+     * @param relativeLayout      绘制的活动块的父组件
+     * @param length              活动块的长度
+     * @param bias                活动块的垂直偏移量
      * @param studentActivityInfo 填充块的活动信息
      */
     public void drawActivity(RelativeLayout relativeLayout, int length, float bias, StudentActivityInfo studentActivityInfo) {
@@ -1202,17 +1227,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         mHelper.insert_course(new Course(2019, 1, "毛概阿肯德基咖喱块附近的光华路科技刻录机ad", 2, 7, 15, 9, 3, "田径场", "老师"));
         mHelper.insert_course(new Course(2019, 1, "毛概", 2, 7, 15, 2, 2, "田径场", "老师"));
         mHelper.insert_course(new Course(2019, 1, "毛概", 3, 7, 15, 2, 2, "田径场", "老师"));
-                /*mHelper.insert_course(new Course("UML",2,3,2));
-                mHelper.insert_course(new Course("UML",2,3,2));
-                mHelper.insert_course(new Course("编译技术",2,5,2));
-                mHelper.insert_course(new Course("大学美育",2,9,2));
-                mHelper.insert_course(new Course("计网",3,1,2));
-                mHelper.insert_course(new Course("数据库",3,5,2));
-                mHelper.insert_course(new Course("毛概",3,7,2));
-                mHelper.insert_course(new Course("大学语文",3,9,2));
-                mHelper.insert_course(new Course("UML",4,3,2));
-                mHelper.insert_course(new Course("计网",5,1,2));
-                mHelper.insert_course(new Course("数据库",5,5,2));*/
 
     }
 
@@ -1221,9 +1235,4 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
         ((TextView) view.findViewById(R.id.sub_title)).setText(info);
 
     }
-
-
-
 }
-
-

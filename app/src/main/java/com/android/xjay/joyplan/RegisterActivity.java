@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -15,9 +13,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.xjay.joyplan.Utils.JumpTextWatcher;
 import com.android.xjay.joyplan.web.WebServiceGet;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegisterActivity extends AppCompatActivity
+        implements View.OnClickListener {
     /**
      * 用户名输入框
      */
@@ -89,13 +89,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         btn_submit.setOnClickListener(this);
         btn_return.setOnClickListener(this);
         spin_university.setOnItemSelectedListener(new MyOnItemSelected());
-        et_nickname.addTextChangedListener(new JumpTextWatcher(et_nickname, et_password));
-        et_password.addTextChangedListener(new JumpTextWatcher(et_password, et_password2));
+        et_nickname.addTextChangedListener(
+                new JumpTextWatcher(this, et_nickname, et_password));
+        et_password.addTextChangedListener(
+                new JumpTextWatcher(this, et_password, et_password2));
     }
 
     @Override
     public void onClick(View v) {
-        //setUser();
+        // setUser();
         switch (v.getId()) {
             case R.id.btn_submit:
                 legal = setUser();
@@ -110,7 +112,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 }
                 break;
             case R.id.register_return:
-                Intent intent = new Intent(RegisterActivity.this, WelcomeActivity.class);
+                Intent intent =
+                        new Intent(RegisterActivity.this,
+                                WelcomeActivity.class);
                 startActivity(intent);
                 break;
         }
@@ -121,7 +125,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      */
     class MyOnItemSelected implements AdapterView.OnItemSelectedListener {
         @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemSelected(AdapterView<?> parent, View view,
+                                   int position, long id) {
             switch (parent.getId()) {
                 case R.id.sp_university:
                     university = parent.getItemAtPosition(position).toString();
@@ -141,9 +146,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private class RegThread implements Runnable {
         @Override
         public void run() {
-            //获取服务器返回数据
+            // 获取服务器返回数据
             String RegRet = WebServiceGet.registerGet(phone_number, password, nick_name, university);
-            //更新UI，界面处理
+            // 更新UI，界面处理
             showReq(RegRet);
         }
     }
@@ -171,37 +176,38 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     builder.show();
                 } else if (response.equals("true")) {
                     dialog.dismiss();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(
+                            RegisterActivity.this);
                     builder.setTitle("注册信息");
                     builder.setMessage("注册成功");
                     builder.setCancelable(false);
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        /*
-                         *注册成功后的页面跳转
-                         */
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                            startActivity(intent);
-                        }
-                    });
+                    builder.setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                /* 注册成功后的页面跳转 */
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Intent intent = new Intent(
+                                            RegisterActivity.this,
+                                            MainActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
                     builder.show();
                 } else {
                     dialog.dismiss();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    AlertDialog.Builder builder =
+                            new AlertDialog.Builder(RegisterActivity.this);
                     builder.setTitle("注册信息");
                     builder.setMessage("注册失败");
                     builder.setCancelable(false);
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        /*
-                         *注册失败后的页面跳转
-                         */
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            /*Intent intent = new Intent(RegisterActivity.this,WelcomeActivity.class);
-                            startActivity(intent);*/
-                        }
-                    });
+                    builder.setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                /* 注册失败后的页面跳转 */
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            });
                     builder.show();
                 }
             }
@@ -216,54 +222,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(this, "昵称不能为空", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (et_password.getText().toString().length() <= 0 || et_password2.getText().toString().length() <= 0) {
+        if (et_password.getText().toString().length() <= 0
+                || et_password2.getText().toString().length() <= 0) {
             Toast.makeText(this, "密码不能为空", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (!et_password.getText().toString().equals(et_password2.getText().toString())) {
-            Toast.makeText(this, "两次输入的密码不同", Toast.LENGTH_LONG).show();
+        if (!et_password.getText().toString().equals(
+                et_password2.getText().toString())) {
+            Toast.makeText(this,
+                    "两次输入的密码不同", Toast.LENGTH_LONG).show();
             return false;
         }
-
         return true;
-    }
-
-    /**
-     * 实现换行功能
-     */
-    private class JumpTextWatcher implements TextWatcher {
-        private EditText mThisView;
-        private View mNextView;
-
-        public JumpTextWatcher(EditText vThis, View vNext) {
-            super();
-            mThisView = vThis;
-            if (vNext != null) {
-                mNextView = vNext;
-            }
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            String str = s.toString();
-            if (str.contains("\r") || str.contains("\n")) {
-                mThisView.setText(str.replace("\r", " ").replace("\n", ""));
-                if (mNextView != null) {
-                    mNextView.requestFocus();
-                    if (mNextView instanceof EditText) {
-                        EditText et = (EditText) mNextView;
-                        et.setSelection(et.getText().length());
-                    }
-                }
-            }
-        }
     }
 }

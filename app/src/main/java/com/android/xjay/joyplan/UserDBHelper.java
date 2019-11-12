@@ -34,6 +34,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 获取实例
+     *
      * @param context
      * @param version
      * @return
@@ -49,6 +50,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 打开读取连接
+     *
      * @return
      */
     public SQLiteDatabase openReadLink() {
@@ -60,6 +62,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 打开写入连接
+     *
      * @return
      */
     public SQLiteDatabase openWriteLink() {
@@ -142,6 +145,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 根据标题和开始时间删除日程
+     *
      * @param agenda
      * @return
      */
@@ -153,6 +157,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 删除课程
+     *
      * @param course
      * @return
      */
@@ -168,6 +173,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 删除预定活动
+     *
      * @param studentActivityInfo
      * @return
      */
@@ -180,6 +186,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 插入学生活动
+     *
      * @param info
      * @return
      */
@@ -198,6 +205,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 插入日程
+     *
      * @param agenda
      * @return
      */
@@ -220,6 +228,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 插入预定活动
+     *
      * @param studentActivityInfo
      * @return
      */
@@ -242,6 +251,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 插入课程
+     *
      * @param course
      * @return
      */
@@ -297,6 +307,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 获取所有学生活动
+     *
      * @return
      */
     public ArrayList<StudentActivityInfo> getAllStudentActivityInfo() {
@@ -387,7 +398,8 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 更新日程备注
-     * @param agenda 要更新的日程
+     *
+     * @param agenda   要更新的日程
      * @param notation 更新后的备注
      */
     public void updateAgendaNotation(Agenda agenda, String notation) {
@@ -406,7 +418,8 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 更新课程备注
-     * @param course 要更新的课程
+     *
+     * @param course   要更新的课程
      * @param notation 更新后的备注
      */
     public void updateCourseNotation(Course course, String notation) {
@@ -432,10 +445,11 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 获取某课程
-     * @param year 学年
+     *
+     * @param year            学年
      * @param indexOfSemester 学期
-     * @param week 某一周
-     * @param dayofweek 星期几
+     * @param week            某一周
+     * @param dayofweek       星期几
      * @return 课程列表
      */
     public ArrayList<Course> getCourseWithDayOfWeek(int year, int indexOfSemester, int week, int dayofweek) {
@@ -478,6 +492,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 根据开始时间获取日程
+     *
      * @param date 开始日期
      * @return
      */
@@ -501,6 +516,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 获取查询活动字符串
+     *
      * @return
      */
     public String createActivitySelectActionDate() {
@@ -512,6 +528,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 获取查询日程字符串
+     *
      * @return
      */
     public String createAgendaSelectActionDate() {
@@ -525,6 +542,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 获取查询预订活动字符串
+     *
      * @return
      */
     public String createReserveActicitySelectActionDate() {
@@ -538,6 +556,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 获取查询日程字符串
+     *
      * @return
      */
     public String createAgendaSelectActionTime() {
@@ -551,6 +570,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 获取查询课程字符串
+     *
      * @return
      */
     public String createCourseSelectActionDayOfWeek() {
@@ -561,6 +581,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     /**
      * 获取查询课程字符串
+     *
      * @return
      */
     public String createCourseSelectionActionWithCourseName() {
@@ -570,11 +591,4 @@ public class UserDBHelper extends SQLiteOpenHelper {
     }
 
 
-
 }
-
-
-
-
-
-

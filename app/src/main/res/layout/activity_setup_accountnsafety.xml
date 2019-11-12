@@ -50,6 +50,7 @@
                     android:text="账号" />
 
                 <TextView
+                    android:id="@+id/tv_safety_user_name"
                     android:layout_width="42dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
@@ -88,7 +89,7 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="130dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="50dp"
                 android:background="@drawable/bg_setup_button"
                 android:orientation="vertical">
@@ -121,33 +122,33 @@
                         android:background="@drawable/ic_right" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/ll_setup_accountnsafety_fc2"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:clickable="true"
-                    android:orientation="horizontal">
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/ll_setup_accountnsafety_fc2"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="60dp"-->
+<!--                    android:clickable="true"-->
+<!--                    android:orientation="horizontal">-->
 
-                    <ImageView
-                        style="@style/function_bar_lefticon"
-                        android:layout_marginStart="15dp"
-                        android:layout_weight="0"
-                        android:background="@drawable/ic_setup_permission" />
+<!--                    <ImageView-->
+<!--                        style="@style/function_bar_lefticon"-->
+<!--                        android:layout_marginStart="15dp"-->
+<!--                        android:layout_weight="0"-->
+<!--                        android:background="@drawable/ic_setup_permission" />-->
 
-                    <TextView
-                        style="@style/function_bar_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="20dp"
-                        android:layout_weight="1"
-                        android:text="权限设置" />
+<!--                    <TextView-->
+<!--                        style="@style/function_bar_text"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_marginStart="20dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:text="权限设置" />-->
 
-                    <ImageView
-                        style="@style/function_bar_righticon"
-                        android:layout_marginEnd="25dp"
-                        android:layout_weight="0"
-                        android:background="@drawable/ic_right" />
-                </LinearLayout>
+<!--                    <ImageView-->
+<!--                        style="@style/function_bar_righticon"-->
+<!--                        android:layout_marginEnd="25dp"-->
+<!--                        android:layout_weight="0"-->
+<!--                        android:background="@drawable/ic_right" />-->
+<!--                </LinearLayout>-->
             </LinearLayout>
 
             <!--<LinearLayout-->

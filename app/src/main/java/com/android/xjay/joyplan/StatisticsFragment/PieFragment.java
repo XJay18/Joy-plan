@@ -78,6 +78,7 @@ public class PieFragment extends Fragment
      * 设置日期格式
      */
     private Calendar cal;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

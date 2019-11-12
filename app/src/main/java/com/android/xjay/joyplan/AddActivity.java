@@ -117,30 +117,29 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
      */
     private Button btn_cancel;
 
-    /*
-    选择照片的状态码
+    /**
+     * 选择照片的状态码
      */
     public static final int CHOOSE_PHOTO = 2;
 
 
-
-    /*
-    添加图片的按钮
+    /**
+     * 添加图片的按钮
      */
     private ImageView img_photo;
 
-    /*
-    添加图片后显示图片的容器
+    /**
+     * 添加图片后显示图片的容器
      */
     private LinearLayout img_add_container;
 
-    /*
-    添加图片后显示的图片
+    /**
+     * 添加图片后显示的图片
      */
     private ImageView img_add_image;
 
-    /*
-    存储添加的图片
+    /**
+     * 存储添加的图片
      */
     private byte[] img_added;
 
@@ -158,7 +157,6 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
 
         // 结束时间选择
         tv_select_end_time = findViewById(R.id.tv_select_end_time);
-
 
 
         // 设置时间选择点击函数
@@ -181,7 +179,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         btn_cancel.setOnClickListener(this);
     }
 
-    private void findAllViews(){
+    private void findAllViews() {
         editText_title = findViewById(R.id.editText_title);
         editText_description = findViewById(R.id.editText_detail);
         editText_address = findViewById(R.id.editText_address);
@@ -191,6 +189,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         btn_add = findViewById(R.id.btn_add);
         img_add_image = findViewById(R.id.img_add_img);
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -219,7 +218,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 break;
             }
 
-            //添加按钮
+            // 添加按钮
             case R.id.btn_add: {
 
                 // 获取用户的输入
@@ -265,12 +264,8 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 break;
             }
             // 添加图片按钮
-            case R.id.img_add_img: {
-                // 检查权限
-                checkPermission();
-                break;
-            }
-            // 添加图片后显示的图片
+            case R.id.img_add_img:
+                // 添加图片后显示的图片
             case R.id.img_photo: {
                 // 检查权限
                 checkPermission();
@@ -291,9 +286,6 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-
-
-
     /*
     private class RegThread implements Runnable {
         public void run() {
@@ -310,7 +302,6 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         }
     }
     */
-
 
     /**
      * 添加活动后发送广播
@@ -359,7 +350,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                         myEndTimePicker.setSelectedTime(temp_beginTime, false);
                     }
                 }, current_time, max_time, "请选择时间");
-        //允许点击屏幕或物理返回键关闭
+        // 允许点击屏幕或物理返回键关闭
         myStartTimePicker.setCancelable(true);
         // 显示时和分
         myStartTimePicker.setTimePickerShowMode(0);
@@ -379,7 +370,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
 
             }
         }, current_time, max_time, "请选择时间");
-        //允许点击屏幕或物理返回键关闭
+        // 允许点击屏幕或物理返回键关闭
         myEndTimePicker.setCancelable(true);
         // 显示日期和时、分
         myEndTimePicker.setTimePickerShowMode(0);
@@ -389,30 +380,30 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         myEndTimePicker.setCanShowAnim(false);
     }
 
-    //检查权限
+    // 检查权限
     public void checkPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            //发现没有权限，调用requestPermissions方法向用户申请权限，requestPermissions接收三个参数，第一个是context，第二个是一个String数组，我们把要申请的权限
-            //名放在数组中即可，第三个是请求码，只要是唯一值就行
+            // 发现没有权限，调用requestPermissions方法向用户申请权限，requestPermissions接收三个参数，第一个是context，第二个是一个String数组，我们把要申请的权限
+            // 名放在数组中即可，第三个是请求码，只要是唯一值就行
         } else {
-            openAlbum();//有权限就打开相册
+            openAlbum();// 有权限就打开相册
         }
     }
 
     public void openAlbum() {
-        //通过intent打开相册，使用startactivityForResult方法启动actvity，会返回到onActivityResult方法，所以我们还得复写onActivityResult方法
+        // 通过intent打开相册，使用startactivityForResult方法启动actvity，会返回到onActivityResult方法，所以我们还得复写onActivityResult方法
         Intent intent = new Intent("android.intent.action.GET_CONTENT");
         intent.setType("image/*");
         startActivityForResult(intent, CHOOSE_PHOTO);
     }
-    //弹出窗口向用户申请权限
+    // 弹出窗口向用户申请权限
 
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);//弹出授权的窗口，这条语句也可以删除，没有影响
-        //获得了用户的授权结果，保存在grantResults中，判断grantResult中的结果来决定接下来的操作
+        // 获得了用户的授权结果，保存在grantResults中，判断grantResult中的结果来决定接下来的操作
         switch (requestCode) {
             case 1:
 
@@ -434,9 +425,9 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             case CHOOSE_PHOTO:
                 if (resultCode == RESULT_OK) {
                     if (Build.VERSION.SDK_INT >= 19) {
-                        handleImageOnkitKat(data);//高于4.4版本使用此方法处理图片
+                        handleImageOnkitKat(data);// 高于4.4版本使用此方法处理图片
                     } else {
-                        handleImageBeforeKitKat(data);//低于4.4版本使用此方法处理图片
+                        handleImageBeforeKitKat(data);// 低于4.4版本使用此方法处理图片
                     }
                 }
                 break;
@@ -450,7 +441,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         String imagePath = null;
         Uri uri = data.getData();
         if (DocumentsContract.isDocumentUri(this, uri)) {
-            //如果是document类型的uri，则通过document id处理
+            // 如果是document类型的uri，则通过document id处理
             String docId = DocumentsContract.getDocumentId(uri);
             if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
                 String id = docId.split(":")[1];//解析出数字格式的id
@@ -473,7 +464,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         displayImage(imagePath);
     }
 
-    //获得图片路径
+    // 获得图片路径
     public String getImagePath(Uri uri, String selection) {
         String path = null;
         Cursor cursor = getContentResolver().query(uri, null, selection, null, null);   //内容提供器
@@ -486,10 +477,10 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         return path;
     }
 
-    //展示图片
+    // 展示图片
     private void displayImage(String imagePath) {
         if (imagePath != null) {
-            Bitmap bitImage = BitmapFactory.decodeFile(imagePath);//格式化图片
+            Bitmap bitImage = BitmapFactory.decodeFile(imagePath);// 格式化图片
             byte[] img = img(bitImage);
             img_added = img;
             img_photo.setImageBitmap(bitImage);
@@ -508,5 +499,3 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         return baos.toByteArray();
     }
 }
-
-

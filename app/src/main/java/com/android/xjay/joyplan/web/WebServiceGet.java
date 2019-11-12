@@ -23,7 +23,7 @@ public class WebServiceGet {
     /**
      * 登录接口
      */
-    public static String loginGet(String username, String password){
+    public static String loginGet(String username, String password) {
         HttpURLConnection connection = null;
         InputStream in = null;
 
@@ -69,7 +69,7 @@ public class WebServiceGet {
     /**
      * 注册接口
      */
-    public static String registerGet(String phone_number,String password,String nick_name,String university){
+    public static String registerGet(String phone_number, String password, String nick_name, String university) {
         HttpURLConnection connection = null;
         InputStream in = null;
         try {
@@ -115,7 +115,7 @@ public class WebServiceGet {
     /**
      * 检查手机号码接口
      */
-    public static String phoneGet(String phone_number){
+    public static String phoneGet(String phone_number) {
         HttpURLConnection connection = null;
         InputStream in = null;
 
@@ -161,7 +161,7 @@ public class WebServiceGet {
     /**
      * 添加日程活动
      */
-    public static String addagendaGet(String userid,String title,String starttime,String endtime,String content,String address){
+    public static String addagendaGet(String userid, String title, String starttime, String endtime, String content, String address) {
         HttpURLConnection connection = null;
         InputStream in = null;
 
@@ -207,7 +207,7 @@ public class WebServiceGet {
     /**
      * 查找用户的课程详情
      */
-    public static Agenda[] selectagendaGet(String userid){
+    public static Agenda[] selectagendaGet(String userid) {
         HttpURLConnection connection = null;
         InputStream in = null;
 

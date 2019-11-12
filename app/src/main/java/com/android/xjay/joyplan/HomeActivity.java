@@ -38,11 +38,14 @@ public class HomeActivity extends AppCompatActivity {
      * 顶部文字标识，指明当前页面是四个fragment中的某一个。
      */
     private TextView tv_tb;
+    private String user_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Bundle bundle = this.getIntent().getExtras();
+        user_name = bundle == null ? null : bundle.getString("user_name");
 
         viewPager = findViewById(R.id.vp_home);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -151,7 +154,7 @@ public class HomeActivity extends AppCompatActivity {
         adapter.addFragment(HomeFragment.newInstance("日程"));
         adapter.addFragment(HomeFragment.newInstance("活动"));
         adapter.addFragment(HomeFragment.newInstance("发现"));
-        adapter.addFragment(HomeFragment.newInstance("设置"));
+        adapter.addFragment(HomeFragment.newInstance("设置", user_name));
         viewPager.setAdapter(adapter);
     }
 

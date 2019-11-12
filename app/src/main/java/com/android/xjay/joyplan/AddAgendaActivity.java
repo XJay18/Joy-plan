@@ -129,7 +129,7 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
     }
 
     // 找到所有部件
-    private void findAllViews(){
+    private void findAllViews() {
         // 找到所有部件
         editText_agenda_title = findViewById(R.id.editText_agenda_title);
         editText_agenda_address = findViewById(R.id.editText_agenda_address);

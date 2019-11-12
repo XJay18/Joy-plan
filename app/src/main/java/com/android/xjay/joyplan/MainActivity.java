@@ -7,14 +7,13 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.xjay.joyplan.Notification.NotificationReceiver;
+import com.android.xjay.joyplan.Utils.JumpTextWatcher;
 import com.android.xjay.joyplan.web.WebServiceGet;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -85,7 +84,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_return.setOnClickListener(this);
         et_account = findViewById(R.id.et_account);
         et_password = findViewById(R.id.et_password);
-        et_account.addTextChangedListener(new JumpTextWatcher(et_account, et_password));
+        et_account.addTextChangedListener(
+                new JumpTextWatcher(this, et_account, et_password));
     }
 
     @Override
@@ -105,7 +105,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.main_return:
-                Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+                Intent intent = new Intent(
+                        MainActivity.this,
+                        WelcomeActivity.class);
                 startActivity(intent);
                 break;
         }
@@ -117,10 +119,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private class MyThread implements Runnable {
         @Override
         public void run() {
-            //获取服务器返回的数据
+            // 获取服务器返回的数据
             infoString = WebServiceGet.loginGet(phone_number, password);
-            //更新UI，使用runOnUiThread()方法
-            System.out.print("infoString:"+infoString);
+            // 更新UI，使用runOnUiThread()方法
+            System.out.print("infoString:" + infoString);
             showResponse(infoString);
         }
     }
@@ -130,51 +132,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void showResponse(final String response) {
         runOnUiThread(new Runnable() {
-            //更新UI
+            // 更新UI
             @Override
             public void run() {
-                if (response.equals("no_connection")) {
-                    dialog.dismiss();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(
-                            MainActivity.this);
-                    builder.setTitle("登陆信息");
-                    builder.setMessage("未连接至服务器，免登录");
-                    builder.setCancelable(false);
-                    builder.setPositiveButton("OK",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    //TODO 登录失败后的页面跳转
-                                    Intent intent = new Intent(MainActivity.this,
-                                            HomeActivity.class);
-                                    startActivity(intent);
-                                }
-                            });
-                    builder.show();
-                } else if (response.equals("false")) {
-                    //TODO 登陆失败后的操作
-                    dialog.dismiss();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(
-                            MainActivity.this);
-                    builder.setTitle("登陆信息");
-                    builder.setMessage("登陆失败");
-                    builder.setCancelable(false);
-                    builder.setPositiveButton("OK",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    //TODO 登录失败后的页面跳转
-                                }
-                            });
-                    builder.show();
-                } else {
-                    Intent intent = new Intent(MainActivity.this,
-                            HomeActivity.class);
-                    startActivity(intent);
-                    dialog.dismiss();
-                }
+                runHelper(response);
             }
         });
+    }
+
+    /**
+     * 更新UI的辅助方法
+     */
+    private void runHelper(String response) {
+        if (response.equals("no_connection")) {
+            dialog.dismiss();
+            AlertDialog.Builder builder = new AlertDialog.Builder(
+                    MainActivity.this);
+            builder.setTitle("登陆信息");
+            builder.setMessage("未连接至服务器，免登录");
+            builder.setCancelable(false);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    //TODO 登录失败后的页面跳转
+                    Intent intent = new Intent(MainActivity.this,
+                            HomeActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("user_name", et_account.getText().toString());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
+            builder.show();
+        } else if (response.equals("false")) {
+            //TODO 登陆失败后的操作
+            dialog.dismiss();
+            AlertDialog.Builder builder = new AlertDialog.Builder(
+                    MainActivity.this);
+            builder.setTitle("登陆信息");
+            builder.setMessage("登陆失败");
+            builder.setCancelable(false);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    //TODO 登录失败后的页面跳转
+                }
+            });
+            builder.show();
+        } else {
+            Intent intent = new Intent(MainActivity.this,
+                    HomeActivity.class);
+            startActivity(intent);
+            dialog.dismiss();
+        }
     }
 
     /**
@@ -190,46 +200,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return false;
         }
         return true;
-    }
-
-    /**
-     * 跳转光标
-     */
-    private class JumpTextWatcher implements TextWatcher {
-        private EditText mThisView;
-        private View mNextView;
-
-        public JumpTextWatcher(EditText vThis, View vNext) {
-            super();
-            mThisView = vThis;
-            if (vNext != null) {
-                mNextView = vNext;
-            }
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            String str = s.toString();
-            if (str.contains("\r") || str.contains("\n")) {
-                mThisView.setText(str.replace(
-                        "\r", " ").replace("\n", ""));
-                if (mNextView != null) {
-                    mNextView.requestFocus();
-                    if (mNextView instanceof EditText) {
-                        EditText et = (EditText) mNextView;
-                        et.setSelection(et.getText().length());
-                    }
-                }
-            }
-        }
     }
 
     /**
