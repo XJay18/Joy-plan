@@ -450,6 +450,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cale
 
             case R.id.btn_agenda: {
                 customChooseDialog(v.getTag());
+                return true;
             }
             case R.id.btn_course: {
                 Intent intent = new Intent(mContext, AddAgendaActivity.class);
