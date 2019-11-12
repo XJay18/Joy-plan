@@ -592,9 +592,3 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
 
 }
-
-
-
-
-
-

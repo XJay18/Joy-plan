@@ -1226,17 +1226,6 @@ public class HomeFragment extends Fragment
         mHelper.insert_course(new Course(2019, 1, "毛概阿肯德基咖喱块附近的光华路科技刻录机ad", 2, 7, 15, 9, 3, "田径场", "老师"));
         mHelper.insert_course(new Course(2019, 1, "毛概", 2, 7, 15, 2, 2, "田径场", "老师"));
         mHelper.insert_course(new Course(2019, 1, "毛概", 3, 7, 15, 2, 2, "田径场", "老师"));
-                /*mHelper.insert_course(new Course("UML",2,3,2));
-                mHelper.insert_course(new Course("UML",2,3,2));
-                mHelper.insert_course(new Course("编译技术",2,5,2));
-                mHelper.insert_course(new Course("大学美育",2,9,2));
-                mHelper.insert_course(new Course("计网",3,1,2));
-                mHelper.insert_course(new Course("数据库",3,5,2));
-                mHelper.insert_course(new Course("毛概",3,7,2));
-                mHelper.insert_course(new Course("大学语文",3,9,2));
-                mHelper.insert_course(new Course("UML",4,3,2));
-                mHelper.insert_course(new Course("计网",5,1,2));
-                mHelper.insert_course(new Course("数据库",5,5,2));*/
 
     }
 
@@ -1245,8 +1234,4 @@ public class HomeFragment extends Fragment
         ((TextView) view.findViewById(R.id.sub_title)).setText(info);
 
     }
-
-
 }
-
-

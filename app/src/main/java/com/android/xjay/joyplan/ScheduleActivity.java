@@ -201,6 +201,4 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
             mAlert.show();
         }
     }
-
-
 }

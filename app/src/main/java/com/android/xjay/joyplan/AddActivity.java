@@ -499,5 +499,3 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         return baos.toByteArray();
     }
 }
-
-
