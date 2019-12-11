@@ -1,223 +1,445 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:orientation="vertical"
+
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
+
     android:background="#EEEEEE">
+
     <LinearLayout
+
         style="@style/top_toor_bar"
+
         android:background="@drawable/toolbar_blue">
+
         <Button
+
             android:id="@+id/btn_course_back"
+
             style="@style/top_tb_btnSize"
+
             android:layout_gravity="center"
+
             android:layout_marginStart="5dp"
+
             android:background="@drawable/ic_left_white"/>
+
         <TextView
+
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
+
             android:text="添加课程表"
+
             style="@style/top_tb_text_discovery"
+
             android:layout_weight="56"/>
 
+
+
         <LinearLayout
+
             android:id="@+id/ll_course_help"
+
             android:layout_width="56dp"
+
             android:layout_height="match_parent"
+
             android:layout_weight="5"
+
             android:gravity="center|end">
 
+
+
             <ImageView
+
                 style="@style/top_tb_btnRightSize"
+
                 android:layout_gravity="center"
+
                 android:layout_marginEnd="10dp"
+
                 android:background="@drawable/ic_help_white" />
+
         </LinearLayout>
+
     </LinearLayout>
 
 
+
+
+
     <LinearLayout
+
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
+
         android:layout_marginTop="10dp"
+
         android:orientation="vertical"
+
         android:gravity="center">
+
     </LinearLayout>
 
+
+
     <LinearLayout
+
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
+
         android:layout_weight="1"
+
         android:orientation="vertical">
 
+
+
         <com.airbnb.lottie.LottieAnimationView
+
             android:id="@+id/fqz_anim_grow"
+
             android:layout_width="150dp"
+
             android:layout_height="150dp"
+
             android:layout_gravity="center"
+
             app:lottie_autoPlay="true"
+
             app:lottie_fileName="course.json" />
 
+
+
         <LinearLayout
+
             android:layout_width="match_parent"
+
             android:layout_height="260dp"
+
             android:layout_marginTop="20dp"
+
             android:background="@drawable/bg_setup_button"
+
             android:orientation="vertical">
 
+
+
             <LinearLayout
+
                 android:layout_width="match_parent"
+
                 android:layout_height="60dp"
+
                 android:clickable="true"
+
                 android:orientation="horizontal">
 
+
+
                 <ImageView
+
                     style="@style/function_bar_lefticon"
+
                     android:layout_marginStart="15dp"
+
                     android:layout_weight="0"
+
                     android:background="@drawable/ic_school" />
 
+
+
                 <TextView
+
                     style="@style/function_bar_text"
+
                     android:layout_width="wrap_content"
+
                     android:layout_height="match_parent"
+
                     android:layout_marginStart="20dp"
+
                     android:layout_weight="1"
+
                     android:text="请选择学校" />
 
+
+
                 <Spinner
+
                     android:id="@+id/sp_course_choose_school"
+
                     android:layout_width="100dp"
+
                     android:layout_height="match_parent"
+
                     android:layout_gravity="end"
+
                     android:layout_marginStart="10dp"
+
                     android:layout_marginEnd="10dp"
+
                     android:layout_weight="3"
+
                     android:spinnerMode="dropdown" />
+
             </LinearLayout>
 
+
+
             <LinearLayout
+
                 android:layout_width="match_parent"
+
                 android:layout_height="60dp"
+
                 android:clickable="true"
+
                 android:orientation="horizontal">
 
+
+
                 <ImageView
+
                     style="@style/function_bar_lefticon"
+
                     android:layout_marginStart="15dp"
+
                     android:layout_weight="0"
+
                     android:background="@drawable/ic_sno" />
 
+
+
                 <TextView
+
                     style="@style/function_bar_text"
+
                     android:layout_width="wrap_content"
+
                     android:layout_height="match_parent"
+
                     android:layout_marginStart="20dp"
+
                     android:layout_weight="1"
+
                     android:text="请输入学号" />
 
+
+
                 <EditText
+
                     android:id="@+id/et_coursetable_sno"
+
                     android:layout_width="wrap_content"
+
                     android:layout_height="40dp"
+
                     android:layout_marginEnd="20dp"
+
                     android:hint="学号"
+
                     android:gravity="center"
+
                     android:background="@drawable/edtext_selector"
+
                     android:layout_weight="3"/>
+
             </LinearLayout>
 
+
+
             <LinearLayout
+
                 android:layout_width="match_parent"
+
                 android:layout_height="60dp"
+
                 android:clickable="true"
+
                 android:orientation="horizontal">
 
+
+
                 <ImageView
+
                     style="@style/function_bar_lefticon"
+
                     android:layout_marginStart="15dp"
+
                     android:layout_weight="0"
+
                     android:background="@drawable/ic_name" />
 
+
+
                 <TextView
+
                     style="@style/function_bar_text"
+
                     android:layout_width="wrap_content"
+
                     android:layout_height="match_parent"
+
                     android:layout_marginStart="20dp"
+
                     android:layout_weight="1"
+
                     android:text="请输入姓名" />
 
+
+
                 <EditText
+
                     android:id="@+id/et_coursetable_name"
+
                     android:layout_width="wrap_content"
+
                     android:layout_height="40dp"
+
                     android:layout_marginEnd="20dp"
+
                     android:hint="姓名"
+
                     android:gravity="center"
+
                     android:background="@drawable/edtext_selector"
+
                     android:layout_weight="3"/>
 
+
+
             </LinearLayout>
+
             <LinearLayout
+
                 android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
+
                 android:background="@drawable/line">
+
             </LinearLayout>
+
             <LinearLayout
+
                 android:id="@+id/ll_addcoursetable_importexcel"
+
                 android:layout_width="match_parent"
+
                 android:layout_height="60dp"
+
                 android:background="@drawable/bg_setup_button"
+
                 android:clickable="true"
+
                 android:orientation="horizontal">
 
+
+
                 <ImageView
+
                     android:layout_marginStart="15dp"
+
                     android:layout_weight="0"
+
                     style="@style/function_bar_lefticon"
+
                     android:background="@drawable/ic_setup_lock" />
 
+
+
                 <TextView
+
                     style="@style/function_bar_text"
+
                     android:layout_width="wrap_content"
+
                     android:layout_height="match_parent"
+
                     android:layout_marginStart="20dp"
+
                     android:layout_weight="1"
+
                     android:text="选择本地文件" />
 
+
+
                 <ImageView
+
                     style="@style/function_bar_righticon"
+
                     android:layout_marginEnd="25dp"
+
                     android:layout_weight="0"
+
                     android:background="@drawable/ic_right" />
+
             </LinearLayout>
 
+
+
         </LinearLayout>
+
+
 
         <com.airbnb.lottie.LottieAnimationView
+
             android:id="@+id/coursetable_anim_okay_blue"
+
             android:layout_width="60dp"
+
             android:layout_height="60dp"
+
             android:layout_gravity="center"
+
             android:layout_marginTop="30dp"
+
             app:lottie_autoPlay="true" />
 
+
+
         <LinearLayout
+
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
+
             android:layout_marginStart="10dp"
+
             android:layout_marginEnd="10dp"
+
             android:layout_marginBottom="10dp"
+
             android:layout_weight="0"
+
             android:orientation="vertical">
 
+
+
             <TextView
+
                 android:id="@+id/tv_coursetable_confirm"
+
                 style="@style/btn_confirm"
+
                 android:layout_marginTop="20dp"
+
                 android:text="确认添加课程表"/>
 
+
+
         </LinearLayout>
+
     </LinearLayout>
+
 </LinearLayout>

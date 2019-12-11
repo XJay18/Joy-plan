@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -100,6 +101,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
         create_sql = "CREATE TABLE IF NOT EXISTS " + RESERVE_ACTIVITY_TABLE + "(" + "id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL," + "title VARCHAR NOT NULL," + "info VARCHAR NOT NULL," + "starttime DATETIME NOT NULL," + "endtime DATETIME not null," + "address VARCHAR NOT NULL," + "img BOLB NOT NULL" + ");";
         db.execSQL(create_sql);
+
     }
 
     /**
@@ -441,6 +443,27 @@ public class UserDBHelper extends SQLiteOpenHelper {
         String str_startweek = String.valueOf(course.getStartWeek());
         String str_startindex = String.valueOf(course.getStartIndex());
         mDB.update(COURSE_TABLE, cv, createCourseSelectionActionWithCourseName(), new String[]{str_year, str_indexofsemester, course.getCourseName(), str_dayofweek, str_startweek, str_startindex});
+    }
+
+    public ArrayList<Course> getAllCourses(){
+        openReadLink();
+        Cursor cursor = null;
+        ArrayList<Course> courseList = new ArrayList<>();
+
+        String queryStatement = String.format("select * from %s",COURSE_TABLE);
+        cursor = mDB.rawQuery(queryStatement,null);
+
+        if(cursor!=null){
+            cursor.moveToFirst();
+            while(cursor.moveToNext()){
+                Course course = new Course(2019,1,cursor.getString(2),cursor.getInt(3),cursor.getInt(4),
+                        cursor.getInt(5),cursor.getInt(6),cursor.getInt(7),cursor.getString(8), cursor.getString(9));
+                courseList.add(course);
+                Log.e("courseInfo",String.format("0 index is %s,2 index is %s",cursor.getString(0),cursor.getInt(2)));
+            }
+
+        }
+        return courseList;
     }
 
     /**
