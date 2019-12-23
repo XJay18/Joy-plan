@@ -38,7 +38,7 @@ import com.android.xjay.calendarview.Calendar;
 import com.android.xjay.calendarview.CalendarLayout;
 import com.android.xjay.calendarview.CalendarUtil;
 import com.android.xjay.calendarview.CalendarView;
-import com.android.xjay.calendarview.YearViewPager;
+
 import com.android.xjay.joyplan.Calendar.CustomTimeListAdapter;
 import com.android.xjay.joyplan.Calendar.ScrollDisabledListView;
 import com.android.xjay.joyplan.CustomExpanding.CustomItem;
@@ -65,7 +65,6 @@ public class HomeFragment extends Fragment
     /**
      * 当前context。
      */
-
     protected Context mContext;
 
     /**
@@ -78,38 +77,75 @@ public class HomeFragment extends Fragment
      */
     DynamicReceiverAddActivity dynamicReceiver;
 
-    TextView mTextMonthDay;
 
-    View mScheduleView;
-
-    View imgAddAgenda;
-
-    View imgScreenCapture;
-
-    YearViewPager mYearViewPager;
+    /**
+     * 年份文字
+     */
 
     TextView mTextYear;
 
+    /**
+     * 月份文字
+     */
+    TextView mTextMonthDay;
+
+    /**
+     * 农历文字
+     */
     TextView mTextLunar;
 
+    /**
+     * 日期文字
+     */
     TextView mTextCurrentDay;
 
+    /**
+     * 日历视图
+     */
     CalendarView mCalendarView;
 
-    RelativeLayout mRelativeTool;
+    /**
+     * 活动页的view
+     */
+    View mScheduleView;
 
+    /**
+     * 添加日程的按钮
+     */
+    View imgAddAgenda;
+
+    /**
+     * 截屏按钮
+     */
+    View imgScreenCapture;
+
+
+    RelativeLayout mRelativeTool;
     LinearLayout mRecyclerView;
 
+    /**
+     * 块容器
+     */
     ArrayList<RelativeLayout> blockContainers;
 
-
+    /**
+     * 滚动视图
+     */
     ScrollView scrollView;
 
+    /**
+     * 时间列表
+     */
     ScrollDisabledListView timeListView;
-    LinearLayout linearLayout;
 
+    /**
+     * 年份
+     */
     int mYear;
 
+    /**
+     * 用户名
+     */
     private static String user_name;
 
     /**
@@ -151,44 +187,33 @@ public class HomeFragment extends Fragment
 
                 findAllScheduleViews();
 
-                //on receive add course table event
+                // 接受添加课程表消息
                 DynamicReceiverAddCourseTable dynamicReceiverAddCourseTable;
                 IntentFilter intentFilterAddCourse = new IntentFilter();
                 intentFilterAddCourse.addAction("ADD COURSE TABLE");
                 dynamicReceiverAddCourseTable = new DynamicReceiverAddCourseTable();
                 mContext.registerReceiver(
                         dynamicReceiverAddCourseTable, intentFilterAddCourse);
-                //on add goal event
+                // 接受添加目标消息
                 DynamicReceiverAddGoal dynamicReceiverAddGoal;
                 IntentFilter intentFilterAddGoal = new IntentFilter();
                 intentFilterAddGoal.addAction("ADD GOAL");
                 dynamicReceiverAddGoal = new DynamicReceiverAddGoal();
                 mContext.registerReceiver(dynamicReceiverAddGoal, intentFilterAddGoal);
 
+                // 接收添加日程消息
                 DynamicReceiverAddAgenda dynamicReceiverAddAgenda;
                 IntentFilter intentFilterAddAgenda = new IntentFilter();
                 intentFilterAddAgenda.addAction("ADD AGENDA");
                 dynamicReceiverAddAgenda = new DynamicReceiverAddAgenda();
                 mContext.registerReceiver(dynamicReceiverAddAgenda, intentFilterAddAgenda);
 
+                // 接收添加预定活动消息
                 DynamicReceiverReserveActivity dynamicReceiverReserveActivity;
                 IntentFilter intentFilterReserveActivity = new IntentFilter();
                 intentFilterReserveActivity.addAction("RESERVE ACTIVITY");
                 dynamicReceiverReserveActivity = new DynamicReceiverReserveActivity();
                 mContext.registerReceiver(dynamicReceiverReserveActivity, intentFilterReserveActivity);
-
-
-                //((FragmentActivity)mContext).findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
-                //initView()
-
-                /*listView1 = mScheduleView.findViewById(R.id.listView1);
-                listView2 = mScheduleView.findViewById(R.id.listView2);
-                listView3 = mScheduleView.findViewById(R.id.listView3);
-                listView4 = mScheduleView.findViewById(R.id.listView4);
-                listView5 = mScheduleView.findViewById(R.id.listView5);
-                listView6 = mScheduleView.findViewById(R.id.listView6);
-                listView7 = mScheduleView.findViewById(R.id.listView7);*/
-
 
                 scrollView.setOnLongClickListener(this);
                 timeListView.setAdapter(new CustomTimeListAdapter());
@@ -198,7 +223,6 @@ public class HomeFragment extends Fragment
                         ((FragmentActivity) mContext).findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
                     }
                 });
-
                 mTextMonthDay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -219,9 +243,10 @@ public class HomeFragment extends Fragment
                         mCalendarView.scrollToCurrent();
                     }
                 });
-
                 imgAddAgenda.setOnClickListener(this);
+
                 imgScreenCapture.setOnClickListener(this);
+
 
                 mCalendarView.setOnYearChangeListener(this);
                 mCalendarView.setOnCalendarSelectListener(this);
@@ -234,48 +259,33 @@ public class HomeFragment extends Fragment
                 mTextLunar.setText("今日");
                 mTextCurrentDay.setText(String.valueOf(mCalendarView.getCurDay()));
 
-
                 updateAgenda();
                 updateCourse();
-
                 updateActivity();
+
                 return mScheduleView;
             }
             /* 发现页面 */
             case "发现": {
                 View view = inflater.inflate(R.layout.fragment_discovery, null);
-//                ((FragmentActivity)mContext).findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.ll_fqz).setOnClickListener(this);
                 view.findViewById(R.id.ll_sjtb).setOnClickListener(this);
                 view.findViewById(R.id.ll_sxj).setOnClickListener(this);
                 view.findViewById(R.id.ll_fbhd).setOnClickListener(this);
                 view.findViewById(R.id.ll_tjkcb).setOnClickListener(this);
                 return view;
-
             }
             /* 活动页面 */
             case "活动": {
                 UserDBHelper mHelper = UserDBHelper.getInstance(mContext, 1);
                 //mHelper.reset();
                 View view = inflater.inflate(R.layout.fragment_reserve, null);
-//                ((FragmentActivity)mContext).findViewById(R.id.activity_main_toolbar).setVisibility(View.VISIBLE);
                 IntentFilter intentFilter = new IntentFilter();
                 intentFilter.addAction("ADD ACTIVITY");
                 dynamicReceiver = new DynamicReceiverAddActivity();
                 mContext.registerReceiver(dynamicReceiver, intentFilter);
                 expandingList = view.findViewById(R.id.reserve_expanding_list);
                 RedrawExpandingList();
-
-                /*Button btn_changeTo_addActivity = view.findViewById(R.id.changeButton_reserve);
-                btn_changeTo_addActivity.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent=new Intent();
-                        intent.setClass(mContext,AddActivity.class);
-                        startActivity(intent);
-                    }
-                });*/
-
                 return view;
             }
             /* 设置页面 */
@@ -353,7 +363,6 @@ public class HomeFragment extends Fragment
         if (studentActivityInfos != null && studentActivityInfos.size() > 0) {
             int length = studentActivityInfos.size();
             for (int i = 0; i < length; i++) {
-
                 addItem(studentActivityInfos.get(i));
             }
         }
@@ -406,11 +415,9 @@ public class HomeFragment extends Fragment
             startActivity(intent);
         } else if (view.getId() == R.id.btn_course) {
             if (view.getTag() instanceof Course) {
-
                 customDialog(view.getTag());
             }
         } else if (view.getId() == R.id.btn_agenda) {
-
             if (view.getTag() instanceof Agenda) {
                 customDialog(view.getTag());
             }
@@ -477,7 +484,6 @@ public class HomeFragment extends Fragment
      * @param activityInfo 填充活动块的活动信息
      */
     private void addItem(StudentActivityInfo activityInfo) {
-        //Let's create an custom_item with R.layout.expanding_layout
         final CustomItem item = expandingList.createNewItem(R.layout.expanding_layout);
         item.setTag(activityInfo);
         byte[] temp = activityInfo.getImg();
@@ -489,32 +495,22 @@ public class HomeFragment extends Fragment
             int res = R.drawable.cc;
             drawable = this.getResources().getDrawable(res);
         }
-
         String title = activityInfo.getTitle();
         String address = activityInfo.getAddress();
         String starttime = activityInfo.getStarttime();
         String info = activityInfo.getInfo();
-        //If custom_item creation is successful, let's configure it
         if (item != null) {
             item.setIndicatorColorRes(R.color.transparent);
             item.setIndicatorIcon(drawable);
             item.createSubItems(1);
             final View view = item.getSubItemView(0);
-            //Let's set some values in
+
             configureSubItem(item, view, info);
-            //It is possible to get any view inside the inflated layout. Let's set the text in the custom_item
+
             ((TextView) item.findViewById(R.id.title)).setText(title);
             ((TextView) item.findViewById(R.id.address)).setText(address);
             ((TextView) item.findViewById(R.id.starttime)).setText(starttime);
-            //We can create items in batch.
 
-
-            /*item.findViewById(R.id.remove_item).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    expandingList.removeItem(item);
-                }
-            });*/
         }
     }
 
@@ -522,16 +518,15 @@ public class HomeFragment extends Fragment
     @Override
     public boolean onLongClick(View v) {
         switch (v.getId()) {
-
             case R.id.btn_agenda: {
                 customChooseDialog(v.getTag());
+                return true;
             }
             case R.id.btn_course: {
                 Intent intent = new Intent(mContext, AddAgendaActivity.class);
                 startActivity(intent);
                 return true;
             }
-
         }
         return false;
     }
@@ -551,27 +546,29 @@ public class HomeFragment extends Fragment
             public void onClick(View v) {
                 if (content instanceof Agenda) {
 
-                    // get day of week by starttime
+                    // 得到当天的星期
                     Agenda agenda = (Agenda) content;
                     String starttime = agenda.getStarttime();
                     String date = starttime.substring(0, 10);
                     Calendar calendar = CalendarUtil.getCalendarByDateString(date);
                     int dayOfWeek = CalendarUtil.getWeekFormCalendar(calendar);
 
-                    // get time in a day by starttime
+                    // 得到开始时间
                     String str_hour = starttime.substring(11, 13);
                     String str_mintue = starttime.substring(14, 16);
                     int hour = Integer.parseInt(str_hour);
                     int mintue = Integer.parseInt(str_mintue);
                     int time = hour + (mintue / 60);
 
-                    // get String without year MMDD
+                    // 得到月份日期
                     String dateWithoutYear = calendar.toStringWithoutYear();
                     dateWithoutYear = dateWithoutYear + str_hour + str_mintue;
 
                     String nextDateWithoutYear = CalendarUtil.getNextCalendar(calendar).toStringWithoutYear();
                     nextDateWithoutYear = nextDateWithoutYear + str_hour + str_mintue;
 
+
+                    // 将日期信息放入intent中
                     Intent intent = new Intent();
                     intent.setClass(mContext, AddAgendaActivity.class);
                     Bundle bundle = new Bundle();
@@ -579,7 +576,6 @@ public class HomeFragment extends Fragment
                     bundle.putString("nextDate", nextDateWithoutYear);
                     intent.putExtras(bundle);
                     startActivity(intent);
-
 
                 }
             }
@@ -614,12 +610,10 @@ public class HomeFragment extends Fragment
         final Dialog dialog = new Dialog(mContext, R.style.NormalDialogStyle);
         View view = View.inflate(mContext, R.layout.dialog_normal, null);
 
-
         TextView tv_title = view.findViewById(R.id.tv_agenda_dialog_title);
         TextView tv_time = view.findViewById(R.id.tv_agenda_dialog_start_time);
         TextView tv_address = view.findViewById(R.id.tv_agenda_dialog_address);
         EditText editText_notation = view.findViewById(R.id.editText_agenda_dialog_notation);
-
 
         dialog.setContentView(view);
         // 使得点击对话框外部不消失对话框
@@ -632,7 +626,6 @@ public class HomeFragment extends Fragment
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.gravity = Gravity.CENTER;
         dialogWindow.setAttributes(lp);
-
 
         if (content instanceof Course) {
             Course course = (Course) content;
@@ -677,14 +670,12 @@ public class HomeFragment extends Fragment
                 tv_time.setText(dayOfWeek + " " + index + "节");
                 tv_address.setText(course.getAddress());
                 editText_notation.setText(course.getNotation());
-
             } else {
                 tv_title.setText("无");
                 tv_time.setText("00-00-00");
                 tv_address.setText("无");
             }
             dialog.show();
-
             view.findViewById(R.id.btn_delete).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -693,9 +684,7 @@ public class HomeFragment extends Fragment
                         mHelper.deleteCourse(course);
                         updateCourse();
                     }
-
                     dialog.dismiss();
-
                 }
             });
             view.findViewById(R.id.btn_confirm_notation).setOnClickListener(
@@ -709,9 +698,7 @@ public class HomeFragment extends Fragment
                                 editText_notation.setText(notation);
                                 updateCourse();
                             }
-
                             dialog.dismiss();
-
                         }
                     });
         } else if (content instanceof Agenda) {
@@ -736,14 +723,7 @@ public class HomeFragment extends Fragment
                                 mHelper.deleteAgendaWithTitleAndStarttime(agenda);
                                 updateAgenda();
                             }
-
-
-                            //Calendar calendar=mCalendarView.getSelectedCalendar();
-                            //Calendar weekStartCalenddar=CalendarUtil.getStartInWeek(
-                            //                  calendar,1);
-
                             dialog.dismiss();
-
                         }
                     });
             view.findViewById(R.id.btn_confirm_notation).setOnClickListener(
@@ -756,10 +736,8 @@ public class HomeFragment extends Fragment
                             editText_notation.setText(notation);
                             updateAgenda();
                             dialog.dismiss();
-
                         }
                     });
-
             dialog.show();
         } else if (content instanceof StudentActivityInfo) {
             StudentActivityInfo studentActivityInfo = (StudentActivityInfo) content;
@@ -777,18 +755,12 @@ public class HomeFragment extends Fragment
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
                             StudentActivityInfo studentActivityInfo = (StudentActivityInfo) content;
                             if (studentActivityInfo != null) {
                                 mHelper.deleteReserveActivity(studentActivityInfo);
                                 updateActivity();
                             }
-
-                            //Calendar calendar=mCalendarView.getSelectedCalendar();
-                            //Calendar weekStartCalenddar=CalendarUtil.getStartInWeek(calendar,1);
-
                             dialog.dismiss();
-
                         }
                     });
             view.findViewById(R.id.btn_confirm_notation).setOnClickListener(new View.OnClickListener() {
@@ -797,11 +769,8 @@ public class HomeFragment extends Fragment
                     Toast.makeText(mContext, "无法修改", Toast.LENGTH_SHORT).show();
                 }
             });
-
             dialog.show();
         }
-
-
     }
 
 
@@ -812,7 +781,6 @@ public class HomeFragment extends Fragment
 
     @Override
     public void onCalendarOutOfRange(Calendar calendar) {
-
     }
 
     @Override
@@ -825,7 +793,6 @@ public class HomeFragment extends Fragment
         mYear = calendar.getYear();
         //update the display of courseTable
         updateAgenda();
-
         updateCourse();
     }
 
@@ -844,9 +811,7 @@ public class HomeFragment extends Fragment
                         j--;
                     }
                 }
-
             }
-
         }
         Calendar selectedCalendar = mCalendarView.getSelectedCalendar();
         Calendar firstDay = CalendarUtil.getStartInWeek(selectedCalendar, 1);
@@ -856,7 +821,6 @@ public class HomeFragment extends Fragment
             firstDay = CalendarUtil.getNextCalendar(firstDay);
             mHelper = UserDBHelper.getInstance(getContext(), 1);
             ArrayList<Agenda> agendaArrayList = mHelper.getAgendaListWithDate(dateString);
-
 
             if (agendaArrayList != null) {
                 int length = agendaArrayList.size();
@@ -887,10 +851,8 @@ public class HomeFragment extends Fragment
                     //TODO
                     //drawAgenda(blockContainers.get(i),);
                 }
-
             }
         }
-
     }
 
     /**
@@ -908,9 +870,7 @@ public class HomeFragment extends Fragment
                         j--;
                     }
                 }
-
             }
-
         }
         Calendar selectedCalendar = mCalendarView.getSelectedCalendar();
         Calendar firstDay = CalendarUtil.getStartInWeek(selectedCalendar, 1);
@@ -921,7 +881,6 @@ public class HomeFragment extends Fragment
             mHelper = UserDBHelper.getInstance(getContext(), 1);
             ArrayList<StudentActivityInfo> studentActivityInfos =
                     mHelper.getReserveActivityListWithDate(dateString);
-
 
             if (studentActivityInfos != null) {
                 int length = studentActivityInfos.size();
@@ -976,24 +935,17 @@ public class HomeFragment extends Fragment
                         j--;
                     }
                 }
-
             }
-
         }
-
 
         //find the day selected
         Calendar selectedCalendar = mCalendarView.getSelectedCalendar();
 
-
         //see which semester the day selected is
-
-
         int year = selectedCalendar.getYear();
         int month = selectedCalendar.getMonth();
         int day = selectedCalendar.getDay();
         String str_year = new Integer(year).toString();
-
         int indexOfSemester = 1;
         if ((month >= 8 && month <= 12) || (month >= 1 && month <= 2)) {
             indexOfSemester = 1;
@@ -1003,7 +955,6 @@ public class HomeFragment extends Fragment
         SimpleDateFormat simFormat = new SimpleDateFormat("yyyyMMdd HHmmss");
         Date selectedDate = new Date();
         Date startWeekDate = new Date();
-
 
         try {
             if (indexOfSemester == 1) {
@@ -1210,82 +1161,25 @@ public class HomeFragment extends Fragment
      * 添加目标
      */
     private void addGoal() {
+        mHelper=UserDBHelper.getInstance(getContext(),1);
+        mHelper.getAllStudentActivityInfo();
 
-        String title = "Running";
-        String address = "田径场";
-        String content = "";
-        String start_time = "2019-05-22 20:00";
-        String end_time = "2019-05-22 20:00";
-        Agenda agenda = new Agenda(title, start_time, end_time, content, address);
-        mHelper.insert_agenda(agenda);
-
-        title = "Running";
-        address = "田径场";
-        content = "";
-        start_time = "2019-05-23 20:00";
-        end_time = "2019-05-23 20:00";
-        agenda = new Agenda(title, start_time, end_time, content, address);
-        mHelper.insert_agenda(agenda);
-
-        title = "Running";
-        address = "田径场";
-        content = "";
-        start_time = "2019-05-24 20:00";
-        end_time = "2019-05-24 20:00";
-        agenda = new Agenda(title, start_time, end_time, content, address);
-        mHelper.insert_agenda(agenda);
-
-        title = "Running";
-        address = "田径场";
-        content = "";
-        start_time = "2019-05-25 20:00";
-        end_time = "2019-05-25 20:00";
-        agenda = new Agenda(title, start_time, end_time, content, address);
-        mHelper.insert_agenda(agenda);
-
-        title = "Running";
-        address = "田径场";
-        content = "";
-        start_time = "2019-05-26 20:00";
-        end_time = "2019-05-26 20:00";
-        agenda = new Agenda(title, start_time, end_time, content, address);
-        mHelper.insert_agenda(agenda);
-
-        title = "Running";
-        address = "田径场";
-        content = "";
-        start_time = "2019-05-27 20:00";
-        end_time = "2019-05-27 20:00";
-        agenda = new Agenda(title, start_time, end_time, content, address);
-        mHelper.insert_agenda(agenda);
-
-        title = "Running";
-        address = "田径场";
-        content = "";
-        start_time = "2019-05-28 20:00";
-        end_time = "2019-05-28 20:00";
-        agenda = new Agenda(title, start_time, end_time, content, address);
-        mHelper.insert_agenda(agenda);
     }
 
     /**
      * 添加课程表
      */
     private void addCourseTable() {
-
-
         mHelper = UserDBHelper.getInstance(getContext(), 1);
         mHelper.resetCourseTable();
-
-        mHelper.insert_course(new Course(2019, 1, "定向越野", 1, 1, 15, 5, 2, "田径场", "老师"));
-        mHelper.insert_course(new Course(2019, 1, "毛概", 1, 7, 15, 1, 2, "田径场", "老师"));
-        mHelper.insert_course(new Course(2019, 1, "毛概阿肯德基咖喱块附近的光华路科技刻录机ad", 2, 7, 15, 9, 3, "田径场", "老师"));
-        mHelper.insert_course(new Course(2019, 1, "毛概", 2, 7, 15, 2, 2, "田径场", "老师"));
-        mHelper.insert_course(new Course(2019, 1, "毛概", 3, 7, 15, 2, 2, "田径场", "老师"));
-
     }
 
-
+    /**
+     * 注册某个活动块到活动列表中
+     * @param item
+     * @param view
+     * @param info
+     */
     private void configureSubItem(final CustomItem item, final View view, String info) {
         ((TextView) view.findViewById(R.id.sub_title)).setText(info);
 
