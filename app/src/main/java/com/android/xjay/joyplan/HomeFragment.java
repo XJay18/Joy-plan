@@ -114,6 +114,11 @@ public class HomeFragment extends Fragment
      */
     View imgAddAgenda;
 
+    /**
+     * 截屏按钮
+     */
+    View imgScreenCapture;
+
 
     RelativeLayout mRelativeTool;
     LinearLayout mRecyclerView;
