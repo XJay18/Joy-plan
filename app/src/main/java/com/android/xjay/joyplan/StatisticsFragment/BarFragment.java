@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.xjay.joyplan.Fqz;
 import com.android.xjay.joyplan.R;
+import com.android.xjay.joyplan.UserDBHelper;
 import com.android.xjay.joyplan.ValueFormatter.MyValueFormatter;
 import com.android.xjay.joyplan.ValueFormatter.MyYAxisValueFormatter;
 import com.android.xjay.joyplan.ValueFormatter.StringAxisValueFormatter;
@@ -52,10 +54,16 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
      * 数据格式
      */
     private SimpleDateFormat dateFormat;
+    private SimpleDateFormat Format;
     /**
      * 当前日期
      */
     private String currentDate;
+    /**
+     * 当前周首日日期
+     */
+    private String currentTime;
+
     /**
      * 显示周
      */
@@ -72,6 +80,14 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
      * 柱状图的横坐标数组
      */
     private String[] value = new String[]{"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
+    /**
+     * 数据库helper的引用(单例)
+     */
+    private UserDBHelper mHelper;
+    /**
+     * 获取数据对象
+     */
+    private Fqz fqz;
 
     @Override
     public void onAttach(Context context) {
@@ -89,7 +105,10 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
      * 初始化页面属性
      */
     private void initUi() {
+        mHelper=UserDBHelper.getInstance(getActivity(),1);
+        //mHelper.reset();
         dateFormat = new SimpleDateFormat("MM月dd日");
+        Format=new SimpleDateFormat("YYYYMMdd");
         date = new Date();
         cal = Calendar.getInstance();
         cal.setTime(date);
@@ -120,7 +139,8 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
         // 改变y标签的位置
         YAxis yAxis = mBarChart.getAxisLeft();
         yAxis.setValueFormatter(new MyYAxisValueFormatter());
-        yAxis.setAxisMaximum(40f);
+        yAxis.setAxisMaximum(300f);
+
         //设置坐标数值的字体大小
         yAxis.setTextSize(15f);
         yAxis.setAxisMinimum(0f);
@@ -154,15 +174,22 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
      */
     private void setData() {
         show_week.setText(currentDate);
+        //mHelper.reset();
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
-        for (int i = 0; i < 7; i++) {
-            float mult = (40);
-            int val1 = (int) ((Math.random() * mult) + mult) % 10 + 1;
-            int val2 = (int) ((Math.random() * mult) + mult) % 10 + 1;
-            int val3 = (int) ((Math.random() * mult) + mult) % 10 + 1;
-            int val4 = (int) ((Math.random() * mult) + mult) % 10 + 1;
-            yVals1.add(new BarEntry(i, new float[]{val1, val2, val3, val4}));
+        boolean exist=mHelper.TimeExist(currentTime);
+        fqz=new Fqz(currentTime);
+        if(!exist){
+            mHelper.insert_time(fqz);
         }
+        fqz=mHelper.getBarTime(currentTime);
+        yVals1.add(new BarEntry(0, new float[]{fqz.getMonday()}));
+        yVals1.add(new BarEntry(1, new float[]{fqz.getTuesday()}));
+        yVals1.add(new BarEntry(2, new float[]{fqz.getWednesday()}));
+        yVals1.add(new BarEntry(3, new float[]{fqz.getThursday()}));
+        yVals1.add(new BarEntry(4, new float[]{fqz.getFriday()}));
+        yVals1.add(new BarEntry(5, new float[]{fqz.getSaturday()}));
+        yVals1.add(new BarEntry(6, new float[]{fqz.getSunday()}));
+
 
         BarDataSet set1;
 
@@ -173,15 +200,17 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
             mBarChart.getData().notifyDataChanged();
             mBarChart.notifyDataSetChanged();
         } else {
-            set1 = new BarDataSet(yVals1, "一周活动总结");
+            set1 = new BarDataSet(yVals1, "一周日程总结");
             set1.setColors(getColors());
-            set1.setStackLabels(new String[]{"学习", "运动", "娱乐", "其他"});
+            set1.setStackLabels(new String[]{"数量"});
             //设置顶点值字体大小
             set1.setValueTextSize(15f);
+           //set1.setValueTextColor(Color.rgb(255, 201, 12));
             //设置图例字体大小
             set1.setFormSize(15f);
-            //设置是否显示定点数值
+            //设置是否显示顶点数值
             set1.setDrawValues(false);
+
             ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
             dataSets.add(set1);
 
@@ -201,8 +230,10 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
      */
     private int[] getColors() {
         //有尽可能多的颜色每项堆栈值
-        int[] colors = new int[]{Color.rgb(255, 201, 12), Color.rgb(248, 223, 114)
-                , Color.rgb(238, 162, 164), Color.rgb(240, 124, 130)};
+//        int[] colors = new int[]{Color.rgb(255, 201, 12), Color.rgb(248, 223, 114)
+//                , Color.rgb(238, 162, 164), Color.rgb(240, 124, 130)};
+        int[] colors = new int[]{Color.rgb(255, 201, 12)};
+
         return colors;
     }
 
@@ -236,6 +267,7 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
      * 获取当前日周的日期
      */
     private String getTimeInterval(String judge) {
+
         switch (judge) {
             case "last":
                 cal.add(Calendar.DAY_OF_YEAR, -7);
@@ -254,6 +286,7 @@ public class BarFragment extends Fragment implements OnChartValueSelectedListene
         cal.setFirstDayOfWeek(Calendar.MONDAY);
         int day = cal.get(Calendar.DAY_OF_WEEK);
         cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - day);
+        currentTime=Format.format(cal.getTime());
         String imptimeBegin = dateFormat.format(cal.getTime());
         cal.add(Calendar.DATE, 6);
         String imptimeEnd = dateFormat.format(cal.getTime());

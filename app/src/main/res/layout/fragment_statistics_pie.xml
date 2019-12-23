@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="20dp"></LinearLayout>
+            android:layout_height="20dp">
+        </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_date"
             android:layout_width="match_parent"
             android:layout_height="40dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="20" />
+                android:layout_weight="20"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -29,95 +28,81 @@
                 android:layout_weight="0.5">
 
                 <TextView
-                    android:id="@+id/show_week_pie"
+                    android:id="@+id/show_week_bar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true" />
+
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="20" />
+                android:layout_weight="20"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="20"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="一周完成日程次数统计图"
+                android:textSize="17sp"
+                android:gravity="center" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="20"/>
+
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="43dp">
-
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/mPieChart1"
-                android:layout_width="200dp"
-                android:layout_height="180dp"
-                android:layout_marginLeft="0dp" />
-
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/mPieChart2"
-                android:layout_width="200dp"
-                android:layout_height="180dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="0dp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/mPieChart3"
-                android:layout_width="200dp"
-                android:layout_height="180dp"
-                android:layout_marginLeft="0dp" />
-
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/mPieChart4"
-                android:layout_width="200dp"
-                android:layout_height="180dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="0dp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="horizontal">
 
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/mBarChart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="50dp"/>
+
             <Button
-                android:id="@+id/btn_last_week_p"
+                android:id="@+id/btn_last_week_b"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
+                android:layout_below="@+id/mBarChart"
+                android:layout_marginTop="30dp"
                 android:layout_marginLeft="50dp"
                 android:background="@drawable/btn_white"
                 android:text="上一周"
                 android:textColor="#6BB6FF"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <Button
-                android:id="@+id/btn_next_week_p"
+                android:id="@+id/btn_next_week_b"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
+                android:layout_below="@+id/mBarChart"
                 android:layout_alignParentRight="true"
+                android:layout_marginTop="30dp"
                 android:layout_marginRight="50dp"
                 android:background="@drawable/btn_white"
                 android:text="下一周"
                 android:textColor="#6BB6FF"
                 android:textStyle="bold"/>
         </RelativeLayout>
+
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="61dp"
-            android:text="一周目标完成度"
-            android:textSize="17sp" />
-    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

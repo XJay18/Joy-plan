@@ -53,6 +53,7 @@ public class FqzStatistic extends AppCompatActivity
      * 数据格式
      */
     private SimpleDateFormat dateFormat;
+    private SimpleDateFormat Format;
     /**
      * 当前日期
      */
@@ -101,12 +102,14 @@ public class FqzStatistic extends AppCompatActivity
      */
     private void initUi() {
         mHelper=UserDBHelper.getInstance(this,1);
-
+        //mHelper.reset();
         dateFormat = new SimpleDateFormat("MM月dd日");
+        Format=new SimpleDateFormat("YYYYMMdd");
         date = new Date();
         cal = Calendar.getInstance();
         cal.setTime(date);
         currentDate = getTimeInterval("now");
+
         show_week = findViewById(R.id.show_week_fqz);
         show_week.setTextSize(22.5f);
         show_week.setTextColor(Color.WHITE);
@@ -182,7 +185,7 @@ public class FqzStatistic extends AppCompatActivity
         int total = 0;
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
         boolean exist=mHelper.FqzExist(currentTime);
-        fqz=new Fqz(currentDate);
+        fqz=new Fqz(currentTime);
         if(!exist){
             mHelper.insert_fqz(fqz);
         }
@@ -276,7 +279,7 @@ public class FqzStatistic extends AppCompatActivity
      * 获取当前日周的日期
      */
     private String getTimeInterval(String judge) {
-        SimpleDateFormat Format=new SimpleDateFormat("YYYYMMdd");
+
         switch (judge) {
             case "last":
                 cal.add(Calendar.DAY_OF_YEAR, -7);
@@ -310,31 +313,4 @@ public class FqzStatistic extends AppCompatActivity
         str = str.substring(beginIndex);
         return str;
     }
-
-    /**
-     * 获取当前周首日的日期
-     */
-//    private String getTimeNow(String judge) {
-//        switch (judge) {
-//            case "last":
-//                cal.add(Calendar.DAY_OF_YEAR, -7);
-//                break;
-//            case "now":
-//                break;
-//            case "next":
-//                cal.add(Calendar.DAY_OF_YEAR, 7);
-//                break;
-//            default:
-//        }
-//        SimpleDateFormat dateFormat=new SimpleDateFormat("YYYYMMdd");
-//        int dayWeek = cal.get(Calendar.DAY_OF_WEEK);
-//        if (1 == dayWeek) {
-//            cal.add(Calendar.DAY_OF_MONTH, -1);
-//        }
-//        cal.setFirstDayOfWeek(Calendar.MONDAY);
-//        int day = cal.get(Calendar.DAY_OF_WEEK);
-//        cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - day);
-//        String imptimeBegin = dateFormat.format(cal.getTime());
-//        return imptimeBegin;
-//    }
 }
