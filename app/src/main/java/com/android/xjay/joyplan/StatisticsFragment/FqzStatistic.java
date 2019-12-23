@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.xjay.joyplan.Fqz;
 import com.android.xjay.joyplan.R;
+import com.android.xjay.joyplan.UserDBHelper;
 import com.android.xjay.joyplan.ValueFormatter.MyValueFormatter;
 import com.android.xjay.joyplan.ValueFormatter.MyYAxisValueFormatter;
 import com.android.xjay.joyplan.ValueFormatter.StringAxisValueFormatter;
@@ -75,7 +77,18 @@ public class FqzStatistic extends AppCompatActivity
      * 柱状图的横坐标数组
      */
     private String[] value = new String[]{"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
-
+    /**
+     * 数据库helper的引用(单例)
+     */
+    private UserDBHelper mHelper;
+    /**
+     * 获取数据对象
+     */
+    private Fqz fqz;
+    /**
+     * 首日时间
+     */
+    private String currentTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,12 +100,13 @@ public class FqzStatistic extends AppCompatActivity
      * 初始化页面属性
      */
     private void initUi() {
+        mHelper=UserDBHelper.getInstance(this,1);
+
         dateFormat = new SimpleDateFormat("MM月dd日");
         date = new Date();
         cal = Calendar.getInstance();
         cal.setTime(date);
         currentDate = getTimeInterval("now");
-
         show_week = findViewById(R.id.show_week_fqz);
         show_week.setTextSize(22.5f);
         show_week.setTextColor(Color.WHITE);
@@ -167,12 +181,21 @@ public class FqzStatistic extends AppCompatActivity
         show_week.setText(currentDate);
         int total = 0;
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
-        for (int i = 0; i < 7; i++) {
-            float mult = (1000);
-            int val1 = (int) (Math.random() * mult) % 150;
-            total += val1;
-            yVals1.add(new BarEntry(i, new float[]{val1}));
+        boolean exist=mHelper.FqzExist(currentTime);
+        fqz=new Fqz(currentDate);
+        if(!exist){
+            mHelper.insert_fqz(fqz);
         }
+            fqz=mHelper.getFqzStatistics(currentTime);
+            yVals1.add(new BarEntry(0, new float[]{fqz.getMonday()}));
+            yVals1.add(new BarEntry(1, new float[]{fqz.getTuesday()}));
+            yVals1.add(new BarEntry(2, new float[]{fqz.getWednesday()}));
+            yVals1.add(new BarEntry(3, new float[]{fqz.getThursday()}));
+            yVals1.add(new BarEntry(4, new float[]{fqz.getFriday()}));
+            yVals1.add(new BarEntry(5, new float[]{fqz.getSaturday()}));
+            yVals1.add(new BarEntry(6, new float[]{fqz.getSunday()}));
+            total=fqz.getTotal();
+
         show_minutes.setText(total + "分钟");
 
         BarDataSet set1;
@@ -232,11 +255,13 @@ public class FqzStatistic extends AppCompatActivity
             case R.id.btn_last_week_fqz:
                 mBarChart.animateXY(1000, 1000);
                 currentDate = getTimeInterval("last");
+
                 setData();
                 break;
             case R.id.btn_next_week_fqz:
                 mBarChart.animateXY(1000, 1000);
                 currentDate = getTimeInterval("next");
+
                 setData();
                 break;
             case R.id.bt_statistics_fqz_back:
@@ -251,6 +276,7 @@ public class FqzStatistic extends AppCompatActivity
      * 获取当前日周的日期
      */
     private String getTimeInterval(String judge) {
+        SimpleDateFormat Format=new SimpleDateFormat("YYYYMMdd");
         switch (judge) {
             case "last":
                 cal.add(Calendar.DAY_OF_YEAR, -7);
@@ -269,6 +295,7 @@ public class FqzStatistic extends AppCompatActivity
         cal.setFirstDayOfWeek(Calendar.MONDAY);
         int day = cal.get(Calendar.DAY_OF_WEEK);
         cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - day);
+        currentTime=Format.format(cal.getTime());
         String imptimeBegin = dateFormat.format(cal.getTime());
         cal.add(Calendar.DATE, 6);
         String imptimeEnd = dateFormat.format(cal.getTime());
@@ -283,4 +310,31 @@ public class FqzStatistic extends AppCompatActivity
         str = str.substring(beginIndex);
         return str;
     }
+
+    /**
+     * 获取当前周首日的日期
+     */
+//    private String getTimeNow(String judge) {
+//        switch (judge) {
+//            case "last":
+//                cal.add(Calendar.DAY_OF_YEAR, -7);
+//                break;
+//            case "now":
+//                break;
+//            case "next":
+//                cal.add(Calendar.DAY_OF_YEAR, 7);
+//                break;
+//            default:
+//        }
+//        SimpleDateFormat dateFormat=new SimpleDateFormat("YYYYMMdd");
+//        int dayWeek = cal.get(Calendar.DAY_OF_WEEK);
+//        if (1 == dayWeek) {
+//            cal.add(Calendar.DAY_OF_MONTH, -1);
+//        }
+//        cal.setFirstDayOfWeek(Calendar.MONDAY);
+//        int day = cal.get(Calendar.DAY_OF_WEEK);
+//        cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - day);
+//        String imptimeBegin = dateFormat.format(cal.getTime());
+//        return imptimeBegin;
+//    }
 }

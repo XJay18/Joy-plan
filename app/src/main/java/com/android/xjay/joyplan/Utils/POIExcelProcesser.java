@@ -15,8 +15,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -187,4 +189,28 @@ public class POIExcelProcesser {
         }
         return;
     }
+
+    public static void writeCourseToExcel(String filePath, Context mContext, ArrayList<Course> courseList){
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(filePath);
+            Workbook workbook = getWorkbook(filePath);
+            XSSFSheet xssfSheet = (XSSFSheet) workbook.getSheetAt(0);
+            Row row = xssfSheet.createRow(0);
+            Cell cell = row.createCell(0);
+            cell.setCellValue(0);
+            cell = row.createCell(1);
+            cell.setCellValue(10086);
+
+            row = xssfSheet.createRow(1);
+            cell = row.createCell(0);
+            cell.setCellValue(500);
+            cell = row.createCell(1);
+            cell.setCellValue(200);
+
+        }
+        catch (IOException ex){
+            ex.printStackTrace();
+        }
+    }
+
 }

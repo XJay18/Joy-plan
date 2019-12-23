@@ -94,6 +94,15 @@
             android:src="@drawable/btn_add"
             android:layout_toLeftOf="@id/fl_current"
             />
+
+        <ImageView
+            android:id="@+id/img_screen_capture"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="40dp"
+            android:layout_toLeftOf="@id/fl_current"
+            android:src="@drawable/fenxiang" />
     </RelativeLayout>
 
     <com.android.xjay.calendarview.CalendarLayout

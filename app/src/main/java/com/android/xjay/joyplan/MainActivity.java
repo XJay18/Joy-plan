@@ -57,7 +57,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 储存密码
      */
     private String password;
-
+    /**
+     *  创建对象储存用户电话号码
+     */
+    private PhoneNumber PN;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // 获取服务器返回的数据
             infoString = WebServiceGet.loginGet(phone_number, password);
             // 更新UI，使用runOnUiThread()方法
-            System.out.print("infoString:" + infoString);
             showResponse(infoString);
         }
     }
@@ -180,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
             builder.show();
         } else {
+            PN=new PhoneNumber(phone_number);
             Intent intent = new Intent(MainActivity.this,
                     HomeActivity.class);
             startActivity(intent);

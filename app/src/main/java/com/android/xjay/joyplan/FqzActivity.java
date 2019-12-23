@@ -20,8 +20,12 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.android.xjay.joyplan.StatisticsFragment.FqzStatistic;
 import com.android.xjay.joyplan.Utils.DateFormat;
 
+import org.apache.poi.ss.usermodel.DataFormat;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class FqzActivity extends AppCompatActivity
         implements View.OnClickListener,
@@ -61,10 +65,39 @@ public class FqzActivity extends AppCompatActivity
      * 番茄钟默认重复次数与间隔时间。
      */
     private int fqz_size = 1, fqz_break = 5;
-
+    /**
+     * 设置日期格式
+     */
+    private Date date;
+    /**
+     * 设置日期格式
+     */
+    private Calendar cal;
+    /**
+     * 获取当前周首日的日期
+     */
+    private String currentTime;
+    /**
+     * 数据库helper的引用(单例)
+     */
+    private UserDBHelper mHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        date = new Date();
+        cal = Calendar.getInstance();
+        cal.setTime(date);
+        currentTime=getTimeInterval();
+        mHelper = UserDBHelper.getInstance(this,1);
+
+        //mHelper.reset();
+        Fqz fqz=new Fqz(currentTime);
+        boolean exist=mHelper.FqzExist(currentTime);
+        if(!exist){
+            mHelper.insert_fqz(fqz);
+        }
+
         setContentView(R.layout.dis_fqz);
         findViewById(R.id.ll_fqz_cycle).setOnClickListener(this);
         findViewById(R.id.tv_fqz_confirm).setOnClickListener(this);
@@ -177,7 +210,11 @@ public class FqzActivity extends AppCompatActivity
             confirmAnimationView.addAnimatorListener(mAnimationListener);
             confirmAnimationView.playAnimation();
             Toast.makeText(this, "番茄钟设置成功", Toast.LENGTH_SHORT).show();
-
+            //插入数据库
+            int totalTime=(fqz_hour*60+fqz_min)*fqz_size;
+            totalTime+=mHelper.getFqzAdd(currentTime,getTimeNow());
+            mHelper.updateFqz(currentTime,totalTime,getTimeNow());
+            System.out.println("这里"+totalTime);
         } else if (v.getId() == R.id.tv_fqz_setup) {
             Intent deleteAlarm = new Intent(AlarmClock.ACTION_DISMISS_ALARM);
             startActivity(deleteAlarm);
@@ -194,6 +231,8 @@ public class FqzActivity extends AppCompatActivity
             AlertDialog mAlert = mBuilder.create();
             mAlert.show();
         }
+
+
     }
 
     @Override
@@ -246,5 +285,33 @@ public class FqzActivity extends AppCompatActivity
         } else
             hour += ahour;
         return new int[]{hour, minute};
+    }
+
+    /**
+     * 获取当前周首日的日期
+     */
+    private String getTimeInterval() {
+        SimpleDateFormat dateFormat=new SimpleDateFormat("YYYYMMdd");
+        int dayWeek = cal.get(Calendar.DAY_OF_WEEK);
+        if (1 == dayWeek) {
+            cal.add(Calendar.DAY_OF_MONTH, -1);
+        }
+        cal.setFirstDayOfWeek(Calendar.MONDAY);
+        int day = cal.get(Calendar.DAY_OF_WEEK);
+        cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - day);
+        String imptimeBegin = dateFormat.format(cal.getTime());
+        return imptimeBegin;
+    }
+
+    /**
+     * 获取今天是周几
+     */
+    private int getTimeNow() {
+        Date today = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(today);
+        int weekday = c.get(Calendar.DAY_OF_WEEK);
+        System.out.println("这里是周几？"+weekday);
+        return weekday-1;
     }
 }

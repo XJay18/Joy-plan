@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public static final String ACTIVITY_TABLE = "user_info";
     public static final String AGENDA_TABLE = "agenda_table";
     public static final String COURSE_TABLE = "course_table";
-    public static final String FQZ_STATICTIS = "fqz_statictis";
+    public static final String FQZ_STATISTICS = "fqz_statistics";
 
     private UserDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -92,14 +93,15 @@ public class UserDBHelper extends SQLiteOpenHelper {
         create_sql = "CREATE TABLE IF NOT EXISTS " + AGENDA_TABLE + "(" + "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "title VARCHAR NOT NULL," + "starttime DATETIME NOT NULL," + "endtime DATETIME NOT NULL," + "notation VARCHAR NOT NULL," + "address VARCHAR NOT NULL" + ");";
         db.execSQL(create_sql);
 
-        create_sql = "CREATE TABLE IF NOT EXISTS " + COURSE_TABLE + "(" + "coursename VARCHAR NOT NULL," + "dayofweek INTEGER NOT NULL," + "startweek INTEGER NOT NULL," + "endweek INTEGER NOT NULL," + "startindex INTEGER NOT NULL," + "numofcourse INTEGER NOT NULL," + "address VARCHAR NOT NULL," + "teachername VARCHAR NOT NULL," + "notation VARCHAR NOT NULL," + "PRIMARY KEY(dayofweek,startweek,startindex)" + ");";
+        create_sql = "CREATE TABLE IF NOT EXISTS " + COURSE_TABLE + "(" + "year INTEGER NOT NULL," + "indexofsemester INTERGER NOT NULL," + "coursename VARCHAR NOT NULL," + "dayofweek INTEGER NOT NULL," + "startweek INTEGER NOT NULL," + "endweek INTEGER NOT NULL," + "startindex INTEGER NOT NULL," + "numofcourse INTEGER NOT NULL," + "address VARCHAR NOT NULL," + "teachername VARCHAR NOT NULL," + "notation VARCHAR NOT NULL," + "PRIMARY KEY(dayofweek,startweek,startindex)" + ");";
         db.execSQL(create_sql);
 
-        create_sql = "CREATE TABLE IF NOT EXISTS " + FQZ_STATICTIS + "(" + "startoftime DATETIME NOT NULL," + "monday INTEGER NOT NULL," + "tuesday INTEGER NOT NULL," + "wednesday INTEGER NOT NULL," + "thursday INTEGER NOT NULL," + "friday INTEGER NOT NULL," + "saturday INTEGER NOT NULL," + "sunday INTEGER NOT NULL," + "PRIMARY KEY(startoftime)" + ");";
+        create_sql = "CREATE TABLE IF NOT EXISTS " + FQZ_STATISTICS + "(" + "startoftime DATETIME NOT NULL," + "monday INTEGER NOT NULL," + "tuesday INTEGER NOT NULL," + "wednesday INTEGER NOT NULL," + "thursday INTEGER NOT NULL," + "friday INTEGER NOT NULL," + "saturday INTEGER NOT NULL," + "sunday INTEGER NOT NULL," + "PRIMARY KEY(startoftime)" + ");";
         db.execSQL(create_sql);
 
         create_sql = "CREATE TABLE IF NOT EXISTS " + RESERVE_ACTIVITY_TABLE + "(" + "id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL," + "title VARCHAR NOT NULL," + "info VARCHAR NOT NULL," + "starttime DATETIME NOT NULL," + "endtime DATETIME not null," + "address VARCHAR NOT NULL," + "img BOLB NOT NULL" + ");";
         db.execSQL(create_sql);
+
     }
 
     /**
@@ -115,6 +117,8 @@ public class UserDBHelper extends SQLiteOpenHelper {
         mDB.execSQL(drop_sql);
         drop_sql = "DROP TABLE IF EXISTS " + RESERVE_ACTIVITY_TABLE + ";";
         mDB.execSQL(drop_sql);
+        drop_sql = "DROP TABLE IF EXISTS " + FQZ_STATISTICS + ";";
+        mDB.execSQL(drop_sql);
 
 
         String create_sql = "CREATE TABLE IF NOT EXISTS " + ACTIVITY_TABLE + "(" + "id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL," + "title VARCHAR NOT NULL," + "info VARCHAR NOT NULL," + "starttime DATETIME NOT NULL," + "endtime DATETIME not null," + "address VARCHAR NOT NULL," + "img BOLB NOT NULL" + ");";
@@ -124,6 +128,8 @@ public class UserDBHelper extends SQLiteOpenHelper {
         create_sql = "CREATE TABLE IF NOT EXISTS " + COURSE_TABLE + "(" + "year INTEGER NOT NULL," + "indexofsemester INTERGER NOT NULL," + "coursename VARCHAR NOT NULL," + "dayofweek INTEGER NOT NULL," + "startweek INTEGER NOT NULL," + "endweek INTEGER NOT NULL," + "startindex INTEGER NOT NULL," + "numofcourse INTEGER NOT NULL," + "address VARCHAR NOT NULL," + "teachername VARCHAR NOT NULL," + "notation VARCHAR NOT NULL," + "PRIMARY KEY(dayofweek,startweek,startindex)" + ");";
         mDB.execSQL(create_sql);
         create_sql = "CREATE TABLE IF NOT EXISTS " + RESERVE_ACTIVITY_TABLE + "(" + "id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL," + "title VARCHAR NOT NULL," + "info VARCHAR NOT NULL," + "starttime DATETIME NOT NULL," + "endtime DATETIME not null," + "address VARCHAR NOT NULL," + "img BOLB NOT NULL" + ");";
+        mDB.execSQL(create_sql);
+        create_sql = "CREATE TABLE IF NOT EXISTS " + FQZ_STATISTICS + "(" + "startoftime DATETIME NOT NULL," + "monday INTEGER NOT NULL," + "tuesday INTEGER NOT NULL," + "wednesday INTEGER NOT NULL," + "thursday INTEGER NOT NULL," + "friday INTEGER NOT NULL," + "saturday INTEGER NOT NULL," + "sunday INTEGER NOT NULL," + "PRIMARY KEY(startoftime)" + ");";
         mDB.execSQL(create_sql);
     }
 
@@ -282,15 +288,16 @@ public class UserDBHelper extends SQLiteOpenHelper {
         long result = -1;
         openWriteLink();
         ContentValues cv = new ContentValues();
-        cv.put("startoftime", fqz.startoftime);
-        cv.put("monday", fqz.monday);
-        cv.put("tuesday", fqz.tuesday);
-        cv.put("wednesday", fqz.wednesday);
-        cv.put("thursday", fqz.thursday);
-        cv.put("friday", fqz.friday);
-        cv.put("saturday", fqz.saturday);
-        cv.put("sunday", fqz.sunday);
-        result = mDB.insert(FQZ_STATICTIS, "", cv);
+        cv.put("startoftime", fqz.getStartoftime());
+        cv.put("monday", fqz.getMonday());
+        cv.put("tuesday", fqz.getThursday());
+        cv.put("wednesday", fqz.getWednesday());
+        cv.put("thursday", fqz.getThursday());
+        cv.put("friday", fqz.getFriday());
+        cv.put("saturday", fqz.getSaturday());
+        cv.put("sunday", fqz.getSunday());
+        result = mDB.insert(FQZ_STATISTICS, "", cv);
+        System.out.println("这里有运行"+result);
         return result;
     }
 
@@ -395,7 +402,88 @@ public class UserDBHelper extends SQLiteOpenHelper {
         } else return new ArrayList<>();
     }
 
+    /**
+     * 查找番茄钟数据
+     * @param date
+     * @return
+     */
+    //TODO 番茄钟查找语句
+    public Fqz getFqzStatistics(String date) {
+        openReadLink();
+        Cursor cursor = null;
+        Fqz fqz;
+        cursor = mDB.query(FQZ_STATISTICS, null, createFqzData(), new String[]{date}, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int monday = cursor.getInt(1);
+            int tuesday = cursor.getInt(2);
+            int wednesday= cursor.getInt(3);
+            int thursday = cursor.getInt(4);
+            int friday = cursor.getInt(5);
+            int saturday = cursor.getInt(6);
+            int sunday = cursor.getInt(7);
+            fqz = new Fqz(monday,tuesday,wednesday,thursday,friday,saturday,sunday);
+            return fqz;
+        } else {
+            fqz=new Fqz();
+            return fqz;
+        }
+    }
+    //
+    public int getFqzAdd(String date,int day) {
+        openReadLink();
+        Cursor cursor = null;
+        Fqz fqz;
+        cursor = mDB.query(FQZ_STATISTICS, null, createFqzData(), new String[]{date}, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int theday = cursor.getInt(day);
+            return theday;
+        } else {
+            return 0;
+        }
+    }
+    /**
+     * 条目是否存在
+     * @param date
+     * @return
+     */
+    public boolean FqzExist(String date) {
+        openReadLink();
+        Cursor cursor = null;
+        cursor = mDB.query(FQZ_STATISTICS, null, createFqzData(), new String[]{date}, null, null, null);
+        if(cursor != null && cursor.moveToFirst()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
+//TODO 更新
+    public void updateFqz(String startoftime,int time,int day) {
+        String week;
+        switch (day){
+            case 1:
+                week="monday";break;
+            case 2:
+                week="tuesday";break;
+            case 3:
+                week="wednesday";break;
+            case 4:
+                week="thursday";break;
+            case 5:
+                week="friday";break;
+            case 6:
+                week="saturday";break;
+            case 0:
+                week="sunday";break;
+            default:
+                week="monday";break;
+        }
+
+        ContentValues cv = new ContentValues();
+        cv.put(week,time);
+        mDB.update(FQZ_STATISTICS, cv, "startoftime=?", new String[]{startoftime});
+    }
     /**
      * 更新日程备注
      *
@@ -441,6 +529,27 @@ public class UserDBHelper extends SQLiteOpenHelper {
         String str_startweek = String.valueOf(course.getStartWeek());
         String str_startindex = String.valueOf(course.getStartIndex());
         mDB.update(COURSE_TABLE, cv, createCourseSelectionActionWithCourseName(), new String[]{str_year, str_indexofsemester, course.getCourseName(), str_dayofweek, str_startweek, str_startindex});
+    }
+
+    public ArrayList<Course> getAllCourses(){
+        openReadLink();
+        Cursor cursor = null;
+        ArrayList<Course> courseList = new ArrayList<>();
+
+        String queryStatement = String.format("select * from %s",COURSE_TABLE);
+        cursor = mDB.rawQuery(queryStatement,null);
+
+        if(cursor!=null){
+            cursor.moveToFirst();
+            while(cursor.moveToNext()){
+                Course course = new Course(2019,1,cursor.getString(2),cursor.getInt(3),cursor.getInt(4),
+                        cursor.getInt(5),cursor.getInt(6),cursor.getInt(7),cursor.getString(8), cursor.getString(9));
+                courseList.add(course);
+                Log.e("courseInfo",String.format("0 index is %s,2 index is %s",cursor.getString(0),cursor.getInt(2)));
+            }
+
+        }
+        return courseList;
     }
 
     /**
@@ -513,7 +622,15 @@ public class UserDBHelper extends SQLiteOpenHelper {
             return agenda;
         } else return null;
     }
-
+    /**
+     * 获取番茄钟
+     */
+    public String createFqzData() {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("startoftime");
+        stringBuffer.append("=?");
+        return stringBuffer.toString();
+    }
     /**
      * 获取查询活动字符串
      *

@@ -29,6 +29,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.android.xjay.joyplan.Utils.JumpTextWatcher;
 import com.android.xjay.joyplan.Utils.POIExcelProcesser;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -87,6 +88,7 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
         findViewById(R.id.ll_course_help).setOnClickListener(this);
         findViewById(R.id.btn_course_back).setOnClickListener(this);
         findViewById(R.id.ll_addcoursetable_importexcel).setOnClickListener(this);
+//        findViewById(R.id.ll_addcoursetable_exportexcel).setOnClickListener(this);
         String[] schoolsArray = schools.toArray(new String[schools.size()]);
         ArrayAdapter<String> mSchoolsAdapter = new ArrayAdapter<>(this,
                 R.layout.item_select, schoolsArray);
@@ -182,6 +184,16 @@ public class AddCourseTableActivity extends AppCompatActivity implements View.On
             }
             startActivityForResult(intent, 1);
         }
+//        else if (v.getId()==R.id.ll_addcoursetable_exportexcel){
+//            // 从sqlite读取Course列表
+//            // 将Course列表写入指定的excel中
+//            UserDBHelper userDBHelper = UserDBHelper.getInstance(this,1);
+//            ArrayList<Course> courseList = userDBHelper.getAllCourses();
+//            for(int i=0;i<courseList.size();i++) {
+//                Log.e("courseInfo", courseList.get(i).getCourseName());
+//            }
+//            Log.e("courseInfo",String.format("The num of course is %d",courseList.size()));
+//        }
     }
 
     @Override

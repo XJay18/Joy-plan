@@ -1,5 +1,6 @@
 package com.android.xjay.joyplan;
 
+
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,10 +8,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -41,6 +45,8 @@ import com.android.xjay.joyplan.CustomExpanding.CustomItem;
 import com.android.xjay.joyplan.CustomExpanding.ExpandingList;
 import com.android.xjay.joyplan.Utils.ScreenSizeUtils;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -71,9 +77,11 @@ public class HomeFragment extends Fragment
      */
     DynamicReceiverAddActivity dynamicReceiver;
 
+
     /**
      * 年份文字
      */
+
     TextView mTextYear;
 
     /**
@@ -231,6 +239,11 @@ public class HomeFragment extends Fragment
                     }
                 });
                 imgAddAgenda.setOnClickListener(this);
+<<<<<<< HEAD
+=======
+                imgScreenCapture.setOnClickListener(this);
+
+>>>>>>> 4b9f2fec171bd7cf5ceda6c2150f4a074f86cb0b
                 mCalendarView.setOnYearChangeListener(this);
                 mCalendarView.setOnCalendarSelectListener(this);
                 mTextYear.setText(String.valueOf(mCalendarView.getCurYear()));
@@ -310,7 +323,7 @@ public class HomeFragment extends Fragment
         mTextCurrentDay = mScheduleView.findViewById(R.id.tv_current_day);
         mCalendarLayout = mScheduleView.findViewById(R.id.calendarLayout);
         imgAddAgenda = mScheduleView.findViewById(R.id.img_add_agenda);
-
+        imgScreenCapture = mScheduleView.findViewById(R.id.img_screen_capture);
         mRecyclerView = mScheduleView.findViewById(R.id.recyclerView);
         blockContainers = new ArrayList<>();
         RelativeLayout container = mScheduleView.findViewById(R.id.course_container0);
@@ -411,7 +424,54 @@ public class HomeFragment extends Fragment
             if (view.getTag() instanceof StudentActivityInfo) {
                 customDialog(view.getTag());
             }
+        } else if (view.getId() == R.id.img_screen_capture) {
+//            Toast.makeText(mContext,"img screen",Toast.LENGTH_SHORT).show();
+
+            int h = 0;
+            Bitmap bitmap,topBitmap;
+            for (int i = 0; i < scrollView.getChildCount(); i++) {
+                h += scrollView.getChildAt(i).getHeight();
+                scrollView.getChildAt(i).setBackgroundColor(Color.parseColor("#ffffff"));
+            }
+            // 创建对应大小的bitmap
+            bitmap = Bitmap.createBitmap(scrollView.getWidth(), h,
+                    Bitmap.Config.ARGB_8888);
+            topBitmap = Bitmap.createBitmap(mCalendarView.getWidth(),mCalendarView.getHeight(),
+                    Bitmap.Config.ARGB_8888);
+            final Canvas canvas = new Canvas(bitmap);
+            final Canvas topCanvas = new Canvas(topBitmap);
+            scrollView.draw(canvas);
+            mCalendarView.draw(topCanvas);
+
+            int width = Math.max(topBitmap.getWidth(),bitmap.getWidth());
+            int height = topBitmap.getHeight() + bitmap.getHeight();
+
+//            Log.e("h",Integer.toString(topBitmap.getHeight()));
+
+            Bitmap totalBitmap = Bitmap.createBitmap(width,height, Bitmap.Config.ARGB_8888);
+            Canvas totalCanvas = new Canvas(totalBitmap);
+            totalCanvas.drawBitmap(topBitmap,0,0,null);
+            totalCanvas.drawBitmap(bitmap,0,topBitmap.getHeight(),null);
+
+//            Log.e("wh",Integer.toString(totalBitmap.getWidth())+"  "+Integer.toString(totalBitmap.getHeight()));
+
+            if (totalBitmap != null) {
+                try {
+                    // 获取路径
+                    String doc_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+                    // 图片文件路径
+                    String filePath = doc_path + File.separator + "screenshot.png";
+                    File file = new File(filePath);
+                    FileOutputStream os = new FileOutputStream(file);
+                    totalBitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
+                    os.flush();
+                    os.close();
+                } catch (Exception e) {
+                }
+            }
+            Toast.makeText(mContext,String.format("照片已保存为screenshot.png"),Toast.LENGTH_SHORT).show();
         }
+
     }
 
     /**

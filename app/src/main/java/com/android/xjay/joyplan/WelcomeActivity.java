@@ -2,6 +2,7 @@ package com.android.xjay.joyplan;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +16,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
      * 注册按钮
      */
     private Button register;
-
     @Override
     protected void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
