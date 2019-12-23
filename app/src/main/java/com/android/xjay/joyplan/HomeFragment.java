@@ -239,11 +239,10 @@ public class HomeFragment extends Fragment
                     }
                 });
                 imgAddAgenda.setOnClickListener(this);
-<<<<<<< HEAD
-=======
+
                 imgScreenCapture.setOnClickListener(this);
 
->>>>>>> 4b9f2fec171bd7cf5ceda6c2150f4a074f86cb0b
+
                 mCalendarView.setOnYearChangeListener(this);
                 mCalendarView.setOnCalendarSelectListener(this);
                 mTextYear.setText(String.valueOf(mCalendarView.getCurYear()));
