@@ -45,6 +45,7 @@ import com.android.xjay.joyplan.CustomExpanding.CustomItem;
 import com.android.xjay.joyplan.CustomExpanding.ExpandingList;
 import com.android.xjay.joyplan.Utils.ScreenSizeUtils;
 import com.android.xjay.joyplan.web.WebServiceGet;
+import com.android.xjay.joyplan.web.WebServicePost;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -314,6 +315,7 @@ public class HomeFragment extends Fragment
                 view.findViewById(R.id.ll_setup_accountnsafety).setOnClickListener(this);
                 view.findViewById(R.id.ll_setup_notenfeedback).setOnClickListener(this);
                 view.findViewById(R.id.ll_setup_about).setOnClickListener(this);
+                view.findViewById(R.id.ll_setup_synchronize).setOnClickListener(this);
                 return view;
             }
             default: {
@@ -444,7 +446,9 @@ public class HomeFragment extends Fragment
         } else if (view.getId() == R.id.ll_setup_about) {
             Intent intent = new Intent(mContext, AboutSetupActivity.class);
             startActivity(intent);
-        } else if (view.getId() == R.id.btn_course) {
+        } else if (view.getId() == R.id.ll_setup_synchronize) {
+            new Thread(new mySynchronizeThread()).start();
+        }else if (view.getId() == R.id.btn_course) {
             if (view.getTag() instanceof Course) {
                 customDialog(view.getTag());
             }
@@ -1252,6 +1256,25 @@ public class HomeFragment extends Fragment
         }
     }
 
+    private class mySynchronizeThread implements Runnable{
+
+        @Override
+        public void run() {
+            // 获取服务器返回的数据
+            PhoneNumber phoneNumber=PhoneNumber.getInstance();
+            String stringPhoneNumber=phoneNumber.getPhone_number();
+            StudentActivityInfo[] allStudentActivityInfos= WebServiceGet.selActiGet(stringPhoneNumber);
+            Course[] courses=WebServiceGet.selCourseGet(stringPhoneNumber);
+            Agenda[] agendas= WebServiceGet.selAgendaGet(stringPhoneNumber);
+            StudentActivityInfo[] myStudentActivityInfos=WebServiceGet.selReserveGet(stringPhoneNumber);
+            // 更新 UI，使用 runOnUiThread()方法
+
+            showResponse(allStudentActivityInfos,myStudentActivityInfos,courses,agendas);
+
+
+        }
+    }
+
     private void showResponse(Agenda agenda,String infoString){
         getActivity().runOnUiThread(new Runnable() {
             // 更新UI
@@ -1300,5 +1323,38 @@ public class HomeFragment extends Fragment
             }
         });
 
+    }
+
+    private void showResponse(StudentActivityInfo[] allStudentActivityInfos,StudentActivityInfo[] myStudentActivityInfos,Course[] courses,Agenda[] agendas){
+        getActivity().runOnUiThread(new Runnable() {
+            // 更新UI
+            @Override
+            public void run() {
+                mHelper=UserDBHelper.getInstance(mContext, 1);
+                mHelper.openWriteLink();
+                mHelper.reset();
+                if(allStudentActivityInfos!=null){
+                    for(int i=0;i<allStudentActivityInfos.length;i++){
+                        mHelper.insert_studentActivity(allStudentActivityInfos[i]);
+                    }
+                }
+                if(myStudentActivityInfos!=null){
+                    for(int i=0;i<myStudentActivityInfos.length;i++){
+                        mHelper.insert_reserve_activity(myStudentActivityInfos[i]);
+                    }
+                }
+                if(courses!=null){
+                    for(int i=0;i<courses.length;i++){
+                        mHelper.insert_course(courses[i]);
+                    }
+                }
+                if(agendas!=null){
+                    for(int i=0;i<agendas.length;i++){
+                        mHelper.insert_agenda(agendas[i]);
+                    }
+                }
+                Toast.makeText(mContext, "同步成功", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

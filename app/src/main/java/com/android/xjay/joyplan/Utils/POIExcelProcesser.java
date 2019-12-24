@@ -2,9 +2,12 @@ package com.android.xjay.joyplan.Utils;
 
 import android.content.Context;
 import android.util.Log;
+import java.util.Calendar;
 
 import com.android.xjay.joyplan.Course;
+import com.android.xjay.joyplan.PhoneNumber;
 import com.android.xjay.joyplan.UserDBHelper;
+import com.android.xjay.joyplan.web.WebServiceGet;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -20,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -81,6 +85,12 @@ public class POIExcelProcesser {
                 course = new Course(2019, 1, course_names.get(i), course_weekdays.get(i), course_begin_weeks.get(i), course_end_weeks.get(i), course_begin_times.get(i),
                         course_end_times.get(i) - course_begin_times.get(i), classrooms.get(i), teachers.get(i));
                 userDBHelper.insert_course(course);
+                PhoneNumber PN = PhoneNumber.getInstance();
+                String userid = PN.getPhone_number();
+                Calendar calendar = Calendar.getInstance();
+                WebServiceGet.addCourseGet(userid, Integer.toString(calendar.get(Calendar.YEAR)),"1",course_names.get(i).toString(),course_weekdays.get(i).toString(),
+                        course_begin_weeks.get(i).toString(),course_end_weeks.get(i).toString(),course_begin_times.get(i).toString(),
+                        Integer.toString(course_end_times.get(i) - course_begin_times.get(i)), classrooms.get(i),teachers.get(i),null);
             }
 
 //            course=new Course("编译原理",3,4,15,9,3,"a","changdalao ");

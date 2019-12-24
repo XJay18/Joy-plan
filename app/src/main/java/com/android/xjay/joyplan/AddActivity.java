@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.android.xjay.joyplan.Utils.DateFormat;
 import com.android.xjay.joyplan.web.WebServiceGet;
+import com.android.xjay.joyplan.web.WebServicePost;
 
 import java.io.ByteArrayOutputStream;
 
@@ -477,12 +478,9 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         public void run() {
             PhoneNumber phoneNumber=PhoneNumber.getInstance();
             String stringPhoneNumber=phoneNumber.getPhone_number();
-            String imgString="";
-            if(studentActivityInfo.getImg()!=null){
-                imgString=new String(studentActivityInfo.getImg());
-            }
 
-            String infoString = WebServiceGet.addActiGet(stringPhoneNumber,studentActivityInfo.getTitle(),studentActivityInfo.getInfo(),studentActivityInfo.getStarttime(),studentActivityInfo.getEndtime(),studentActivityInfo.getAddress(),imgString);
+
+            String infoString = WebServiceGet.addActiGet(stringPhoneNumber,studentActivityInfo.getTitle(),studentActivityInfo.getInfo(),studentActivityInfo.getStarttime(),studentActivityInfo.getEndtime(),studentActivityInfo.getAddress(),"0");
             // 更新 UI，使用 runOnUiThread()方法
             showResponse(studentActivityInfo,infoString);
         }
@@ -494,6 +492,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             @Override
             public void run() {
                 if(infoString.equals("true")){
+                    mHelper.openWriteLink();
                     mHelper.insert_studentActivity(studentActivityInfo);
                     sentBroadcast();
                     Toast.makeText(mContext, "添加活动成功，已同步到云端", Toast.LENGTH_SHORT).show();
