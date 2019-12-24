@@ -310,6 +310,51 @@ public class WebServiceGet {
     }
 
     /**
+     * 删除日程
+     */
+    public static String upAgendaGet(String userid, String title, String starttime,String notation) {
+        HttpURLConnection connection = null;
+        InputStream in = null;
+
+        try {
+            String Url = "http://110.64.91.150:8080/joyweb3.0/UpAgenda";
+            String path = Url + "?userid=" + URLEncoder.encode(userid, "UTF-8")
+                    + "&title=" + URLEncoder.encode(title, "UTF-8")
+                    + "&starttime=" + URLEncoder.encode(starttime, "UTF-8")
+                    + "&notation=" + URLEncoder.encode(notation, "UTF-8");
+            try {
+                URL url = new URL(path);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setConnectTimeout(10000);//建立连接超时
+                connection.setReadTimeout(8000);//传递数据超时
+                in = connection.getInputStream();
+                return parseInfo(in);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            //意外退出时，连接关闭保护
+            if (connection != null) {
+                connection.disconnect();
+            }
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
+
+    /**
      * 添加活动
      */
     public static String addActiGet(String userid, String title, String info, String starttime, String endtime, String address, String img) {
@@ -551,6 +596,55 @@ public class WebServiceGet {
                     + "&startweek=" + startweek
                     + "&startindex=" + startindex
                     + "&coursename=" + URLEncoder.encode(coursename, "UTF-8");
+
+            try {
+                URL url = new URL(path);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setConnectTimeout(10000);//建立连接超时
+                connection.setReadTimeout(8000);//传递数据超时
+                in = connection.getInputStream();
+                return parseInfo(in);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            //意外退出时，连接关闭保护
+            if (connection != null) {
+                connection.disconnect();
+            }
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 修改课程表
+     */
+    public static String upCourseGet(String userid,int year,int indexofsemester,int dayofweek,int startweek,int startindex,String coursename,String notation) {
+        HttpURLConnection connection = null;
+        InputStream in = null;
+
+        try {
+            String Url = "http://110.64.91.150:8080/joyweb3.0/UpCourse";
+            String path = Url + "?userid=" + URLEncoder.encode(userid, "UTF-8")
+                    + "&year=" + year
+                    + "&indexofsemester=" + indexofsemester
+                    + "&dayofweek=" + dayofweek
+                    + "&startweek=" + startweek
+                    + "&startindex=" + startindex
+                    + "&coursename=" + URLEncoder.encode(coursename, "UTF-8")
+                    + "&notation=" + URLEncoder.encode(notation, "UTF-8");
 
             try {
                 URL url = new URL(path);

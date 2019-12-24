@@ -872,6 +872,7 @@ public class HomeFragment extends Fragment
                     float bias = time * 100;
                     drawAgenda(blockContainers.get(i), l, bias, agenda);
                     //int l=numOfCourse*200;
+                    //TODO
                     //drawAgenda(blockContainers.get(i),);
                 }
             }

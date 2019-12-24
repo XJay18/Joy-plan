@@ -212,9 +212,8 @@ public class FqzActivity extends AppCompatActivity
             Toast.makeText(this, "番茄钟设置成功", Toast.LENGTH_SHORT).show();
             //插入数据库
             int totalTime=(fqz_hour*60+fqz_min)*fqz_size;
-            totalTime+=mHelper.getFqzAdd(currentTime,getTimeNow());
             mHelper.updateFqz(currentTime,totalTime,getTimeNow());
-            System.out.println("这里"+totalTime);
+
         } else if (v.getId() == R.id.tv_fqz_setup) {
             Intent deleteAlarm = new Intent(AlarmClock.ACTION_DISMISS_ALARM);
             startActivity(deleteAlarm);
@@ -291,7 +290,7 @@ public class FqzActivity extends AppCompatActivity
      * 获取当前周首日的日期
      */
     private String getTimeInterval() {
-        SimpleDateFormat dateFormat=new SimpleDateFormat("YYYYMMdd");
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMdd");
         int dayWeek = cal.get(Calendar.DAY_OF_WEEK);
         if (1 == dayWeek) {
             cal.add(Calendar.DAY_OF_MONTH, -1);

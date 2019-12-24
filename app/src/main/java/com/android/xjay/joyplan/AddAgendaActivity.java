@@ -19,7 +19,10 @@ import com.android.xjay.joyplan.web.WebServiceGet;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+
+import static com.android.xjay.joyplan.Utils.CalendarUtil.minutesBetween;
 
 
 /**
@@ -76,9 +79,28 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
      * 备注输入框
      */
     private EditText editText_notation;
-
+    /**
+     * 设置日期格式
+     */
+    private Date date;
+    /**
+     * 设置日期格式
+     */
+    private Calendar cal;
+    /**
+     * 数据格式
+     */
+    private SimpleDateFormat Format;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //设置时间格式
+        Format=new SimpleDateFormat("YYYYMMdd");
+        date = new Date();
+        cal = Calendar.getInstance();
+        cal.setTime(date);
+        // 获取数据库操作类实例（单例）
+        mHelper = UserDBHelper.getInstance(this, 1);
+
 
         // 获取intent
         Intent intent = getIntent();
@@ -105,8 +127,6 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
         tv_agenda_end_time.setOnClickListener(this);
         tv_agenda_cancel.setOnClickListener(this);
 
-        // 获取数据库操作类实例（单例）
-        mHelper = UserDBHelper.getInstance(this, 1);
 
         // 如果bundle内容非空，从bundle中获取开始时间和结束时间，并显示出来
         if (bundle != null) {
@@ -248,6 +268,25 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 start_time = "2019-" + start_time;
                 String end_time = tv_agenda_end_time.getText().toString();
                 end_time = "2019-" + end_time;
+
+                String time = getFirstDay(start_time);
+                time=time.replace("-","");
+                Fqz fqz=new Fqz(time);
+                boolean exist=mHelper.TimeExist(time);
+                if(!exist){
+                    mHelper.insert_time(fqz);
+                }
+                exist=mHelper.CountExist(time);
+                if(!exist){
+                    mHelper.insert_count(fqz);
+                }
+                //获取分钟数
+                int minute=minutesBetween(start_time,end_time);
+                mHelper.updateTime(time,minute,dateToWeek(start_time));
+                //次数加一
+                int count=1;
+                mHelper.updateCount(time,count,dateToWeek(start_time));
+
                 //日程标题和备注
                 String agenda_title = editText_agenda_title.getText().toString();
                 String agenda_content = editText_notation.getText().toString();
@@ -342,5 +381,46 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
 
 
 
+
+    /**
+     * 获取某一天的首日日期
+     */
+    private String getFirstDay(String time){
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c= Calendar.getInstance();
+        Date t=null;
+        try {
+            t = sdf.parse(time);
+            c.setTime(t);
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        int dayWeek = c.get(Calendar.DAY_OF_WEEK);
+        if(1 == dayWeek) {
+            c.add(Calendar.DAY_OF_MONTH, -1);
+        }
+        c.setFirstDayOfWeek(Calendar.MONDAY);
+        int day = c.get(Calendar.DAY_OF_WEEK);
+        c.add(Calendar.DATE, c.getFirstDayOfWeek()-day);
+        return sdf.format(c.getTime());
+    }
+    /**
+     * 获取今天是周几
+     */
+    public static int dateToWeek(String datetime) {
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        Date datet = null;
+        try {
+            datet = f.parse(datetime);
+            cal.setTime(datet);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        int w = cal.get(Calendar.DAY_OF_WEEK) - 1; // 指示一个星期中的某天。
+        if (w < 0)
+            w = 0;
+        return w;
+    }
 
 }

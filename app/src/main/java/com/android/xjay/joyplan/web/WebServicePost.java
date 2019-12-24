@@ -134,12 +134,12 @@ public class WebServicePost {
         return null;
     }
 
-    public static String activityPost(String title, String time, String description, String addr, String address) {
+    public static String addActiPost(String userid, String title, String info, String starttime, String endtime, String address, String img) {
         HttpURLConnection connection = null;
         InputStream in = null;
 
         try {
-            String Url = "http://110.64.91.150:8080/joyplan3.0/" + address;
+            String Url = "http://110.64.91.150:8080/joyplan3.0/Activity";
             try {
                 URL url = new URL(Url);
                 connection = (HttpURLConnection) url.openConnection();
@@ -155,9 +155,13 @@ public class WebServicePost {
                 connection.connect();
 
                 DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-                String data = "title=" + URLEncoder.encode(title, "UTF-8") + "&time=" + URLEncoder.encode(time, "UTF-8")
-                        + "&description=" + URLEncoder.encode(description, "UTF-8")
-                        + "&address=" + URLEncoder.encode(addr, "UTF-8");
+                String data = "userid=" + URLEncoder.encode(userid, "UTF-8")
+                        + "&title=" + URLEncoder.encode(title, "UTF-8")
+                        + "&info=" + URLEncoder.encode(info, "UTF-8")
+                        + "&starttime=" + URLEncoder.encode(starttime, "UTF-8")
+                        + "&endtime=" + URLEncoder.encode(endtime, "UTF-8")
+                        + "&address=" + URLEncoder.encode(address, "UTF-8")
+                        + "&img=" + URLEncoder.encode(img, "UTF-8");
                 out.writeBytes(data);
                 out.flush();
                 out.close();
@@ -172,7 +176,6 @@ public class WebServicePost {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
-                System.out.println("出现错误");
                 e.printStackTrace();
             }
         } catch (Exception e) {
@@ -193,7 +196,7 @@ public class WebServicePost {
         return null;
     }
 
-    public static String checkphonePost(String phone_number, String address) {
+    public static String addReservePost(String userid, String title, String info, String starttime, String endtime, String address, String img) {
         HttpURLConnection connection = null;
         InputStream in = null;
 
@@ -214,7 +217,13 @@ public class WebServicePost {
                 connection.connect();
 
                 DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-                String data = "phone_number=" + URLEncoder.encode(phone_number, "UTF-8");
+                String data = "userid=" + URLEncoder.encode(userid, "UTF-8")
+                        + "&title=" + URLEncoder.encode(title, "UTF-8")
+                        + "&info=" + URLEncoder.encode(info, "UTF-8")
+                        + "&starttime=" + URLEncoder.encode(starttime, "UTF-8")
+                        + "&endtime=" + URLEncoder.encode(endtime, "UTF-8")
+                        + "&address=" + URLEncoder.encode(address, "UTF-8")
+                        + "&img=" + URLEncoder.encode(img, "UTF-8");
                 out.writeBytes(data);
                 out.flush();
                 out.close();
@@ -229,7 +238,6 @@ public class WebServicePost {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
-                System.out.println("出现错误");
                 e.printStackTrace();
             }
         } catch (Exception e) {

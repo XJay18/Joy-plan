@@ -23,6 +23,8 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public static final String AGENDA_TABLE = "agenda_table";
     public static final String COURSE_TABLE = "course_table";
     public static final String FQZ_STATISTICS = "fqz_statistics";
+    public static final String BAR_TIME = "bar_time";
+    public static final String BAR_COUNT = "bar_count";
 
     private UserDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -99,6 +101,12 @@ public class UserDBHelper extends SQLiteOpenHelper {
         create_sql = "CREATE TABLE IF NOT EXISTS " + FQZ_STATISTICS + "(" + "startoftime DATETIME NOT NULL," + "monday INTEGER NOT NULL," + "tuesday INTEGER NOT NULL," + "wednesday INTEGER NOT NULL," + "thursday INTEGER NOT NULL," + "friday INTEGER NOT NULL," + "saturday INTEGER NOT NULL," + "sunday INTEGER NOT NULL," + "PRIMARY KEY(startoftime)" + ");";
         db.execSQL(create_sql);
 
+        create_sql = "CREATE TABLE IF NOT EXISTS " + BAR_TIME + "(" + "startoftime DATETIME NOT NULL," + "monday INTEGER NOT NULL," + "tuesday INTEGER NOT NULL," + "wednesday INTEGER NOT NULL," + "thursday INTEGER NOT NULL," + "friday INTEGER NOT NULL," + "saturday INTEGER NOT NULL," + "sunday INTEGER NOT NULL," + "PRIMARY KEY(startoftime)" + ");";
+        db.execSQL(create_sql);
+
+        create_sql = "CREATE TABLE IF NOT EXISTS " + BAR_COUNT + "(" + "startoftime DATETIME NOT NULL," + "monday INTEGER NOT NULL," + "tuesday INTEGER NOT NULL," + "wednesday INTEGER NOT NULL," + "thursday INTEGER NOT NULL," + "friday INTEGER NOT NULL," + "saturday INTEGER NOT NULL," + "sunday INTEGER NOT NULL," + "PRIMARY KEY(startoftime)" + ");";
+        db.execSQL(create_sql);
+
         create_sql = "CREATE TABLE IF NOT EXISTS " + RESERVE_ACTIVITY_TABLE + "(" + "id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL," + "title VARCHAR NOT NULL," + "info VARCHAR NOT NULL," + "starttime DATETIME NOT NULL," + "endtime DATETIME not null," + "address VARCHAR NOT NULL," + "img BOLB NOT NULL" + ");";
         db.execSQL(create_sql);
 
@@ -119,6 +127,10 @@ public class UserDBHelper extends SQLiteOpenHelper {
         mDB.execSQL(drop_sql);
         drop_sql = "DROP TABLE IF EXISTS " + FQZ_STATISTICS + ";";
         mDB.execSQL(drop_sql);
+        drop_sql = "DROP TABLE IF EXISTS " + BAR_TIME + ";";
+        mDB.execSQL(drop_sql);
+        drop_sql = "DROP TABLE IF EXISTS " + BAR_COUNT + ";";
+        mDB.execSQL(drop_sql);
 
 
         String create_sql = "CREATE TABLE IF NOT EXISTS " + ACTIVITY_TABLE + "(" + "id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL," + "title VARCHAR NOT NULL," + "info VARCHAR NOT NULL," + "starttime DATETIME NOT NULL," + "endtime DATETIME not null," + "address VARCHAR NOT NULL," + "img BOLB" + ");";
@@ -130,6 +142,10 @@ public class UserDBHelper extends SQLiteOpenHelper {
         create_sql = "CREATE TABLE IF NOT EXISTS " + RESERVE_ACTIVITY_TABLE + "(" + "id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL," + "title VARCHAR NOT NULL," + "info VARCHAR NOT NULL," + "starttime DATETIME NOT NULL," + "endtime DATETIME not null," + "address VARCHAR NOT NULL," + "img BOLB NOT NULL" + ");";
         mDB.execSQL(create_sql);
         create_sql = "CREATE TABLE IF NOT EXISTS " + FQZ_STATISTICS + "(" + "startoftime DATETIME NOT NULL," + "monday INTEGER NOT NULL," + "tuesday INTEGER NOT NULL," + "wednesday INTEGER NOT NULL," + "thursday INTEGER NOT NULL," + "friday INTEGER NOT NULL," + "saturday INTEGER NOT NULL," + "sunday INTEGER NOT NULL," + "PRIMARY KEY(startoftime)" + ");";
+        mDB.execSQL(create_sql);
+        create_sql = "CREATE TABLE IF NOT EXISTS " + BAR_TIME + "(" + "startoftime DATETIME NOT NULL," + "monday INTEGER NOT NULL," + "tuesday INTEGER NOT NULL," + "wednesday INTEGER NOT NULL," + "thursday INTEGER NOT NULL," + "friday INTEGER NOT NULL," + "saturday INTEGER NOT NULL," + "sunday INTEGER NOT NULL," + "PRIMARY KEY(startoftime)" + ");";
+        mDB.execSQL(create_sql);
+        create_sql = "CREATE TABLE IF NOT EXISTS " + BAR_COUNT + "(" + "startoftime DATETIME NOT NULL," + "monday INTEGER NOT NULL," + "tuesday INTEGER NOT NULL," + "wednesday INTEGER NOT NULL," + "thursday INTEGER NOT NULL," + "friday INTEGER NOT NULL," + "saturday INTEGER NOT NULL," + "sunday INTEGER NOT NULL," + "PRIMARY KEY(startoftime)" + ");";
         mDB.execSQL(create_sql);
     }
 
@@ -217,6 +233,8 @@ public class UserDBHelper extends SQLiteOpenHelper {
      */
     public long insert_agenda(Agenda agenda) {
 
+
+
         long result = -1;
         openWriteLink();
         ContentValues cv = new ContentValues();
@@ -297,7 +315,44 @@ public class UserDBHelper extends SQLiteOpenHelper {
         cv.put("saturday", fqz.getSaturday());
         cv.put("sunday", fqz.getSunday());
         result = mDB.insert(FQZ_STATISTICS, "", cv);
-        System.out.println("这里有运行"+result);
+        return result;
+    }
+
+    /**
+     * 插入柱形时间图
+     */
+    public long insert_time(Fqz fqz) {
+        long result = -1;
+        openWriteLink();
+        ContentValues cv = new ContentValues();
+        cv.put("startoftime", fqz.getStartoftime());
+        cv.put("monday", fqz.getMonday());
+        cv.put("tuesday", fqz.getThursday());
+        cv.put("wednesday", fqz.getWednesday());
+        cv.put("thursday", fqz.getThursday());
+        cv.put("friday", fqz.getFriday());
+        cv.put("saturday", fqz.getSaturday());
+        cv.put("sunday", fqz.getSunday());
+        result = mDB.insert(BAR_TIME, "", cv);
+        return result;
+    }
+
+    /**
+     * 插入柱形次数图
+     */
+    public long insert_count(Fqz fqz) {
+        long result = -1;
+        openWriteLink();
+        ContentValues cv = new ContentValues();
+        cv.put("startoftime", fqz.getStartoftime());
+        cv.put("monday", fqz.getMonday());
+        cv.put("tuesday", fqz.getThursday());
+        cv.put("wednesday", fqz.getWednesday());
+        cv.put("thursday", fqz.getThursday());
+        cv.put("friday", fqz.getFriday());
+        cv.put("saturday", fqz.getSaturday());
+        cv.put("sunday", fqz.getSunday());
+        result = mDB.insert(BAR_COUNT, "", cv);
         return result;
     }
 
@@ -407,7 +462,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
      * @param date
      * @return
      */
-    //TODO 番茄钟查找语句
+    //番茄钟查找语句
     public Fqz getFqzStatistics(String date) {
         openReadLink();
         Cursor cursor = null;
@@ -428,17 +483,46 @@ public class UserDBHelper extends SQLiteOpenHelper {
             return fqz;
         }
     }
-    //
-    public int getFqzAdd(String date,int day) {
+    //bar_time查找语句
+    public Fqz getBarTime(String date) {
         openReadLink();
         Cursor cursor = null;
         Fqz fqz;
-        cursor = mDB.query(FQZ_STATISTICS, null, createFqzData(), new String[]{date}, null, null, null);
+        cursor = mDB.query(BAR_TIME, null, createFqzData(), new String[]{date}, null, null, null);
         if (cursor != null && cursor.moveToFirst()) {
-            int theday = cursor.getInt(day);
-            return theday;
+            int monday = cursor.getInt(1);
+            int tuesday = cursor.getInt(2);
+            int wednesday= cursor.getInt(3);
+            int thursday = cursor.getInt(4);
+            int friday = cursor.getInt(5);
+            int saturday = cursor.getInt(6);
+            int sunday = cursor.getInt(7);
+            fqz = new Fqz(monday,tuesday,wednesday,thursday,friday,saturday,sunday);
+            return fqz;
         } else {
-            return 0;
+            fqz=new Fqz();
+            return fqz;
+        }
+    }
+    //番茄钟查找语句
+    public Fqz getBarCount(String date) {
+        openReadLink();
+        Cursor cursor = null;
+        Fqz fqz;
+        cursor = mDB.query(BAR_COUNT, null, createFqzData(), new String[]{date}, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int monday = cursor.getInt(1);
+            int tuesday = cursor.getInt(2);
+            int wednesday= cursor.getInt(3);
+            int thursday = cursor.getInt(4);
+            int friday = cursor.getInt(5);
+            int saturday = cursor.getInt(6);
+            int sunday = cursor.getInt(7);
+            fqz = new Fqz(monday,tuesday,wednesday,thursday,friday,saturday,sunday);
+            return fqz;
+        } else {
+            fqz=new Fqz();
+            return fqz;
         }
     }
     /**
@@ -457,10 +541,33 @@ public class UserDBHelper extends SQLiteOpenHelper {
             return false;
         }
     }
+    public boolean TimeExist(String date) {
+        openReadLink();
+        Cursor cursor = null;
+        cursor = mDB.query(BAR_TIME, null, createFqzData(), new String[]{date}, null, null, null);
+        if(cursor != null && cursor.moveToFirst()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    public boolean CountExist(String date) {
+        openReadLink();
+        Cursor cursor = null;
+        cursor = mDB.query(BAR_COUNT, null, createFqzData(), new String[]{date}, null, null, null);
+        if(cursor != null && cursor.moveToFirst()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
-//TODO 更新
+    // 更新番茄钟表格数据
     public void updateFqz(String startoftime,int time,int day) {
         String week;
+        int weekday=day;
         switch (day){
             case 1:
                 week="monday";break;
@@ -475,14 +582,92 @@ public class UserDBHelper extends SQLiteOpenHelper {
             case 6:
                 week="saturday";break;
             case 0:
-                week="sunday";break;
+                week="sunday";weekday=7;break;
             default:
                 week="monday";break;
         }
+        openReadLink();
+        Cursor cursor = null;
+        int daytime=0;
+        cursor = mDB.query(FQZ_STATISTICS, null, createFqzData(), new String[]{startoftime}, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            daytime = cursor.getInt(weekday);
+        }
 
+        time+=daytime;
         ContentValues cv = new ContentValues();
         cv.put(week,time);
         mDB.update(FQZ_STATISTICS, cv, "startoftime=?", new String[]{startoftime});
+    }
+    // 更新番茄钟表格数据
+    public void updateTime(String startoftime,int time,int day) {
+        String week;
+        int weekday=day;
+        switch (day){
+            case 1:
+                week="monday";break;
+            case 2:
+                week="tuesday";break;
+            case 3:
+                week="wednesday";break;
+            case 4:
+                week="thursday";break;
+            case 5:
+                week="friday";break;
+            case 6:
+                week="saturday";break;
+            case 0:
+                week="sunday";weekday=7;break;
+            default:
+                week="monday";break;
+        }
+        openReadLink();
+        Cursor cursor = null;
+        int daytime=0;
+        cursor = mDB.query(BAR_TIME, null, createFqzData(), new String[]{startoftime}, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            daytime = cursor.getInt(weekday);
+        }
+
+        time+=daytime;
+        ContentValues cv = new ContentValues();
+        cv.put(week,time);
+        mDB.update(BAR_TIME, cv, "startoftime=?", new String[]{startoftime});
+    }
+    // 更新番茄钟表格数据
+    public void updateCount(String startoftime,int time,int day) {
+        String week;
+        int weekday=day;
+        switch (day){
+            case 1:
+                week="monday";break;
+            case 2:
+                week="tuesday";break;
+            case 3:
+                week="wednesday";break;
+            case 4:
+                week="thursday";break;
+            case 5:
+                week="friday";break;
+            case 6:
+                week="saturday";break;
+            case 0:
+                week="sunday";weekday=7;break;
+            default:
+                week="monday";break;
+        }
+        openReadLink();
+        Cursor cursor = null;
+        int daytime=0;
+        cursor = mDB.query(BAR_COUNT, null, createFqzData(), new String[]{startoftime}, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            daytime = cursor.getInt(weekday);
+        }
+
+        time+=daytime;
+        ContentValues cv = new ContentValues();
+        cv.put(week,time);
+        mDB.update(BAR_COUNT, cv, "startoftime=?", new String[]{startoftime});
     }
     /**
      * 更新日程备注

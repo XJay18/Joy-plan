@@ -69,8 +69,8 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         ViewList.add(BarFragment);
         ViewList.add(PieFragment);
         //添加页卡标题
-        TitleList.add("任务汇总信息");
-        TitleList.add("目标进度信息");
+        TitleList.add("日程完成时间");
+        TitleList.add("日程完成次数");
         //设置tab模式
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         //添加tab选项卡
