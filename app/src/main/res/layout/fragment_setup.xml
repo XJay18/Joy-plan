@@ -84,6 +84,36 @@
                     android:background="@drawable/ic_right" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_setup_synchronize"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="0dp"
+                android:background="@drawable/bg_setup_button"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <ImageView
+                    style="@style/function_bar_lefticon"
+                    android:layout_marginStart="30dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/ic_synchronize" />
+
+                <TextView
+                    style="@style/function_bar_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    android:text="同步" />
+
+                <ImageView
+                    style="@style/function_bar_righticon"
+                    android:layout_marginEnd="25dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/ic_right" />
+            </LinearLayout>
+
             <!--<LinearLayout-->
                 <!--android:id="@+id/ll_setup_addfriends"-->
                 <!--android:layout_width="match_parent"-->

@@ -70,31 +70,35 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
     }
 
     // 向活动列表添加活动
-    private void addItem(String title, String info, String starttime, String address, int colorRes, Drawable drawable) {
+    private void addItem(StudentActivityInfo studentActivityInfo) {
         //Let's create an custom_item with R.layout.expanding_layout
         final CustomItem item = expandingList.createNewItem(R.layout.expanding_layout);
-        String Date = starttime.substring(0, 10);
-        //If custom_item creation is successful, let's configure it
+        item.setTag(studentActivityInfo);
+        byte[] temp = studentActivityInfo.getImg();
+        Drawable drawable;
+        if (temp != null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(temp, 0, temp.length);
+            drawable = bitmap2Drawable(bitmap);
+        } else {
+            int res = R.drawable.cc;
+            drawable = this.getResources().getDrawable(res);
+        }
+        String title = studentActivityInfo.getTitle();
+        String address = studentActivityInfo.getAddress();
+        String starttime = studentActivityInfo.getStarttime();
+        String info = studentActivityInfo.getInfo();
         if (item != null) {
-            item.setIndicatorColorRes(colorRes);
+            item.setIndicatorColorRes(R.color.transparent);
             item.setIndicatorIcon(drawable);
             item.createSubItems(1);
             final View view = item.getSubItemView(0);
-            //Let's set some values in
+
             configureSubItem(item, view, info);
-            //It is possible to get any view inside the inflated layout. Let's set the text in the custom_item
+
             ((TextView) item.findViewById(R.id.title)).setText(title);
             ((TextView) item.findViewById(R.id.address)).setText(address);
-            ((TextView) item.findViewById(R.id.starttime)).setText(Date);
-            //We can create items in batch.
+            ((TextView) item.findViewById(R.id.starttime)).setText(starttime);
 
-
-            /*item.findViewById(R.id.remove_item).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    expandingList.removeItem(item);
-                }
-            });*/
         }
     }
 
@@ -165,23 +169,7 @@ public class ScheduleActivity extends AppCompatActivity implements View.OnClickL
         if (studentActivityInfos != null && studentActivityInfos.size() > 0) {
             int length = studentActivityInfos.size();
             for (int i = 0; i < length; i++) {
-                String title = studentActivityInfos.get(i).getTitle();
-                String info = studentActivityInfos.get(i).getInfo();
-                String starttime = studentActivityInfos.get(i).getStarttime();
-                String address = studentActivityInfos.get(i).getAddress();
-
-                byte[] temp = studentActivityInfos.get(i).getImg();
-
-                Drawable drawable;
-                if (temp != null) {
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(temp, 0, temp.length);
-                    drawable = bitmap2Drawable(bitmap);
-
-                } else {
-                    int res = R.drawable.cc;
-                    drawable = this.getResources().getDrawable(res);
-                }
-                addItem(title, info, starttime, address, R.color.transparent, drawable);
+                addItem(studentActivityInfos.get(i));
             }
         }
 

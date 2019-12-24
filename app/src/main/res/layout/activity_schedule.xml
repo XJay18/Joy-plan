@@ -58,6 +58,7 @@
 
         <com.android.xjay.joyplan.CustomExpanding.ExpandingList
             android:id="@+id/schedule_expanding_list"
+            android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/transparent">
