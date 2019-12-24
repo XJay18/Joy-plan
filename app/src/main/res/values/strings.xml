@@ -6,7 +6,7 @@
     <string name="info_fqz">使用番茄钟设定一个【番茄周期】，在一个【番茄周期】内专注于一件工作。设定【番茄篮子】的大小，当番茄篮子满的时候，可以休息一个【番茄时长】。\n\n快来种番茄吧~</string>
     <string name="info_course">选择您所在的学校，然后输入您的学号以及姓名，点击“确认添加课程表”后，系统会自动从教务系统中获取您的课程表并显示在日程中。</string>
     <string name="info_fbhd">学生社团或学生组织负责人可以在线发布活动，学生可以在活动列表中浏览可以预定的活动。</string>
-    <string name="info_about">我们希望为在校大学生实现的方便的日程管理应用，旨在帮助他们合理规划时间、合理利用碎片时间、快速地安排并设定任务。\n\nVersion 1.0.1版本于2019年11月发布。感谢您的支持！</string>
+    <string name="info_about">我们希望为在校大学生实现的方便的日程管理应用，旨在帮助他们合理规划时间、合理利用碎片时间、快速地安排并设定任务。\n\n感谢您的支持！</string>
     <string name="cancel">取消</string>
     <string name="title">请选择时间</string>
     <string name="confirm">确定</string>

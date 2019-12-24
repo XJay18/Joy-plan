@@ -498,9 +498,9 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 sentBroadcast();
                 if(infoString.equals("true")){
                     Toast.makeText(mContext, "添加活动成功，已同步到云端", Toast.LENGTH_SHORT).show();
-                }else{
+                }/* else{
                     Toast.makeText(mContext, "添加活动失败", Toast.LENGTH_SHORT).show();
-                }
+                } */
 
             }
         });

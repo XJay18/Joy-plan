@@ -38,7 +38,7 @@ public class AboutSetupActivity extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.ll_setup_about_other: {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
-                mBuilder.setTitle("Joyplan Version 1.0.1");
+                mBuilder.setTitle("Joyplan Version 1.1");
                 mBuilder.setMessage(R.string.info_about);
                 AlertDialog mAlert = mBuilder.create();
                 mAlert.show();

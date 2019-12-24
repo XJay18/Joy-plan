@@ -14,7 +14,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -45,7 +44,6 @@ import com.android.xjay.joyplan.CustomExpanding.CustomItem;
 import com.android.xjay.joyplan.CustomExpanding.ExpandingList;
 import com.android.xjay.joyplan.Utils.ScreenSizeUtils;
 import com.android.xjay.joyplan.web.WebServiceGet;
-import com.android.xjay.joyplan.web.WebServicePost;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -1283,9 +1281,9 @@ public class HomeFragment extends Fragment
                 mHelper.deleteAgendaWithTitleAndStarttime(agenda);
                 if(infoString.equals("true")){
                     Toast.makeText(mContext, "删除日程成功，已同步到云端", Toast.LENGTH_SHORT).show();
-                }else{
+                }/* else{
                     Toast.makeText(mContext, "删除日程失败", Toast.LENGTH_SHORT).show();
-                }
+                } */
                 updateAgenda();
             }
         });
