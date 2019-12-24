@@ -184,7 +184,11 @@ public class WebServiceGet {
                 connection.setReadTimeout(8000);//传递数据超时
                 in = connection.getInputStream();
                 return parseInfo(in);
-            } catch (MalformedURLException e) {
+            }  catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                connection.disconnect();
+                return "no_connection";
+            }catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -243,7 +247,11 @@ public class WebServiceGet {
                 }
 
                 return ao;
-            } catch (MalformedURLException e) {
+            }  catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                connection.disconnect();
+                return null;
+            }catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -286,6 +294,10 @@ public class WebServiceGet {
                 connection.setReadTimeout(8000);//传递数据超时
                 in = connection.getInputStream();
                 return parseInfo(in);
+            } catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                connection.disconnect();
+                return "no_connection";
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -330,6 +342,10 @@ public class WebServiceGet {
                 connection.setReadTimeout(8000);//传递数据超时
                 in = connection.getInputStream();
                 return parseInfo(in);
+            } catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                connection.disconnect();
+                return "no_connection";
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -378,7 +394,11 @@ public class WebServiceGet {
                 connection.setReadTimeout(8000);//传递数据超时
                 in = connection.getInputStream();
                 return parseInfo(in);
-            } catch (MalformedURLException e) {
+            }  catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                connection.disconnect();
+                return "no_connection";
+            }catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -439,7 +459,11 @@ public class WebServiceGet {
                 }
 
                 return aco;
-            } catch (MalformedURLException e) {
+            }  catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                connection.disconnect();
+                return null;
+            }catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -491,7 +515,11 @@ public class WebServiceGet {
                 connection.setReadTimeout(8000);//传递数据超时
                 in = connection.getInputStream();
                 return parseInfo(in);
-            } catch (MalformedURLException e) {
+            }  catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                connection.disconnect();
+                return "no_connection";
+            }catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -557,7 +585,11 @@ public class WebServiceGet {
                 }
 
                 return co;
-            } catch (MalformedURLException e) {
+            }  catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                connection.disconnect();
+                return null;
+            }catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -605,7 +637,11 @@ public class WebServiceGet {
                 connection.setReadTimeout(8000);//传递数据超时
                 in = connection.getInputStream();
                 return parseInfo(in);
-            } catch (MalformedURLException e) {
+            }  catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                connection.disconnect();
+                return "no_connection";
+            }catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -654,7 +690,11 @@ public class WebServiceGet {
                 connection.setReadTimeout(8000);//传递数据超时
                 in = connection.getInputStream();
                 return parseInfo(in);
-            } catch (MalformedURLException e) {
+            }  catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                connection.disconnect();
+                return "no_connection";
+            }catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -701,7 +741,11 @@ public class WebServiceGet {
                 connection.setReadTimeout(8000);//传递数据超时
                 in = connection.getInputStream();
                 return parseInfo(in);
-            } catch (MalformedURLException e) {
+            }  catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                connection.disconnect();
+                return "no_connection";
+            }catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -762,7 +806,11 @@ public class WebServiceGet {
                 }
 
                 return aco;
-            } catch (MalformedURLException e) {
+            }  catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                connection.disconnect();
+                return null;
+            }catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -806,7 +854,11 @@ public class WebServiceGet {
                 connection.setReadTimeout(8000);//传递数据超时
                 in = connection.getInputStream();
                 return parseInfo(in);
-            } catch (MalformedURLException e) {
+            }  catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                connection.disconnect();
+                return "no_connection";
+            }catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -866,7 +918,11 @@ public class WebServiceGet {
                 }
 
                 return aso;
-            } catch (MalformedURLException e) {
+            }  catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                connection.disconnect();
+                return null;
+            }catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -888,32 +944,6 @@ public class WebServiceGet {
         }
         return null;
     }
-    //得到字节输入流，将字节输入流转化为String类型
-//    public static String parseInfo(InputStream inputStream){
-//        BufferedReader reader = null;
-//        String line = "";
-//        StringBuilder response = new StringBuilder();
-//
-//        try {
-//            reader = new BufferedReader(new InputStreamReader(inputStream));
-//            while((line = reader.readLine()) != null){
-//                response.append(line);
-//            }
-//            return response.toString();
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }finally {
-//            if(reader != null){
-//                try{
-//                    reader.close();
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//        return null;
-//    }
-
     /**
      * 将输入流转化为 String 型
      */

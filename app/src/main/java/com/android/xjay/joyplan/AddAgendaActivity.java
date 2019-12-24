@@ -346,6 +346,7 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
         public void run() {
             // 获取服务器返回的数据
             PhoneNumber phoneNumber=PhoneNumber.getInstance();
+
             String stringPhoneNumber=phoneNumber.getPhone_number();
             String infoString = WebServiceGet.addAgendaGet(stringPhoneNumber, agenda.getTitle(),agenda.getStarttime(),agenda.getEndtime(),agenda.getNotation(),agenda.getAddress());
             // 更新 UI，使用 runOnUiThread()方法
