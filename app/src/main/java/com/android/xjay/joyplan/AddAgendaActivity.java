@@ -267,7 +267,7 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 String end_time = tv_agenda_end_time.getText().toString();
                 end_time = "2019-" + end_time;
 
-                String time = getFirstDay(start_time+":00");
+                String time = getFirstDay(start_time);
                 time=time.replace("-","");
                 Fqz fqz=new Fqz(time);
                 boolean exist=mHelper.TimeExist(time);
@@ -349,7 +349,6 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
         c.setFirstDayOfWeek(Calendar.MONDAY);
         int day = c.get(Calendar.DAY_OF_WEEK);
         c.add(Calendar.DATE, c.getFirstDayOfWeek()-day);
-
         return sdf.format(c.getTime());
     }
     /**
@@ -357,7 +356,7 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
      */
     public static int dateToWeek(String datetime) {
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar cal = Calendar.getInstance(); // 获得一个日历
+        Calendar cal = Calendar.getInstance();
         Date datet = null;
         try {
             datet = f.parse(datetime);

@@ -290,7 +290,7 @@ public class FqzActivity extends AppCompatActivity
      * 获取当前周首日的日期
      */
     private String getTimeInterval() {
-        SimpleDateFormat dateFormat=new SimpleDateFormat("YYYYMMdd");
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMdd");
         int dayWeek = cal.get(Calendar.DAY_OF_WEEK);
         if (1 == dayWeek) {
             cal.add(Calendar.DAY_OF_MONTH, -1);

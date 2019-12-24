@@ -104,7 +104,7 @@ public class FqzStatistic extends AppCompatActivity
         mHelper=UserDBHelper.getInstance(this,1);
         //mHelper.reset();
         dateFormat = new SimpleDateFormat("MM月dd日");
-        Format=new SimpleDateFormat("YYYYMMdd");
+        Format=new SimpleDateFormat("yyyyMMdd");
         date = new Date();
         cal = Calendar.getInstance();
         cal.setTime(date);

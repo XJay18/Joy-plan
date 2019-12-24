@@ -108,7 +108,7 @@ public class PieFragment extends Fragment implements OnChartValueSelectedListene
         mHelper=UserDBHelper.getInstance(getActivity(),1);
 
         dateFormat = new SimpleDateFormat("MM月dd日");
-        Format=new SimpleDateFormat("YYYYMMdd");
+        Format=new SimpleDateFormat("yyyyMMdd");
         date = new Date();
         cal = Calendar.getInstance();
         cal.setTime(date);
@@ -290,7 +290,6 @@ public class PieFragment extends Fragment implements OnChartValueSelectedListene
         //去掉首字符
         imptimeBegin = cutFirstChart(imptimeBegin, '0');
         imptimeEnd = cutFirstChart(imptimeEnd, '0');
-
         return cal.get(Calendar.YEAR) + "年" + imptimeBegin + "至" + imptimeEnd;
     }
 
