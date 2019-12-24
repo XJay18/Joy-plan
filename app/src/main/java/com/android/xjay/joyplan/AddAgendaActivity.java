@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.android.xjay.joyplan.Notification.NotificationTool;
 import com.android.xjay.joyplan.Utils.DateFormat;
 import com.android.xjay.joyplan.Utils.JumpTextWatcher;
+import com.android.xjay.joyplan.web.WebServiceGet;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -269,6 +271,10 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
                 Agenda agenda = new Agenda(title, start_time, end_time, content, address);
                 //mHelper.reset();
                 mHelper.insert_agenda(agenda);
+
+
+
+
                 SQLiteDatabase dbRead = mHelper.getReadableDatabase();
                 Cursor c;
                 c = dbRead.query("agenda_table", null, null, null, null, null, null);
@@ -277,11 +283,14 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
 //                int length = c.getCount();
 //                String s = new Integer(length).toString();
 //                Toast toast = Toast.makeText(this, s, Toast.LENGTH_SHORT);
-                Toast toast = Toast.makeText(this, "任务添加成功", Toast.LENGTH_SHORT);
-                Intent intent = new Intent();
-                intent.setAction("ADD AGENDA");
-                sendBroadcast(intent);
-                toast.show();
+
+
+
+
+
+                new Thread(new MyThread(agenda)).start();
+
+
 
                 finish();
                 break;
@@ -289,5 +298,49 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
 
         }
     }
+
+    private class MyThread implements Runnable{
+        Agenda agenda;
+        public MyThread(Agenda agenda){
+            this.agenda=agenda;
+        }
+        public void run() {
+            // 获取服务器返回的数据
+            PhoneNumber phoneNumber=PhoneNumber.getInstance();
+            String stringPhoneNumber=phoneNumber.getPhone_number();
+            String infoString = WebServiceGet.addAgendaGet(stringPhoneNumber, agenda.getTitle(),agenda.getStarttime(),agenda.getEndtime(),agenda.getNotation(),agenda.getAddress());
+            // 更新 UI，使用 runOnUiThread()方法
+            showResponse(infoString);
+        }
+
+    }
+
+    private void showResponse(final String response){
+            sendBroadcast();
+            if(response.equals("true")){
+                Looper.prepare();
+                Toast.makeText(this, "任务添加成功，已同步到云端", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            } else{
+                Looper.prepare();
+                Toast.makeText(this, "任务添加成功，未到云端失败", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+
+
+    }
+
+    /**
+     * 添加活动后发送广播
+     */
+    private void sendBroadcast() {
+        Intent intent = new Intent();
+        intent.setAction("ADD AGENDA");
+        sendBroadcast(intent);
+    }
+
+
+
+
 
 }

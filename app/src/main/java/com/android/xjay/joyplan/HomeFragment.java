@@ -14,7 +14,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Environment;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -44,6 +44,7 @@ import com.android.xjay.joyplan.Calendar.ScrollDisabledListView;
 import com.android.xjay.joyplan.CustomExpanding.CustomItem;
 import com.android.xjay.joyplan.CustomExpanding.ExpandingList;
 import com.android.xjay.joyplan.Utils.ScreenSizeUtils;
+import com.android.xjay.joyplan.web.WebServiceGet;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -75,8 +76,27 @@ public class HomeFragment extends Fragment
     /**
      * 添加活动事件广播接收
      */
-    DynamicReceiverAddActivity dynamicReceiver;
+    private DynamicReceiverAddActivity dynamicReceiver;
 
+    /**
+     * 添加课程表广播接收
+     */
+    private DynamicReceiverAddCourseTable dynamicReceiverAddCourseTable;
+
+    /**
+     * 添加课程表目标广播接收
+     */
+    private DynamicReceiverAddGoal dynamicReceiverAddGoal;
+
+    /**
+     * 添加日程广播接收
+     */
+    private DynamicReceiverAddAgenda dynamicReceiverAddAgenda;
+
+    /**
+     * 添加接收预定活动广播接收
+     */
+    DynamicReceiverReserveActivity dynamicReceiverReserveActivity;
 
     /**
      * 年份文字
@@ -180,6 +200,12 @@ public class HomeFragment extends Fragment
 
         /* 获取当前界面的名称 */
         String info = getArguments().getString("info");
+        dynamicReceiver = new DynamicReceiverAddActivity();
+        dynamicReceiverAddCourseTable = new DynamicReceiverAddCourseTable();
+        dynamicReceiverAddGoal = new DynamicReceiverAddGoal();
+        dynamicReceiverAddAgenda = new DynamicReceiverAddAgenda();
+        dynamicReceiverReserveActivity = new DynamicReceiverReserveActivity();
+
         switch (info) {
             /* 日程页面 */
             case "日程": {
@@ -188,31 +214,27 @@ public class HomeFragment extends Fragment
                 findAllScheduleViews();
 
                 // 接受添加课程表消息
-                DynamicReceiverAddCourseTable dynamicReceiverAddCourseTable;
                 IntentFilter intentFilterAddCourse = new IntentFilter();
                 intentFilterAddCourse.addAction("ADD COURSE TABLE");
-                dynamicReceiverAddCourseTable = new DynamicReceiverAddCourseTable();
-                mContext.registerReceiver(
-                        dynamicReceiverAddCourseTable, intentFilterAddCourse);
+
+                mContext.registerReceiver(dynamicReceiverAddCourseTable, intentFilterAddCourse);
+
                 // 接受添加目标消息
-                DynamicReceiverAddGoal dynamicReceiverAddGoal;
                 IntentFilter intentFilterAddGoal = new IntentFilter();
                 intentFilterAddGoal.addAction("ADD GOAL");
-                dynamicReceiverAddGoal = new DynamicReceiverAddGoal();
+
                 mContext.registerReceiver(dynamicReceiverAddGoal, intentFilterAddGoal);
 
                 // 接收添加日程消息
-                DynamicReceiverAddAgenda dynamicReceiverAddAgenda;
                 IntentFilter intentFilterAddAgenda = new IntentFilter();
                 intentFilterAddAgenda.addAction("ADD AGENDA");
-                dynamicReceiverAddAgenda = new DynamicReceiverAddAgenda();
+
                 mContext.registerReceiver(dynamicReceiverAddAgenda, intentFilterAddAgenda);
 
                 // 接收添加预定活动消息
-                DynamicReceiverReserveActivity dynamicReceiverReserveActivity;
                 IntentFilter intentFilterReserveActivity = new IntentFilter();
                 intentFilterReserveActivity.addAction("RESERVE ACTIVITY");
-                dynamicReceiverReserveActivity = new DynamicReceiverReserveActivity();
+
                 mContext.registerReceiver(dynamicReceiverReserveActivity, intentFilterReserveActivity);
 
                 scrollView.setOnLongClickListener(this);
@@ -252,10 +274,7 @@ public class HomeFragment extends Fragment
                 mCalendarView.setOnCalendarSelectListener(this);
                 mTextYear.setText(String.valueOf(mCalendarView.getCurYear()));
                 mYear = mCalendarView.getCurYear();
-                mTextMonthDay.setText(
-                        mCalendarView.getCurMonth()
-                                + "月"
-                                + mCalendarView.getCurDay() + "日");
+                mTextMonthDay.setText(mCalendarView.getCurMonth() + "月" + mCalendarView.getCurDay() + "日");
                 mTextLunar.setText("今日");
                 mTextCurrentDay.setText(String.valueOf(mCalendarView.getCurDay()));
 
@@ -282,7 +301,7 @@ public class HomeFragment extends Fragment
                 View view = inflater.inflate(R.layout.fragment_reserve, null);
                 IntentFilter intentFilter = new IntentFilter();
                 intentFilter.addAction("ADD ACTIVITY");
-                dynamicReceiver = new DynamicReceiverAddActivity();
+
                 mContext.registerReceiver(dynamicReceiver, intentFilter);
                 expandingList = view.findViewById(R.id.reserve_expanding_list);
                 RedrawExpandingList();
@@ -310,6 +329,18 @@ public class HomeFragment extends Fragment
                 return view;
             }
         }
+    }
+
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mContext.unregisterReceiver(dynamicReceiverAddCourseTable);
+        mContext.unregisterReceiver(dynamicReceiver);
+        mContext.unregisterReceiver(dynamicReceiverAddAgenda);
+        mContext.unregisterReceiver(dynamicReceiverAddGoal);
+        mContext.unregisterReceiver(dynamicReceiverReserveActivity);
     }
 
     /**
@@ -680,10 +711,8 @@ public class HomeFragment extends Fragment
                 @Override
                 public void onClick(View v) {
                     Course course = (Course) content;
-                    if (course != null) {
-                        mHelper.deleteCourse(course);
-                        updateCourse();
-                    }
+                    new Thread(new myDeleteCourseThread(course)).start();
+                    updateCourse();
                     dialog.dismiss();
                 }
             });
@@ -717,12 +746,9 @@ public class HomeFragment extends Fragment
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
                             Agenda agenda = (Agenda) content;
-                            if (agenda != null) {
-                                mHelper.deleteAgendaWithTitleAndStarttime(agenda);
-                                updateAgenda();
-                            }
+                            new Thread(new myDeleteAgendaThread(agenda)).start();
+                            updateAgenda();
                             dialog.dismiss();
                         }
                     });
@@ -756,10 +782,8 @@ public class HomeFragment extends Fragment
                         @Override
                         public void onClick(View v) {
                             StudentActivityInfo studentActivityInfo = (StudentActivityInfo) content;
-                            if (studentActivityInfo != null) {
-                                mHelper.deleteReserveActivity(studentActivityInfo);
-                                updateActivity();
-                            }
+                            new Thread(new myDeleteActivityThread(studentActivityInfo)).start();
+                            updateActivity();
                             dialog.dismiss();
                         }
                     });
@@ -1181,6 +1205,99 @@ public class HomeFragment extends Fragment
      */
     private void configureSubItem(final CustomItem item, final View view, String info) {
         ((TextView) view.findViewById(R.id.sub_title)).setText(info);
+    }
+
+    private class myDeleteAgendaThread implements Runnable{
+        Agenda agenda;
+        public myDeleteAgendaThread(Agenda agenda){
+            this.agenda=agenda;
+        }
+        public void run() {
+            // 获取服务器返回的数据
+            PhoneNumber phoneNumber=PhoneNumber.getInstance();
+            String stringPhoneNumber=phoneNumber.getPhone_number();
+                String infoString = WebServiceGet.delAgendaGet(stringPhoneNumber, agenda.getTitle(),agenda.getStarttime());
+            // 更新 UI，使用 runOnUiThread()方法
+            showResponse(agenda,infoString);
+        }
+    }
+    private class myDeleteCourseThread implements Runnable{
+        Course course;
+        public myDeleteCourseThread(Course course){
+            this.course=course;
+        }
+        public void run() {
+            // 获取服务器返回的数据
+            PhoneNumber phoneNumber=PhoneNumber.getInstance();
+            String stringPhoneNumber=phoneNumber.getPhone_number();
+            String infoString = WebServiceGet.delCourseGet(stringPhoneNumber,course.getYear(),course.getIndex0fSemester(),
+                    course.getDayofweek(),course.getStartWeek(),course.getStartIndex(),course.getCourseName());
+            // 更新 UI，使用 runOnUiThread()方法
+            showResponse(course,infoString);
+        }
+    }
+    private class myDeleteActivityThread implements Runnable{
+        StudentActivityInfo activityInfo;
+        public myDeleteActivityThread(StudentActivityInfo activityInfo){
+            this.activityInfo=activityInfo;
+        }
+        public void run() {
+            // 获取服务器返回的数据
+            PhoneNumber phoneNumber=PhoneNumber.getInstance();
+            String stringPhoneNumber=phoneNumber.getPhone_number();
+            String infoString = WebServiceGet.delReserveGet(stringPhoneNumber,activityInfo.getTitle(),activityInfo.getStarttime());
+            // 更新 UI，使用 runOnUiThread()方法
+            showResponse(activityInfo,infoString);
+        }
+    }
+
+    private void showResponse(Agenda agenda,String infoString){
+        getActivity().runOnUiThread(new Runnable() {
+            // 更新UI
+            @Override
+            public void run() {
+                if(infoString.equals("true")){
+                    mHelper.deleteAgendaWithTitleAndStarttime(agenda);
+                    Toast.makeText(mContext, "删除日程成功，已同步到云端", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(mContext, "删除日程失败", Toast.LENGTH_SHORT).show();
+                }
+                updateAgenda();
+            }
+        });
+
+    }
+
+    private void showResponse(Course course,String infoString){
+        getActivity().runOnUiThread(new Runnable() {
+            // 更新UI
+            @Override
+            public void run() {
+                if(infoString.equals("true")){
+                    mHelper.deleteCourse(course);
+                    Toast.makeText(mContext, "删除课程成功，已同步到云端", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(mContext, "删除课程失败", Toast.LENGTH_SHORT).show();
+                }
+                updateCourse();
+            }
+        });
+
+    }
+    private void showResponse(StudentActivityInfo activity, String infoString){
+        getActivity().runOnUiThread(new Runnable() {
+            // 更新UI
+            @Override
+            public void run() {
+                if(infoString.equals("true")){
+                    mHelper.deleteReserveActivity(activity);
+                    Toast.makeText(mContext, "删除活动成功，已同步到云端", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(mContext, "删除活动失败", Toast.LENGTH_SHORT).show();
+                }
+                updateActivity();
+            }
+        });
 
     }
 }

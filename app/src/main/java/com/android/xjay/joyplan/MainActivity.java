@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 用服务器返回的数据进行页面更新
      */
     private void showResponse(final String response) {
+
         runOnUiThread(new Runnable() {
             // 更新UI
             @Override
@@ -182,7 +183,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
             builder.show();
         } else {
-            PN=new PhoneNumber(phone_number);
+            PN=PhoneNumber.getInstance();
+            PN.setPhoneNumber(phone_number);
             Intent intent = new Intent(MainActivity.this,
                     HomeActivity.class);
             startActivity(intent);

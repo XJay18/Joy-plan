@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.xjay.joyplan.Utils.DateFormat;
+import com.android.xjay.joyplan.web.WebServiceGet;
 
 import java.io.ByteArrayOutputStream;
 
@@ -240,24 +241,8 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                     info = new StudentActivityInfo(string_title, string_description, string_start_time, string_end_time, string_address);
 
                 }
-                // 像学生活动表中插入一条新的记录
-                mHelper.insert_studentActivity(info);
-
-                // 获取数据库读取权限
-                SQLiteDatabase dbRead = mHelper.getReadableDatabase();
-
-                // 查询学生活动表所有记录
-                Cursor c = dbRead.query("user_info", null, null, null, null, null, null);
-                // 获取结果的长度（即有几条记录）
-                Integer i = c.getCount();
-
-                // 添加完后显示目前有多少条记录（测试用）
-                Toast toast = Toast.makeText(getApplicationContext(), i.toString(), Toast.LENGTH_SHORT);
-                toast.show();
-                sentBroadcast();
-
-                //new Thread(new RegThread()).start();
-
+                // 向学生活动表中插入一条新的记录（本地云端同步）
+                new Thread(new myAddActivityThread(info)).start();
 
                 // 结束当前activity
                 finish();
@@ -286,22 +271,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    /*
-    private class RegThread implements Runnable {
-        public void run() {
-            //获取服务器返回数据
-            System.out.println("wenti" + string_title);
-            System.out.println("wenti" + string_description);
-            System.out.println("wenti" + string_start_time);
-            System.out.println("wenti" + string_address);
-            String RegRet = WebServicePost.activityPost(string_title,
-                    string_start_time, string_description,
-                    string_address, "ActiLet");
-            //更新UI，界面处理
-            //showReq(RegRet);
-        }
-    }
-    */
+
 
     /**
      * 添加活动后发送广播
@@ -309,7 +279,6 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     private void sentBroadcast() {
         Intent intent = new Intent();
         intent.setAction("ADD ACTIVITY");
-        intent.putExtra("sele", "广播测试");
         sendBroadcast(intent);
     }
 
@@ -497,5 +466,42 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
 
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         return baos.toByteArray();
+    }
+
+    private class myAddActivityThread implements Runnable{
+        StudentActivityInfo studentActivityInfo;
+        public myAddActivityThread(StudentActivityInfo studentActivityInfo){
+            this.studentActivityInfo=studentActivityInfo;
+        }
+        @Override
+        public void run() {
+            PhoneNumber phoneNumber=PhoneNumber.getInstance();
+            String stringPhoneNumber=phoneNumber.getPhone_number();
+            String imgString="";
+            if(studentActivityInfo.getImg()!=null){
+                imgString=new String(studentActivityInfo.getImg());
+            }
+
+            String infoString = WebServiceGet.addActiGet(stringPhoneNumber,studentActivityInfo.getTitle(),studentActivityInfo.getInfo(),studentActivityInfo.getStarttime(),studentActivityInfo.getEndtime(),studentActivityInfo.getAddress(),imgString);
+            // 更新 UI，使用 runOnUiThread()方法
+            showResponse(studentActivityInfo,infoString);
+        }
+    }
+
+    private void showResponse(StudentActivityInfo studentActivityInfo,String infoString){
+        runOnUiThread(new Runnable() {
+            // 更新UI
+            @Override
+            public void run() {
+                if(infoString.equals("true")){
+                    mHelper.insert_studentActivity(studentActivityInfo);
+                    sentBroadcast();
+                    Toast.makeText(mContext, "添加活动成功，已同步到云端", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(mContext, "添加活动失败", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
     }
 }
