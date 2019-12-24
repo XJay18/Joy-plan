@@ -355,19 +355,25 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void showResponse(final String response){
-            sendBroadcast();
-            if(response.equals("true")){
-                Looper.prepare();
-                Toast.makeText(this, "任务添加成功，已同步到云端", Toast.LENGTH_SHORT).show();
-                Looper.loop();
-            } else{
-                Looper.prepare();
-                Toast.makeText(this, "任务添加成功，未到云端失败", Toast.LENGTH_SHORT).show();
-                Looper.loop();
+
+
+        runOnUiThread(new Runnable() {
+            // 更新UI
+            @Override
+            public void run() {
+                sendBroadcast();
+                if(response.equals("true")){
+                    Toast.makeText(getApplicationContext(), "任务添加成功，已同步到云端", Toast.LENGTH_SHORT).show();
+
+                } else{
+                    Toast.makeText(getApplicationContext(), "任务添加成功，未到云端失败", Toast.LENGTH_SHORT).show();
+                }
             }
+        });
 
 
     }
+
 
     /**
      * 添加活动后发送广播

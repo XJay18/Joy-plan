@@ -1280,8 +1280,8 @@ public class HomeFragment extends Fragment
             // 更新UI
             @Override
             public void run() {
+                mHelper.deleteAgendaWithTitleAndStarttime(agenda);
                 if(infoString.equals("true")){
-                    mHelper.deleteAgendaWithTitleAndStarttime(agenda);
                     Toast.makeText(mContext, "删除日程成功，已同步到云端", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(mContext, "删除日程失败", Toast.LENGTH_SHORT).show();
@@ -1297,8 +1297,8 @@ public class HomeFragment extends Fragment
             // 更新UI
             @Override
             public void run() {
+                mHelper.deleteCourse(course);
                 if(infoString.equals("true")){
-                    mHelper.deleteCourse(course);
                     Toast.makeText(mContext, "删除课程成功，已同步到云端", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(mContext, "删除课程失败", Toast.LENGTH_SHORT).show();
@@ -1313,8 +1313,8 @@ public class HomeFragment extends Fragment
             // 更新UI
             @Override
             public void run() {
+                mHelper.deleteReserveActivity(activity);
                 if(infoString.equals("true")){
-                    mHelper.deleteReserveActivity(activity);
                     Toast.makeText(mContext, "删除活动成功，已同步到云端", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(mContext, "删除活动失败", Toast.LENGTH_SHORT).show();

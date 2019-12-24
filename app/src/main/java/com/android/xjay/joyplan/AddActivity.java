@@ -490,11 +490,13 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         runOnUiThread(new Runnable() {
             // 更新UI
             @Override
+
             public void run() {
+                mHelper=UserDBHelper.getInstance(getApplicationContext(),1);
+                mHelper.openWriteLink();
+                mHelper.insert_studentActivity(studentActivityInfo);
+                sentBroadcast();
                 if(infoString.equals("true")){
-                    mHelper.openWriteLink();
-                    mHelper.insert_studentActivity(studentActivityInfo);
-                    sentBroadcast();
                     Toast.makeText(mContext, "添加活动成功，已同步到云端", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(mContext, "添加活动失败", Toast.LENGTH_SHORT).show();
