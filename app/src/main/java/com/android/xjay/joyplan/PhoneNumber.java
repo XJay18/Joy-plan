@@ -13,7 +13,7 @@ public class PhoneNumber {
     public void setPhoneNumber(String num){
         phone_number=num;
     }
-    String getPhone_number(){
+    public String getPhone_number(){
         return phone_number;
     }
 }
