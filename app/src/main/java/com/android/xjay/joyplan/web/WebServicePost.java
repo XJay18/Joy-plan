@@ -139,7 +139,7 @@ public class WebServicePost {
         InputStream in = null;
 
         try {
-            String Url = "http://110.64.91.150:8080/joyplan3.0/Activity";
+            String Url = "http://110.64.91.150:8080/joyweb3.0/Activity";
             try {
                 URL url = new URL(Url);
                 connection = (HttpURLConnection) url.openConnection();
