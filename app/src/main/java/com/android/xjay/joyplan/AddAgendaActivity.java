@@ -363,6 +363,8 @@ public class AddAgendaActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void run() {
                 sendBroadcast();
+                System.out.println("agendaresponse="+response);
+
                 if(response.equals("true")){
                     Toast.makeText(getApplicationContext(), "任务添加成功，已同步到云端", Toast.LENGTH_SHORT).show();
 

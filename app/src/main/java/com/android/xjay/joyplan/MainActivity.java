@@ -147,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 更新UI的辅助方法
      */
     private void runHelper(String response) {
+        System.out.println("loginresponse="+response);
         if (response.equals("no_connection")) {
             dialog.dismiss();
             AlertDialog.Builder builder = new AlertDialog.Builder(

@@ -112,7 +112,7 @@ public class WebServiceGet {
                 }
             }
         }
-        return null;
+        return "no_connection";
     }
 
     /**
@@ -180,13 +180,15 @@ public class WebServiceGet {
                 URL url = new URL(path);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
-                connection.setConnectTimeout(10000);//建立连接超时
+                connection.setConnectTimeout(5000);//建立连接超时
                 connection.setReadTimeout(8000);//传递数据超时
                 in = connection.getInputStream();
                 return parseInfo(in);
             }  catch (SocketTimeoutException e) {
                 e.printStackTrace();
-                connection.disconnect();
+                if(connection !=null) {
+                    connection.disconnect();
+                }
                 return "no_connection";
             }catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -208,7 +210,7 @@ public class WebServiceGet {
                 }
             }
         }
-        return null;
+        return "no_connection";
     }
 
     /**
@@ -318,7 +320,7 @@ public class WebServiceGet {
                 }
             }
         }
-        return null;
+        return "no_connection";
     }
 
     /**
@@ -366,7 +368,7 @@ public class WebServiceGet {
                 }
             }
         }
-        return null;
+        return "no_connection";
     }
 
 
@@ -418,7 +420,7 @@ public class WebServiceGet {
                 }
             }
         }
-        return null;
+        return "no_connection";
     }
 
     /**
@@ -539,7 +541,7 @@ public class WebServiceGet {
                 }
             }
         }
-        return null;
+        return "no_connection";
     }
 
     /**
@@ -661,7 +663,7 @@ public class WebServiceGet {
                 }
             }
         }
-        return null;
+        return "no_connection";
     }
 
     /**
@@ -714,7 +716,7 @@ public class WebServiceGet {
                 }
             }
         }
-        return null;
+        return "no_connection";
     }
 
     /**
@@ -765,7 +767,7 @@ public class WebServiceGet {
                 }
             }
         }
-        return null;
+        return "no_connection";
     }
 
     /**
@@ -878,7 +880,7 @@ public class WebServiceGet {
                 }
             }
         }
-        return null;
+        return "no_connection";
     }
 
     /**
